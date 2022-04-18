@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Confirm password</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="/css/my-login.css">
+</head>
+
+<body class="my-login-page">
+	<section class="h-90">
+		<div class="container h-100">
+			<div class="row justify-content-md-center h-90">
+				<div class="card-wrapper">
+					<div class="brand">
+						<img src="/img/sign.jpg" alt="logo">
+					</div>
+					<div class="card fat">
+						<div class="card-body">
+							<h4 class="card-title text-center"> 
+								Set Password
+							</h4>
+							<div th:if="${user?.userName}" class="alert alert-success" role="alert"
+								th:text="'Welcome to ' + ${user?.userName}"></div>
+							<div th:if="${invalidToken}" class="alert alert-danger" role="alert"
+								th:text=${invalidToken}></div>
+							<form th:if="!${invalidToken}" th:action="@{/register/confirm}" method="POST"  th:object="${user}" class="my-login-validation" novalidate="">
+								<input type="hidden" name="token" th:value=${confirmationToken} th:field="*{confirmationToken}" >
+								<div th:if="${userName}" class="alert alert-success" role="alert"
+								th:text=${userName}></div>
+								
+								<div class="form-group">
+									<label for="password">Password</label>
+									<input id="password" type="password" class="form-control" name="password" th:field="*{password}"
+										required autofocus>
+								</div>
+								<div class="form-group">
+									<label for="rePassword">Confirm Password</label>
+									<input id="rePassword" type="password" class="form-control"
+										required autofocus>
+								</div>
+
+								<div class="form-group m-0">
+									<button type="submit" class="btn btn-primary btn-block">
+										Save
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="footer">
+						Copyright &copy; 2022 &mdash; EasyDoctorhuyhue
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</body>
+
+</html>

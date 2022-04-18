@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Register EasyDoctor</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="/css/my-login.css">
+</head>
+
+<body class="my-login-page">
+	<section class="h-90">
+		<div class="container h-100">
+			<div class="row justify-content-md-center h-90">
+				<div class="card-wrapper">
+					<div class="brand">
+						<img src="/img/sign.jpg" alt="logo">
+					</div>
+					<div class="card fat">
+						<div class="card-body">
+							<h4 class="card-title text-center">Sign Up</h4>
+							<form th:action="@{/register}" th:object="${user}"
+								method="POST" class="m-t" role="form" data-toggle="validator">
+
+								<div th:if="${confirmationMessage}" class="alert alert-success" role="alert"
+									th:text=${confirmationMessage}></div>
+
+								<div th:if="${alreadyRegisteredMessage}" class="alert alert-danger" role="alert"
+									th:text="${alreadyRegisteredMessage}"></div>
+
+								<!--<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+									class="validation-message alert alert-danger" role="alert"></div>
+
+								<div th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"
+									class="validation-message alert alert-danger" role="alert"></div>-->
+
+								<!--			from tu day-->
+								<div class="form-group">
+									<label for="email">Email</label>
+									<input id="email" type="email" class="form-control" name="email"
+										th:field="*{email}" required autofocus>
+								</div>
+								<div class="form-group">
+									<label for="userName">Username</label>
+									<input id="userName" type="text" class="form-control" name="userName" 
+										th:field="*{userName}" required autofocus>
+								</div>
+								<div class="form-group m-0">
+									<button type="submit" class="btn btn-primary btn-block">
+										Register
+									</button>
+								</div>
+								<div class="mt-4 text-center">
+									Already have an account? <a th:href="@{/login}">Sign In</a>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="footer">
+						Copyright &copy; 2022 &mdash; EasyDoctor
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</body>
+
+</html>
