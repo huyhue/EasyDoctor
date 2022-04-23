@@ -30,7 +30,14 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 //        } else {
 //            appointmentService.updateUserAppointmentsStatuses(currentUser.getId());
 //        }
-		response.sendRedirect(request.getContextPath() + "/");
+		if (currentUser.hasRole("ROLE_PATIENT")) {
+			response.sendRedirect(request.getContextPath() + "/doctors/all");
+		} else if (currentUser.hasRole("ROLE_DOCTOR")) {
+			response.sendRedirect(request.getContextPath() + "/patients/all");
+		} else {
+			response.sendRedirect(request.getContextPath() + "/");
+		}
+
 	}
 
 }

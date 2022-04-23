@@ -1,23 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
- th:replace="~{fragments/layout :: layout (~{::body},'home','Home')}"
->
+<html xmlns:th="http://www.thymeleaf.org" 
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	th:replace="~{fragments/layout :: layout (~{::body},'home','Home')}">
 
 <body>
-<div class="row mt-3">
-    <div class="col">
+	<div class="row mt-3">
+		<div class="col">
 
-    </div>
-    <div class="col-10">
-        <div>Home Page</div>
-        <div th:replace="doctors/doctorList.html"></div>
-    </div>
-    <div class="col">
+		</div>
+		<div class="col-10">
+			<div>Home Page</div>
+		</div>
+		<div class="col">
 
-    </div>
-</div>
+		</div>
+	</div>
+
 
 </body>
-
 </html>
