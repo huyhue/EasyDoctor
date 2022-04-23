@@ -12,8 +12,11 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class CustomUserDetails implements UserDetails {
-	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String userName;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;

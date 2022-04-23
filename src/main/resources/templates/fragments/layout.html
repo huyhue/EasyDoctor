@@ -87,7 +87,8 @@
                     </li>
                     <li>
                         <p class="navbar-nav ml-auto navbar-text"> Logged as:
-                            <span sec:authentication="name">username</span> | </p>
+                         <span  th:text="${#authentication.getPrincipal().getUsername()}">username</span> | </p>
+                           
                     </li>
                     <li>
                         <form th:action="@{/perform_logout}" id="logout" method="POST">

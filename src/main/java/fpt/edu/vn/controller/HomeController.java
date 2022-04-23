@@ -1,6 +1,5 @@
 package fpt.edu.vn.controller;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -48,20 +47,29 @@ public class HomeController {
 	public String showRegistrationForm(@ModelAttribute("user") User user) {
 		return "users/registerPatient";
 	}
+	
+	@RequestMapping(value = "/forgot", method = RequestMethod.GET)
+	public String showForgotPassword(@ModelAttribute("user") User user) {
+		return "users/forgotPassword";
+	}
+	
+	@RequestMapping(value = "/forgot", method = RequestMethod.POST)
+	public String resetForgotPassword(@ModelAttribute("user") User user, Model model) {
+//		do something
+		return "users/login";
+	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String addPatientRegistration(@ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
-		// Lookup user in database by e-mail
-		User userEmailExists = userService.findByEmail(user.getEmail());
-		Optional<User> usernameExists = userService.findByUserName(user.getEmail());
-
-		if (userEmailExists != null && usernameExists != null) {
-			model.addAttribute("alreadyRegisteredMessage",
-					"Oops!  There is already a user registered.");
+		if (bindingResult.hasErrors()) {
 			return "users/registerPatient";
 		}
+		// Check user exist
+		Boolean userExists = userService.checkUserExists(user.getEmail(), user.getUserName());
 
-		if (bindingResult.hasErrors()) {
+		if (userExists == true) {
+			model.addAttribute("alreadyRegisteredMessage",
+					"Oops!  There is already a user registered.");
 			return "users/registerPatient";
 		} else {
 			user.setConfirmationToken(UUID.randomUUID().toString());
@@ -69,7 +77,6 @@ public class HomeController {
 			emailService.sendConfirmRegistration(user);
 			model.addAttribute("confirmationMessage", "A confirmation e-mail has been sent to " + user.getEmail());
 		}
-
 		return "users/registerPatient";
 	}
 
@@ -96,11 +103,11 @@ public class HomeController {
 		User userDR = userService.findByConfirmationToken(user.getConfirmationToken());
 		if(userDR != null) {
 			userService.savePasswordByUser(user);
-		}else {
+			model.addAttribute("successMessage", "Your password has been set!");
+		} else {
 			model.addAttribute("errorMessage", "Your password hasn't been set. Please again!");
 		}
-		model.addAttribute("successMessage", "Your password has been set!");
-		return "/";
+		return "users/login";
 	}
 
 	@GetMapping("/access-denied")

@@ -29,10 +29,10 @@
 								<div th:if="${param.logout != null}" class="alert alert-success">
 									<p>Logged out successfully</p>
 								</div>
-								<div th:if="${successMessage}" class="alert alert-success" role="alert"
+								<div th:if="${successMessage != null}" class="alert alert-success" role="alert"
 									th:text=${successMessage}></div>
 
-								<div th:if="${errorMessage}" class="alert alert-danger" role="alert"
+								<div th:if="${errorMessage != null}" class="alert alert-danger" role="alert"
 									th:text=${errorMessage}></div>
 
 								<div class="form-group">
@@ -49,7 +49,7 @@
 									</label>
 									<input id="password" type="password" class="form-control" name="password" required
 										data-eye>
-									<a href="forgot.html" class="float-right">
+									<a th:href="@{/forgot}" class="float-right">
 										Forgot Password?
 									</a>
 									<div class="invalid-feedback">

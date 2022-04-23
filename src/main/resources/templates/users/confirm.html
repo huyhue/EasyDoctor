@@ -27,8 +27,7 @@
 								th:text=${invalidToken}></div>
 							<form th:if="!${invalidToken}" th:action="@{/register/confirm}" method="POST"  th:object="${user}" class="my-login-validation" novalidate="">
 								<input type="hidden" name="token" th:value=${confirmationToken} th:field="*{confirmationToken}" >
-								<div th:if="${userName}" class="alert alert-success" role="alert"
-								th:text=${userName}></div>
+								<input type="hidden" name="token" th:value=${userName} th:field="*{userName}" >
 								
 								<div class="form-group">
 									<label for="password">Password</label>

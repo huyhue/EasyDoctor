@@ -16,18 +16,21 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 //    public CustomAuthenticationSuccessHandler(AppointmentService appointmentService) {
 //        this.appointmentService = appointmentService;
 //    }
+	public CustomAuthenticationSuccessHandler() {
+		// TODO Auto-generated constructor stub
+	}
 
-    @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-            throws IOException {
-        CustomUserDetails currentUser = (CustomUserDetails) authentication.getPrincipal();
+	@Override
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+			Authentication authentication) throws IOException {
+		CustomUserDetails currentUser = (CustomUserDetails) authentication.getPrincipal();
 
 //        if (currentUser.hasRole("ROLE_ADMIN")) {
 //            appointmentService.updateAllAppointmentsStatuses();
 //        } else {
 //            appointmentService.updateUserAppointmentsStatuses(currentUser.getId());
 //        }
-        response.sendRedirect(request.getContextPath() + "/");
-    }
+		response.sendRedirect(request.getContextPath() + "/");
+	}
 
 }

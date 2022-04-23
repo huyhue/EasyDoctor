@@ -21,6 +21,9 @@ public class User extends BaseEntity {
 
     @Column(name = "mobile")
     private String mobile;
+    
+    @Enumerated(value = EnumType.STRING)
+    private Gender gender;
 
     @Column(name = "address")
     private String address;

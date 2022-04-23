@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'home','Home')}"
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+ th:replace="~{fragments/layout :: layout (~{::body},'home','Home')}"
 >
 
 <body>
@@ -9,6 +11,7 @@
     </div>
     <div class="col-10">
         <div>Home Page</div>
+        <div th:replace="doctors/doctorList.html"></div>
     </div>
     <div class="col">
 

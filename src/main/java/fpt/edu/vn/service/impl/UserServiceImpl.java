@@ -2,7 +2,6 @@ package fpt.edu.vn.service.impl;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -43,8 +42,20 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public Optional<User> findByUserName(String username) {
-		return userRepository.findByUserName(username);
+	public Boolean checkUserExists(String email, String username) {
+		User user = userRepository.findByEmail(email);
+		if (user != null) {
+			return true;
+		}
+		if (username.equals(user.getUserName())) {
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public User findByUserName(String username) {
+		return userRepository.findByUserName(username).isPresent() ? userRepository.findByUserName(username).get() : null;
 	}
 	
 	@Override
