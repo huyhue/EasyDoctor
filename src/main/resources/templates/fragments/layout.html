@@ -63,7 +63,7 @@
                 <div th:replace="fragments/patient-nav.html :: navlinks(${activeLink})"></div>
             </th:block>
 
-            <th:block sec:authorize="hasRole('ROLE_DOCTER')">
+            <th:block sec:authorize="hasRole('ROLE_DOCTOR')">
                 <!-- menu for docter-->
                 <div th:replace="fragments/doctor-nav.html :: navlinks(${activeLink})"></div>
             </th:block>

@@ -1,5 +1,7 @@
 package fpt.edu.vn.model;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -18,6 +20,9 @@ public class Clinic{
     private String website;
 
     private String description;
+    
+	@OneToMany(mappedBy = "clinic")
+	private List<Doctor> doctors;
 
     public Clinic() {}
 
@@ -68,4 +73,12 @@ public class Clinic{
     public void setDescription(String description) {
         this.description = description;
     }
+
+	public List<Doctor> getDoctors() {
+		return doctors;
+	}
+
+	public void setDoctors(List<Doctor> doctors) {
+		this.doctors = doctors;
+	}
 }
