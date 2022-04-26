@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.thymeleaf.context.Context;
 
+import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.EmailService;
@@ -44,7 +46,27 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String showRegistrationForm(@ModelAttribute("user") User user) {
+	public String showRegistrationForm(@ModelAttribute("user") Patient user) {
+		return "users/registerPatient";
+	}
+
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public String addPatientRegistration(@ModelAttribute("user") Patient user, BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			return "users/registerPatient";
+		}
+		// Check user exist
+		User userExists = userService.findByUserName(user.getUserName());
+
+		if (userExists != null) {
+			model.addAttribute("alreadyRegisteredMessage",
+					"Oops!  There is already a user registered.");
+			return "users/registerPatient";
+		} else {
+			user.setConfirmationToken(UUID.randomUUID().toString());
+			userService.savePatientRegister(user);
+			model.addAttribute("confirmationMessage", "You register successful.");
+		}
 		return "users/registerPatient";
 	}
 	
@@ -56,29 +78,16 @@ public class HomeController {
 	@RequestMapping(value = "/forgot", method = RequestMethod.POST)
 	public String resetForgotPassword(@ModelAttribute("user") User user, Model model) {
 //		do something
-		return "users/login";
-	}
-
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String addPatientRegistration(@ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
-		if (bindingResult.hasErrors()) {
-			return "users/registerPatient";
-		}
-		// Check user exist
-		Boolean userExists = userService.checkUserExists(user.getEmail(), user.getUserName());
-
-		if (userExists == true) {
-			model.addAttribute("alreadyRegisteredMessage",
-					"Oops!  There is already a user registered.");
-			return "users/registerPatient";
-		} else {
-			user.setConfirmationToken(UUID.randomUUID().toString());
-			userService.saveRegister(user);
-			emailService.sendConfirmRegistration(user);
+		User existUser = userService.findByEmail(user.getEmail());
+		if (existUser != null) {
+			emailService.sendConfirmRegistration(existUser);
 			model.addAttribute("confirmationMessage", "A confirmation e-mail has been sent to " + user.getEmail());
+		}else {
+			model.addAttribute("alreadyRegisteredMessage", "A confirmation e-mail not exists.");
 		}
-		return "users/registerPatient";
+		return "users/forgotPassword";
 	}
+
 
 	// Process confirmation link
 	@RequestMapping(value = "/register/confirm", method = RequestMethod.GET)

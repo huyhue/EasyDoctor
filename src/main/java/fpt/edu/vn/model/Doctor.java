@@ -10,11 +10,8 @@ import javax.persistence.*;
 @PrimaryKeyJoinColumn(name = "id_doctor")
 public class Doctor extends User {
 	private String description;
-	private Date startPracticeDate;
 	
-
-//	@OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "id", referencedColumnName = "id_doctor")
+	private Date startPracticeDate;
 	
 	@OneToOne
     @JoinColumn(name = "id_specialty")
@@ -50,6 +47,14 @@ public class Doctor extends User {
 
 	public void setClinic(Clinic clinic) {
 		this.clinic = clinic;
+	}
+
+	public Specialty getSpecialty() {
+		return specialty;
+	}
+
+	public void setSpecialty(Specialty specialty) {
+		this.specialty = specialty;
 	}
 
 }

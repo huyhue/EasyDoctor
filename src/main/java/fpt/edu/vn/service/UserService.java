@@ -1,7 +1,11 @@
 package fpt.edu.vn.service;
 
 import java.util.Collection;
+import java.util.List;
 
+import fpt.edu.vn.component.ChangePasswordForm;
+import fpt.edu.vn.model.Doctor;
+import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.Role;
 import fpt.edu.vn.model.User;
 
@@ -11,9 +15,18 @@ public interface UserService {
 	User findByConfirmationToken(String token);
 	
 	User getUserById(int userId);
+	Doctor getDoctorById(int userId);
+	Patient getPatientById(int userId);
+	
+	void updateUserPassword(ChangePasswordForm passwordChangeForm);
+	
 	void savePasswordByUser(User user);
-	void saveRegister(User userRE);
+	void savePatientRegister(Patient userRE);
+	
 	Boolean checkUserExists(String email, String username);
+	
+	List<Doctor> getAllDoctors();
+	List<Doctor> getAllDoctorsByPatient();
 	
 	Collection<Role> getRolesForDoctor();
 	Collection<Role> getRolesForPatient();

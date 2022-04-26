@@ -67,6 +67,6 @@ public class EmailServiceImpl implements EmailService {
         
         sendEmail(user.getEmail(), "Confirm Registration", content, context, null);
     }
-
+    
     
 }

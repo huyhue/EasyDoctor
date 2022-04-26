@@ -24,9 +24,6 @@ public class User extends BaseEntity {
     
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
-
-    @Column(name = "address")
-    private String address;
     
     @Column(name = "enabled", columnDefinition = "boolean default false")
 	private boolean enabled;
@@ -47,22 +44,10 @@ public class User extends BaseEntity {
     public User() {
     }
     
-    public User(String userName, String password, String email, String mobile,
-			String address, Collection<Role> roles) {
+	public User(String userName, String password, String confirmationToken, Collection<Role> roles) {
 		super();
 		this.userName = userName;
 		this.password = password;
-		this.email = email;
-		this.mobile = mobile;
-		this.address = address;
-		this.roles = roles;
-	}
-    
-
-	public User(String userName, String email, String confirmationToken, Collection<Role> roles) {
-		super();
-		this.userName = userName;
-		this.email = email;
 		this.confirmationToken = confirmationToken;
 		this.roles = roles;
 	}
@@ -114,20 +99,20 @@ public class User extends BaseEntity {
         this.mobile = mobile;
     }
 
-    public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
 	public boolean isEnabled() {
 		return enabled;
 	}
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
 	}
 
 	public String getConfirmationToken() {
@@ -163,7 +148,7 @@ public class User extends BaseEntity {
 	@Override
 	public String toString() {
 		return "User [userName=" + userName + ", password=" + password + ", email=" + email + ", mobile=" + mobile
-				+ ", address=" + address + ", enabled=" + enabled + ", confirmationToken=" + confirmationToken
+				+ ", enabled=" + enabled + ", confirmationToken=" + confirmationToken
 				+ ", roles=" + roles + "]";
 	}
    

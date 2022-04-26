@@ -1,5 +1,7 @@
 package fpt.edu.vn.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,10 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import fpt.edu.vn.model.User;
+import fpt.edu.vn.component.ChangePasswordForm;
+import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.EmailService;
 import fpt.edu.vn.service.UserService;
@@ -37,14 +40,41 @@ public class PatientController {
 	}
 	
 	@GetMapping("/{id}")
-    public String showPatientDetails(@PathVariable("id") int PatientId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
-          return "users/updateUserForm";
+    public String showPatientDetails(@PathVariable("id") int patientId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
+		Patient patient = userService.getPatientById(patientId);
+		if (patient.hasRole("ROLE_PATIENT")) {
+            if (!model.containsAttribute("user")) {
+                model.addAttribute("user", patient);
+            }
+            if (!model.containsAttribute("passwordChange")) {
+                model.addAttribute("passwordChange", new ChangePasswordForm(patientId));
+            }
+            model.addAttribute("account_type", "patients");
+            model.addAttribute("formActionProfile", "/patients/update/profile");
+            model.addAttribute("formActionPassword", "/patients/update/password");
+            model.addAttribute("numberOfScheduledAppointments", 1);
+            model.addAttribute("numberOfCanceledAppointments", 2);
+            return "users/updateUserForm";
+        } else {
+            throw new org.springframework.security.access.AccessDeniedException("Unauthorized");
+        }
 
     }
 
     @PostMapping("/update/profile")
     public String processPatientUpdate() {
-        return "redirect:/Patients/" + "";
+        return "redirect:/doctors/" + "all";
+    }
+    
+    @PostMapping("/update/password")
+    public String processPatientPasswordUpdate(@Valid @ModelAttribute("passwordChange") ChangePasswordForm passwordChange, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.passwordChange", bindingResult);
+            redirectAttributes.addFlashAttribute("passwordChange", passwordChange);
+            return "redirect:/patients/" + passwordChange.getId();
+        }
+        userService.updateUserPassword(passwordChange);
+        return "redirect:/patients/" + passwordChange.getId();
     }
 
     @GetMapping("/new")

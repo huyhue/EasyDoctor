@@ -1,6 +1,7 @@
 package fpt.edu.vn.repository;
 
-import fpt.edu.vn.model.User;
+import fpt.edu.vn.model.Patient;
 
-public interface PatientRepository extends CommonUserRepository<User> {
+public interface PatientRepository extends CommonUserRepository<Patient> {
+	
 }
