@@ -78,3 +78,19 @@
 .doctors .member .social a + a {
   margin-left: 8px;
 }
+/*AVARTA
+*/
+#profileImage{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    cursor: pointer;
+    opacity: 0;
+    padding: 0px;
+    margin: 0px;
+} 
+/*
+*/

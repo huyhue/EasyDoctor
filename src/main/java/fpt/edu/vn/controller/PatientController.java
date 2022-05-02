@@ -2,6 +2,8 @@ package fpt.edu.vn.controller;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import fpt.edu.vn.component.ChangePasswordForm;
+import fpt.edu.vn.component.UserForm;
 import fpt.edu.vn.model.Patient;
+import fpt.edu.vn.model.User;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.EmailService;
 import fpt.edu.vn.service.UserService;
@@ -26,6 +30,7 @@ public class PatientController {
 
 	private final UserService userService;
 	private final EmailService emailService;
+	private static final Logger log = LoggerFactory.getLogger(PatientController.class);
 
 	public PatientController(UserService userService, EmailService emailService) {
 		super();
@@ -62,17 +67,14 @@ public class PatientController {
     }
 
     @PostMapping("/update/profile")
-    public String processPatientUpdate() {
-        return "redirect:/doctors/" + "all";
+    public String processPatientUpdate(@ModelAttribute("user") Patient user, Model model, BindingResult bindingResult) {
+    	log.info(">> Patient " );
+    	userService.updatePatient(user);
+        return "redirect:/patients/" + user.getId();
     }
     
     @PostMapping("/update/password")
-    public String processPatientPasswordUpdate(@Valid @ModelAttribute("passwordChange") ChangePasswordForm passwordChange, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.passwordChange", bindingResult);
-            redirectAttributes.addFlashAttribute("passwordChange", passwordChange);
-            return "redirect:/patients/" + passwordChange.getId();
-        }
+    public String processPatientPasswordUpdate(@ModelAttribute("passwordChange") ChangePasswordForm passwordChange) {
         userService.updateUserPassword(passwordChange);
         return "redirect:/patients/" + passwordChange.getId();
     }

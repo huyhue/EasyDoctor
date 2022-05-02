@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'account','My account')}"
 	xmlns:sec="http://www.w3.org/1999/xhtml">
+
 <body>
 	<div class="row p-3">
 		<div class="col-sm-3">
 			<!--left col-->
 			<div class="text-center">
-				<img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail"
-					alt="avatar">
+				<img th:src="@{${user.profileImage != ''}  ? ${user.ProfileImagePath} : 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png'}"
+					class="avatar img-circle img-thumbnail" alt="avatar" id="avatar">
+				<form id="uploadForm">
+					<input id="profileImage" name="profileImage" type="file" accept="image/png, image/jpeg" />
+				</form>
+				<p class="text-center">
+					<div id="successImage">file is too large</div>
+					<img src="/img/loader.gif" alt="loader" style="width: 150px;height: 120px;" id="loader">
+				</p>
 			</div>
+
 			</hr><br>
 
 			<div class="card text-center">
@@ -43,14 +52,14 @@
 					<a class="nav-link" id="newPassword-tab" data-toggle="tab" href="#newPassword" role="tab"
 						aria-controls="newPassword" aria-selected="false">Password</a>
 				</li>
-				<!--<li sec:authorize="hasRole('ROLE_PATIENT')" class="nav-item">
-					<a class="nav-link" id="newPassword-tab" data-toggle="tab" href="#newPassword" role="tab"
-						aria-controls="newPassword" aria-selected="false">Prescription</a>
-				</li>
 				<li sec:authorize="hasRole('ROLE_PATIENT')" class="nav-item">
-					<a class="nav-link" id="newPassword-tab" data-toggle="tab" href="#newPassword" role="tab"
-						aria-controls="newPassword" aria-selected="false">Payment</a>
-				</li>-->
+					<a class="nav-link" id="pathological-tab" data-toggle="tab" href="#pathological" role="tab"
+						aria-controls="pathological" aria-selected="false">Pathological</a>
+				</li>
+				<li sec:authorize="hasRole('ROLE_PATIENT') or hasRole('ROLE_DOCTOR')" class="nav-item">
+					<a class="nav-link" id="payment-tab" data-toggle="tab" href="#payment" role="tab"
+						aria-controls="payment" aria-selected="false">Payment</a>
+				</li>
 
 			</ul>
 
@@ -83,21 +92,31 @@
 						</div>
 						<div class="form-row">
 							<div class="form-group col-md-6">
-								<label for="startPracticeDate">Nickname</label>
+								<label for="startPracticeDate">Fullname</label>
 								<input type="text" class="form-control"
-									th:classappend="${#fields.hasErrors('gender') ? 'is-invalid' :''}"
-									th:field="*{gender}">
-								<div th:if="${#fields.hasErrors('gender')}" class="invalid-feedback">
-									<p th:errors="*{gender}"></p>
+									th:classappend="${#fields.hasErrors('fullname') ? 'is-invalid' :''}"
+									th:field="*{fullname}">
+								<div th:if="${#fields.hasErrors('fullname')}" class="invalid-feedback">
+									<p th:errors="*{fullname}"></p>
 								</div>
 							</div>
 							<div class="form-group col-md-6">
-								<label for="gender">Gender</label>
-								<input type="text" class="form-control"
+								<label for="gender">Gender</label><br>
+								<!--<input type="text" class="form-control"
 									th:classappend="${#fields.hasErrors('gender') ? 'is-invalid' :''}"
 									th:field="*{gender}">
 								<div th:if="${#fields.hasErrors('gender')}" class="invalid-feedback">
 									<p th:errors="*{gender}"></p>
+								</div>-->
+								<div class="form-check form-check-inline">
+									<input name="gender" type="radio" value="MALE" class="form-check-input" id="radio1"
+										th:field="*{gender}" />
+									<label class="form-chek-label" for="radio1">Male</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input name="gender" type="radio" value="FEMALE" class="form-check-input"
+										id="radio2" th:field="*{gender}" /> <label class="form-chek-label"
+										for="radio2">Female</label>
 								</div>
 							</div>
 						</div>
@@ -107,18 +126,17 @@
 								<label for="mobile">Mobile</label>
 								<input type="text" class="form-control"
 									th:classappend="${#fields.hasErrors('mobile') ? 'is-invalid' :''}"
-									th:field="*{mobile}">
+									th:field="*{mobile}" placeholder="0362529468">
 								<div th:if="${#fields.hasErrors('mobile')}" class="invalid-feedback">
 									<p th:errors="*{mobile}"></p>
 								</div>
 							</div>
 							<div class="form-group col-md-6">
-								<label for="address">Address</label>
+								<label for="age">Age</label>
 								<input type="text" class="form-control"
-									th:classappend="${#fields.hasErrors('address') ? 'is-invalid' :''}"
-									th:field="*{address}">
-								<div th:if="${#fields.hasErrors('address')}" class="invalid-feedback">
-									<p th:errors="*{address}"></p>
+									th:classappend="${#fields.hasErrors('age') ? 'is-invalid' :''}" th:field="*{age}">
+								<div th:if="${#fields.hasErrors('age')}" class="invalid-feedback">
+									<p th:errors="*{age}"></p>
 								</div>
 							</div>
 						</div>
@@ -129,7 +147,7 @@
 									<label for="specialty">Specialty</label>
 									<input type="text" class="form-control"
 										th:classappend="${#fields.hasErrors('specialty.name') ? 'is-invalid' :''}"
-										th:field="*{specialty.name}">
+										th:field="*{specialty.name}" readonly>
 									<div th:if="${#fields.hasErrors('specialty.name')}" class="invalid-feedback">
 										<p th:errors="*{specialty.name}"></p>
 									</div>
@@ -149,7 +167,7 @@
 									<label for="clinic.name">Clinic</label>
 									<input type="text" class="form-control"
 										th:classappend="${#fields.hasErrors('clinic.name') ? 'is-invalid' :''}"
-										th:field="*{clinic.name}">
+										th:field="*{clinic.name}" readonly>
 									<div th:if="${#fields.hasErrors('clinic.name')}" class="invalid-feedback">
 										<p th:errors="*{clinic.name}"></p>
 									</div>
@@ -164,21 +182,47 @@
 									</div>
 								</div>
 							</div>
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="clinic.name">Certification</label>
+									<input type="text" class="form-control"
+										th:classappend="${#fields.hasErrors('certification') ? 'is-invalid' :''}"
+										th:field="*{certification}">
+									<div th:if="${#fields.hasErrors('certification')}" class="invalid-feedback">
+										<p th:errors="*{certification}"></p>
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="clinic.name">Certification</label><br>
+									<div class="form-check form-check-inline">
+										<input type="checkbox" value="Cricket" class="form-check-input" id="check1" />
+										<label class="form-check-label" for="check1">Cricket</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input type="checkbox" value="Football" class="form-check-input" id="check2" />
+										<label class="form-check-label" for="check2">Football</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input type="checkbox" value="Other" class="form-check-input" id="check3" />
+										<label class="form-check-label" for="check3">Other</label>
+									</div>
+								</div>
+							</div>
 						</th:block>
 
 						<th:block th:if="${account_type =='patients'}">
 							<div class="form-row">
-								<div class="form-group col-md-6">
-									<label for="mobile">Mobile1</label>
+								<!--<div class="form-group col-md-6">
+									<label for="mobile">Other</label>
 									<input type="text" class="form-control"
 										th:classappend="${#fields.hasErrors('mobile') ? 'is-invalid' :''}"
 										th:field="*{mobile}">
 									<div th:if="${#fields.hasErrors('mobile')}" class="invalid-feedback">
 										<p th:errors="*{mobile}"></p>
 									</div>
-								</div>
+								</div>-->
 								<div class="form-group col-md-6">
-									<label for="address">Address1</label>
+									<label for="address">Address</label>
 									<input type="text" class="form-control"
 										th:classappend="${#fields.hasErrors('address') ? 'is-invalid' :''}"
 										th:field="*{address}">
@@ -194,16 +238,14 @@
 				</div>
 
 				<div class="tab-pane fade pt-3" id="newPassword" role="tabpanel" aria-labelledby="newPassword-tab">
-
 					<form th:action="@{${formActionPassword}}" th:object="${passwordChange}" method="POST">
 						<input type="hidden" th:field="*{id}">
-
 						<div class="form-row">
 							<div class="form-group col-md-6">
 								<label for="currentPassword">Current password</label>
 								<input type="password" class="form-control"
 									th:classappend="${#fields.hasErrors('currentPassword') ? 'is-invalid' :''}"
-									th:field="*{currentPassword}">
+									th:value="*{currentPassword}" readonly>
 								<div th:if="${#fields.hasErrors('currentPassword')}" class="invalid-feedback">
 									<p th:errors="*{currentPassword}"></p>
 								</div>
@@ -236,8 +278,45 @@
 					</form>
 				</div>
 
-			</div>
+				<div class="tab-pane fade pt-3" id="pathological" role="tabpanel" aria-labelledby="pathological-tab">
+					<form method="POST">
 
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label for="">Bạn có tiền sử bệnh án nào không ?</label>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="">Bạn có đang dùng thuốc nào không ?</label>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="">Bạn có bị dị ứng không ?</label>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="">Các vấn đề khác ?</label>
+							</div>
+						</div>
+						<button type="submit" class="btn btn-primary">Add Info</button>
+					</form>
+				</div>
+
+				<div class="tab-pane fade pt-3" id="payment" role="tabpanel" aria-labelledby="payment-tab">
+					<form method="POST">
+
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label for="currentPassword">Payment banking</label>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label for="currentPassword">VNPay Online</label>
+							</div>
+						</div>
+						<button type="submit" class="btn btn-primary">Set</button>
+					</form>
+				</div>
+
+			</div>
 		</div>
 
 

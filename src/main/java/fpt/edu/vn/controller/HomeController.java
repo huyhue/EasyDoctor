@@ -1,17 +1,34 @@
 package fpt.edu.vn.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Date;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.thymeleaf.context.Context;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.User;
@@ -65,9 +82,9 @@ public class HomeController {
 		} else {
 			user.setConfirmationToken(UUID.randomUUID().toString());
 			userService.savePatientRegister(user);
-			model.addAttribute("confirmationMessage", "You register successful.");
+			model.addAttribute("successMessage", "You registered successful.");
 		}
-		return "users/registerPatient";
+		return "users/login";
 	}
 	
 	@RequestMapping(value = "/forgot", method = RequestMethod.GET)
@@ -77,7 +94,6 @@ public class HomeController {
 	
 	@RequestMapping(value = "/forgot", method = RequestMethod.POST)
 	public String resetForgotPassword(@ModelAttribute("user") User user, Model model) {
-//		do something
 		User existUser = userService.findByEmail(user.getEmail());
 		if (existUser != null) {
 			emailService.sendConfirmRegistration(existUser);
@@ -108,7 +124,6 @@ public class HomeController {
 	// Process confirmation link
 	@RequestMapping(value = "/register/confirm", method = RequestMethod.POST)
 	public String confirmRegistration(Model model, @ModelAttribute("user") User user) {
-
 		User userDR = userService.findByConfirmationToken(user.getConfirmationToken());
 		if(userDR != null) {
 			userService.savePasswordByUser(user);
@@ -118,6 +133,49 @@ public class HomeController {
 		}
 		return "users/login";
 	}
+	
+	@PostMapping("/image/saveImageProfile")
+    public @ResponseBody
+    ResponseEntity<?> saveImageProfile(@AuthenticationPrincipal CustomUserDetails currentUser, final @RequestParam("profileImage") MultipartFile file) throws IOException {
+		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+			if (file.getContentType().equalsIgnoreCase("image/jpg")
+					|| file.getContentType().equalsIgnoreCase("image/jpeg")
+					|| file.getContentType().equalsIgnoreCase("image/png")) {
+				double fileSize = file.getSize();
+
+				double kl = (fileSize / 1024);
+				double mb = (kl / 1024);
+				if (mb < 5) {
+					String uploadDir = "./uploads/" + currentUser.getEmail();
+					Path uploadPath = Paths.get(uploadDir);
+					String oldFileLocation = uploadDir + "/" + currentUser.getProfileImage();
+					Path getImage = Paths.get(oldFileLocation);
+
+					if (Files.exists(getImage)) {
+						Files.delete(getImage);
+						System.out.println("Files deleted");
+					}
+
+					if (!Files.exists(uploadPath)) {
+						Files.createDirectories(uploadPath);
+					}
+					try (InputStream inputStream = file.getInputStream()) {
+						String newFileName = System.currentTimeMillis() + "_" + fileName;
+						userService.updateImage(currentUser.getId(), newFileName);
+						currentUser.setProfileImage(newFileName);
+						Path filePath = uploadPath.resolve(newFileName).normalize();
+						Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+					} catch (IOException e) {
+						throw new IOException("Error in uploading File!");
+					}
+				} else {
+					return new ResponseEntity<>("file is too large", HttpStatus.BAD_REQUEST);
+				}
+			} else {
+				return new ResponseEntity<>("Please enter a valid image file", HttpStatus.BAD_REQUEST);
+			}
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 
 	@GetMapping("/access-denied")
 	public String showAccessDeniedPage() {

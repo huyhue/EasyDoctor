@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import fpt.edu.vn.component.ChangePasswordForm;
+import fpt.edu.vn.component.UserForm;
+import fpt.edu.vn.model.Doctor;
+import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.EmailService;
@@ -43,9 +46,10 @@ public class DoctorController {
 	
 	@GetMapping("/{id}")
     public String showDoctorDetails(@PathVariable("id") int doctorId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
+		Doctor doctor = userService.getDoctorById(doctorId);
 		if (currentUser.getId() == doctorId || currentUser.hasRole("ROLE_ADMIN")) {
             if (!model.containsAttribute("user")) {
-                model.addAttribute("user", userService.getDoctorById(doctorId));
+                model.addAttribute("user", doctor);
             }
             if (!model.containsAttribute("passwordChange")) {
                 model.addAttribute("passwordChange", new ChangePasswordForm(doctorId));
@@ -62,17 +66,16 @@ public class DoctorController {
     }
 
     @PostMapping("/update/profile")
-    public String processDoctorUpdate() {
-        return "redirect:/patients/" + "all";
+    public String processDoctorUpdate(@ModelAttribute("user") Doctor user, BindingResult bindingResult) {
+//    	if (bindingResult.hasErrors()) {
+//			return "redirect:/doctors/" + user.getId();
+//		}
+    	userService.updateDoctor(user);
+        return "redirect:/doctors/" + user.getId();
     }
     
     @PostMapping("/update/password")
-    public String processProviderPasswordUpate(@Valid @ModelAttribute("passwordChange") ChangePasswordForm passwordChange, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.passwordChange", bindingResult);
-            redirectAttributes.addFlashAttribute("passwordChange", passwordChange);
-            return "redirect:/doctors/" + passwordChange.getId();
-        }
+    public String processProviderPasswordUpate(@ModelAttribute("passwordChange") ChangePasswordForm passwordChange, BindingResult bindingResult) {
         userService.updateUserPassword(passwordChange);
         return "redirect:/doctors/" + passwordChange.getId();
     }

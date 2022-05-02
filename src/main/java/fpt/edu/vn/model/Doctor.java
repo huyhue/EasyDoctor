@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import fpt.edu.vn.component.UserForm;
+
 
 @Entity
 @Table(name = "doctors")
@@ -12,6 +14,8 @@ public class Doctor extends User {
 	private String description;
 	
 	private Date startPracticeDate;
+	
+    private String certification;
 	
 	@OneToOne
     @JoinColumn(name = "id_specialty")
@@ -23,6 +27,12 @@ public class Doctor extends User {
 	
     public Doctor() {
     }
+
+	@Override
+	public void update(UserForm updateData) {
+		super.update(updateData);
+		this.setCertification(updateData.getCertification());
+	}
 
 	public String getDescription() {
 		return description;
@@ -55,6 +65,14 @@ public class Doctor extends User {
 
 	public void setSpecialty(Specialty specialty) {
 		this.specialty = specialty;
+	}
+
+	public String getCertification() {
+		return certification;
+	}
+
+	public void setCertification(String certification) {
+		this.certification = certification;
 	}
 
 }

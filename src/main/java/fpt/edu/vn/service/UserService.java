@@ -19,11 +19,12 @@ public interface UserService {
 	Patient getPatientById(int userId);
 	
 	void updateUserPassword(ChangePasswordForm passwordChangeForm);
+	void updateImage(int id, String fileImage);
+	void updatePatient(Patient patient);
+	void updateDoctor(Doctor doctor);
 	
 	void savePasswordByUser(User user);
 	void savePatientRegister(Patient userRE);
-	
-	Boolean checkUserExists(String email, String username);
 	
 	List<Doctor> getAllDoctors();
 	List<Doctor> getAllDoctorsByPatient();

@@ -13,8 +13,6 @@ public class Specialty{
 
     private String description;
     
-//	@OneToOne(mappedBy = "doctorSpecialty")
-    
     @OneToOne(mappedBy = "specialty", cascade = {CascadeType.ALL})
     private Doctor doctor;
 
@@ -36,13 +34,13 @@ public class Specialty{
         this.description = description;
     }
 
-//	public int getId() {
-//		return id;
-//	}
-//
-//	public void setId(int id) {
-//		this.id = id;
-//	}
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public Doctor getDoctor() {
 		return doctor;

@@ -21,13 +21,15 @@ public class CustomUserDetails implements UserDetails {
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
     private String email;
+    private String profileImage;
     private Integer id;
 
-    public CustomUserDetails(Integer id, String userName, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public CustomUserDetails(Integer id, String userName, String email, String password,String profileImage, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.userName = userName;
         this.email = email;
         this.password = password;
+        this.profileImage = profileImage;
         this.authorities = authorities;
     }
 
@@ -40,6 +42,7 @@ public class CustomUserDetails implements UserDetails {
                 user.getUserName(),
                 user.getEmail(),
                 user.getPassword(),
+                user.getProfileImage(),
                 authorities
         );
     }
@@ -87,7 +90,15 @@ public class CustomUserDetails implements UserDetails {
         return id;
     }
 
-    public boolean hasRole(String roleName) {
+    public String getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
+	}
+
+	public boolean hasRole(String roleName) {
         for (GrantedAuthority grantedAuthority : authorities) {
             if (grantedAuthority.getAuthority().equals(roleName)) {
                 return true;
