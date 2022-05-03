@@ -28,10 +28,13 @@ public class AdminController {
 		this.emailService = emailService;
 	}
 
-	@GetMapping("/list")
-	public String showHome(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
-//		model.addAttribute("user", userService.getUserById(currentUser.getId()));
-		return "doctors/doctorList";
+	@GetMapping("/home")
+	public String showHome(Model model) {
+		model.addAttribute("totalUniversity", 5);
+		model.addAttribute("totalContact", 5);
+		model.addAttribute("totalPost",5);
+		model.addAttribute("totalUrl", 5);
+		return "home";
 	}
 
 	
