@@ -1,11 +1,10 @@
 package fpt.edu.vn.model;
 
 import java.util.Date;
-
+import java.util.List;
 import javax.persistence.*;
 
 import fpt.edu.vn.component.UserForm;
-
 
 @Entity
 @Table(name = "doctors")
@@ -24,6 +23,17 @@ public class Doctor extends User {
 	@ManyToOne
     @JoinColumn(name = "id_clinic")
     private Clinic clinic;
+	
+//	Booking doctor
+	@OneToMany(mappedBy = "doctor")
+    private List<Appointment> appointments;
+
+    @ManyToMany
+    @JoinTable(name = "works_doctors", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_work"))
+    private List<Work> works;
+
+    @OneToOne(mappedBy = "doctor", cascade = {CascadeType.ALL})
+    private WorkingPlan workingPlan;
 	
     public Doctor() {
     }
