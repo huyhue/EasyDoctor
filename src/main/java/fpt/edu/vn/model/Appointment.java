@@ -44,7 +44,7 @@ public class Appointment extends BaseEntity implements Comparable<Appointment> {
 
     @ManyToOne
     @JoinColumn(name = "id_work")
-    private Work work;
+    private Packages work;
 
     @OneToMany(mappedBy = "appointment")
     private List<ChatMessage> chatMessages;
@@ -59,7 +59,7 @@ public class Appointment extends BaseEntity implements Comparable<Appointment> {
     public Appointment() {
     }
 
-    public Appointment(LocalDateTime start, LocalDateTime end, Patient patient, Doctor doctor, Work work) {
+    public Appointment(LocalDateTime start, LocalDateTime end, Patient patient, Doctor doctor, Packages work) {
         this.start = start;
         this.end = end;
         this.patient = patient;
@@ -104,11 +104,11 @@ public class Appointment extends BaseEntity implements Comparable<Appointment> {
 		this.doctor = doctor;
 	}
 
-	public Work getWork() {
+	public Packages getWork() {
         return work;
     }
 
-    public void setWork(Work work) {
+    public void setWork(Packages work) {
         this.work = work;
     }
 

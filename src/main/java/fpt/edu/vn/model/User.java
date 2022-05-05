@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import fpt.edu.vn.component.UserForm;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -43,6 +44,9 @@ public class User extends BaseEntity {
 
 	@Column(name = "confirmation_token")
 	private String confirmationToken;
+	
+	@OneToMany(mappedBy = "user")
+    private List<Notification> notifications;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
@@ -177,6 +181,14 @@ public class User extends BaseEntity {
 
 	public void setProfileImage(String profileImage) {
 		this.profileImage = profileImage;
+	}
+
+	public List<Notification> getNotifications() {
+		return notifications;
+	}
+
+	public void setNotifications(List<Notification> notifications) {
+		this.notifications = notifications;
 	}
 
 	@Transient

@@ -29,8 +29,8 @@ public class Doctor extends User {
     private List<Appointment> appointments;
 
     @ManyToMany
-    @JoinTable(name = "works_doctors", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_work"))
-    private List<Work> works;
+    @JoinTable(name = "packages_doctors", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_package"))
+    private List<Packages> packages;
 
     @OneToOne(mappedBy = "doctor", cascade = {CascadeType.ALL})
     private WorkingPlan workingPlan;
@@ -83,6 +83,30 @@ public class Doctor extends User {
 
 	public void setCertification(String certification) {
 		this.certification = certification;
+	}
+
+	public List<Appointment> getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
+	}
+
+	public List<Packages> getPackages() {
+		return packages;
+	}
+
+	public void setPackages(List<Packages> packages) {
+		this.packages = packages;
+	}
+
+	public WorkingPlan getWorkingPlan() {
+		return workingPlan;
+	}
+
+	public void setWorkingPlan(WorkingPlan workingPlan) {
+		this.workingPlan = workingPlan;
 	}
 
 }

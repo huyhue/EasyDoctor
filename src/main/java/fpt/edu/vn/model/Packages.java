@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "works")
-public class Work extends BaseEntity {
+@Table(name = "packages")
+public class Packages extends BaseEntity {
 
     @Column(name = "name")
     private String name;
@@ -26,10 +26,10 @@ public class Work extends BaseEntity {
     private String targetCustomer;
 
     @ManyToMany
-    @JoinTable(name = "works_providers", joinColumns = @JoinColumn(name = "id_work"), inverseJoinColumns = @JoinColumn(name = "id_user"))
-    private List<User> providers;
+    @JoinTable(name = "packages_docters", joinColumns = @JoinColumn(name = "id_package"), inverseJoinColumns = @JoinColumn(name = "id_user"))
+    private List<User> docters;
 
-    public Work() {
+    public Packages() {
     }
 
     public String getName() {
@@ -64,15 +64,15 @@ public class Work extends BaseEntity {
         this.duration = duration;
     }
 
-    public List<User> getProviders() {
-        return providers;
-    }
+    public List<User> getDocters() {
+		return docters;
+	}
 
-    public void setProviders(List<User> providers) {
-        this.providers = providers;
-    }
+	public void setDocters(List<User> docters) {
+		this.docters = docters;
+	}
 
-    public boolean getEditable() {
+	public boolean getEditable() {
         return editable;
     }
 
@@ -91,8 +91,8 @@ public class Work extends BaseEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Work)) return false;
-        Work work = (Work) o;
+        if (!(o instanceof Packages)) return false;
+        Packages work = (Packages) o;
         return super.getId().equals(work.getId());
     }
 
