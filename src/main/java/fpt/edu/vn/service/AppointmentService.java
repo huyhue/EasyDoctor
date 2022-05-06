@@ -10,5 +10,6 @@ import fpt.edu.vn.model.ChatMessage;
 import fpt.edu.vn.model.Packages;
 
 public interface AppointmentService {
-    
+	List<Appointment> getAllAppointments();
+	List<Appointment> getAppointmentByDoctorId(int doctorId);
 }

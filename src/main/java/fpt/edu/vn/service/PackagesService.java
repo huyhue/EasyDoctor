@@ -5,5 +5,6 @@ import java.util.List;
 import fpt.edu.vn.model.Packages;
 
 public interface PackagesService {
-	
+	List<Packages> getPackagesByDoctorId(int docterId);
+	List<Packages> getAllPackages();
 }

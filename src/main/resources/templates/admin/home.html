@@ -1,18 +1,14 @@
 <!DOCTYPE html>
-
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org" 
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="fragments/base">
-
-
-<div layout:fragment="adminContent">
+	th:replace="~{fragments/base :: base (~{::body},'Admin Home')}">
+<body>
+<div>
 	<div class="content-header">
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h4 class="m-0">DashBoard</h4>
+					<h4 class="m-0">DashBoard hello</h4>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
@@ -142,17 +138,14 @@
 </div>
 
 <div layout:fragment="script">
-
 	<script type="text/javascript">
 		$(document)
 				.ready(
 						function() {
 					 $("#nav-linkDashboard").addClass("active");
 						});
-		
-		</script>
-						
-
+		</script>			
 </div>
 
-<div layout:fragment="css"></div>
+</body>
+</html>

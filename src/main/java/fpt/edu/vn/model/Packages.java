@@ -17,17 +17,17 @@ public class Packages extends BaseEntity {
     private double price;
 
     @Column(name = "duration")
-    private int duration;
+    private Integer duration;
 
-    @Column(name = "editable")
+    @Column(name = "editable", columnDefinition = "boolean default false")
     private boolean editable;
 
     @Column(name = "target")
     private String targetCustomer;
 
     @ManyToMany
-    @JoinTable(name = "packages_docters", joinColumns = @JoinColumn(name = "id_package"), inverseJoinColumns = @JoinColumn(name = "id_user"))
-    private List<User> docters;
+    @JoinTable(name = "packages_doctors", joinColumns = @JoinColumn(name = "id_packages"), inverseJoinColumns = @JoinColumn(name = "id_user"))
+    private List<User> doctors;
 
     public Packages() {
     }
@@ -64,12 +64,12 @@ public class Packages extends BaseEntity {
         this.duration = duration;
     }
 
-    public List<User> getDocters() {
-		return docters;
+	public List<User> getDoctors() {
+		return doctors;
 	}
 
-	public void setDocters(List<User> docters) {
-		this.docters = docters;
+	public void setDoctors(List<User> doctors) {
+		this.doctors = doctors;
 	}
 
 	public boolean getEditable() {
@@ -88,7 +88,11 @@ public class Packages extends BaseEntity {
         this.targetCustomer = targetCustomer;
     }
 
-    @Override
+    public void setDuration(Integer duration) {
+		this.duration = duration;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Packages)) return false;

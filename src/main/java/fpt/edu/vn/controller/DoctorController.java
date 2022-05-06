@@ -23,6 +23,7 @@ import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.EmailService;
+import fpt.edu.vn.service.PackagesService;
 import fpt.edu.vn.service.UserService;
 
 @Controller
@@ -31,13 +32,21 @@ public class DoctorController {
 
 	private final UserService userService;
 	private final EmailService emailService;
+	private final PackagesService packagesService;
 
-	public DoctorController(UserService userService, EmailService emailService) {
+	public DoctorController(UserService userService, EmailService emailService, PackagesService packagesService) {
 		super();
 		this.userService = userService;
 		this.emailService = emailService;
+		this.packagesService = packagesService;
 	}
 
+	@GetMapping("/home")
+	public String showHomeDoctors(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
+		model.addAttribute("user", userService.getUserById(currentUser.getId()));
+		return "doctors/home";
+	}
+	
 	@GetMapping("/all")
 	public String showAllDoctors(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
 		model.addAttribute("doctors", userService.getAllDoctorsByPatient());
@@ -55,6 +64,7 @@ public class DoctorController {
                 model.addAttribute("passwordChange", new ChangePasswordForm(doctorId));
             }
             model.addAttribute("account_type", "doctors");
+            model.addAttribute("allPackages", packagesService.getAllPackages());
             model.addAttribute("formActionProfile", "/doctors/update/profile");
             model.addAttribute("formActionPassword", "/doctors/update/password");
             model.addAttribute("numberOfScheduledAppointments", 1);

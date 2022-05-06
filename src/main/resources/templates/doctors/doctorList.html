@@ -17,13 +17,14 @@
             <div class="member d-flex align-items-start">
               <div class="pic"><img src="/img/doctors/doctors-1.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4> [[${doctor.userName}]]</h4>
+                <h4> [[${doctor.fullname}]]</h4>
                 <span>[[${doctor.getClinic().getName()}]]</span>
                 <p>[[${doctor.getSpecialty().getName()}]]</p>
-                 <a href=""><i class="fa-solid fa-books-medical"></i></a>
-                 
+                <span>[[${doctor.description}]]</span>
+                 <!--<small class="text-muted"
+                               th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(doctor.startPracticeDate) + 1} years|"></small>-->
                 <div class="social">
-                  <a href=""><i class="fas fa-book-medical"></i></a>
+                  <a th:href="@{'/appointments/new/' + ${doctor.id}}"><i class="fas fa-book-medical"></i></a>
                   <a href=""><i class="ri-facebook-fill"></i></a>
                   <a href=""><i class="ri-instagram-fill"></i></a>
                   <a href=""> <i class="ri-linkedin-box-fill"></i> </a>

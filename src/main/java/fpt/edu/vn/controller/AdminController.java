@@ -34,7 +34,7 @@ public class AdminController {
 		model.addAttribute("totalContact", 5);
 		model.addAttribute("totalPost",5);
 		model.addAttribute("totalUrl", 5);
-		return "home";
+		return "admin/home";
 	}
 
 	

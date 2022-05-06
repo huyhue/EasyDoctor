@@ -29,7 +29,7 @@ public class Doctor extends User {
     private List<Appointment> appointments;
 
     @ManyToMany
-    @JoinTable(name = "packages_doctors", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_package"))
+    @JoinTable(name = "packages_doctors", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_packages"))
     private List<Packages> packages;
 
     @OneToOne(mappedBy = "doctor", cascade = {CascadeType.ALL})

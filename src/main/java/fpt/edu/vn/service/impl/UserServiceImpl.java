@@ -71,8 +71,11 @@ public class UserServiceImpl implements UserService {
 		d.setFullname(doctor.getFullname());
 		d.setMobile(doctor.getMobile());
 		d.setAge(doctor.getAge());
-		d.setGender(Gender.MALE);
+		d.setGender(doctor.getGender());
+		d.setStartPracticeDate(doctor.getStartPracticeDate());
+		d.setDescription(doctor.getDescription());
 		d.setCertification(doctor.getCertification());
+		d.setPackages(doctor.getPackages());
 		doctorRepository.save(d);
 	}
 

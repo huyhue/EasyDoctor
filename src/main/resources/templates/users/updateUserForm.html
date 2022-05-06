@@ -13,8 +13,8 @@
 					<input id="profileImage" name="profileImage" type="file" accept="image/png, image/jpeg" />
 				</form>
 				<p class="text-center">
-					<div id="successImage">file is too large</div>
-					<img src="/img/loader.gif" alt="loader" style="width: 150px;height: 120px;" id="loader">
+				<div id="successImage">file is too large</div>
+				<img src="/img/loader.gif" alt="loader" style="width: 150px;height: 120px;" id="loader">
 				</p>
 			</div>
 
@@ -84,7 +84,7 @@
 								<label for="email">Email</label>
 								<input type="text" class="form-control"
 									th:classappend="${#fields.hasErrors('email') ? 'is-invalid' :''}"
-									th:field="*{email}">
+									th:field="*{email}" readonly>
 								<div th:if="${#fields.hasErrors('email')}" class="invalid-feedback">
 									<p th:errors="*{email}"></p>
 								</div>
@@ -102,19 +102,13 @@
 							</div>
 							<div class="form-group col-md-6">
 								<label for="gender">Gender</label><br>
-								<!--<input type="text" class="form-control"
-									th:classappend="${#fields.hasErrors('gender') ? 'is-invalid' :''}"
-									th:field="*{gender}">
-								<div th:if="${#fields.hasErrors('gender')}" class="invalid-feedback">
-									<p th:errors="*{gender}"></p>
-								</div>-->
 								<div class="form-check form-check-inline">
-									<input name="gender" type="radio" value="MALE" class="form-check-input" id="radio1"
+									<input name="gender" type="radio"  th:value="MALE" class="form-check-input" id="radio1"
 										th:field="*{gender}" />
 									<label class="form-chek-label" for="radio1">Male</label>
 								</div>
 								<div class="form-check form-check-inline">
-									<input name="gender" type="radio" value="FEMALE" class="form-check-input"
+									<input name="gender" type="radio" th:value="FEMALE" class="form-check-input"
 										id="radio2" th:field="*{gender}" /> <label class="form-chek-label"
 										for="radio2">Female</label>
 								</div>
@@ -126,7 +120,7 @@
 								<label for="mobile">Mobile</label>
 								<input type="text" class="form-control"
 									th:classappend="${#fields.hasErrors('mobile') ? 'is-invalid' :''}"
-									th:field="*{mobile}" placeholder="0362529468">
+									th:field="*{mobile}">
 								<div th:if="${#fields.hasErrors('mobile')}" class="invalid-feedback">
 									<p th:errors="*{mobile}"></p>
 								</div>
@@ -154,7 +148,7 @@
 								</div>
 								<div class="form-group col-md-6">
 									<label for="startPracticeDate">Start Practice Date</label>
-									<input type="text" class="form-control"
+									<input type="date" class="form-control"
 										th:classappend="${#fields.hasErrors('startPracticeDate') ? 'is-invalid' :''}"
 										th:field="*{startPracticeDate}">
 									<div th:if="${#fields.hasErrors('startPracticeDate')}" class="invalid-feedback">
@@ -193,19 +187,13 @@
 									</div>
 								</div>
 								<div class="form-group col-md-6">
-									<label for="clinic.name">Certification</label><br>
-									<div class="form-check form-check-inline">
-										<input type="checkbox" value="Cricket" class="form-check-input" id="check1" />
-										<label class="form-check-label" for="check1">Cricket</label>
-									</div>
-									<div class="form-check form-check-inline">
-										<input type="checkbox" value="Football" class="form-check-input" id="check2" />
-										<label class="form-check-label" for="check2">Football</label>
-									</div>
-									<div class="form-check form-check-inline">
-										<input type="checkbox" value="Other" class="form-check-input" id="check3" />
-										<label class="form-check-label" for="check3">Other</label>
-									</div>
+									<label>Packages</label><br>
+									<ul>
+										<li th:each="packages : ${allPackages}">
+											<input type="checkbox" th:field="*{packages}" th:value="${packages.id}" />
+											<label th:for="${#ids.prev('packages')}" th:text="${packages.name}">Name</label>
+										</li>
+									</ul>
 								</div>
 							</div>
 						</th:block>

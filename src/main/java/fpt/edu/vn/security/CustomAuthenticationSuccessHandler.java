@@ -33,7 +33,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		if (currentUser.hasRole("ROLE_PATIENT")) {
 			response.sendRedirect(request.getContextPath() + "/doctors/all");
 		} else if (currentUser.hasRole("ROLE_DOCTOR")) {
-			response.sendRedirect(request.getContextPath() + "/patients/all");
+			response.sendRedirect(request.getContextPath() + "/doctors/home");
 		} else if (currentUser.hasRole("ROLE_ADMIN")){
 			response.sendRedirect(request.getContextPath() + "/admin/home");
 		}

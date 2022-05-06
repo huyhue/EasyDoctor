@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.AppointmentService;
-import fpt.edu.vn.service.ExchangeService;
 import fpt.edu.vn.service.PackagesService;
 import fpt.edu.vn.service.UserService;
 
@@ -18,23 +17,24 @@ import java.time.LocalDateTime;
 @RequestMapping("/appointments")
 public class AppointmentController {
 
-    private static final String REJECTION_CONFIRMATION_VIEW = "appointments/rejectionConfirmation";
+	private static final String REJECTION_CONFIRMATION_VIEW = "appointments/rejectionConfirmation";
 
-    private final PackagesService workService;
-    private final UserService userService;
-    private final AppointmentService appointmentService;
-    private final ExchangeService exchangeService;
+	private final PackagesService packagesService;
+	private final UserService userService;
+	private final AppointmentService appointmentService;
+//    private final ExchangeService exchangeService;
+	
+	public AppointmentController(PackagesService packagesService, UserService userService,
+			AppointmentService appointmentService) {
+		super();
+		this.packagesService = packagesService;
+		this.userService = userService;
+		this.appointmentService = appointmentService;
+	}
 
-    public AppointmentController(PackagesService workService, UserService userService, AppointmentService appointmentService, ExchangeService exchangeService) {
-        this.workService = workService;
-        this.userService = userService;
-        this.appointmentService = appointmentService;
-        this.exchangeService = exchangeService;
-    }
-
-    @GetMapping("/all")
-    public String showAllAppointments(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
-        String appointmentsModelName = "appointments";
+	@GetMapping("/all")
+	public String showAllAppointments(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
+		String appointmentsModelName = "appointments";
 
 //        if (currentUser.hasRole("ROLE_CUSTOMER")) {
 //            model.addAttribute(appointmentsModelName, appointmentService.getAppointmentByCustomerId(currentUser.getId()));
@@ -43,10 +43,17 @@ public class AppointmentController {
 //        } else if (currentUser.hasRole("ROLE_ADMIN")) {
 //            model.addAttribute(appointmentsModelName, appointmentService.getAllAppointments());
 //        }
-        return "appointments/listAppointments";
+		return "appointments/listAppointments";
+	}
+	
+    @GetMapping("/new/{doctorId}")
+    public String selectPackages(@PathVariable("doctorId") int doctorId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
+    	model.addAttribute("packages", packagesService.getPackagesByDoctorId(doctorId));
+    	model.addAttribute(doctorId);
+        return "appointments/selectPackages";
     }
 
-    @GetMapping("/{id}")
+//	@GetMapping("/{id}")
 //    public String showAppointmentDetail(@PathVariable("id") int appointmentId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
 //        Appointment appointment = appointmentService.getAppointmentByIdWithAuthorization(appointmentId);
 //        model.addAttribute("appointment", appointment);
@@ -65,7 +72,6 @@ public class AppointmentController {
 //        model.addAttribute("cancelNotAllowedReason", cancelNotAllowedReason);
 //        return "appointments/appointmentDetail";
 //    }
-
 
 //    @PostMapping("/reject")
 //    public String processAppointmentRejectionRequest(@RequestParam("appointmentId") int appointmentId, @AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
@@ -115,18 +121,9 @@ public class AppointmentController {
 //        }
 //        return "appointments/selectProvider";
 //    }
-//
-//    @GetMapping("/new/{providerId}")
-//    public String selectService(@PathVariable("providerId") int providerId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
-//        if (currentUser.hasRole("ROLE_CUSTOMER_RETAIL")) {
-//            model.addAttribute("works", workService.getWorksForRetailCustomerByProviderId(providerId));
-//        } else if (currentUser.hasRole("ROLE_CUSTOMER_CORPORATE")) {
-//            model.addAttribute("works", workService.getWorksForCorporateCustomerByProviderId(providerId));
-//        }
-//        model.addAttribute(providerId);
-//        return "appointments/selectService";
-//    }
-//
+
+
+
 //    @GetMapping("/new/{providerId}/{workId}")
 //    public String selectDate(@PathVariable("workId") int workId, @PathVariable("providerId") int providerId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
 //        if (workService.isWorkForCustomer(workId, currentUser.getId())) {
@@ -165,10 +162,9 @@ public class AppointmentController {
 //        return "redirect:/appointments/all";
 //    }
 
-
-    public static String formatDuration(Duration duration) {
-        long s = duration.getSeconds();
-        return String.format("%dh%02dm", s / 3600, (s % 3600) / 60);
-    }
+	public static String formatDuration(Duration duration) {
+		long s = duration.getSeconds();
+		return String.format("%dh%02dm", s / 3600, (s % 3600) / 60);
+	}
 
 }
