@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
-
 @Entity
 @Table(name = "appointments")
 @JsonSerialize(using = AppointmentSerializer.class)
@@ -43,8 +42,8 @@ public class Appointment extends BaseEntity implements Comparable<Appointment> {
     private Doctor doctor;
 
     @ManyToOne
-    @JoinColumn(name = "id_work")
-    private Packages work;
+    @JoinColumn(name = "id_packages")
+    private Packages packages;
 
     @OneToMany(mappedBy = "appointment")
     private List<ChatMessage> chatMessages;
@@ -59,12 +58,12 @@ public class Appointment extends BaseEntity implements Comparable<Appointment> {
     public Appointment() {
     }
 
-    public Appointment(LocalDateTime start, LocalDateTime end, Patient patient, Doctor doctor, Packages work) {
+    public Appointment(LocalDateTime start, LocalDateTime end, Patient patient, Doctor doctor, Packages packages) {
         this.start = start;
         this.end = end;
         this.patient = patient;
         this.doctor = doctor;
-        this.work = work;
+        this.packages = packages;
     }
 
     @Override
@@ -104,15 +103,15 @@ public class Appointment extends BaseEntity implements Comparable<Appointment> {
 		this.doctor = doctor;
 	}
 
-	public Packages getWork() {
-        return work;
-    }
+    public Packages getPackages() {
+		return packages;
+	}
 
-    public void setWork(Packages work) {
-        this.work = work;
-    }
+	public void setPackages(Packages packages) {
+		this.packages = packages;
+	}
 
-    public AppointmentStatus getStatus() {
+	public AppointmentStatus getStatus() {
         return status;
     }
 

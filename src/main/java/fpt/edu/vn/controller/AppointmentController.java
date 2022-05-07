@@ -52,6 +52,13 @@ public class AppointmentController {
     	model.addAttribute(doctorId);
         return "appointments/selectPackages";
     }
+    
+  @GetMapping("/new/{doctorId}/{packagesId}")
+  public String selectDate(@PathVariable("packagesId") int packagesId, @PathVariable("doctorId") int doctorId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
+      model.addAttribute(doctorId);
+      model.addAttribute("packagesId", packagesId);
+      return "appointments/selectDate";
+  }
 
 //	@GetMapping("/{id}")
 //    public String showAppointmentDetail(@PathVariable("id") int appointmentId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {

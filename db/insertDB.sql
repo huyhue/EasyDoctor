@@ -34,8 +34,21 @@ INSERT INTO `doctors` (description, start_practice_date, id_doctor, id_clinic, i
 
 INSERT INTO `packages` (id,duration,editable, description, name, price) VALUES
 ('1','60','1','Chăm sóc tùy nhu cầu bệnh nhân','Gói cơ bản', '500'),
-('2','60','1', 'Chăm sóc toàn diện sức khỏe bệnh nhân','Gói toàn diện', '1000')
+('2','60','1', 'Chăm sóc toàn diện sức khỏe bệnh nhân','Gói toàn diện', '1000'),
 ('3', '60', '1', 'Chăm sóc trọn gói trong vòng 6 tháng', 'Gói 6 tháng', '3200');
 
 INSERT INTO `packages_doctors` VALUES
  (1,2),(2,2);
+ 
+ INSERT INTO `working_plans` VALUES 
+ (2,
+ '{\"breaks\": [], \"workingHours\": {\"end\": [18, 0], \"start\": [6, 0]}, \"timePeroidsWithBreaksExcluded\": [{\"end\": [18, 0], \"start\": [6, 0]}]}',
+ '{\"breaks\": [], \"workingHours\": {\"end\": [18, 0], \"start\": [6, 0]}, \"timePeroidsWithBreaksExcluded\": [{\"end\": [18, 0], \"start\": [6, 0]}]}',
+ '{\"breaks\": [], \"workingHours\": {\"end\": [18, 0], \"start\": [6, 0]}, \"timePeroidsWithBreaksExcluded\": [{\"end\": [18, 0], \"start\": [6, 0]}]}',
+ '{\"breaks\": [], \"workingHours\": {\"end\": [18, 0], \"start\": [6, 0]}, \"timePeroidsWithBreaksExcluded\": [{\"end\": [18, 0], \"start\": [6, 0]}]}',
+ '{\"breaks\": [], \"workingHours\": {\"end\": [18, 0], \"start\": [6, 0]}, \"timePeroidsWithBreaksExcluded\": [{\"end\": [18, 0], \"start\": [6, 0]}]}',
+ '{\"breaks\": [], \"workingHours\": {\"end\": [18, 0], \"start\": [6, 0]}, \"timePeroidsWithBreaksExcluded\": [{\"end\": [18, 0], \"start\": [6, 0]}]}',
+ '{\"breaks\": [], \"workingHours\": {\"end\": [18, 0], \"start\": [6, 0]}, \"timePeroidsWithBreaksExcluded\": [{\"end\": [18, 0], \"start\": [6, 0]}]}'
+ );
+
+ 

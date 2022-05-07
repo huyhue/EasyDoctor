@@ -6,9 +6,9 @@ import java.time.LocalDateTime;
 
 public class AppointmentRegisterForm {
 
-    private int workId;
-    private int providerId;
-    private int customerId;
+    private int packagesId;
+    private int doctorId;
+    private int patientId;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime start;
@@ -19,30 +19,38 @@ public class AppointmentRegisterForm {
     public AppointmentRegisterForm() {
     }
 
-    public AppointmentRegisterForm(int workId, int providerId, LocalDateTime start, LocalDateTime end) {
-        this.workId = workId;
-        this.providerId = providerId;
+    public AppointmentRegisterForm(int packagesId, int doctorId, LocalDateTime start, LocalDateTime end) {
+        this.packagesId = packagesId;
+        this.doctorId = doctorId;
         this.start = start;
         this.end = end;
     }
 
-    public int getWorkId() {
-        return workId;
-    }
+    public int getPackagesId() {
+		return packagesId;
+	}
 
-    public void setWorkId(int workId) {
-        this.workId = workId;
-    }
+	public void setPackagesId(int packagesId) {
+		this.packagesId = packagesId;
+	}
 
-    public int getProviderId() {
-        return providerId;
-    }
+	public int getDoctorId() {
+		return doctorId;
+	}
 
-    public void setProviderId(int providerId) {
-        this.providerId = providerId;
-    }
+	public void setDoctorId(int doctorId) {
+		this.doctorId = doctorId;
+	}
 
-    public LocalDateTime getStart() {
+	public int getPatientId() {
+		return patientId;
+	}
+
+	public void setPatientId(int patientId) {
+		this.patientId = patientId;
+	}
+
+	public LocalDateTime getStart() {
         return start;
     }
 
@@ -56,13 +64,5 @@ public class AppointmentRegisterForm {
 
     public void setEnd(LocalDateTime end) {
         this.end = end;
-    }
-
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
     }
 }

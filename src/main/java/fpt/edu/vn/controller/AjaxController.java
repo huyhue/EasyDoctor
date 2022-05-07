@@ -2,6 +2,7 @@ package fpt.edu.vn.controller;
 
 import com.google.common.collect.Lists;
 
+import fpt.edu.vn.component.AppointmentRegisterForm;
 import fpt.edu.vn.model.Appointment;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.AppointmentService;
@@ -43,14 +44,14 @@ public class AjaxController {
 	}
 	
 	/// api/availableHours/2/2/2022-04-03
-//    @GetMapping("/availableHours/{doctorId}/{packagesId}/{date}")
-//    public List<AppointmentRegisterForm> getAvailableHours(@PathVariable("doctorId") int doctorId, @PathVariable("packagesId") int packagesId, @PathVariable("date") String date, @AuthenticationPrincipal CustomUserDetails currentUser) {
-//        LocalDate localDate = LocalDate.parse(date);
-//        return appointmentService.getAvailableHours(doctorId, currentUser.getId(), packagesId, localDate)
-//                .stream()
-//                .map(timePeriod -> new AppointmentRegisterForm(packagesId, doctorId, timePeriod.getStart().atDate(localDate), timePeriod.getEnd().atDate(localDate)))
-//                .collect(Collectors.toList());
-//    }
+    @GetMapping("/availableHours/{doctorId}/{packagesId}/{date}")
+    public List<AppointmentRegisterForm> getAvailableHours(@PathVariable("doctorId") int doctorId, @PathVariable("packagesId") int packagesId, @PathVariable("date") String date, @AuthenticationPrincipal CustomUserDetails currentUser) {
+        LocalDate localDate = LocalDate.parse(date);
+        return appointmentService.getAvailableHours(doctorId, currentUser.getId(), packagesId, localDate)
+                .stream()
+                .map(timePeriod -> new AppointmentRegisterForm(packagesId, doctorId, timePeriod.getStart().atDate(localDate), timePeriod.getEnd().atDate(localDate)))
+                .collect(Collectors.toList());
+    }
 
 //    @GetMapping("/user/notifications")
 //    public int getUnreadNotificationsCount(@AuthenticationPrincipal CustomUserDetails currentUser) {

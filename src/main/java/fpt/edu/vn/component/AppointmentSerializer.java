@@ -24,7 +24,7 @@ public class AppointmentSerializer extends StdSerializer<Appointment> {
     public void serialize(Appointment appointment, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeStartObject();
         gen.writeNumberField("id", appointment.getId());
-//        gen.writeStringField("title", appointment.getWork().getName());
+        gen.writeStringField("title", appointment.getPackages().getName());
         gen.writeNumberField("start", appointment.getStart().toInstant(ZoneOffset.UTC).toEpochMilli());
         gen.writeNumberField("end", appointment.getEnd().toInstant(ZoneOffset.UTC).toEpochMilli());
         gen.writeStringField("url", "/appointments/" + appointment.getId());
