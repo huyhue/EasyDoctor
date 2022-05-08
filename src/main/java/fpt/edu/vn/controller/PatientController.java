@@ -47,7 +47,7 @@ public class PatientController {
 	@GetMapping("/{id}")
     public String showPatientDetails(@PathVariable("id") int patientId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
 		Patient patient = userService.getPatientById(patientId);
-		if (patient.hasRole("ROLE_PATIENT")) {
+		if (currentUser.getId() == patientId || currentUser.hasRole("ROLE_ADMIN")) {
             if (!model.containsAttribute("user")) {
                 model.addAttribute("user", patient);
             }

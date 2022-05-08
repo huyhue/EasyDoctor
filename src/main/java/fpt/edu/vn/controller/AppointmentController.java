@@ -23,7 +23,7 @@ public class AppointmentController {
 	private final UserService userService;
 	private final AppointmentService appointmentService;
 //    private final ExchangeService exchangeService;
-	
+
 	public AppointmentController(PackagesService packagesService, UserService userService,
 			AppointmentService appointmentService) {
 		super();
@@ -45,20 +45,39 @@ public class AppointmentController {
 //        }
 		return "appointments/listAppointments";
 	}
-	
-    @GetMapping("/new/{doctorId}")
-    public String selectPackages(@PathVariable("doctorId") int doctorId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
-    	model.addAttribute("packages", packagesService.getPackagesByDoctorId(doctorId));
-    	model.addAttribute(doctorId);
-        return "appointments/selectPackages";
-    }
-    
-  @GetMapping("/new/{doctorId}/{packagesId}")
-  public String selectDate(@PathVariable("packagesId") int packagesId, @PathVariable("doctorId") int doctorId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
-      model.addAttribute(doctorId);
-      model.addAttribute("packagesId", packagesId);
-      return "appointments/selectDate";
-  }
+
+	@GetMapping("/new/{doctorId}")
+	public String selectPackages(@PathVariable("doctorId") int doctorId, Model model,
+			@AuthenticationPrincipal CustomUserDetails currentUser) {
+		model.addAttribute("packages", packagesService.getPackagesByDoctorId(doctorId));
+		model.addAttribute(doctorId);
+		return "appointments/selectPackages";
+	}
+
+	@GetMapping("/new/{doctorId}/{packagesId}")
+	public String selectDate(@PathVariable("packagesId") int packagesId, @PathVariable("doctorId") int doctorId,
+			Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
+		model.addAttribute(doctorId);
+		model.addAttribute("packagesId", packagesId);
+		return "appointments/selectDate";
+	}
+
+	@GetMapping("/new/{doctorId}/{packagesId}/{dateTime}")
+	public String showNewAppointmentSummary(@PathVariable("packagesId") int packagesId,
+			@PathVariable("doctorId") int doctorId, @PathVariable("dateTime") String start, Model model,
+			@AuthenticationPrincipal CustomUserDetails currentUser) {
+		if (appointmentService.isAvailable(packagesId, doctorId, currentUser.getId(), LocalDateTime.parse(start))) {
+			model.addAttribute("packages", packagesService.getPackagesById(packagesId));
+			model.addAttribute("doctor", userService.getDoctorById(doctorId).getFullname());
+			model.addAttribute(doctorId);
+			model.addAttribute("start", LocalDateTime.parse(start));
+			model.addAttribute("end",
+					LocalDateTime.parse(start).plusMinutes(packagesService.getPackagesById(packagesId).getDuration()));
+			return "appointments/newAppointmentSummary";
+		} else {
+			return "redirect:/appointments/new" + doctorId;
+		}
+	}
 
 //	@GetMapping("/{id}")
 //    public String showAppointmentDetail(@PathVariable("id") int appointmentId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
@@ -128,8 +147,6 @@ public class AppointmentController {
 //        }
 //        return "appointments/selectProvider";
 //    }
-
-
 
 //    @GetMapping("/new/{providerId}/{workId}")
 //    public String selectDate(@PathVariable("workId") int workId, @PathVariable("providerId") int providerId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {

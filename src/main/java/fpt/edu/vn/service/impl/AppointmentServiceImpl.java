@@ -124,4 +124,11 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
         return availableHours;
     }
+    
+    @Override
+    public boolean isAvailable(int packagesId, int doctorId, int patientId, LocalDateTime start) {
+        Packages packages = packagesService.getPackagesById(packagesId);
+        TimePeroid timePeroid = new TimePeroid(start.toLocalTime(), start.toLocalTime().plusMinutes(packages.getDuration()));
+        return getAvailableHours(doctorId, patientId, packagesId, start.toLocalDate()).contains(timePeroid);
+    }
 }

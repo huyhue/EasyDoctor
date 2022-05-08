@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'appointments','New appointment confirmation')}"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<body>
+<div class="row justify-content-center">
+    <div class="col-md-6 mt-3">
+
+        <table class="table">
+            <thead>
+            <tr class="text-center">
+                <td colspan="2">
+                    <h3>Your new appointment summary</h3>
+                </td>
+            </tr>
+            </thead>
+
+            <tr>
+                <td><b>Date</b></td>
+                <td><span th:text="${#temporals.format(start, 'dd-MM-yyyy')}">10-01-2019</span></td>
+            </tr>
+            <tr>
+                <td><b>Time</b></td>
+                <td><span th:text="${#temporals.format(start, 'HH:mm')+' - '+ #temporals.format(end, 'HH:mm')}">14:00 - 15:00</span>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Doctor</b></td>
+                <td><span th:text="${doctor}">Marian Nowak</span></td>
+            </tr>
+
+            <tr>
+                <td><b>Packages</b></td>
+                <td><span th:text="${packages.name}"> english </span></td>
+            </tr>
+            <tr>
+                <td><b>Description</b></td>
+                <td><span th:text="${packages.description}">description</span></td>
+            </tr>
+
+            <tr>
+                <td><b>Price</b></td>
+                <td><span th:text="${packages.price}"> 50 </span> VND</td>
+            </tr>
+
+            <tr>
+                <td><b>Cancellable by patient?</b></td>
+                <td><p th:text="${packages.editable ? 'Yes':'No, only by provider'}">Yes</p></td>
+            </tr>
+            <tr class="text-center">
+                <td colspan="2">
+                    <form th:action="@{/appointments/new}" method="POST">
+                        <input type="hidden" name="workId" th:value="${packages.id}">
+                        <input type="hidden" name="providerId" th:value="${doctorId}">
+                        <input type="hidden" name="start" th:value="${start}">
+
+                        <button type="submit" class="btn btn-primary">Book Now</button>
+                    </form>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

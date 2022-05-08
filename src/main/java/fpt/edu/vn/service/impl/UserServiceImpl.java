@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
 		p.setFullname(patient.getFullname());
 		p.setMobile(patient.getMobile());
 		p.setAge(patient.getAge());
-		p.setGender(Gender.MALE);
+		p.setGender(patient.getGender());
 		p.setAddress(patient.getAddress());
 		patientRepository.save(p);
 	}

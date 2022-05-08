@@ -32,6 +32,9 @@ INSERT INTO `doctors` (description, start_practice_date, id_doctor, id_clinic, i
 ('Kinh nghiệm lâu năm', NULL, '6', '2', '3'),
 ('Lương y như từ mẫu', NULL, '7', '3', '2');
 
+INSERT INTO `patients`  VALUES
+('61 Lê Minh, Huế', '3', NULL);
+
 INSERT INTO `packages` (id,duration,editable, description, name, price) VALUES
 ('1','60','1','Chăm sóc tùy nhu cầu bệnh nhân','Gói cơ bản', '500'),
 ('2','60','1', 'Chăm sóc toàn diện sức khỏe bệnh nhân','Gói toàn diện', '1000'),
