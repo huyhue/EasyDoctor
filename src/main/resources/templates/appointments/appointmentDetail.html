@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'appointments','Appointment detail')}"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<body>
+<div class="row" style="margin-top: 50px">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div clas="col-md-1">
+            </div>
+            <div th:if="${appointment.exchangeRequest !=null && appointment.exchangeRequest.getStatus().name()== 'PENDING'}" class="col-md-9 p-3 mb-2 bg-warning text-dark text-center">
+                <p>Someone requested this appointment to be exchanged.</p>
+
+                <form th:action="@{/exchange/reject}" method='POST'>
+                    <input type="hidden" name="exchangeId" th:value="${appointment.exchangeRequest.id}">
+                    <input type="submit" class="btn btn-success" value="Reject" />
+                </form>
+                <form th:action="@{/exchange/accept}" method='POST'>
+                    <input type="hidden" name="exchangeId" th:value="${appointment.exchangeRequest.id}">
+                    <input type="submit" class="btn btn-success" value="Accept" />
+                </form>
+            </div>
+            <div th:if="${allowedToRequestRejection}" class="col-md-9 p-3 mb-2 bg-warning text-dark text-center">
+                <p>You have <span class="font-weight-bold" th:text="${remainingTime}">3h 45m</span> to deny that
+                    this appointment took place.</p>
+                <p>After that time it will be invoiced automatically.</p>
+
+                <form th:action="@{/appointments/reject}" method='POST'>
+                    <input type="hidden" name="appointmentId" th:value="${appointment.id}">
+                    <input type="submit" class="btn btn-danger" value="Reject" />
+                </form>
+            </div>
+            <div th:if="${allowedToAcceptRejection}" class="col-md-9 p-3 mb-2 bg-warning text-dark text-center">
+                <p>Customer claims that this appointment didn't take place.</p>
+                <p>If you agree with that, click the button below:</p>
+
+                <form th:action="@{/appointments/acceptRejection}" method='POST'>
+                    <input type="hidden" name="appointmentId" th:value="${appointment.id}">
+                    <input type="submit" class="btn btn-danger" value="Accept" /></form>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-4">
+
+                <table id="appointments" class="table">
+                    <tr>
+                        <td><b>Status</b></td>
+                        <td><span th:text="${appointment.status}"> scheduled </span></td>
+                    </tr>
+                    <tr th:if="${appointment.status.name()=='CANCELED'}">
+                        <td><b>Canceled by</b></td>
+                        <td><span
+                                th:text="${appointment.canceler.fullname}">Canceller
+                            name</span>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td><b>Date</b></td>
+                        <td><span th:text="${#temporals.format(appointment.start, 'dd-MM-yyyy')}">10-01-2019</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>Time</b></td>
+                        <td><span th:text="${#temporals.format(appointment.start, 'HH:mm')+' - '+ #temporals.format(appointment.end, 'HH:mm')}">14:00 - 15:00</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Patient</b></td>
+                        <td><span th:text="${appointment.patient.fullname}">Huyhue</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Doctor</b></td>
+                        <td><span th:text="${appointment.doctor.fullname}">Huyhue</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><b>Packages</b></td>
+                        <td><span th:text="${appointment.packages.name}"> english </span></td>
+                    </tr>
+                    <tr>
+                        <td><b>Description</b></td>
+                        <td><span th:text="${appointment.packages.description}">description</span></td>
+                    </tr>
+
+
+                    <tr>
+                        <td><b>Price</b></td>
+                        <td><span th:text="${appointment.packages.price}"> 50 </span> pln</td>
+                    </tr>
+                    <tr th:if="${appointment.status.name()=='INVOICED'}">
+                        <td><b>Invoice</b></td>
+                        <td><a th:href="@{'/invoices/download/'+${appointment.invoice.id}}">Download</a></td>
+                    </tr>
+
+                    <tr>
+                        <td><b>Exchange</b></td>
+                        <td th:if="${allowedToExchange}">
+                            <a th:href="@{'/exchange/'+${appointment.id}}">Exchange</a>
+                        </td>
+                        <td th:unless="${allowedToExchange}">
+                            <p>This appointment cannot be exchanged.</p>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td><b>Cancellation</b></td>
+                        <td th:if="${allowedToCancel}">
+                            <form th:action="@{/appointments/cancel}" method='POST'>
+                                <input type="hidden" name="appointmentId" th:value="${appointment.id}">
+                                <input type="submit" class="btn btn-danger" value="Cancel" />
+                            </form>
+                        </td>
+                        <td th:unless="${allowedToCancel}">
+                            <p th:text="${cancelNotAllowedReason}">Reason why appointment cannot be cancelled.</p>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </div>
+            <div class="col-md-5">
+
+                <div class="chatbody">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading top-bar">
+                            <div class="col-md-8 col-xs-8">
+                                <p>
+                                    Appointment chat with
+                                    <span sec:authorize="hasRole('ROLE_DOCTOR')" th:text="${appointment.patient.fullname}"></span>
+                                    <span sec:authorize="hasRole('ROLE_PATIENT')" th:text="${appointment.doctor.fullname}"></span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="panel-body msg_container_base">
+                            <div th:each="chatMessage : ${appointment.chatMessages}" class="row msg_container base_receive">
+                                <div class="col-md-12 col-xs-12">
+                                    <div class="messages msg_receive">
+                                        <p th:text="${chatMessage.message}">message</p>
+                                        <time datetime="2009-11-13T20:00"><span
+                                                th:text="${chatMessage.author.firstName}">author</span> • <span
+                                                th:text="${#temporals.format(chatMessage.createdAt, 'dd-MM-yyyy HH:mm')}"></span></time>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form th:action="@{/appointments/messages/new}" th:object="${chatMessage}" method='POST'>
+                            <div class="input-group mb-3">
+                                <input type="hidden" name="appointmentId" th:value="${appointment.id}">
+                                <input type="text" class="form-control" th:field="*{message}" placeholder="Write your message here..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="submit">Send</button>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+</body>
+
+</html>

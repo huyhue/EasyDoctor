@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'','Select Packages')}"
-      xmlns:sec="http://www.w3.org/1999/xhtml">
+	xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <body>
-<div class="row align-items-center justify-content-center" style="margin-top: 50px">
+	<div class="row align-items-center justify-content-center" style="margin-top: 50px">
+		<!--<div th:if="${packages}">
+			<h5>This Doctor hasnot registered Packages. Please choose other doctors.</h5>
+		</div>-->
+		<div class="col-md-3 m-3" th:each="package : ${packages}">
+			<div class="card" style="width: 18rem;">
+				<!-- <img class="card-img-top" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="Card image cap">-->
+				<div class="card-body text-center">
+					<h5 class="card-title"><span th:text="${package.name}">Name</span></h5>
+					<p th:text="${package.description}">Description</p>
+					<p th:text="${package.price + ' VND'}">Price</p>
+					<a th:href="@{'/appointments/new/' + ${doctorId} +'/'+ ${package.id}}"
+						class="btn btn-primary">Select</a>
+				</div>
+			</div>
+		</div>
 
-
-    <div class="col-md-3 m-3" th:each="package : ${packages}">
-        <div class="card" style="width: 18rem;">
-           <!-- <img class="card-img-top" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="Card image cap">-->
-            <div class="card-body text-center">
-                <h5 class="card-title"><span th:text="${package.name}">Name</span></h5>
-                <p th:text="${package.description}">Description</p>
-                <p th:text="${package.price + ' VND'}">Price</p>
-                <a th:href="@{'/appointments/new/' + ${doctorId} +'/'+ ${package.id}}" class="btn btn-primary">Select</a>
-            </div>
-        </div>
-    </div>
-
-</div>
+	</div>
 </body>
 
 </html>

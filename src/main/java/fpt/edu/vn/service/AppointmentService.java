@@ -18,8 +18,19 @@ public interface AppointmentService {
 	List<TimePeroid> excludeAppointmentsFromTimePeroids(List<TimePeroid> peroids, List<Appointment> appointments);
 	List<TimePeroid> calculateAvailableHours(List<TimePeroid> availableTimePeroids, Packages packages);
 	
+	void createNewAppointment(int packagesId, int doctorId, int patientId, LocalDateTime start);
+	void cancelUserAppointmentById(int appointmentId, int userId);
+	
 	boolean isAvailable(int packagesId, int doctorId, int patientId, LocalDateTime start);
 	
 	List<Appointment> getAllAppointments();
+	List<Appointment> getAppointmentByPatientId(int patientId);
 	List<Appointment> getAppointmentByDoctorId(int doctorId);
+	
+	Appointment getAppointmentByIdWithAuthorization(int id);
+	Appointment getAppointmentById(int id);
+	
+	//Cancel
+	String getCancelNotAllowedReason(int userId, int appointmentId);
+	List<Appointment> getCanceledAppointmentsByPatientIdForCurrentMonth(int patientId);
 }

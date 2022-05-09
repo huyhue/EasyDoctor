@@ -14,11 +14,17 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
 	@Query("select a from Appointment a where a.doctor.id = :doctorId")
     List<Appointment> findByDoctorId(@Param("doctorId") int doctorId);
 	
+	@Query("select a from Appointment a where a.patient.id = :patientId")
+	List<Appointment> findByPatientId(@Param("patientId") int patientId);
+	
 	@Query("select a from Appointment a where a.doctor.id = :doctorId and  a.start >=:dayStart and  a.start <=:dayEnd")
     List<Appointment> findByDoctorIdWithStartInPeroid(@Param("doctorId") int doctorId, @Param("dayStart") LocalDateTime startPeroid, @Param("dayEnd") LocalDateTime endPeroid);
 
     @Query("select a from Appointment a where a.patient.id = :patientId and  a.start >=:dayStart and  a.start <=:dayEnd")
     List<Appointment> findByPatientIdWithStartInPeroid(@Param("patientId") int patientId, @Param("dayStart") LocalDateTime startPeroid, @Param("dayEnd") LocalDateTime endPeroid);
+
+    @Query("select a from Appointment a where a.patient.id = :patientId and a.canceler.id =:patientId and a.canceledAt >=:date")
+    List<Appointment> findByPatientIdCanceledAfterDate(@Param("patientId") int patientId, @Param("date") LocalDateTime date);
 
 	
 //    @Query("select a from Appointment a where a.customer.id = :customerId")

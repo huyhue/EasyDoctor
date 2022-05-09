@@ -51,8 +51,8 @@
             <tr class="text-center">
                 <td colspan="2">
                     <form th:action="@{/appointments/new}" method="POST">
-                        <input type="hidden" name="workId" th:value="${packages.id}">
-                        <input type="hidden" name="providerId" th:value="${doctorId}">
+                        <input type="hidden" name="packagesId" th:value="${packages.id}">
+                        <input type="hidden" name="doctorId" th:value="${doctorId}">
                         <input type="hidden" name="start" th:value="${start}">
 
                         <button type="submit" class="btn btn-primary">Book Now</button>

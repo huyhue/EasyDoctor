@@ -20,8 +20,8 @@
 					<div class="card fat">
 						<div class="card-body">
 							<h4 class="card-title text-center">Sign Up</h4>
-							<form th:action="@{/register}" th:object="${user}"
-								method="POST" class="m-t" role="form" data-toggle="validator">
+							<form th:action="@{/register}" th:object="${user}" method="POST" class="m-t" role="form"
+								data-toggle="validator">
 
 								<div th:if="${confirmationMessage}" class="alert alert-success" role="alert"
 									th:text=${confirmationMessage}></div>
@@ -38,20 +38,19 @@
 								<!--			from tu day-->
 								<div class="form-group">
 									<label for="userName">Username</label>
-									<input id="userName" type="text" class="form-control" name="userName" 
+									<input id="userName" type="text" class="form-control" name="userName"
 										th:field="*{userName}" required autofocus>
 								</div>
 								<div class="form-group">
 									<label for="password">Password</label>
-									<input id="password" type="password" class="form-control" name="password" th:field="*{password}"
-										required autofocus>
+									<input id="password" type="password" class="form-control" name="password"
+										th:field="*{password}" required autofocus>
 								</div>
 								<div class="form-group">
 									<label for="rePassword">Confirm Password</label>
-									<input id="rePassword" type="password" class="form-control"
-										required autofocus>
+									<input id="rePassword" type="password" class="form-control" required autofocus>
 								</div>
-								
+
 								<div class="form-group m-0">
 									<button type="submit" class="btn btn-primary btn-block">
 										Register
@@ -71,6 +70,24 @@
 		</div>
 	</section>
 
+	<!--preloader-->
+	<div id="spinner-wrapper">
+		<div class="spinner"></div>
+	</div>
+
 </body>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+	var preloader = $('#spinner-wrapper');
+	$(window).on('load', function () {
+		var preloaderFadeOutTime = 500;
+
+		function hidePreloader() {
+			preloader.fadeOut(preloaderFadeOutTime);
+		}
+		hidePreloader();
+	});
+
+</script>
 
 </html>

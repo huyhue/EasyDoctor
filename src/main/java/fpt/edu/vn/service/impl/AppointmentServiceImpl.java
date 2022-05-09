@@ -6,9 +6,12 @@ import org.springframework.stereotype.Service;
 
 import fpt.edu.vn.component.DayPlan;
 import fpt.edu.vn.component.TimePeroid;
+import fpt.edu.vn.exception.AppointmentNotFoundException;
 import fpt.edu.vn.model.Appointment;
+import fpt.edu.vn.model.AppointmentStatus;
 import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.Packages;
+import fpt.edu.vn.model.User;
 import fpt.edu.vn.model.WorkingPlan;
 import fpt.edu.vn.repository.AppointmentRepository;
 import fpt.edu.vn.service.AppointmentService;
@@ -59,6 +62,12 @@ public class AppointmentServiceImpl implements AppointmentService {
     @PreAuthorize("#doctorId == principal.id")
     public List<Appointment> getAppointmentByDoctorId(int doctorId) {
         return appointmentRepository.findByDoctorId(doctorId);
+    }
+	
+	@Override
+    @PreAuthorize("#patientId == principal.id")
+    public List<Appointment> getAppointmentByPatientId(int patientId) {
+        return appointmentRepository.findByPatientId(patientId);
     }
 	
 	@Override
@@ -131,4 +140,92 @@ public class AppointmentServiceImpl implements AppointmentService {
         TimePeroid timePeroid = new TimePeroid(start.toLocalTime(), start.toLocalTime().plusMinutes(packages.getDuration()));
         return getAvailableHours(doctorId, patientId, packagesId, start.toLocalDate()).contains(timePeroid);
     }
+    
+    @Override
+    public void createNewAppointment(int packagesId, int doctorId, int patientId, LocalDateTime start) {
+        if (isAvailable(packagesId, doctorId, patientId, start)) {
+            Appointment appointment = new Appointment();
+            appointment.setStatus(AppointmentStatus.SCHEDULED);
+            appointment.setPatient(userService.getPatientById(patientId));
+            appointment.setDoctor(userService.getDoctorById(doctorId));
+            Packages packages = packagesService.getPackagesById(packagesId);
+            appointment.setPackages(packages);
+            appointment.setStart(start);
+            appointment.setEnd(start.plusMinutes(packages.getDuration()));
+            appointmentRepository.save(appointment);
+//            notificationService.newNewAppointmentScheduledNotification(appointment, true);
+        } else {
+            throw new RuntimeException();
+        }
+    }
+    
+    @Override
+    public void cancelUserAppointmentById(int appointmentId, int userId) {
+        Appointment appointment = appointmentRepository.findById(appointmentId).get();
+        if (appointment.getPatient().getId() == userId || appointment.getDoctor().getId() == userId) {
+            appointment.setStatus(AppointmentStatus.CANCELED);
+            User canceler = userService.getUserById(userId);
+            appointment.setCanceler(canceler);
+            appointment.setCanceledAt(LocalDateTime.now());
+            appointmentRepository.save(appointment);
+            if (canceler.equals(appointment.getPatient())) {
+//                notificationService.newAppointmentCanceledByCustomerNotification(appointment, true);
+            } else if (canceler.equals(appointment.getDoctor())) {
+//                notificationService.newAppointmentCanceledByProviderNotification(appointment, true);
+            }
+        } else {
+            throw new org.springframework.security.access.AccessDeniedException("Unauthorized");
+        }
+    }
+    
+    @Override
+    @PostAuthorize("returnObject.doctor.id == principal.id or returnObject.patient.id == principal.id or hasRole('ADMIN') ")
+    public Appointment getAppointmentByIdWithAuthorization(int id) {
+        return getAppointmentById(id);
+    }
+
+    @Override
+    public Appointment getAppointmentById(int id) {
+        return appointmentRepository.findById(id)
+                .orElseThrow(AppointmentNotFoundException::new);
+    }
+    
+    @Override
+    public String getCancelNotAllowedReason(int userId, int appointmentId) {
+        User user = userService.getUserById(userId);
+        Appointment appointment = getAppointmentByIdWithAuthorization(appointmentId);
+
+        if (user.hasRole("ROLE_ADMIN")) {
+            return "Only patient or doctor can cancel appointments";
+        }
+
+        if (appointment.getDoctor().equals(user)) {
+            if (!appointment.getStatus().equals(AppointmentStatus.SCHEDULED)) {
+                return "Only appoinmtents with scheduled status can be cancelled.";
+            } else {
+                return null;
+            }
+        }
+
+        if (appointment.getPatient().equals(user)) {
+            if (!appointment.getStatus().equals(AppointmentStatus.SCHEDULED)) {
+                return "Only appoinmtents with scheduled status can be cancelled.";
+            } else if (LocalDateTime.now().plusDays(1).isAfter(appointment.getStart())) {
+                return "Appointments which will be in less than 24 hours cannot be canceled.";
+            } else if (!appointment.getPackages().getEditable()) {
+                return "This type of appointment can be canceled only by Doctor.";
+            } else if (getCanceledAppointmentsByPatientIdForCurrentMonth(userId).size() >= NUMBER_OF_ALLOWED_CANCELATIONS_PER_MONTH) {
+                return "You can't cancel this appointment because you exceeded maximum number of cancellations in this month.";
+            } else {
+                return null;
+            }
+        }
+        return null;
+    }
+    
+    @Override
+    public List<Appointment> getCanceledAppointmentsByPatientIdForCurrentMonth(int patientId) {
+        return appointmentRepository.findByPatientIdCanceledAfterDate(patientId, LocalDate.now().with(TemporalAdjusters.firstDayOfMonth()).atStartOfDay());
+    }
+    
 }

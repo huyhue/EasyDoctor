@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import fpt.edu.vn.model.Appointment;
+import fpt.edu.vn.model.ChatMessage;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.AppointmentService;
 import fpt.edu.vn.service.PackagesService;
@@ -34,15 +36,11 @@ public class AppointmentController {
 
 	@GetMapping("/all")
 	public String showAllAppointments(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
-		String appointmentsModelName = "appointments";
-
-//        if (currentUser.hasRole("ROLE_CUSTOMER")) {
-//            model.addAttribute(appointmentsModelName, appointmentService.getAppointmentByCustomerId(currentUser.getId()));
-//        } else if (currentUser.hasRole("ROLE_PROVIDER")) {
-//            model.addAttribute(appointmentsModelName, appointmentService.getAppointmentByProviderId(currentUser.getId()));
-//        } else if (currentUser.hasRole("ROLE_ADMIN")) {
-//            model.addAttribute(appointmentsModelName, appointmentService.getAllAppointments());
-//        }
+        if (currentUser.hasRole("ROLE_PATIENT")) {
+            model.addAttribute("appointments", appointmentService.getAppointmentByPatientId(currentUser.getId()));
+        } else if (currentUser.hasRole("ROLE_DOCTOR")) {
+            model.addAttribute("appointments", appointmentService.getAppointmentByDoctorId(currentUser.getId()));
+        }
 		return "appointments/listAppointments";
 	}
 
@@ -79,11 +77,26 @@ public class AppointmentController {
 		}
 	}
 
-//	@GetMapping("/{id}")
-//    public String showAppointmentDetail(@PathVariable("id") int appointmentId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
-//        Appointment appointment = appointmentService.getAppointmentByIdWithAuthorization(appointmentId);
-//        model.addAttribute("appointment", appointment);
-//        model.addAttribute("chatMessage", new ChatMessage());
+	@PostMapping("/new")
+	public String bookAppointment(@RequestParam("packagesId") int packagesId, @RequestParam("doctorId") int doctorId,
+			@RequestParam("start") String start, @AuthenticationPrincipal CustomUserDetails currentUser) {
+		appointmentService.createNewAppointment(packagesId, doctorId, currentUser.getId(), LocalDateTime.parse(start));
+		return "redirect:/appointments/all";
+	}
+
+	@PostMapping("/cancel")
+	public String cancelAppointment(@RequestParam("appointmentId") int appointmentId,
+			@AuthenticationPrincipal CustomUserDetails currentUser) {
+		appointmentService.cancelUserAppointmentById(appointmentId, currentUser.getId());
+		return "redirect:/appointments/all";
+	}
+	
+
+	@GetMapping("/{id}")
+    public String showAppointmentDetail(@PathVariable("id") int appointmentId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
+        Appointment appointment = appointmentService.getAppointmentByIdWithAuthorization(appointmentId);
+        model.addAttribute("appointment", appointment);
+        model.addAttribute("chatMessage", new ChatMessage());
 //        boolean allowedToRequestRejection = appointmentService.isCustomerAllowedToRejectAppointment(currentUser.getId(), appointmentId);
 //        boolean allowedToAcceptRejection = appointmentService.isProviderAllowedToAcceptRejection(currentUser.getId(), appointmentId);
 //        boolean allowedToExchange = exchangeService.checkIfEligibleForExchange(currentUser.getId(), appointmentId);
@@ -93,11 +106,11 @@ public class AppointmentController {
 //        if (allowedToRequestRejection) {
 //            model.addAttribute("remainingTime", formatDuration(Duration.between(LocalDateTime.now(), appointment.getEnd().plusDays(1))));
 //        }
-//        String cancelNotAllowedReason = appointmentService.getCancelNotAllowedReason(currentUser.getId(), appointmentId);
-//        model.addAttribute("allowedToCancel", cancelNotAllowedReason == null);
-//        model.addAttribute("cancelNotAllowedReason", cancelNotAllowedReason);
-//        return "appointments/appointmentDetail";
-//    }
+        String cancelNotAllowedReason = appointmentService.getCancelNotAllowedReason(currentUser.getId(), appointmentId);
+        model.addAttribute("allowedToCancel", cancelNotAllowedReason == null);
+        model.addAttribute("cancelNotAllowedReason", cancelNotAllowedReason);
+        return "appointments/appointmentDetail";
+    }
 
 //    @PostMapping("/reject")
 //    public String processAppointmentRejectionRequest(@RequestParam("appointmentId") int appointmentId, @AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
@@ -172,18 +185,6 @@ public class AppointmentController {
 //        } else {
 //            return "redirect:/appointments/new";
 //        }
-//    }
-//
-//    @PostMapping("/new")
-//    public String bookAppointment(@RequestParam("workId") int workId, @RequestParam("providerId") int providerId, @RequestParam("start") String start, @AuthenticationPrincipal CustomUserDetails currentUser) {
-//        appointmentService.createNewAppointment(workId, providerId, currentUser.getId(), LocalDateTime.parse(start));
-//        return "redirect:/appointments/all";
-//    }
-//
-//    @PostMapping("/cancel")
-//    public String cancelAppointment(@RequestParam("appointmentId") int appointmentId, @AuthenticationPrincipal CustomUserDetails currentUser) {
-//        appointmentService.cancelUserAppointmentById(appointmentId, currentUser.getId());
-//        return "redirect:/appointments/all";
 //    }
 
 	public static String formatDuration(Duration duration) {

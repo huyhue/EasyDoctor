@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      th:replace="~{fragments/layout :: layout (~{::body},'appointments','List appointments')}">
+
+<body>
+
+<!-- Page Content -->
+<div class="row align-items-center justify-content-center" style="margin-top: 50px">
+    <div th:fragment="patientAppointments">
+
+        <table id="appointments" class="table text-center">
+            <thead class="thead-dark">
+            <tr>
+                <th> Packages</th>
+                <th> Status</th>
+                <th> Start</th>
+                <th sec:authorize="!hasRole('ROLE_DOCTOR')"> Doctor</th>
+                <th sec:authorize="!hasRole('ROLE_PATIENT')"> Patient</th>
+                <th> Duration</th>
+                <th> Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${appointments == null}">
+                <td colspan="2"> No Appointments Available</td>
+            </tr>
+            <tr th:each="appointment : ${appointments}"
+                th:classappend="${appointment.status.name() == 'CANCELED' || appointment.status.name()  == 'FINISHED' || appointment.status.name()  == 'INVOICED' || appointment.status.name()  == 'REJECTION_REQUESTED' || appointment.status.name()  == 'REJECTED'} ? table-secondary : table-success">
+                <td><span th:text="${appointment.packages.name}"> Packages </span></td>
+                <td><span th:text="${appointment.status}"> Scheduled </span></td>
+                <td><span th:text="${#temporals.format(appointment.start, 'yyyy-MM-dd HH:mm')}"> 21-01-2019 15:00</span>
+                </td>
+                <td sec:authorize="!hasRole('ROLE_DOCTOR')"><span
+                        th:text="${appointment.doctor.fullname}">
+                                Doctor </span>
+                </td>
+                <td sec:authorize="!hasRole('ROLE_PATIENT')"><span
+                        th:text="${appointment.patient.fullname}">
+                                Patient </span>
+                </td>
+                <td><span th:text="${appointment.packages.duration + ' min'}"> 60 min </span></td>
+                <td><a class="btn btn-secondary" th:href="@{'/appointments/' + ${appointment.id}}"
+                       role="button">Details</a></td>
+            </tr>
+            </tbody>
+            <tfoot class="text-primary">
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th  sec:authorize="hasRole('ROLE_ADMIN')"></th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#appointments').DataTable({
+                "dom": '<"toolbar">lrtip',
+                "bFilter": true,
+                "bLengthChange": false,
+                "order": [
+                    [2, "asc"]
+                ],
+                "initComplete": function () {
+                    this.api().columns([1]).every(function () {
+                        $("div.toolbar").html('<div id="my_filter" style="margin-bottom: 10px">Status filter: </div>');
+                        var column = this;
+                        column.search('^SCHEDULED$', true, false).draw();
+                        var select = $('<select name="statuses"><option value="SCHEDULED">SCHEDULED</option></select>')
+                            .appendTo('#my_filter')
+                            .on('change', function () {
+                                var searchString = $(this).val();
+                                searchString = searchString.replace('<span>', '');
+                                searchString = searchString.replace('</span>', '');
+                                var val = $.fn.dataTable.util.escapeRegex(searchString);
+                                column.search(val ? '^' + val + '$' : '', true, false).draw();
+                            });
+                        statuses.forEach(function (d) {
+                            select.append('<option value="' + d + '">' + d + '</option>')
+                        });
+                    });
+                }
+            });
+        });
+
+        var statuses = [
+            'FINISHED',
+            'CONFIRMED',
+            'INVOICED',
+            'CANCELED',
+            'DENIED',
+            'REJECTION_REQUESTED',
+            'REJECTED',
+            'EXCHANGE_REQUESTED'];
+    </script>
+</div>
+
+</body>
+</html>
