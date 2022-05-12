@@ -42,4 +42,7 @@ public interface AppointmentService {
 	boolean requestAppointmentRejection(String token);
 	boolean acceptRejection(int appointmentId, int patientId);
 	boolean acceptRejection(String token);
+	
+	//Chat
+	void addMessageToAppointmentChat(int appointmentId, int authorId, ChatMessage chatMessage);
 }

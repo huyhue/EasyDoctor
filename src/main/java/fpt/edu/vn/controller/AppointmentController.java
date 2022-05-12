@@ -24,7 +24,6 @@ public class AppointmentController {
 	private final PackagesService packagesService;
 	private final UserService userService;
 	private final AppointmentService appointmentService;
-//    private final ExchangeService exchangeService;
 
 	public AppointmentController(PackagesService packagesService, UserService userService,
 			AppointmentService appointmentService) {
@@ -105,9 +104,6 @@ public class AppointmentController {
             model.addAttribute("remainingTime", formatDuration(Duration.between(LocalDateTime.now(), appointment.getEnd().plusDays(1))));
         }
         
-//        boolean allowedToExchange = exchangeService.checkIfEligibleForExchange(currentUser.getId(), appointmentId);
-//        model.addAttribute("allowedToExchange", allowedToExchange);
-        
         String cancelNotAllowedReason = appointmentService.getCancelNotAllowedReason(currentUser.getId(), appointmentId);
         model.addAttribute("allowedToCancel", cancelNotAllowedReason == null);
         model.addAttribute("cancelNotAllowedReason", cancelNotAllowedReason);
@@ -148,12 +144,12 @@ public class AppointmentController {
         return REJECTION_CONFIRMATION_VIEW;
     }
 
-//    @PostMapping("/messages/new")
-//    public String addNewChatMessage(@ModelAttribute("chatMessage") ChatMessage chatMessage, @RequestParam("appointmentId") int appointmentId, @AuthenticationPrincipal CustomUserDetails currentUser) {
-//        int authorId = currentUser.getId();
-//        appointmentService.addMessageToAppointmentChat(appointmentId, authorId, chatMessage);
-//        return "redirect:/appointments/" + appointmentId;
-//    }
+    @PostMapping("/messages/new")
+    public String addNewChatMessage(@ModelAttribute("chatMessage") ChatMessage chatMessage, @RequestParam("appointmentId") int appointmentId, @AuthenticationPrincipal CustomUserDetails currentUser) {
+        int authorId = currentUser.getId();
+        appointmentService.addMessageToAppointmentChat(appointmentId, authorId, chatMessage);
+        return "redirect:/appointments/" + appointmentId;
+    }
 
 	public static String formatDuration(Duration duration) {
 		long s = duration.getSeconds();

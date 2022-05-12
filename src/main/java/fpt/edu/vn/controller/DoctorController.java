@@ -17,14 +17,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import fpt.edu.vn.component.ChangePasswordForm;
+import fpt.edu.vn.component.TimePeroid;
 import fpt.edu.vn.component.UserForm;
 import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.User;
+import fpt.edu.vn.model.WorkingPlan;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.EmailService;
 import fpt.edu.vn.service.PackagesService;
 import fpt.edu.vn.service.UserService;
+import fpt.edu.vn.service.WorkingPlanService;
 
 @Controller
 @RequestMapping("/doctors")
@@ -33,12 +36,15 @@ public class DoctorController {
 	private final UserService userService;
 	private final EmailService emailService;
 	private final PackagesService packagesService;
+	private final WorkingPlanService workingPlanService;
 
-	public DoctorController(UserService userService, EmailService emailService, PackagesService packagesService) {
+	public DoctorController(UserService userService, EmailService emailService, PackagesService packagesService,
+			WorkingPlanService workingPlanService) {
 		super();
 		this.userService = userService;
 		this.emailService = emailService;
 		this.packagesService = packagesService;
+		this.workingPlanService = workingPlanService;
 	}
 
 	@GetMapping("/home")
@@ -88,6 +94,33 @@ public class DoctorController {
     public String processProviderPasswordUpate(@ModelAttribute("passwordChange") ChangePasswordForm passwordChange, BindingResult bindingResult) {
         userService.updateUserPassword(passwordChange);
         return "redirect:/doctors/" + passwordChange.getId();
+    }
+    
+    @GetMapping("/availability")
+    public String showAvailability(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
+        model.addAttribute("plan", workingPlanService.getWorkingPlanByDoctorId(currentUser.getId()));
+        model.addAttribute("breakModel", new TimePeroid());
+        return "doctors/doctorAvailability";
+    }
+    
+    @PostMapping("/availability")
+    public String processWorkingPlanUpdate(@ModelAttribute("plan") WorkingPlan plan) {
+        workingPlanService.updateWorkingPlan(plan);
+        return "redirect:/doctors/availability";
+    }
+    
+    //http://localhost:8080/providers/availability/breakes/add
+    @PostMapping("/availability/breakes/add")
+    public String processAddBreak(@ModelAttribute("breakModel") TimePeroid breakToAdd, @RequestParam("planId") int planId, @RequestParam("dayOfWeek") String dayOfWeek) {
+        System.out.print("Test: "+breakToAdd+planId+dayOfWeek);
+    	workingPlanService.addBreakToWorkingPlan(breakToAdd, planId, dayOfWeek);
+        return "redirect:/doctors/availability";
+    }
+
+    @PostMapping("/availability/breakes/delete")
+    public String processDeleteBreak(@ModelAttribute("breakModel") TimePeroid breakToDelete, @RequestParam("planId") int planId, @RequestParam("dayOfWeek") String dayOfWeek) {
+        workingPlanService.deleteBreakFromWorkingPlan(breakToDelete, planId, dayOfWeek);
+        return "redirect:/doctors/availability";
     }
 
     @GetMapping("/new")
