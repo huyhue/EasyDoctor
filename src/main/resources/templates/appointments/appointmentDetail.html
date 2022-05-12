@@ -33,7 +33,7 @@
                 </form>
             </div>
             <div th:if="${allowedToAcceptRejection}" class="col-md-9 p-3 mb-2 bg-warning text-dark text-center">
-                <p>Customer claims that this appointment didn't take place.</p>
+                <p>Patient claims that this appointment didn't take place.</p>
                 <p>If you agree with that, click the button below:</p>
 
                 <form th:action="@{/appointments/acceptRejection}" method='POST'>

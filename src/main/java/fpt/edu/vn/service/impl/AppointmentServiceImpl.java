@@ -281,7 +281,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             Appointment appointment = getAppointmentByIdWithAuthorization(appointmentId);
             appointment.setStatus(AppointmentStatus.REJECTED);
             updateAppointment(appointment);
-//            notificationService.newAppointmentRejectionAcceptedNotification(appointment, true);
+            notificationService.newAppointmentRejectionAcceptedNotification(appointment, true);
             return true;
         } else {
             return false;

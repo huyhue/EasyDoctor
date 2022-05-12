@@ -117,8 +117,17 @@ public class AppointmentController {
     @PostMapping("/reject")
     public String processAppointmentRejectionRequest(@RequestParam("appointmentId") int appointmentId, @AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
         boolean result = appointmentService.requestAppointmentRejection(appointmentId, currentUser.getId());
-        model.addAttribute(result);
+        model.addAttribute("result", result);
         model.addAttribute("type", "request");
+        return REJECTION_CONFIRMATION_VIEW;
+    }
+    
+    //Click link by email by doctor
+    @GetMapping("/acceptRejection")
+    public String acceptAppointmentRejectionRequest(@RequestParam("token") String token, Model model) {
+        boolean result = appointmentService.acceptRejection(token);
+        model.addAttribute("result", result);
+        model.addAttribute("type", "accept");
         return REJECTION_CONFIRMATION_VIEW;
     }
     
@@ -126,7 +135,7 @@ public class AppointmentController {
     @GetMapping("/reject")
     public String processAppointmentRejectionRequest(@RequestParam("token") String token, Model model) {
         boolean result = appointmentService.requestAppointmentRejection(token);
-        model.addAttribute(result);
+        model.addAttribute("result", result);
         model.addAttribute("type", "request");
         return REJECTION_CONFIRMATION_VIEW;
     }
@@ -134,15 +143,6 @@ public class AppointmentController {
     @PostMapping("/acceptRejection")
     public String acceptAppointmentRejectionRequest(@RequestParam("appointmentId") int appointmentId, @AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
         boolean result = appointmentService.acceptRejection(appointmentId, currentUser.getId());
-        model.addAttribute(result);
-        model.addAttribute("type", "accept");
-        return REJECTION_CONFIRMATION_VIEW;
-    }
-
-    @GetMapping("/acceptRejection")
-    public String acceptAppointmentRejectionRequest(@RequestParam("token") String token, Model model) {
-        boolean result = appointmentService.acceptRejection(token);
-//        model.addAttribute(result);
         model.addAttribute("result", result);
         model.addAttribute("type", "accept");
         return REJECTION_CONFIRMATION_VIEW;
@@ -153,42 +153,6 @@ public class AppointmentController {
 //        int authorId = currentUser.getId();
 //        appointmentService.addMessageToAppointmentChat(appointmentId, authorId, chatMessage);
 //        return "redirect:/appointments/" + appointmentId;
-//    }
-
-//    @GetMapping("/new")
-//    public String selectProvider(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
-//        if (currentUser.hasRole("ROLE_CUSTOMER_RETAIL")) {
-//            model.addAttribute("providers", userService.getProvidersWithRetailWorks());
-//        } else if (currentUser.hasRole("ROLE_CUSTOMER_CORPORATE")) {
-//            model.addAttribute("providers", userService.getProvidersWithCorporateWorks());
-//        }
-//        return "appointments/selectProvider";
-//    }
-
-//    @GetMapping("/new/{providerId}/{workId}")
-//    public String selectDate(@PathVariable("workId") int workId, @PathVariable("providerId") int providerId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
-//        if (workService.isWorkForCustomer(workId, currentUser.getId())) {
-//            model.addAttribute(providerId);
-//            model.addAttribute("workId", workId);
-//            return "appointments/selectDate";
-//        } else {
-//            return "redirect:/appointments/new";
-//        }
-
-//    }
-//
-//    @GetMapping("/new/{providerId}/{workId}/{dateTime}")
-//    public String showNewAppointmentSummary(@PathVariable("workId") int workId, @PathVariable("providerId") int providerId, @PathVariable("dateTime") String start, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
-//        if (appointmentService.isAvailable(workId, providerId, currentUser.getId(), LocalDateTime.parse(start))) {
-//            model.addAttribute("work", workService.getWorkById(workId));
-//            model.addAttribute("provider", userService.getProviderById(providerId).getFirstName() + " " + userService.getProviderById(providerId).getLastName());
-//            model.addAttribute(providerId);
-//            model.addAttribute("start", LocalDateTime.parse(start));
-//            model.addAttribute("end", LocalDateTime.parse(start).plusMinutes(workService.getWorkById(workId).getDuration()));
-//            return "appointments/newAppointmentSummary";
-//        } else {
-//            return "redirect:/appointments/new";
-//        }
 //    }
 
 	public static String formatDuration(Duration duration) {

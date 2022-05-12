@@ -39,6 +39,17 @@ public class NotificationServiceImpl implements NotificationService {
             emailService.sendAppointmentRejectionRequestedNotification(appointment);
         }
     }
+    
+    @Override
+    public void newAppointmentRejectionAcceptedNotification(Appointment appointment, boolean sendEmail) {
+        String title = "Rejection accepted";
+        String message = "You doctor accepted your rejection request";
+        String url = "/appointments/" + appointment.getId();
+//        newNotification(title, message, url, appointment.getPatient());
+        if (sendEmail && mailingEnabled) {
+            emailService.sendAppointmentRejectionAcceptedNotification(appointment);
+        }
+    }
 
 //    @Override
 //    public void newNewAppointmentScheduledNotification(Appointment appointment, boolean sendEmail) {

@@ -13,4 +13,5 @@ public interface EmailService {
     void sendConfirmRegistration(User user);
     
     void sendAppointmentRejectionRequestedNotification(Appointment appointment);
+    void sendAppointmentRejectionAcceptedNotification(Appointment appointment);
 }

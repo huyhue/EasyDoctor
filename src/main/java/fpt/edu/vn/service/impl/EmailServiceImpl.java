@@ -85,5 +85,13 @@ public class EmailServiceImpl implements EmailService {
         sendEmail(appointment.getDoctor().getEmail(), "Rejection requested", url, context, null);
     }
     
+    @Async
+    @Override
+    public void sendAppointmentRejectionAcceptedNotification(Appointment appointment) {
+        Context context = new Context();
+//        context.setVariable("appointment", appointment);
+        sendEmail(appointment.getPatient().getEmail(), "Rejection request accepted", "Appointment Rejection Accepted", context, null);
+    }
+    
     
 }

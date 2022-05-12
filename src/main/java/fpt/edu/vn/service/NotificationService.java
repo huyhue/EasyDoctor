@@ -11,4 +11,5 @@ import fpt.edu.vn.model.User;
 
 public interface NotificationService {
 	void newAppointmentRejectionRequestedNotification(Appointment appointment, boolean sendEmail);
+	void newAppointmentRejectionAcceptedNotification(Appointment appointment, boolean sendEmail);
 }
