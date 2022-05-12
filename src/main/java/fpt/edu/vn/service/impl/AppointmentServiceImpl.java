@@ -15,6 +15,7 @@ import fpt.edu.vn.model.User;
 import fpt.edu.vn.model.WorkingPlan;
 import fpt.edu.vn.repository.AppointmentRepository;
 import fpt.edu.vn.service.AppointmentService;
+import fpt.edu.vn.service.NotificationService;
 import fpt.edu.vn.service.PackagesService;
 import fpt.edu.vn.service.UserService;
 
@@ -33,8 +34,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final UserService userService;
     private final PackagesService packagesService;
 //    private final ChatMessageRepository chatMessageRepository;
-//    private final NotificationService notificationService;
-//    private final JwtTokenServiceImpl jwtTokenService;
+    private final NotificationService notificationService;
+    private final JwtTokenServiceImpl jwtTokenService;
 //
 //    public AppointmentServiceImpl(AppointmentRepository appointmentRepository, UserService userService, WorkService workService, ChatMessageRepository chatMessageRepository, NotificationService notificationService, JwtTokenServiceImpl jwtTokenService) {
 //        this.appointmentRepository = appointmentRepository;
@@ -44,13 +45,15 @@ public class AppointmentServiceImpl implements AppointmentService {
 //        this.notificationService = notificationService;
 //        this.jwtTokenService = jwtTokenService;
 //    }
-	public AppointmentServiceImpl(AppointmentRepository appointmentRepository, UserService userService,
-			PackagesService packagesService) {
-		super();
-		this.appointmentRepository = appointmentRepository;
-		this.userService = userService;
-		this.packagesService = packagesService;
-	}
+    public AppointmentServiceImpl(AppointmentRepository appointmentRepository, UserService userService,
+    		PackagesService packagesService, NotificationService notificationService, JwtTokenServiceImpl jwtTokenService) {
+    	super();
+    	this.appointmentRepository = appointmentRepository;
+    	this.userService = userService;
+    	this.packagesService = packagesService;
+    	this.notificationService = notificationService;
+    	this.jwtTokenService = jwtTokenService;
+    }
 	
 	@Override
     @PreAuthorize("hasRole('ADMIN')")
@@ -228,4 +231,70 @@ public class AppointmentServiceImpl implements AppointmentService {
         return appointmentRepository.findByPatientIdCanceledAfterDate(patientId, LocalDate.now().with(TemporalAdjusters.firstDayOfMonth()).atStartOfDay());
     }
     
+    @Override
+    public boolean isPatientAllowedToRejectAppointment(int userId, int appointmentId) {
+        User user = userService.getUserById(userId);
+        Appointment appointment = getAppointmentByIdWithAuthorization(appointmentId);
+
+        return appointment.getPatient().equals(user) && appointment.getStatus().equals(AppointmentStatus.FINISHED) && !LocalDateTime.now().isAfter(appointment.getEnd().plusDays(1));
+    }
+    
+    @Override
+    public boolean isDoctorAllowedToAcceptRejection(int doctorId, int appointmentId) {
+        User user = userService.getUserById(doctorId);
+        Appointment appointment = getAppointmentByIdWithAuthorization(appointmentId);
+
+        return appointment.getDoctor().equals(user) && appointment.getStatus().equals(AppointmentStatus.REJECTION_REQUESTED);
+    }
+    
+    @Override
+    public void updateAppointment(Appointment appointment) {
+        appointmentRepository.save(appointment);
+    }
+    
+    @Override
+    public boolean requestAppointmentRejection(int appointmentId, int patientId) {
+        if (isPatientAllowedToRejectAppointment(patientId, appointmentId)) {
+            Appointment appointment = getAppointmentByIdWithAuthorization(appointmentId);
+            appointment.setStatus(AppointmentStatus.REJECTION_REQUESTED);
+            notificationService.newAppointmentRejectionRequestedNotification(appointment, true);
+            updateAppointment(appointment);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    @Override
+    public boolean requestAppointmentRejection(String token) {
+        if (jwtTokenService.validateToken(token)) {
+            int appointmentId = jwtTokenService.getAppointmentIdFromToken(token);
+            int patientId = jwtTokenService.getPatientIdFromToken(token);
+            return requestAppointmentRejection(appointmentId, patientId);
+        }
+        return false;
+    }
+    
+    @Override
+    public boolean acceptRejection(int appointmentId, int doctorId) {
+        if (isDoctorAllowedToAcceptRejection(doctorId, appointmentId)) {
+            Appointment appointment = getAppointmentByIdWithAuthorization(appointmentId);
+            appointment.setStatus(AppointmentStatus.REJECTED);
+            updateAppointment(appointment);
+//            notificationService.newAppointmentRejectionAcceptedNotification(appointment, true);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    @Override
+    public boolean acceptRejection(String token) {
+        if (jwtTokenService.validateToken(token)) {
+            int appointmentId = jwtTokenService.getAppointmentIdFromToken(token);
+            int doctorId = jwtTokenService.getDoctorIdFromToken(token);
+            return acceptRejection(appointmentId, doctorId);
+        }
+        return false;
+    }
 }

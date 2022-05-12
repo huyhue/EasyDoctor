@@ -79,6 +79,11 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
+//    	try {
+//            return this.user.getActive() == 1;
+//        } catch (Exception e){
+//            return false;
+//        }
         return true;
     }
 

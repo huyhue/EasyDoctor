@@ -20,6 +20,7 @@ public interface AppointmentService {
 	
 	void createNewAppointment(int packagesId, int doctorId, int patientId, LocalDateTime start);
 	void cancelUserAppointmentById(int appointmentId, int userId);
+	void updateAppointment(Appointment appointment);
 	
 	boolean isAvailable(int packagesId, int doctorId, int patientId, LocalDateTime start);
 	
@@ -33,4 +34,12 @@ public interface AppointmentService {
 	//Cancel
 	String getCancelNotAllowedReason(int userId, int appointmentId);
 	List<Appointment> getCanceledAppointmentsByPatientIdForCurrentMonth(int patientId);
+	
+	//Reject
+	boolean isPatientAllowedToRejectAppointment(int userId, int appointmentId);
+	boolean isDoctorAllowedToAcceptRejection(int doctorId, int appointmentId);
+	boolean requestAppointmentRejection(int appointmentId, int patientId);
+	boolean requestAppointmentRejection(String token);
+	boolean acceptRejection(int appointmentId, int patientId);
+	boolean acceptRejection(String token);
 }

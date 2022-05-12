@@ -97,52 +97,56 @@ public class AppointmentController {
         Appointment appointment = appointmentService.getAppointmentByIdWithAuthorization(appointmentId);
         model.addAttribute("appointment", appointment);
         model.addAttribute("chatMessage", new ChatMessage());
-//        boolean allowedToRequestRejection = appointmentService.isCustomerAllowedToRejectAppointment(currentUser.getId(), appointmentId);
-//        boolean allowedToAcceptRejection = appointmentService.isProviderAllowedToAcceptRejection(currentUser.getId(), appointmentId);
+        boolean allowedToRequestRejection = appointmentService.isPatientAllowedToRejectAppointment(currentUser.getId(), appointmentId);
+        boolean allowedToAcceptRejection = appointmentService.isDoctorAllowedToAcceptRejection(currentUser.getId(), appointmentId);
+        model.addAttribute("allowedToRequestRejection", allowedToRequestRejection);
+        model.addAttribute("allowedToAcceptRejection", allowedToAcceptRejection);
+        if (allowedToRequestRejection) {
+            model.addAttribute("remainingTime", formatDuration(Duration.between(LocalDateTime.now(), appointment.getEnd().plusDays(1))));
+        }
+        
 //        boolean allowedToExchange = exchangeService.checkIfEligibleForExchange(currentUser.getId(), appointmentId);
-//        model.addAttribute("allowedToRequestRejection", allowedToRequestRejection);
-//        model.addAttribute("allowedToAcceptRejection", allowedToAcceptRejection);
 //        model.addAttribute("allowedToExchange", allowedToExchange);
-//        if (allowedToRequestRejection) {
-//            model.addAttribute("remainingTime", formatDuration(Duration.between(LocalDateTime.now(), appointment.getEnd().plusDays(1))));
-//        }
+        
         String cancelNotAllowedReason = appointmentService.getCancelNotAllowedReason(currentUser.getId(), appointmentId);
         model.addAttribute("allowedToCancel", cancelNotAllowedReason == null);
         model.addAttribute("cancelNotAllowedReason", cancelNotAllowedReason);
         return "appointments/appointmentDetail";
     }
 
-//    @PostMapping("/reject")
-//    public String processAppointmentRejectionRequest(@RequestParam("appointmentId") int appointmentId, @AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
-//        boolean result = appointmentService.requestAppointmentRejection(appointmentId, currentUser.getId());
-//        model.addAttribute(result);
-//        model.addAttribute("type", "request");
-//        return REJECTION_CONFIRMATION_VIEW;
-//    }
+    @PostMapping("/reject")
+    public String processAppointmentRejectionRequest(@RequestParam("appointmentId") int appointmentId, @AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
+        boolean result = appointmentService.requestAppointmentRejection(appointmentId, currentUser.getId());
+        model.addAttribute(result);
+        model.addAttribute("type", "request");
+        return REJECTION_CONFIRMATION_VIEW;
+    }
+    
+    //Click link by email
+    @GetMapping("/reject")
+    public String processAppointmentRejectionRequest(@RequestParam("token") String token, Model model) {
+        boolean result = appointmentService.requestAppointmentRejection(token);
+        model.addAttribute(result);
+        model.addAttribute("type", "request");
+        return REJECTION_CONFIRMATION_VIEW;
+    }
 
-//    @GetMapping("/reject")
-//    public String processAppointmentRejectionRequest(@RequestParam("token") String token, Model model) {
-//        boolean result = appointmentService.requestAppointmentRejection(token);
-//        model.addAttribute(result);
-//        model.addAttribute("type", "request");
-//        return REJECTION_CONFIRMATION_VIEW;
-//    }
+    @PostMapping("/acceptRejection")
+    public String acceptAppointmentRejectionRequest(@RequestParam("appointmentId") int appointmentId, @AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
+        boolean result = appointmentService.acceptRejection(appointmentId, currentUser.getId());
+        model.addAttribute(result);
+        model.addAttribute("type", "accept");
+        return REJECTION_CONFIRMATION_VIEW;
+    }
 
-//    @PostMapping("/acceptRejection")
-//    public String acceptAppointmentRejectionRequest(@RequestParam("appointmentId") int appointmentId, @AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
-//        boolean result = appointmentService.acceptRejection(appointmentId, currentUser.getId());
+    @GetMapping("/acceptRejection")
+    public String acceptAppointmentRejectionRequest(@RequestParam("token") String token, Model model) {
+        boolean result = appointmentService.acceptRejection(token);
 //        model.addAttribute(result);
-//        model.addAttribute("type", "accept");
-//        return REJECTION_CONFIRMATION_VIEW;
-//    }
-//
-//    @GetMapping("/acceptRejection")
-//    public String acceptAppointmentRejectionRequest(@RequestParam("token") String token, Model model) {
-//        boolean result = appointmentService.acceptRejection(token);
-//        model.addAttribute(result);
-//        model.addAttribute("type", "accept");
-//        return REJECTION_CONFIRMATION_VIEW;
-//    }
+        model.addAttribute("result", result);
+        model.addAttribute("type", "accept");
+        return REJECTION_CONFIRMATION_VIEW;
+    }
 
 //    @PostMapping("/messages/new")
 //    public String addNewChatMessage(@ModelAttribute("chatMessage") ChatMessage chatMessage, @RequestParam("appointmentId") int appointmentId, @AuthenticationPrincipal CustomUserDetails currentUser) {

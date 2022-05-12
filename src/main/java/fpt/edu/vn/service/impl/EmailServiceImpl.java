@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
+
+import fpt.edu.vn.model.Appointment;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.service.EmailService;
 
@@ -22,14 +24,18 @@ public class EmailServiceImpl implements EmailService {
     private final JavaMailSender javaMailSender;
     private final SpringTemplateEngine templateEngine;
     private final String baseUrl;
+    private final JwtTokenServiceImpl jwtTokenService;
 
-    public EmailServiceImpl(JavaMailSender javaMailSender, SpringTemplateEngine templateEngine, @Value("${base.url}") String baseUrl) {
-        this.javaMailSender = javaMailSender;
-        this.templateEngine = templateEngine;
-        this.baseUrl = baseUrl;
-    }
+    public EmailServiceImpl(JavaMailSender javaMailSender, SpringTemplateEngine templateEngine, @Value("${base.url}") String baseUrl,
+			JwtTokenServiceImpl jwtTokenService) {
+		super();
+		this.javaMailSender = javaMailSender;
+		this.templateEngine = templateEngine;
+		this.baseUrl = baseUrl;
+		this.jwtTokenService = jwtTokenService;
+	}
 
-    @Async
+	@Async
     @Override
     public void sendEmail(String to, String subject, String templateName, Context templateContext, File attachment) {
         try {
@@ -66,6 +72,17 @@ public class EmailServiceImpl implements EmailService {
 				+ baseUrl + "/register/confirm?token=" + user.getConfirmationToken();
         
         sendEmail(user.getEmail(), "Confirm Registration", content, context, null);
+    }
+    
+    @Async
+    @Override
+    public void sendAppointmentRejectionRequestedNotification(Appointment appointment) {
+        Context context = new Context();
+//        context.setVariable("appointment", appointment);
+//        context.setVariable("url", baseUrl + "/appointments/acceptRejection?token=" + jwtTokenService.generateAcceptRejectionToken(appointment));
+        
+        String url = baseUrl + "/appointments/acceptRejection?token=" + jwtTokenService.generateAcceptRejectionToken(appointment);
+        sendEmail(appointment.getDoctor().getEmail(), "Rejection requested", url, context, null);
     }
     
     

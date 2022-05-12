@@ -153,6 +153,7 @@ public class UserServiceImpl implements UserService {
 	public void savePatientRegister(Patient userRE) {
 		Patient patient = new Patient(userRE.getUserName(), passwordEncoder.encode(userRE.getPassword()),
 				userRE.getConfirmationToken(), getRolesForPatient());
+		patient.setEmail(userRE.getEmail());
 		userRepository.save(patient);
 	}
 
