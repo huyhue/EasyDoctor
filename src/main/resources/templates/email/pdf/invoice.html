@@ -1,0 +1,183 @@
+<html>
+
+<head>
+
+    <style>
+        .invoice-box {
+            max-width: 800px;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #eee;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+            font-size: 16px;
+            line-height: 24px;
+            font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+            color: #555;
+        }
+
+        .invoice-box table {
+            width: 100%;
+            line-height: inherit;
+            text-align: left;
+        }
+
+        .invoice-box table td {
+            padding: 5px;
+            vertical-align: top;
+        }
+
+        .invoice-box table tr td:nth-child(2) {
+            text-align: right;
+        }
+
+        .invoice-box table tr.top table td {
+            padding-bottom: 20px;
+        }
+
+        .invoice-box table tr.top table td.title {
+            font-size: 45px;
+            line-height: 45px;
+            color: #333;
+        }
+
+        .invoice-box table tr.information table td {
+            padding-bottom: 40px;
+        }
+
+        .invoice-box table tr.heading td {
+            background: #eee;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+        }
+
+        .invoice-box table tr.details td {
+            padding-bottom: 20px;
+        }
+
+        .invoice-box table tr.item td {
+            border-bottom: 1px solid #eee;
+        }
+
+        .invoice-box table tr.item.last td {
+            border-bottom: none;
+        }
+
+        .invoice-box table tr.total td:nth-child(2) {
+            border-top: 2px solid #eee;
+            font-weight: bold;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .invoice-box table tr.top table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+
+            .invoice-box table tr.information table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+        }
+
+        /** RTL **/
+        .rtl {
+            direction: rtl;
+            font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        }
+
+        .rtl table {
+            text-align: right;
+        }
+
+        .rtl table tr td:nth-child(2) {
+            text-align: left;
+        }
+
+        #number {
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="invoice-box">
+    <table cellpadding="0" cellspacing="0">
+        <tr class="top">
+            <td colspan="2">
+                <table>
+                    <tr>
+                        <td class="title">
+                            <img src="/img/logo.jpg" style="width:100%; max-width:300px;" />
+                        </td>
+
+                        <td>
+                            <span th:text="${invoice.number}" id="number">FV/2019/03/42</span><br />
+                            Issued: <span th:text="${#temporals.format(invoice.issued, 'dd-MM-yyyy')}">Issued: 01-03-2019</span><br/>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr class="information">
+            <td colspan="2">
+                <table>
+                    <tr>
+                        <td>
+                            <b>From:</b><br/>
+                            Walerian Grabowski<br/>
+                            ul. Białych Brzóz 13<br/>
+                            31-410 Kraków<br/>
+                            706-425-256 <br/>
+                            PL 76 9584 1034 3528 6132 8140 7826
+
+                        </td>
+
+                        <td>
+                            <b>To:</b><br/>
+                            <span th:if="${invoice.appointments[0].customer.hasRole('ROLE_CUSTOMER_RETAIL')}" th:utext="${invoice.appointments[0].customer.firstName +' '+invoice.appointments[0].customer.lastName}+ '&lt;br /&gt;'">Bolesław Walczak</span>
+                            <span th:if="${invoice.appointments[0].customer.hasRole('ROLE_CUSTOMER_CORPORATE')}" th:utext="${invoice.appointments[0].customer.companyName} +'&lt;br /&gt;'">Company name</span>
+                            <span th:if="${invoice.appointments[0].customer.hasRole('ROLE_CUSTOMER_CORPORATE')}" th:utext="${'VAT: ' + invoice.appointments[0].customer.vatNumber}+'&lt;br /&gt;'">VAT: 697-134-42-81</span>
+                            <span th:text="${invoice.appointments[0].customer.street}">ul. Pola Wincentego 7</span><br/>
+                            <span th:text="${invoice.appointments[0].customer.postcode + ' ' + invoice.appointments[0].customer.city}">71-342 Szczecin</span><br/>
+                            <span th:text="${invoice.appointments[0].customer.mobile}">695-262-145</span><br/>
+                            <span th:text="${invoice.appointments[0].customer.email}">email@example.com</span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr class="heading">
+            <td>
+                Item
+            </td>
+
+            <td>
+                Price
+            </td>
+        </tr>
+
+        <tr th:each="appointment : ${invoice.appointments}" class="item">
+            <td>
+                <span th:text="${appointment.work.name +' with '+appointment.provider.firstName +' '+appointment.provider.lastName +' on '+#temporals.format(appointment.start, 'dd-MM-yyyy HH:mm')}"></span>
+            </td>
+
+            <td>
+                <span th:text="${appointment.work.price}">50 PLN</span> PLN
+            </td>
+        </tr>
+
+        <tr class="total">
+            <td></td>
+
+            <td>
+                Total: <span th:text="${invoice.totalAmount}">50 PLN</span> PLN
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
