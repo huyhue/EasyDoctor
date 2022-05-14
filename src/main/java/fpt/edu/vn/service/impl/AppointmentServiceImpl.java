@@ -152,7 +152,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             appointment.setStart(start);
             appointment.setEnd(start.plusMinutes(packages.getDuration()));
             appointmentRepository.save(appointment);
-//            notificationService.newNewAppointmentScheduledNotification(appointment, true);
+            notificationService.newAppointmentNotification(appointment, true);
         } else {
             throw new RuntimeException();
         }
@@ -168,9 +168,9 @@ public class AppointmentServiceImpl implements AppointmentService {
             appointment.setCanceledAt(LocalDateTime.now());
             appointmentRepository.save(appointment);
             if (canceler.equals(appointment.getPatient())) {
-//                notificationService.newAppointmentCanceledByCustomerNotification(appointment, true);
+                notificationService.appointmentCanceledByPatient(appointment, true);
             } else if (canceler.equals(appointment.getDoctor())) {
-//                notificationService.newAppointmentCanceledByProviderNotification(appointment, true);
+                notificationService.appointmentCanceledByDoctor(appointment, true);
             }
         } else {
             throw new org.springframework.security.access.AccessDeniedException("Unauthorized");

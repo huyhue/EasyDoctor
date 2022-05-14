@@ -6,6 +6,7 @@ import fpt.edu.vn.component.AppointmentRegisterForm;
 import fpt.edu.vn.model.Appointment;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.AppointmentService;
+import fpt.edu.vn.service.NotificationService;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,17 +23,12 @@ import java.util.stream.Collectors;
 public class AjaxController {
 
 	private final AppointmentService appointmentService;
-//    private final NotificationService notificationService;
-//
-//    public AjaxController(AppointmentService appointmentService, NotificationService notificationService) {
-//        this.appointmentService = appointmentService;
-//        this.notificationService = notificationService;
-//    }
+    private final NotificationService notificationService;
 
-	public AjaxController(AppointmentService appointmentService) {
-		super();
-		this.appointmentService = appointmentService;
-	}
+    public AjaxController(AppointmentService appointmentService, NotificationService notificationService) {
+        this.appointmentService = appointmentService;
+        this.notificationService = notificationService;
+    }
 
 	@GetMapping("/user/{userId}/appointments")
 	public List<Appointment> getAppointmentsForUser(@PathVariable("userId") int userId,
@@ -53,9 +49,9 @@ public class AjaxController {
                 .collect(Collectors.toList());
     }
 
-//    @GetMapping("/user/notifications")
-//    public int getUnreadNotificationsCount(@AuthenticationPrincipal CustomUserDetails currentUser) {
-//        return notificationService.getUnreadNotifications(currentUser.getId()).size();
-//    }
+    @GetMapping("/user/notifications")
+    public int getUnreadNotificationsCount(@AuthenticationPrincipal CustomUserDetails currentUser) {
+        return notificationService.getUnreadNotifications(currentUser.getId()).size();
+    }
 
 }

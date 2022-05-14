@@ -18,9 +18,7 @@ import java.time.LocalDateTime;
 @Controller
 @RequestMapping("/appointments")
 public class AppointmentController {
-
 	private static final String REJECTION_CONFIRMATION_VIEW = "appointments/rejectionConfirmation";
-
 	private final PackagesService packagesService;
 	private final UserService userService;
 	private final AppointmentService appointmentService;
@@ -32,6 +30,25 @@ public class AppointmentController {
 		this.userService = userService;
 		this.appointmentService = appointmentService;
 	}
+	
+	@GetMapping("/{id}")
+    public String showAppointmentDetail(@PathVariable("id") int appointmentId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
+        Appointment appointment = appointmentService.getAppointmentByIdWithAuthorization(appointmentId);
+        model.addAttribute("appointment", appointment);
+        model.addAttribute("chatMessage", new ChatMessage());
+        boolean allowedToRequestRejection = appointmentService.isPatientAllowedToRejectAppointment(currentUser.getId(), appointmentId);
+        boolean allowedToAcceptRejection = appointmentService.isDoctorAllowedToAcceptRejection(currentUser.getId(), appointmentId);
+        model.addAttribute("allowedToRequestRejection", allowedToRequestRejection);
+        model.addAttribute("allowedToAcceptRejection", allowedToAcceptRejection);
+        if (allowedToRequestRejection) {
+            model.addAttribute("remainingTime", formatDuration(Duration.between(LocalDateTime.now(), appointment.getEnd().plusDays(1))));
+        }
+        
+        String cancelNotAllowedReason = appointmentService.getCancelNotAllowedReason(currentUser.getId(), appointmentId);
+        model.addAttribute("allowedToCancel", cancelNotAllowedReason == null);
+        model.addAttribute("cancelNotAllowedReason", cancelNotAllowedReason);
+        return "appointments/appointmentDetail";
+    }
 
 	@GetMapping("/all")
 	public String showAllAppointments(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
@@ -89,26 +106,6 @@ public class AppointmentController {
 		appointmentService.cancelUserAppointmentById(appointmentId, currentUser.getId());
 		return "redirect:/appointments/all";
 	}
-	
-
-	@GetMapping("/{id}")
-    public String showAppointmentDetail(@PathVariable("id") int appointmentId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
-        Appointment appointment = appointmentService.getAppointmentByIdWithAuthorization(appointmentId);
-        model.addAttribute("appointment", appointment);
-        model.addAttribute("chatMessage", new ChatMessage());
-        boolean allowedToRequestRejection = appointmentService.isPatientAllowedToRejectAppointment(currentUser.getId(), appointmentId);
-        boolean allowedToAcceptRejection = appointmentService.isDoctorAllowedToAcceptRejection(currentUser.getId(), appointmentId);
-        model.addAttribute("allowedToRequestRejection", allowedToRequestRejection);
-        model.addAttribute("allowedToAcceptRejection", allowedToAcceptRejection);
-        if (allowedToRequestRejection) {
-            model.addAttribute("remainingTime", formatDuration(Duration.between(LocalDateTime.now(), appointment.getEnd().plusDays(1))));
-        }
-        
-        String cancelNotAllowedReason = appointmentService.getCancelNotAllowedReason(currentUser.getId(), appointmentId);
-        model.addAttribute("allowedToCancel", cancelNotAllowedReason == null);
-        model.addAttribute("cancelNotAllowedReason", cancelNotAllowedReason);
-        return "appointments/appointmentDetail";
-    }
 
     @PostMapping("/reject")
     public String processAppointmentRejectionRequest(@RequestParam("appointmentId") int appointmentId, @AuthenticationPrincipal CustomUserDetails currentUser, Model model) {

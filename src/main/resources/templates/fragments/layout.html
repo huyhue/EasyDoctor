@@ -2,122 +2,118 @@
 <html th:fragment="layout (content, activeLink, pageTitle)" xmlns:th="http://www.w3.org/1999/html">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title th:text="${pageTitle}">Page title</title>
-    <link href="/img/iconlogo.jpg" rel="icon">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title th:text="${pageTitle}">Page title</title>
+	<link href="/img/iconlogo.jpg" rel="icon">
 	<link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
-    <!-- Appointment Chat CSS -->
-    <link rel="stylesheet" th:href="@{/css/vendor/chat.css}"/>
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"/>
-    <!-- Fullcalendar CSS -->
-    <link rel="stylesheet" th:href="@{/css/vendor/fullcalendar.css}"/>
-    <!-- Site CSS -->
-    <link rel="stylesheet" th:href="@{/css/style.css}"/>
-    <!--DataTables CSS-->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+	<!-- Appointment Chat CSS -->
+	<link rel="stylesheet" th:href="@{/css/vendor/chat.css}" />
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+	<!-- Fullcalendar CSS -->
+	<link rel="stylesheet" th:href="@{/css/vendor/fullcalendar.css}" />
+	<!-- Site CSS -->
+	<link rel="stylesheet" th:href="@{/css/style.css}" />
+	<!--DataTables CSS-->
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 
-    <link rel="stylesheet" th:href="@{/css/vendor/bootstrap-notifications.css}"/>
+	<link rel="stylesheet" th:href="@{/css/vendor/bootstrap-notifications.css}" />
 
 
-    <!--font awesome-->
-    <script src="https://kit.fontawesome.com/56438f342e.js"></script>
+	<!--font awesome-->
+	<script src="https://kit.fontawesome.com/56438f342e.js"></script>
 
-    <!--jQuery-->
-    <script src="/webjars/jquery/3.3.1-2/jquery.min.js"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <!--Moment-->
-    <script type="text/javascript" th:src="@{/js/vendor/moment.js}"></script>
-    <script type="text/javascript" th:src="@{/js/main.js}"></script>
-    <!--FullCalendar-->
-    <script type="text/javascript" th:src="@{/js/vendor/fullcalendar.js}"></script>
-    <!--DataTables-->
-    <script type="text/javascript" charset="utf8"
-            src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+	<!--jQuery-->
+	<script src="/webjars/jquery/3.3.1-2/jquery.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<!--Moment-->
+	<script type="text/javascript" th:src="@{/js/vendor/moment.js}"></script>
+	<script type="text/javascript" th:src="@{/js/main.js}"></script>
+	<!--FullCalendar-->
+	<script type="text/javascript" th:src="@{/js/vendor/fullcalendar.js}"></script>
+	<!--DataTables-->
+	<script type="text/javascript" charset="utf8"
+		src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137823705-3"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-137823705-3"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() {dataLayer.push(arguments);}
+		gtag('js', new Date());
 
-        gtag('config', 'UA-137823705-3');
-    </script>
+		gtag('config', 'UA-137823705-3');
+	</script>
 
 </head>
 
 <body>
 
-<!-- Navigation -->
-<div sec:authorize="isAuthenticated()">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+	<!-- Navigation -->
+	<div sec:authorize="isAuthenticated()">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+			<div class="container">
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+					aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
 
-            <th:block sec:authorize="hasRole('ROLE_PATIENT')">
-                <!-- menu for patient-->
-                <div th:replace="fragments/patient-nav.html :: navlinks(${activeLink})"></div>
-            </th:block>
+				<th:block sec:authorize="hasRole('ROLE_PATIENT')">
+					<!-- menu for patient-->
+					<div th:replace="fragments/patient-nav.html :: navlinks(${activeLink})"></div>
+				</th:block>
 
-            <th:block sec:authorize="hasRole('ROLE_DOCTOR')">
-                <!-- menu for docter-->
-                <div th:replace="fragments/doctor-nav.html :: navlinks(${activeLink})"></div>
-            </th:block>
+				<th:block sec:authorize="hasRole('ROLE_DOCTOR')">
+					<!-- menu for docter-->
+					<div th:replace="fragments/doctor-nav.html :: navlinks(${activeLink})"></div>
+				</th:block>
 
-            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-                <!-- menu for admin-->
-                <div th:replace="fragments/admin-nav.html :: navlinks(${activeLink})"></div>
-            </th:block>
-            <!--notifications-->
+				<th:block sec:authorize="hasRole('ROLE_ADMIN')">
+					<!-- menu for admin-->
+					<div th:replace="fragments/admin-nav.html :: navlinks(${activeLink})"></div>
+				</th:block>
+				<!--notifications-->
 
+				<!--notifications-->
+				<div class="collapse navbar-collapse">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item dropdown dropdown-notifications open">
+							<a th:href="@{/notifications}" class="nav-link dropdown-toggle">
+								<i id="notifications-count" data-count="2" class="fas fa-bell"
+									aria-label="Nofitication centre"></i>
+							</a>
+						</li>
+						<li>
+							<p class="navbar-nav ml-auto navbar-text"> Logged as:
+								<span th:text="${#authentication.getPrincipal().getUsername()}">username</span> |
+							</p>
+						</li>
+						<li>
+							<form th:action="@{/perform_logout}" id="logout" method="POST">
+								<a class="nav-link" href="#"
+									onclick="document.getElementById('logout').submit(); return false;">Log out</a>
+							</form>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
 
-
-
-            <!--notifications-->
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown dropdown-notifications open">
-                        <!--<a th:href="@{/notifications}" class="nav-link dropdown-toggle">
-                            <i id="notifications-count" data-count="2" class="fas fa-bell" aria-label="Nofitication centre"></i>
-                        </a>-->
-                    </li>
-                    <li>
-                        <p class="navbar-nav ml-auto navbar-text"> Logged as:
-                         <span th:text="${#authentication.getPrincipal().getUsername()}">username</span> | </p>
-                           
-                    </li>
-                    <li>
-                        <form th:action="@{/perform_logout}" id="logout" method="POST">
-                            <a class="nav-link" href="#"
-                               onclick="document.getElementById('logout').submit(); return false;">Log out</a>
-                        </form>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</div>
-
-<!-- Page Content -->
-<div class="container">
-    <th:block th:include="${content}"/>
-    <div class="row align-items-center justify-content-center" style="margin-top: 50px">
-        <p>EasyDoctor v<span th:text="${currentVersion}">1.0</span></p>
-    </div>
-</div>
-<script type="text/javascript" th:inline="javascript">
+	<!-- Page Content -->
+	<div class="container">
+		<th:block th:include="${content}" />
+		<div class="row align-items-center justify-content-center" style="margin-top: 50px">
+			<p>EasyDoctor v<span th:text="${currentVersion}">1.0</span></p>
+		</div>
+	</div>
+	<script type="text/javascript" th:inline="javascript">
 		$(document).ready(function () {
 			$('#profileImage').change(function () {
 				showImageThumbnail(this);
-				console.log("hello");
 			});
-
 			function showImageThumbnail(fileInput) {
 				file = fileInput.files[0];
 				var reader = new FileReader();
@@ -128,34 +124,33 @@
 			}
 		});
 	</script>
-<!--<script th:inline="javascript">
-    function fetchdata(){
-        $.ajax({
-            url: '/api/user/notifications',
-            type: 'get',
-            success: function(data){
-                var elemennt = document.getElementById("notifications-count");
-                if(data>0){
-                    elemennt.setAttribute("data-count",data);
-                    elemennt.className = "fas fa-bell notification-icon";
-                } else{
-                    elemennt.setAttribute("data-count",0);
-                    elemennt.className = "fas fa-bell";
-                }
-            },
-            complete:function(data){
-                setTimeout(fetchdata,5000);
-            }
-        });
-    }
 
-    $(document).ready(function(){
-        fetchdata();
-        setTimeout(fetchdata,5000);
-    });
+	<script th:inline="javascript">
+		function fetchdata() {
+			$.ajax({
+				url: '/api/user/notifications',
+				type: 'get',
+				success: function (data) {
+					var elemennt = document.getElementById("notifications-count");
+					if (data > 0) {
+						elemennt.setAttribute("data-count", data);
+						elemennt.className = "fas fa-bell notification-icon";
+					} else {
+						elemennt.setAttribute("data-count", 0);
+						elemennt.className = "fas fa-bell";
+					}
+				},
+				complete: function (data) {
+					setTimeout(fetchdata, 5000);
+				}
+			});
+		}
 
-</script>-->
-
+		$(document).ready(function () {
+			fetchdata();
+			setTimeout(fetchdata, 5000);
+		});
+	</script>
+	
 </body>
-
 </html>

@@ -12,6 +12,11 @@ public interface EmailService {
 
     void sendConfirmRegistration(User user);
     
+    void sendNewAppointment(Appointment appointment);
+    void sendAppointmentCanceledByPatient(Appointment appointment);
+    void sendAppointmentCanceledByDoctor(Appointment appointment);
     void sendAppointmentRejectionRequestedNotification(Appointment appointment);
     void sendAppointmentRejectionAcceptedNotification(Appointment appointment);
+    
+    
 }

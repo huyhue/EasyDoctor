@@ -4,15 +4,16 @@
 <head></head>
 
 <body>
-<p th:if="${canceler =='customer'}">Hello, <span th:text="${appointment.provider.firstName}"></span></p>
-<p th:if="${canceler =='provider'}">Hello, <span th:text="${appointment.customer.firstName}"></span></p>
-<p>This appointemnt has been cancelled by <span th:text="${canceler}"></span></p>
-<p>Start date: <span th:text="${#temporals.format(appointment.start, 'dd-MM-yyyy HH:mm')}"></span></p>
-<p>Work: <span th:text="${appointment.work.name}"></span></p>
-<p th:if="${canceler =='customer'}">Provider: <span th:text="${appointment.provider.firstName + ' ' + appointment.provider.lastName}"></span></p>
-<p th:if="${canceler =='provider'}">Customer: <span th:text="${appointment.customer.firstName + ' ' + appointment.customer.lastName}"></span></p>
-<p>Duration: <span th:text="${appointment.work.duration}"></span></p>
-<p>Price: <span th:text="${appointment.work.price}"></span></p>
-</body>
+<p th:if="${canceler =='patient'}">Xin chào bác sĩ, <span th:text="${appointment.doctor.fullname}"></span></p>
+<p th:if="${canceler =='doctor'}">Xin chào bệnh nhân, <span th:text="${appointment.patient.fullname}"></span></p>
+<p>Lịch khám này đã bị hủy bởi <span th:text="${canceler}"></span></p>
+<p>Ngày khám: <span th:text="${#temporals.format(appointment.start, 'dd-MM-yyyy HH:mm')}"></span></p>
+<p>Gói khám bệnh: <span th:text="${appointment.packages.name}"></span></p>
+<p th:if="${canceler =='patient'}">Bệnh nhân: <span th:text="${appointment.patient.fullname}"></span></p>
+<p th:if="${canceler =='doctor'}">Bác sĩ: <span th:text="${appointment.doctor.fullname}"></span></p>
+<p>Thời lượng khám: <span th:text="${appointment.packages.duration}"></span> phút</p>
+<p>Giá: <span th:text="${appointment.packages.price}"></span> VND</p>
+<p>Cảm ơn.</p>
 
+</body>
 </html>

@@ -44,12 +44,13 @@ public class EmailServiceImpl implements EmailService {
                     MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
                     StandardCharsets.UTF_8.name());
 
-//            String html = templateEngine.process("", templateContext);
+            String html = templateEngine.process("email/" + templateName, templateContext);
 
             helper.setTo(to);
             helper.setFrom("spring.email.auth@gmail.com");
             helper.setSubject(subject);
-            helper.setText(templateName, true);
+//            helper.setText(templateName, true);
+            helper.setText(html, true);
 
             if (attachment != null) {
                 helper.addAttachment("invoice", attachment);
@@ -93,5 +94,30 @@ public class EmailServiceImpl implements EmailService {
         sendEmail(appointment.getPatient().getEmail(), "Rejection request accepted", "Appointment Rejection Accepted", context, null);
     }
     
+    @Async
+    @Override
+    public void sendNewAppointment(Appointment appointment) {
+        Context context = new Context();
+        context.setVariable("appointment", appointment);
+        sendEmail(appointment.getDoctor().getEmail(), "Đặt lịch khám mới", "appointmentNew", context, null);
+    }
+    
+    @Async
+    @Override
+    public void sendAppointmentCanceledByPatient(Appointment appointment) {
+        Context context = new Context();
+        context.setVariable("appointment", appointment);
+        context.setVariable("canceler", "patient");
+        sendEmail(appointment.getDoctor().getEmail(), "Lịch khám bệnh đã hủy bởi bệnh nhân", "appointmentCanceled", context, null);
+    }
+
+    @Async
+    @Override
+    public void sendAppointmentCanceledByDoctor(Appointment appointment) {
+        Context context = new Context();
+        context.setVariable("appointment", appointment);
+        context.setVariable("canceler", "doctor");
+        sendEmail(appointment.getPatient().getEmail(), "Lịch khám bệnh đã hủy bởi bác sĩ", "appointmentCanceled", context, null);
+    }
     
 }

@@ -43,4 +43,5 @@ public class NotificationController {
         notificationService.markAllAsRead(currentUser.getId());
         return "redirect:/notifications";
     }
+    
 }

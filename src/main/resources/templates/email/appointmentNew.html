@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head></head>
+
+<body>
+<p>Xin chào bác sĩ, <span th:text="${appointment.doctor.fullname}"></span></p>
+<p>Bác sĩ có lịch hẹn khám mới với bệnh nhân, thông tin chi tiết phía dưới:</p>
+<p>Ngày khám: <span th:text="${#temporals.format(appointment.start, 'dd-MM-yyyy HH:mm')}"></span></p>
+<p>Bệnh nhân: <span th:text="${appointment.patient.fullname}"></span></p>
+<p>Gói khám bệnh: <span th:text="${appointment.packages.name}"></span></p>
+<p>Thời lượng khám: <span th:text="${appointment.packages.duration}"></span> phút</p>
+<p>Giá: <span th:text="${appointment.packages.price}"></span> VND</p>
+<p>Số điện thoại: <span th:text="${appointment.patient.mobile}"></span></p>
+
+
+<p>Cảm ơn bác sĩ.</p>
+</body>
+</html>
