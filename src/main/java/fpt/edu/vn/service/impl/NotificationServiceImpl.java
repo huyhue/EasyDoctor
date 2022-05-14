@@ -90,23 +90,23 @@ public class NotificationServiceImpl implements NotificationService {
 
 	@Override
 	public void newAppointmentRejectionRequestedNotification(Appointment appointment, boolean sendEmail) {
-		String title = "Appointment Rejected";
-		String message = appointment.getPatient().getFullname() + "rejected an appointment. Your approval is required";
+		String title = "Lịch khám đã bị từ chối";
+		String message = "Bệnh nhân " + appointment.getPatient().getFullname() + " đã từ chối lịch khám. Sự chấp thuận của bạn là cần thiết";
 		String url = "/appointments/" + appointment.getId();
-//        newNotification(title, message, url, appointment.getDoctor());
+        newNotification(title, message, url, appointment.getDoctor());
 		if (sendEmail && mailingEnabled) {
-			emailService.sendAppointmentRejectionRequestedNotification(appointment);
+			emailService.sendAppointmentRejectionRequested(appointment);
 		}
 	}
 
 	@Override
 	public void newAppointmentRejectionAcceptedNotification(Appointment appointment, boolean sendEmail) {
-		String title = "Rejection accepted";
-		String message = "You doctor accepted your rejection request";
+		String title = "Lời từ chối được chấp nhận";
+		String message = "Bác sĩ của bạn đã chấp nhận yêu cầu từ chối của bạn";
 		String url = "/appointments/" + appointment.getId();
 		newNotification(title, message, url, appointment.getPatient());
 		if (sendEmail && mailingEnabled) {
-			emailService.sendAppointmentRejectionAcceptedNotification(appointment);
+			emailService.sendAppointmentRejectionAccepted(appointment);
 		}
 	}
 
@@ -133,6 +133,17 @@ public class NotificationServiceImpl implements NotificationService {
 			emailService.sendAppointmentCanceledByDoctor(appointment);
 		}
 	}
+	
+	@Override
+    public void newAppointmentFinishedNotification(Appointment appointment, boolean sendEmail) {
+        String title = "Lịch khám đã kết thúc";
+        String message = "Lịch khám đã kết thúc, bạn có thể từ chối cuộc hẹn nếu nó không diễn ra cho đến khi " + appointment.getEnd().plusHours(24).toString();
+        String url = "/appointments/" + appointment.getId();
+        newNotification(title, message, url, appointment.getPatient());
+        if (sendEmail && mailingEnabled) {
+            emailService.sendAppointmentFinished(appointment);
+        }
+    }
 
 //    public void newInvoice(Invoice invoice, boolean sendEmail) {
 //        String title = "New invoice";

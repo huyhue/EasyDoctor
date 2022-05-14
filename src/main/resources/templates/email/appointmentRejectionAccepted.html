@@ -4,14 +4,16 @@
 <head></head>
 
 <body>
-<p>Hello, <span th:text="${appointment.customer.firstName}"></span></p>
-<p>You provider confirmed that this appointment didn't take place: </p>
-<p>Start date: <span th:text="${#temporals.format(appointment.start, 'dd-MM-yyyy HH:mm')}"></span></p>
-<p>Work: <span th:text="${appointment.work.name}"></span></p>
-<p>Duration: <span th:text="${appointment.work.duration}"></span></p>
-<p>Price: <span th:text="${appointment.work.price}"></span></p>
+<p>Xin chào bệnh nhân, <span th:text="${appointment.patient.fullname}"></span></p>
+<p>Bác sĩ <span th:text="${appointment.doctor.fullname}"></span> của bạn đã xác nhận cuộc hẹn khám bệnh đã không diễn ra: </p>
+<p>Ngày khám: <span th:text="${#temporals.format(appointment.start, 'dd-MM-yyyy HH:mm')}"></span></p>
+<p>Gói khám bệnh: <span th:text="${appointment.packages.name}"></span></p>
+<p>Thời lượng khám: <span th:text="${appointment.packages.duration}"></span> phút</p>
+<p>Giá: <span th:text="${appointment.packages.price}"></span> VND</p>
 
-<p><strong>It's status is set to rejected and it will be not invoiced.</strong></p>
+<p><strong>Hệ thống sẽ thiết lập trạng thái từ chối cuộc hẹn và hóa đơn sẽ không được gửi tới bạn.</strong></p>
+
+<p>Cảm ơn bạn.</p>
 
 </body>
 

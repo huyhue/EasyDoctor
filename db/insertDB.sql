@@ -3,7 +3,7 @@ INSERT INTO `roles` VALUES (1,'ROLE_ADMIN'),(2,'ROLE_DOCTOR'),(3,'ROLE_PATIENT')
 INSERT INTO `users` (id,fullname, email, enabled, username, password) VALUES 
 (1,'ADMIN','admin@gmail.com',1,'admin','$2a$10$Th3jovQba84Dul0dnXFxiOBTBKSx4s26sXi4k9s.NUge62i8rur92'),
 (2,'BS CKII Hà Ngọc Hùng','doctor@gmail.com',1,'doctor','$2a$10$Th3jovQba84Dul0dnXFxiOBTBKSx4s26sXi4k9s.NUge62i8rur92'),
-(3,'Tống Phước Gia Huy','huyhue@gmail.com',1,'huyhue','$2a$10$Th3jovQba84Dul0dnXFxiOBTBKSx4s26sXi4k9s.NUge62i8rur92'),
+(3,'Tống Phước Gia Huy','tpgiahuy5@gmail.com',1,'huyhue','$2a$10$Th3jovQba84Dul0dnXFxiOBTBKSx4s26sXi4k9s.NUge62i8rur92'),
 (4,'PGS.TS.Phạm Thị Bích Đào','doctor1@gmail.com',1,'doctor1','$2a$10$Th3jovQba84Dul0dnXFxiOBTBKSx4s26sXi4k9s.NUge62i8rur92'),
 (5,'PGS.TS.Đinh Ngọc Sơn','doctor2@gmail.com',1,'doctor2','$2a$10$Th3jovQba84Dul0dnXFxiOBTBKSx4s26sXi4k9s.NUge62i8rur92'),
 (6,'TS.Nguyễn Hoàng Long','doctor3@gmail.com',1,'doctor3','$2a$10$Th3jovQba84Dul0dnXFxiOBTBKSx4s26sXi4k9s.NUge62i8rur92'),

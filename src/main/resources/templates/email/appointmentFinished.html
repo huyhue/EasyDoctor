@@ -4,14 +4,15 @@
 <head></head>
 
 <body>
-<p>Hello, <span th:text="${appointment.customer.firstName}"></span></p>
-<p>This is your finished appointment summary:</p>
-<p>Date: <span th:text="${#temporals.format(appointment.start, 'dd-MM-yyyy HH:mm')}"></span></p>
-<p>Provider: <span th:text="${appointment.provider.firstName}"></span></p>
-<p>Work: <span th:text="${appointment.work.name}"></span></p>
-<p>Duration: <span th:text="${appointment.work.duration}"></span></p>
-<p>Price: <span th:text="${appointment.work.price}"></span></p>
-<p>If by some reason this appointemt didn't take place, you have 24h to report this by clicking <a th:href="${url}">here</a></p>
+<p>Xin chào bệnh nhân, <span th:text="${appointment.patient.fullname}"></span></p>
+<p>Cuộc hẹn khám bệnh của bạn đã kết thúc:</p>
+<p>Ngày khám: <span th:text="${#temporals.format(appointment.start, 'dd-MM-yyyy HH:mm')}"></span></p>
+<p>Bác sĩ: <span th:text="${appointment.doctor.fullname}"></span></p>
+<p>Gói khám bệnh: <span th:text="${appointment.packages.name}"></span></p>
+<p>Thời lượng khám: <span th:text="${appointment.packages.duration}"></span> phút</p>
+<p>Giá: <span th:text="${appointment.packages.price}"></span> VND</p>
+<p>Nếu bạn có một số lý do và đã không đến cuộc hẹn với bác sĩ như lịch đặt, thì bạn có 24h sau thời gian kết thúc để báo cáo, bằng cách<a th:href="${url}">Click ở đây</a></p>
+<p>Cảm ơn bạn.</p>
 
 </body>
 

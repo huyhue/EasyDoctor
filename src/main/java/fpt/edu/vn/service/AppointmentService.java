@@ -45,4 +45,8 @@ public interface AppointmentService {
 	
 	//Chat
 	void addMessageToAppointmentChat(int appointmentId, int authorId, ChatMessage chatMessage);
+	
+	//Auto
+	void updateUserAppointmentsStatuses(int userId);
+	void updateAllAppointmentsStatuses();
 }

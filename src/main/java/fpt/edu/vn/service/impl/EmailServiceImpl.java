@@ -77,21 +77,20 @@ public class EmailServiceImpl implements EmailService {
     
     @Async
     @Override
-    public void sendAppointmentRejectionRequestedNotification(Appointment appointment) {
+    public void sendAppointmentRejectionRequested(Appointment appointment) {
         Context context = new Context();
-//        context.setVariable("appointment", appointment);
-//        context.setVariable("url", baseUrl + "/appointments/acceptRejection?token=" + jwtTokenService.generateAcceptRejectionToken(appointment));
+        context.setVariable("appointment", appointment);
+        context.setVariable("url", baseUrl + "/appointments/acceptRejection?token=" + jwtTokenService.generateAcceptRejectionToken(appointment));
         
-        String url = baseUrl + "/appointments/acceptRejection?token=" + jwtTokenService.generateAcceptRejectionToken(appointment);
-        sendEmail(appointment.getDoctor().getEmail(), "Rejection requested", url, context, null);
+        sendEmail(appointment.getDoctor().getEmail(), "Yêu cầu từ chối lịch khám", "appointmentRejectionRequested", context, null);
     }
     
     @Async
     @Override
-    public void sendAppointmentRejectionAcceptedNotification(Appointment appointment) {
+    public void sendAppointmentRejectionAccepted(Appointment appointment) {
         Context context = new Context();
-//        context.setVariable("appointment", appointment);
-        sendEmail(appointment.getPatient().getEmail(), "Rejection request accepted", "Appointment Rejection Accepted", context, null);
+        context.setVariable("appointment", appointment);
+        sendEmail(appointment.getPatient().getEmail(), "Yêu cầu từ chối lịch khám được chấp nhận", "appointmentRejectionAccepted", context, null);
     }
     
     @Async
@@ -120,4 +119,12 @@ public class EmailServiceImpl implements EmailService {
         sendEmail(appointment.getPatient().getEmail(), "Lịch khám bệnh đã hủy bởi bác sĩ", "appointmentCanceled", context, null);
     }
     
+    @Async
+    @Override
+    public void sendAppointmentFinished(Appointment appointment) {
+        Context context = new Context();
+        context.setVariable("appointment", appointment);
+        context.setVariable("url", baseUrl + "/appointments/reject?token=" + jwtTokenService.generateAppointmentRejectionToken(appointment));
+        sendEmail(appointment.getPatient().getEmail(), "Lịch khám bệnh đã kết thúc", "appointmentFinished", context, null);
+    }
 }

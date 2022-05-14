@@ -133,6 +133,7 @@ public class AppointmentController {
         return REJECTION_CONFIRMATION_VIEW;
     }
 
+    //Click by button by doctor
     @PostMapping("/acceptRejection")
     public String acceptAppointmentRejectionRequest(@RequestParam("appointmentId") int appointmentId, @AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
         boolean result = appointmentService.acceptRejection(appointmentId, currentUser.getId());

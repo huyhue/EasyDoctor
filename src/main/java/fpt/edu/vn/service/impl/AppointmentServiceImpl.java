@@ -307,4 +307,35 @@ public class AppointmentServiceImpl implements AppointmentService {
             throw new org.springframework.security.access.AccessDeniedException("Unauthorized");
         }
     }
+    
+    @Override
+    public void updateUserAppointmentsStatuses(int userId) {
+        for (Appointment appointment : appointmentRepository.findScheduledByUserIdWithEndBeforeDate(LocalDateTime.now(), userId)) {
+            appointment.setStatus(AppointmentStatus.FINISHED);
+            updateAppointment(appointment);
+        }
+
+        for (Appointment appointment : appointmentRepository.findFinishedByUserIdWithEndBeforeDate(LocalDateTime.now().minusDays(1), userId)) {
+            appointment.setStatus(AppointmentStatus.INVOICED);
+            updateAppointment(appointment);
+        }
+    }
+
+    @Override
+    public void updateAllAppointmentsStatuses() {
+        appointmentRepository.findScheduledWithEndBeforeDate(LocalDateTime.now())
+                .forEach(appointment -> {
+                    appointment.setStatus(AppointmentStatus.FINISHED);
+                    updateAppointment(appointment);
+                    if (LocalDateTime.now().minusDays(1).isBefore(appointment.getEnd())) {
+                        notificationService.newAppointmentFinishedNotification(appointment, true);
+                    }
+                });
+
+        appointmentRepository.findFinishedWithEndBeforeDate(LocalDateTime.now().minusDays(1))
+                .forEach(appointment -> {
+                    appointment.setStatus(AppointmentStatus.CONFIRMED);
+                    updateAppointment(appointment);
+                });
+    }
 }
