@@ -10,6 +10,7 @@ import fpt.edu.vn.model.Role;
 import fpt.edu.vn.model.User;
 
 public interface UserService {
+	List<Patient> getAllPatients();
 	User findByEmail(String email);
 	User findByUserName(String username);
 	User findByConfirmationToken(String token);

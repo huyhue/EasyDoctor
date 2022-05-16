@@ -3,6 +3,7 @@ package fpt.edu.vn.service;
 import org.thymeleaf.context.Context;
 
 import fpt.edu.vn.model.Appointment;
+import fpt.edu.vn.model.Invoice;
 import fpt.edu.vn.model.User;
 
 import java.io.File;
@@ -19,5 +20,5 @@ public interface EmailService {
     void sendAppointmentRejectionAccepted(Appointment appointment);
     void sendAppointmentFinished(Appointment appointment);
     
-    
+    void sendInvoice(Invoice invoice);
 }

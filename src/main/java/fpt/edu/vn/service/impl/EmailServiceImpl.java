@@ -8,10 +8,11 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
-
 import fpt.edu.vn.model.Appointment;
+import fpt.edu.vn.model.Invoice;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.service.EmailService;
+import fpt.edu.vn.util.PdfGeneratorUtil;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -25,14 +26,17 @@ public class EmailServiceImpl implements EmailService {
     private final SpringTemplateEngine templateEngine;
     private final String baseUrl;
     private final JwtTokenServiceImpl jwtTokenService;
+    private final PdfGeneratorUtil pdfGenaratorUtil;
 
     public EmailServiceImpl(JavaMailSender javaMailSender, SpringTemplateEngine templateEngine, @Value("${base.url}") String baseUrl,
-			JwtTokenServiceImpl jwtTokenService) {
+			JwtTokenServiceImpl jwtTokenService, PdfGeneratorUtil pdfGenaratorUtil) {
 		super();
 		this.javaMailSender = javaMailSender;
 		this.templateEngine = templateEngine;
 		this.baseUrl = baseUrl;
 		this.jwtTokenService = jwtTokenService;
+		this.pdfGenaratorUtil = pdfGenaratorUtil;
+		
 	}
 
 	@Async
@@ -126,5 +130,19 @@ public class EmailServiceImpl implements EmailService {
         context.setVariable("appointment", appointment);
         context.setVariable("url", baseUrl + "/appointments/reject?token=" + jwtTokenService.generateAppointmentRejectionToken(appointment));
         sendEmail(appointment.getPatient().getEmail(), "Lịch khám bệnh đã kết thúc", "appointmentFinished", context, null);
+    }
+    
+    @Async
+    @Override
+    public void sendInvoice(Invoice invoice) {
+        Context context = new Context();
+        context.setVariable("patient", invoice.getAppointments().get(0).getPatient().getFullname());
+        try {
+            File invoicePdf = pdfGenaratorUtil.generatePdfFromInvoice(invoice);
+            sendEmail(invoice.getAppointments().get(0).getPatient().getEmail(), "Hóa đơn khám bệnh", "appointmentInvoice", context, invoicePdf);
+        } catch (Exception e) {
+            System.err.print("Error while generating pdf, error is {}"+ e.getLocalizedMessage());
+        }
+
     }
 }

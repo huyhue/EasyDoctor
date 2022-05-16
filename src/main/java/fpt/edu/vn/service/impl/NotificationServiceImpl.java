@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import fpt.edu.vn.model.Appointment;
+import fpt.edu.vn.model.Invoice;
 import fpt.edu.vn.model.Notification;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.repository.NotificationRepository;
@@ -144,27 +145,15 @@ public class NotificationServiceImpl implements NotificationService {
             emailService.sendAppointmentFinished(appointment);
         }
     }
-
-//    public void newInvoice(Invoice invoice, boolean sendEmail) {
-//        String title = "New invoice";
-//        String message = "New invoice has been issued for you";
-//        String url = "/invoices/" + invoice.getId();
-//        newNotification(title, message, url, invoice.getAppointments().get(0).getCustomer());
-//        if (sendEmail && mailingEnabled) {
-//            emailService.sendInvoice(invoice);
-//        }
-//    }
-//
-//
-//    @Override
-//    public void newAppointmentRejectionAcceptedNotification(Appointment appointment, boolean sendEmail) {
-//        String title = "Rejection accepted";
-//        String message = "You provider accepted your rejection request";
-//        String url = "/appointments/" + appointment.getId();
-//        newNotification(title, message, url, appointment.getCustomer());
-//        if (sendEmail && mailingEnabled) {
-//            emailService.sendAppointmentRejectionAcceptedNotification(appointment);
-//        }
-//    }
+	
+	public void newInvoice(Invoice invoice, boolean sendEmail) {
+        String title = "Xuất hóa đơn";
+        String message = "Xuất hóa đơn đã được gửi tới bạn";
+        String url = "/invoices/" + invoice.getId();
+        newNotification(title, message, url, invoice.getAppointments().get(0).getPatient());
+        if (sendEmail && mailingEnabled) {
+            emailService.sendInvoice(invoice);
+        }
+    }
 
 }

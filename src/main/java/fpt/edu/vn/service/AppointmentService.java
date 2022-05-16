@@ -49,4 +49,6 @@ public interface AppointmentService {
 	//Auto
 	void updateUserAppointmentsStatuses(int userId);
 	void updateAllAppointmentsStatuses();
+	
+	List<Appointment> getConfirmedAppointmentsByPatientId(int patientId);
 }

@@ -338,4 +338,9 @@ public class AppointmentServiceImpl implements AppointmentService {
                     updateAppointment(appointment);
                 });
     }
+    
+    @Override
+    public List<Appointment> getConfirmedAppointmentsByPatientId(int patientId) {
+        return appointmentRepository.findConfirmedByPatientId(patientId);
+    }
 }

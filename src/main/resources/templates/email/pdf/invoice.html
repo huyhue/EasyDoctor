@@ -1,7 +1,7 @@
-<html>
+<html lang="en">
 
 <head>
-
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<style>
 		.invoice-box {
 			max-width: 800px;
@@ -109,13 +109,13 @@
 					<table>
 						<tr>
 							<td class="title">
-								<img src="/img/logo.jpg" style="width:100%; max-width:300px;" />
+								<img src="/img/logoBrand.jpg" style="width:100%; max-width:300px;" />
 							</td>
 
 							<td>
-								<span th:text="${invoice.number}" id="number">FV/2019/03/42</span><br />
+								<span th:text="${invoice.number}" id="number">HD/2022/05/16</span><br />
 								Issued: <span th:text="${#temporals.format(invoice.issued, 'dd-MM-yyyy')}">Issued:
-									01-03-2019</span><br />
+									16-05-2022</span><br />
 							</td>
 						</tr>
 					</table>
@@ -128,43 +128,34 @@
 						<tr>
 							<td>
 								<b>From:</b><br />
-								Walerian Grabowski<br />
-								ul. Białych Brzóz 13<br />
-								31-410 Kraków<br />
-								706-425-256 <br />
-								PL 76 9584 1034 3528 6132 8140 7826
-
+								Đại học FPT<br />
+								Khu đô thị FPT City<br />
+								Ngũ Hành Sơn, Da Nang<br />
+								0236 7300 999 <br />
 							</td>
-
 							<td>
 								<b>To:</b><br />
-								<span th:if="${invoice.appointments[0].customer.hasRole('ROLE_CUSTOMER_RETAIL')}"
-									th:utext="${invoice.appointments[0].customer.firstName +' '+invoice.appointments[0].customer.lastName}+ '&lt;br /&gt;'">Bolesław
-									Walczak</span>
-								<span th:if="${invoice.appointments[0].customer.hasRole('ROLE_CUSTOMER_CORPORATE')}"
-									th:utext="${invoice.appointments[0].customer.companyName} +'&lt;br /&gt;'">Company
-									name</span>
-								<span th:if="${invoice.appointments[0].customer.hasRole('ROLE_CUSTOMER_CORPORATE')}"
-									th:utext="${'VAT: ' + invoice.appointments[0].customer.vatNumber}+'&lt;br /&gt;'">VAT:
-									697-134-42-81</span>
-								<span th:text="${invoice.appointments[0].customer.street}">ul. Pola Wincentego
-									7</span><br />
-								<span
-									th:text="${invoice.appointments[0].customer.postcode + ' ' + invoice.appointments[0].customer.city}">71-342
-									Szczecin</span><br />
-								<span th:text="${invoice.appointments[0].customer.mobile}">695-262-145</span><br />
-								<span th:text="${invoice.appointments[0].customer.email}">email@example.com</span>
+								<span th:if="${invoice.appointments[0].patient.hasRole('ROLE_PATIENT')}"
+									th:utext="${invoice.appointments[0].patient.fullname}+ '&lt;br /&gt;'">Huyhue</span>
+								<span th:if="${invoice.appointments[0].patient.hasRole('ROLE_PATIENT')}"
+									th:utext="${invoice.appointments[0].patient.address} +'&lt;br /&gt;'"></span>
+								<span th:if="${invoice.appointments[0].patient.hasRole('ROLE_PATIENT')}"
+									th:utext="${'VAT: ' + invoice.appointments[0].patient.mobile}+'&lt;br /&gt;'">0362529468</span>
+								<span th:text="${invoice.appointments[0].patient.gender}">Female</span><br />
+								<span th:text="${invoice.appointments[0].patient.email}">email@example.com</span>
 							</td>
 						</tr>
 					</table>
 				</td>
 			</tr>
 
+			<h3>Doctor: <span th:text="${invoice.appointments[0].doctor.fullname}"></span></h3>
+			<h3>Time: <span th:text="${#temporals.format(invoice.appointments[0].start, 'dd-MM-yyyy HH:mm')}"></span>
+			</h3>
 			<tr class="heading">
 				<td>
-					Item
+					Packages
 				</td>
-
 				<td>
 					Price
 				</td>
@@ -172,12 +163,10 @@
 
 			<tr th:each="appointment : ${invoice.appointments}" class="item">
 				<td>
-					<span
-						th:text="${appointment.work.name +' with '+appointment.provider.firstName +' '+appointment.provider.lastName +' on '+#temporals.format(appointment.start, 'dd-MM-yyyy HH:mm')}"></span>
+					<span th:text="${appointment.packages.name}"></span>
 				</td>
-
 				<td>
-					<span th:text="${appointment.work.price}">50 PLN</span> PLN
+					<span th:text="${appointment.packages.price}">50 VND</span> VND
 				</td>
 			</tr>
 
@@ -185,7 +174,7 @@
 				<td></td>
 
 				<td>
-					Total: <span th:text="${invoice.totalAmount}">50 PLN</span> PLN
+					Total: <span th:text="${invoice.totalAmount}">50 VND</span> VND
 				</td>
 			</tr>
 		</table>

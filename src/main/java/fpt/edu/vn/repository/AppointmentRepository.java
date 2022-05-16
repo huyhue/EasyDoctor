@@ -37,4 +37,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
     
     @Query("select a from Appointment a where a.status = 'FINISHED' and :date >= a.end")
     List<Appointment> findFinishedWithEndBeforeDate(@Param("date") LocalDateTime date);
+    
+    @Query("select a from Appointment a where a.status = 'CONFIRMED' and a.patient.id = :patientId")
+    List<Appointment> findConfirmedByPatientId(@Param("patientId") int patientId);
 }

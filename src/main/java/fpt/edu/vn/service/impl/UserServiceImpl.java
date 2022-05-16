@@ -41,6 +41,11 @@ public class UserServiceImpl implements UserService {
 		this.roleRepository = roleRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
+	
+	@Override
+    public List<Patient> getAllPatients() {
+        return patientRepository.findAll();
+    }
 
 	@Override
 	public User findByConfirmationToken(String token) {
