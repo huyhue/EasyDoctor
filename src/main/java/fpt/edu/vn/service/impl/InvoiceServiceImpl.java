@@ -73,7 +73,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public File generatePdfForInvoice(int invoiceId) {
         CustomUserDetails currentUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Invoice invoice = invoiceRepository.getOne(invoiceId);
+        Invoice invoice = invoiceRepository.findById(invoiceId).get();
         if (!isUserAllowedToDownloadInvoice(currentUser, invoice)) {
             throw new org.springframework.security.access.AccessDeniedException("Unauthorized");
         }
@@ -87,9 +87,9 @@ public class InvoiceServiceImpl implements InvoiceService {
             return true;
         }
         for (Appointment a : invoice.getAppointments()) {
-//            if (a.getProvider().getId() == userId || a.getCustomer().getId() == userId) {
-//                return true;
-//            }
+            if (a.getDoctor().getId() == userId || a.getPatient().getId() == userId) {
+                return true;
+            }
         }
         return false;
     }

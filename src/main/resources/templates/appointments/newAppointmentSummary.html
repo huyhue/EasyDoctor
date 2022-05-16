@@ -18,7 +18,7 @@
 
             <tr>
                 <td><b>Date</b></td>
-                <td><span th:text="${#temporals.format(start, 'dd-MM-yyyy')}">10-01-2019</span></td>
+                <td><span th:text="${#temporals.format(start, 'dd-MM-yyyy')}">10-01-2022</span></td>
             </tr>
             <tr>
                 <td><b>Time</b></td>
@@ -27,7 +27,7 @@
             </tr>
             <tr>
                 <td><b>Doctor</b></td>
-                <td><span th:text="${doctor}">Marian Nowak</span></td>
+                <td><span th:text="${doctor}">Huyhue</span></td>
             </tr>
 
             <tr>
@@ -46,7 +46,7 @@
 
             <tr>
                 <td><b>Cancellable by patient?</b></td>
-                <td><p th:text="${packages.editable ? 'Yes':'No, only by provider'}">Yes</p></td>
+                <td><p th:text="${packages.editable ? 'Yes':'No, only by doctor'}">Yes</p></td>
             </tr>
             <tr class="text-center">
                 <td colspan="2">
