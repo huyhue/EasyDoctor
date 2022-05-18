@@ -1,5 +1,10 @@
 package fpt.edu.vn.controller;
 
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
 import javax.validation.Valid;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,11 +24,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import fpt.edu.vn.component.ChangePasswordForm;
 import fpt.edu.vn.component.TimePeroid;
 import fpt.edu.vn.component.UserForm;
+import fpt.edu.vn.model.Appointment;
 import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.model.WorkingPlan;
 import fpt.edu.vn.security.CustomUserDetails;
+import fpt.edu.vn.service.AppointmentService;
 import fpt.edu.vn.service.EmailService;
 import fpt.edu.vn.service.PackagesService;
 import fpt.edu.vn.service.UserService;
@@ -37,14 +44,18 @@ public class DoctorController {
 	private final EmailService emailService;
 	private final PackagesService packagesService;
 	private final WorkingPlanService workingPlanService;
+	private final AppointmentService appointmentService;
+	
+
 
 	public DoctorController(UserService userService, EmailService emailService, PackagesService packagesService,
-			WorkingPlanService workingPlanService) {
+			WorkingPlanService workingPlanService, AppointmentService appointmentService) {
 		super();
 		this.userService = userService;
 		this.emailService = emailService;
 		this.packagesService = packagesService;
 		this.workingPlanService = workingPlanService;
+		this.appointmentService = appointmentService;
 	}
 
 	@GetMapping("/home")
@@ -56,6 +67,13 @@ public class DoctorController {
 	@GetMapping("/all")
 	public String showAllDoctors(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
 		model.addAttribute("doctors", userService.getAllDoctorsByPatient());
+		Set<Doctor> recentDoctors = new HashSet<>();
+		 
+		List<Appointment> list = appointmentService.getAppointmentByPatientId(currentUser.getId());
+		for (Appointment appointment : list) {
+			recentDoctors.add(appointment.getDoctor());
+		}
+		model.addAttribute("recentDoctors", recentDoctors);
 		return "doctors/doctorList";
 	}
 	
