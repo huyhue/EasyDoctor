@@ -21,4 +21,5 @@ public interface EmailService {
     void sendAppointmentFinished(Appointment appointment);
     
     void sendInvoice(Invoice invoice);
+    void sendAppointmentOTPConfirm(String email);
 }

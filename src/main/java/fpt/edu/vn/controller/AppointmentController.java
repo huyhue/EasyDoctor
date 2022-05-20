@@ -1,5 +1,7 @@
 package fpt.edu.vn.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +11,8 @@ import fpt.edu.vn.model.Appointment;
 import fpt.edu.vn.model.ChatMessage;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.AppointmentService;
+import fpt.edu.vn.service.EmailService;
+import fpt.edu.vn.service.OTPService;
 import fpt.edu.vn.service.PackagesService;
 import fpt.edu.vn.service.UserService;
 
@@ -18,19 +22,24 @@ import java.time.LocalDateTime;
 @Controller
 @RequestMapping("/appointments")
 public class AppointmentController {
+	
 	private static final String REJECTION_CONFIRMATION_VIEW = "appointments/rejectionConfirmation";
+	@Autowired
+	public OTPService otpService;
 	private final PackagesService packagesService;
 	private final UserService userService;
 	private final AppointmentService appointmentService;
-
+	private final EmailService emailService;
+	
 	public AppointmentController(PackagesService packagesService, UserService userService,
-			AppointmentService appointmentService) {
+			AppointmentService appointmentService, EmailService emailService) {
 		super();
 		this.packagesService = packagesService;
 		this.userService = userService;
 		this.appointmentService = appointmentService;
+		this.emailService = emailService;
 	}
-	
+
 	@GetMapping("/{id}")
     public String showAppointmentDetail(@PathVariable("id") int appointmentId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
         Appointment appointment = appointmentService.getAppointmentByIdWithAuthorization(appointmentId);
@@ -87,6 +96,7 @@ public class AppointmentController {
 			model.addAttribute("start", LocalDateTime.parse(start));
 			model.addAttribute("end",
 					LocalDateTime.parse(start).plusMinutes(packagesService.getPackagesById(packagesId).getDuration()));
+			emailService.sendAppointmentOTPConfirm(currentUser.getEmail());
 			return "appointments/newAppointmentSummary";
 		} else {
 			return "redirect:/appointments/new" + doctorId;
@@ -98,6 +108,29 @@ public class AppointmentController {
 			@RequestParam("start") String start, @AuthenticationPrincipal CustomUserDetails currentUser) {
 		appointmentService.createNewAppointment(packagesId, doctorId, currentUser.getId(), LocalDateTime.parse(start));
 		return "redirect:/appointments/all";
+	}
+	
+	@RequestMapping(value = "/new", method = RequestMethod.GET)
+	public @ResponseBody String validateOtp(@RequestParam("OTPSEND") int OTPSEND, @RequestParam("packagesId") int packagesId, @RequestParam("doctorId") int doctorId,
+			@RequestParam("start") String start, @AuthenticationPrincipal CustomUserDetails currentUser) {
+		final String SUCCESS = "SUCCESS";
+		final String FAIL = "FAIL";
+		if (OTPSEND >= 0) {
+			int serverOtp = otpService.getOtp(currentUser.getEmail());
+			if (serverOtp > 0) {
+				if (OTPSEND == serverOtp) {
+					otpService.clearOTP(currentUser.getEmail());
+					appointmentService.createNewAppointment(packagesId, doctorId, currentUser.getId(), LocalDateTime.parse(start));
+					return (SUCCESS);
+				} else {
+					return FAIL;
+				}
+			} else {
+				return FAIL;
+			}
+		} else {
+			return FAIL;
+		}
 	}
 
 	@PostMapping("/cancel")

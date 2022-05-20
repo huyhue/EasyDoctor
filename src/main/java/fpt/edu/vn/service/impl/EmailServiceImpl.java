@@ -1,5 +1,6 @@
 package fpt.edu.vn.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -12,6 +13,7 @@ import fpt.edu.vn.model.Appointment;
 import fpt.edu.vn.model.Invoice;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.service.EmailService;
+import fpt.edu.vn.service.OTPService;
 import fpt.edu.vn.util.PdfGeneratorUtil;
 
 import javax.mail.MessagingException;
@@ -21,13 +23,14 @@ import java.nio.charset.StandardCharsets;
 
 @Service
 public class EmailServiceImpl implements EmailService {
-
+	@Autowired
+	public OTPService otpService;
     private final JavaMailSender javaMailSender;
     private final SpringTemplateEngine templateEngine;
     private final String baseUrl;
     private final JwtTokenServiceImpl jwtTokenService;
     private final PdfGeneratorUtil pdfGenaratorUtil;
-
+    
     public EmailServiceImpl(JavaMailSender javaMailSender, SpringTemplateEngine templateEngine, @Value("${base.url}") String baseUrl,
 			JwtTokenServiceImpl jwtTokenService, PdfGeneratorUtil pdfGenaratorUtil) {
 		super();
@@ -36,7 +39,6 @@ public class EmailServiceImpl implements EmailService {
 		this.baseUrl = baseUrl;
 		this.jwtTokenService = jwtTokenService;
 		this.pdfGenaratorUtil = pdfGenaratorUtil;
-		
 	}
 
 	@Async
@@ -143,6 +145,14 @@ public class EmailServiceImpl implements EmailService {
         } catch (Exception e) {
             System.err.print("Error while generating pdf, error is {}"+ e.getLocalizedMessage());
         }
-
+    }
+    
+    @Async
+    @Override
+    public void sendAppointmentOTPConfirm(String email) {
+    	int otp = otpService.generateOTP(email);
+        Context context = new Context();
+        context.setVariable("OTPSEND", String.valueOf(otp));
+        sendEmail(email, "Xác nhận đặt lịch hẹn", "appointmentConfirmOTP", context, null);
     }
 }
