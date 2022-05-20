@@ -17,7 +17,7 @@
             <div class="member d-flex align-items-start">
               <div class="pic"><img src="/img/doctors/doctors-1.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4> [[${doctor.fullname}]]</h4>
+              	<a th:href="@{'/detail/' + ${doctor.id}}"><h4> [[${doctor.fullname}]]</h4></a>
                 <span>[[${doctor.getClinic().getName()}]]</span>
                 <p>[[${doctor.getSpecialty().getName()}]]</p>
                 <span>[[${doctor.description}]]</span>

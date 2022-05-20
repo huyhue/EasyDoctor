@@ -6,6 +6,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -13,17 +16,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
+import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.security.CustomUserDetails;
@@ -169,6 +174,34 @@ public class HomeController {
 				return new ResponseEntity<>("Please enter a valid image file", HttpStatus.BAD_REQUEST);
 			}
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+	
+	@GetMapping("/detail/{id}")
+    public String showDoctorDetails(@PathVariable("id") int doctorId, ModelMap modelMap, @AuthenticationPrincipal CustomUserDetails currentUser) {
+		Doctor doctor = userService.getDoctorById(doctorId);
+		modelMap.put("doctor", doctor);
+		
+		setUpReferenceData(modelMap);
+//		Review review = new Review();
+//
+//        double bookRatingDouble = bookService.findBookRating(bookId);
+//        int bookRating = (int) Math.floor(bookRatingDouble);
+//        modelMap.put("bookRating", bookRating);
+		
+//        modelMap.put("review",review);
+//		List<Review>reviewList = bookService.reviewDoctorList(doctorId);
+//        modelMap.put("ListOfReview",reviewList);
+        return "doctors/doctorDetail";
+    }
+	
+	private void setUpReferenceData(ModelMap modelMap) {
+        Map<Integer, String> ratingOptionMap = new LinkedHashMap<>();
+        ratingOptionMap.put(5, "5 Star");
+        ratingOptionMap.put(4, "4 Star");
+        ratingOptionMap.put(3, "3 Star");
+        ratingOptionMap.put(2, "2 Star");
+        ratingOptionMap.put(1, "1 Star");
+        modelMap.put("ratingOptionMap", ratingOptionMap);
     }
 
 	@GetMapping("/access-denied")

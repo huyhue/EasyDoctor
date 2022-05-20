@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	th:replace="~{fragments/layout :: layout (~{::body},'doctors','Doctor Detail')}">
+
+<body>
+	<h2 class="text-center">[[${doctor.fullname}]]</h2>
+
+	<div class="card book-detail-page doctor-detail-page">
+		<div class="card-body">
+			<div class="row">
+				<div class="col-sm-4">
+					<img src="/img/doctors/doctors-1.jpg" class="img-thumbnail" width="100%">
+				</div>
+				<div class="col-sm-8">
+					<div class="row">
+						<div class="col-sm-4 form-group">
+							<label>Phòng khám</label>
+						</div>
+						<div class="col-sm-8 form-group">
+							[[${doctor.getClinic().getName()}]]
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-4 form-group">
+							<label>Chuyên khoa</label>
+						</div>
+						<div class="col-sm-8 form-group">
+							[[${doctor.getSpecialty().getName()}]]
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-4 form-group">
+							<label>Kinh nghiệm</label>
+						</div>
+						<div class="col-sm-8 form-group">
+							<!--<small class="text-muted"
+                               th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(doctor.startPracticeDate) + 1} years|"></small>-->
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-4 form-group">
+							<label>Chứng chỉ</label>
+						</div>
+						<div class="col-sm-8 form-group">
+							[[${doctor.getCertification()}]]
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-4 form-group">
+							<label>Mô tả</label>
+						</div>
+						<div class="col-sm-8 form-group">
+							[[${doctor.description}]]
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4 form-group">
+							<h6>Rating</h6>
+						</div>
+						<div class="col-sm-8 form-group">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<h2 class="text-center">Review doctor</h2>
+
+
+</body>
+
+</html>

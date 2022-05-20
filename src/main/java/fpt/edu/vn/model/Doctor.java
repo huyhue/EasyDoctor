@@ -27,6 +27,9 @@ public class Doctor extends User {
 //	Booking doctor
 	@OneToMany(mappedBy = "doctor")
     private List<Appointment> appointments;
+	
+	@OneToMany(mappedBy = "doctor")
+    private List<Review> reviews;
 
     @ManyToMany
     @JoinTable(name = "packages_doctors", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_packages"))
@@ -108,5 +111,12 @@ public class Doctor extends User {
 	public void setWorkingPlan(WorkingPlan workingPlan) {
 		this.workingPlan = workingPlan;
 	}
+	
+	public List<Review> getReviews() {
+		return reviews;
+	}
 
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
 }

@@ -25,6 +25,9 @@ public class Patient extends User {
 	@OneToMany(mappedBy = "patient")
     private List<Appointment> appointments;
 	
+	@OneToMany(mappedBy = "patient")
+    private List<Review> reviews;
+	
 	public Patient() {
 		super();
 	}
@@ -55,5 +58,13 @@ public class Patient extends User {
 
 	public void setAppointments(List<Appointment> appointments) {
 		this.appointments = appointments;
+	}
+
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
 	}
 }
