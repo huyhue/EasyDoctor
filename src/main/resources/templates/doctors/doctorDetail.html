@@ -62,6 +62,13 @@
 							<h6>Rating</h6>
 						</div>
 						<div class="col-sm-8 form-group">
+							<!--<c:forEach begin="1" end="5" varStatus="loop">
+                            <span class="fa fa-star ${loop.index <= doctorRating ? 'checked' : ''}"></span>
+                        </c:forEach>-->
+							<div th:each="loop: ${#numbers.sequence(1, 5)}" style="display: inline;">
+								<span class="fa fa-star"
+									th:classappend="${loop <= doctorRating} ? 'checked-star':''"></span>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -70,7 +77,32 @@
 	</div>
 
 	<h2 class="text-center">Review doctor</h2>
+	<form  method="post">
+		<div class="card book-detail-page book-detail-card">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-2 form-group">
+						<select class="form-control">
+							<option th:each="rate : ${ratingOptionMap}" th:value="${rate.key}" th:text="${rate.value}">
+								Rating
+							</option>
+						</select>
+					</div>
+					<div class="col-sm-10 form-group">
+						<textarea class="form-control" rows="5" placeholder="Nhập nhận xét ở đây" id="comment"></textarea>
+					</div>
+				</div>
 
+				<!--<input type="hidden" name="reviewedById" value="${sessionScope.currentUser.userId}" />
+				<input type="hidden" name="bookId" value="${book.bookId}" />-->
+			</div>
+		</div>
+
+
+		<div class="text-center" style="margin-top: 20px;">
+			<input type="submit" name="button" class="btn btn-lg btn-primary" value="Submit" />
+		</div>
+	</form>
 
 </body>
 

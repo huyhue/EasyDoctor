@@ -19,6 +19,7 @@ import fpt.edu.vn.model.Role;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.repository.DoctorRepository;
 import fpt.edu.vn.repository.PatientRepository;
+import fpt.edu.vn.repository.ReviewRepository;
 import fpt.edu.vn.repository.RoleRepository;
 import fpt.edu.vn.repository.UserRepository;
 import fpt.edu.vn.service.UserService;
@@ -30,17 +31,31 @@ public class UserServiceImpl implements UserService {
 	private final DoctorRepository doctorRepository;
 	private final PatientRepository patientRepository;
 	private final RoleRepository roleRepository;
+	private final ReviewRepository reviewRepository;
 	private final PasswordEncoder passwordEncoder;
 
-	public UserServiceImpl(UserRepository userRepository, DoctorRepository doctorRepository,
-			PatientRepository patientRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+public UserServiceImpl(UserRepository userRepository, DoctorRepository doctorRepository,
+			PatientRepository patientRepository, RoleRepository roleRepository, ReviewRepository reviewRepository,
+			PasswordEncoder passwordEncoder) {
 		super();
 		this.userRepository = userRepository;
 		this.doctorRepository = doctorRepository;
 		this.patientRepository = patientRepository;
 		this.roleRepository = roleRepository;
+		this.reviewRepository = reviewRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
+
+//	public UserServiceImpl(UserRepository userRepository, DoctorRepository doctorRepository,
+//			PatientRepository patientRepository, RoleRepository roleRepository,
+//			PasswordEncoder passwordEncoder) {
+//		super();
+//		this.userRepository = userRepository;
+//		this.doctorRepository = doctorRepository;
+//		this.patientRepository = patientRepository;
+//		this.roleRepository = roleRepository;
+//		this.passwordEncoder = passwordEncoder;
+//	}
 	
 	@Override
     public List<Patient> getAllPatients() {
@@ -174,6 +189,12 @@ public class UserServiceImpl implements UserService {
 		HashSet<Role> roles = new HashSet();
 		roles.add(roleRepository.findByName("ROLE_PATIENT"));
 		return roles;
+	}
+	
+	@Override
+	public double getRatingByDoctorId(int doctorId) {
+		Double rating = reviewRepository.getRatingByDoctorId(doctorId);
+		return (rating == null) ? 0.0 : rating;
 	}
 
 }

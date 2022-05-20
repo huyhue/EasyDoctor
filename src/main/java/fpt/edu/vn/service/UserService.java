@@ -32,4 +32,6 @@ public interface UserService {
 	
 	Collection<Role> getRolesForDoctor();
 	Collection<Role> getRolesForPatient();
+	
+	double getRatingByDoctorId(int doctorId);
 }

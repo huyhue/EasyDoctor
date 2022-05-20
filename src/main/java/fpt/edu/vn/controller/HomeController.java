@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.Patient;
+import fpt.edu.vn.model.Review;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.EmailService;
@@ -180,15 +181,14 @@ public class HomeController {
     public String showDoctorDetails(@PathVariable("id") int doctorId, ModelMap modelMap, @AuthenticationPrincipal CustomUserDetails currentUser) {
 		Doctor doctor = userService.getDoctorById(doctorId);
 		modelMap.put("doctor", doctor);
-		
 		setUpReferenceData(modelMap);
-//		Review review = new Review();
-//
-//        double bookRatingDouble = bookService.findBookRating(bookId);
-//        int bookRating = (int) Math.floor(bookRatingDouble);
-//        modelMap.put("bookRating", bookRating);
+
+        double doctorRatingDouble = userService.getRatingByDoctorId(doctorId);
+        int doctorRating = (int) Math.floor(doctorRatingDouble);
+        modelMap.put("doctorRating", doctorRating);
 		
-//        modelMap.put("review",review);
+        Review review = new Review();
+        modelMap.put("review",review);
 //		List<Review>reviewList = bookService.reviewDoctorList(doctorId);
 //        modelMap.put("ListOfReview",reviewList);
         return "doctors/doctorDetail";
