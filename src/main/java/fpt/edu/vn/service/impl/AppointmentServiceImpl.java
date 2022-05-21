@@ -236,6 +236,14 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
     
     @Override
+    public boolean isPatientAllowedToReview(int userId, int appointmentId) {
+    	User user = userService.getUserById(userId);
+    	Appointment appointment = getAppointmentByIdWithAuthorization(appointmentId);
+    	
+    	return appointment.getPatient().equals(user) && appointment.getStatus().equals(AppointmentStatus.INVOICED);
+    }
+    
+    @Override
     public boolean isDoctorAllowedToAcceptRejection(int doctorId, int appointmentId) {
         User user = userService.getUserById(doctorId);
         Appointment appointment = getAppointmentByIdWithAuthorization(appointmentId);

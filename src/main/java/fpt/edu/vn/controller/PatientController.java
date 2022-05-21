@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import fpt.edu.vn.component.ChangePasswordForm;
 import fpt.edu.vn.component.UserForm;
 import fpt.edu.vn.model.Patient;
+import fpt.edu.vn.model.Review;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.EmailService;
@@ -77,6 +78,14 @@ public class PatientController {
     public String processPatientPasswordUpdate(@ModelAttribute("passwordChange") ChangePasswordForm passwordChange) {
         userService.updateUserPassword(passwordChange);
         return "redirect:/patients/" + passwordChange.getId();
+    }
+    
+    @PostMapping("/review")
+    public String addReviewPatient(@ModelAttribute("review") Review review, @AuthenticationPrincipal CustomUserDetails currentUser) {
+    	Review reviewUO = new Review(review.getFeedback(), review.getRating(), review.getDoctor(), userService.getPatientById(currentUser.getId()));
+    	
+    	userService.saveReviewByPatient(reviewUO);
+        return "redirect:/detail/" + review.getDoctor().getId();
     }
 
     @GetMapping("/new")

@@ -10,8 +10,8 @@ import javax.persistence.Table;
 @Table(name = "reviews")
 public class Review extends BaseEntity {
 	
-	@Column(name = "review")
-    private String review;
+	@Column(name = "feedback",length=100)
+    private String feedback;
 	
 	@Column(name = "rating")
 	private int rating;
@@ -27,20 +27,20 @@ public class Review extends BaseEntity {
     public Review() {
 	}
 
-	public Review(String review, int rating, Patient patient, Doctor doctor) {
+	public Review(String feedback, int rating, Doctor doctor, Patient patient) {
 		super();
-		this.review = review;
+		this.feedback = feedback;
 		this.rating = rating;
 		this.patient = patient;
 		this.doctor = doctor;
 	}
 
-	public String getReview() {
-		return review;
+	public String getFeedback() {
+		return feedback;
 	}
 
-	public void setReview(String review) {
-		this.review = review;
+	public void setFeedback(String feedback) {
+		this.feedback = feedback;
 	}
 
 	public int getRating() {

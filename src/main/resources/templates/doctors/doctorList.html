@@ -1,70 +1,74 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	th:replace="~{fragments/layout :: layout (~{::body},'patients','Doctor List')}">
+
 <body>
-<section id="doctors" class="doctors">
-      <div class="container">
+	<section id="doctors" class="doctors">
+		<div class="container">
 
-        <div class="section-title">
-          <h2>Doctors</h2>
-          <p>Develop future google map, filter combo box, recommend doctor,...</p>
-        </div>
+			<div class="section-title">
+				<h2>Doctors</h2>
+				<p>Develop future google map, filter combo box, recommend doctor,...</p>
+			</div>
 
-        <div class="row" th:each="doctor : ${doctors}">
+			<div class="row" th:each="doctor : ${doctors}">
 
-          <div class="col-lg-6">
-            <div class="member d-flex align-items-start">
-              <div class="pic"><img src="/img/doctors/doctors-1.jpg" class="img-fluid" alt=""></div>
-              <div class="member-info">
-              	<a th:href="@{'/detail/' + ${doctor.id}}"><h4> [[${doctor.fullname}]]</h4></a>
-                <span>[[${doctor.getClinic().getName()}]]</span>
-                <p>[[${doctor.getSpecialty().getName()}]]</p>
-                <span>[[${doctor.description}]]</span>
-                 <!--<small class="text-muted"
+				<div class="col-lg-6">
+					<div class="member d-flex align-items-start">
+						<div class="pic"><img src="/img/doctors/doctors-1.jpg" class="img-fluid" alt=""></div>
+						<div class="member-info">
+							<a th:href="@{'/detail/' + ${doctor.id}}">
+								<h4> [[${doctor.fullname}]]</h4>
+							</a>
+							<span>[[${doctor.getClinic().getName()}]]</span>
+							<p>[[${doctor.getSpecialty().getName()}]]</p>
+							<span>[[${doctor.description}]]</span>
+							<!--<small class="text-muted"
                                th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(doctor.startPracticeDate) + 1} years|"></small>-->
-                <div class="social">
-                  <a th:href="@{'/appointments/new/' + ${doctor.id}}"><i class="fas fa-book-medical"></i></a>
-                  <a href=""><i class="ri-facebook-fill"></i></a>
-                  <a href=""><i class="ri-instagram-fill"></i></a>
-                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                </div>
-              </div>
-            </div>
-          </div>
-         
-        </div>
-        
-        <div class="section-title">
-          <h2>Recent Doctors</h2>
-          <p>View a list of recently examined doctors</p>
-          <div class="row" th:each="doctor : ${recentDoctors}">
+							<div class="social">
+								<a th:href="@{'/appointments/new/' + ${doctor.id}}"><i
+										class="fas fa-book-medical"></i></a>
+								<a href=""><i class="ri-facebook-fill"></i></a>
+								<a href=""><i class="ri-instagram-fill"></i></a>
+								<a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+							</div>
+						</div>
+					</div>
+				</div>
 
-          <div class="col-lg-6">
-            <div class="member d-flex align-items-start">
-              <div class="pic"><img src="/img/doctors/doctors-1.jpg" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4> [[${doctor.fullname}]]</h4>
-                <span>[[${doctor.getClinic().getName()}]]</span>
-                <p>[[${doctor.getSpecialty().getName()}]]</p>
-                <span>[[${doctor.description}]]</span>
-                 <!--<small class="text-muted"
+			</div>
+
+
+			<div class="section-title" th:if="${not #lists.isEmpty(recentDoctors)}">
+				<h2>Recent Doctors</h2>
+				<p>View a list of recently examined doctors</p>
+				<div class="row" th:each="doctor : ${recentDoctors}">
+
+					<div class="col-lg-6">
+						<div class="member d-flex align-items-start">
+							<div class="pic"><img src="/img/doctors/doctors-1.jpg" class="img-fluid" alt=""></div>
+							<div class="member-info">
+								<h4> [[${doctor.fullname}]]</h4>
+								<span>[[${doctor.getClinic().getName()}]]</span>
+								<p>[[${doctor.getSpecialty().getName()}]]</p>
+								<span>[[${doctor.description}]]</span>
+								<!--<small class="text-muted"
                                th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(doctor.startPracticeDate) + 1} years|"></small>-->
-                <div class="social">
-                  <a th:href="@{'/appointments/new/' + ${doctor.id}}"><i class="fas fa-book-medical"></i></a>
-                  <a href=""><i class="ri-facebook-fill"></i></a>
-                  <a href=""><i class="ri-instagram-fill"></i></a>
-                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                </div>
-              </div>
-            </div>
-          </div>
-         
-        </div>
-        </div>
+								<div class="social">
+									<a th:href="@{'/appointments/new/' + ${doctor.id}}"><i
+											class="fas fa-book-medical"></i></a>
+									<a href=""><i class="ri-facebook-fill"></i></a>
+									<a href=""><i class="ri-instagram-fill"></i></a>
+									<a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-      </div>
-    </section><!-- End Doctors Section Recent doctor-->
+		</div>
+	</section><!-- End Doctors Section Recent doctor-->
 
 </body>
 

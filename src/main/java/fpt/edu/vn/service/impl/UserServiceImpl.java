@@ -15,6 +15,7 @@ import fpt.edu.vn.component.ChangePasswordForm;
 import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.Gender;
 import fpt.edu.vn.model.Patient;
+import fpt.edu.vn.model.Review;
 import fpt.edu.vn.model.Role;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.repository.DoctorRepository;
@@ -34,7 +35,7 @@ public class UserServiceImpl implements UserService {
 	private final ReviewRepository reviewRepository;
 	private final PasswordEncoder passwordEncoder;
 
-public UserServiceImpl(UserRepository userRepository, DoctorRepository doctorRepository,
+	public UserServiceImpl(UserRepository userRepository, DoctorRepository doctorRepository,
 			PatientRepository patientRepository, RoleRepository roleRepository, ReviewRepository reviewRepository,
 			PasswordEncoder passwordEncoder) {
 		super();
@@ -56,11 +57,11 @@ public UserServiceImpl(UserRepository userRepository, DoctorRepository doctorRep
 //		this.roleRepository = roleRepository;
 //		this.passwordEncoder = passwordEncoder;
 //	}
-	
+
 	@Override
-    public List<Patient> getAllPatients() {
-        return patientRepository.findAll();
-    }
+	public List<Patient> getAllPatients() {
+		return patientRepository.findAll();
+	}
 
 	@Override
 	public User findByConfirmationToken(String token) {
@@ -71,7 +72,7 @@ public UserServiceImpl(UserRepository userRepository, DoctorRepository doctorRep
 	public User findByEmail(String email) {
 		return userRepository.findByEmail(email);
 	}
-	
+
 	@Override
 	@PreAuthorize("#patient.id == principal.id or hasRole('ADMIN')")
 	public void updatePatient(Patient patient) {
@@ -83,7 +84,7 @@ public UserServiceImpl(UserRepository userRepository, DoctorRepository doctorRep
 		p.setAddress(patient.getAddress());
 		patientRepository.save(p);
 	}
-	
+
 	@Override
 	@PreAuthorize("#doctor.id == principal.id or hasRole('ADMIN')")
 	public void updateDoctor(Doctor doctor) {
@@ -134,7 +135,7 @@ public UserServiceImpl(UserRepository userRepository, DoctorRepository doctorRep
 		user.setPassword(passwordEncoder.encode(passwordChangeForm.getPassword()));
 		userRepository.save(user);
 	}
-	
+
 	@Override
 	public void updateImage(int id, String fileImage) {
 		User user = userRepository.findById(id).get();
@@ -190,11 +191,20 @@ public UserServiceImpl(UserRepository userRepository, DoctorRepository doctorRep
 		roles.add(roleRepository.findByName("ROLE_PATIENT"));
 		return roles;
 	}
-	
+
 	@Override
 	public double getRatingByDoctorId(int doctorId) {
 		Double rating = reviewRepository.getRatingByDoctorId(doctorId);
 		return (rating == null) ? 0.0 : rating;
 	}
 
+	@Override
+	public List<Review> getAllReviewByDoctorId(int doctorId) {
+		return reviewRepository.getAllReviewByDoctorId(doctorId);
+	}
+	
+	@Override
+	public void saveReviewByPatient(Review review) {
+		reviewRepository.save(review);
+	}
 }

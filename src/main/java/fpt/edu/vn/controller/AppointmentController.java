@@ -5,10 +5,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import fpt.edu.vn.model.Appointment;
 import fpt.edu.vn.model.ChatMessage;
+import fpt.edu.vn.model.Review;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.AppointmentService;
 import fpt.edu.vn.service.EmailService;
@@ -18,6 +20,8 @@ import fpt.edu.vn.service.UserService;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/appointments")
@@ -41,14 +45,18 @@ public class AppointmentController {
 	}
 
 	@GetMapping("/{id}")
-    public String showAppointmentDetail(@PathVariable("id") int appointmentId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
+    public String showAppointmentDetail(@PathVariable("id") int appointmentId, Model model, ModelMap modelMap, @AuthenticationPrincipal CustomUserDetails currentUser) {
         Appointment appointment = appointmentService.getAppointmentByIdWithAuthorization(appointmentId);
         model.addAttribute("appointment", appointment);
         model.addAttribute("chatMessage", new ChatMessage());
         boolean allowedToRequestRejection = appointmentService.isPatientAllowedToRejectAppointment(currentUser.getId(), appointmentId);
         boolean allowedToAcceptRejection = appointmentService.isDoctorAllowedToAcceptRejection(currentUser.getId(), appointmentId);
+        boolean allowedToReview = appointmentService.isPatientAllowedToReview(currentUser.getId(), appointmentId);
         model.addAttribute("allowedToRequestRejection", allowedToRequestRejection);
         model.addAttribute("allowedToAcceptRejection", allowedToAcceptRejection);
+        setUpReferenceData(modelMap);
+        model.addAttribute("allowedToReview", allowedToReview);
+        model.addAttribute("review", new Review());
         if (allowedToRequestRejection) {
             model.addAttribute("remainingTime", formatDuration(Duration.between(LocalDateTime.now(), appointment.getEnd().plusDays(1))));
         }
@@ -58,6 +66,16 @@ public class AppointmentController {
         model.addAttribute("cancelNotAllowedReason", cancelNotAllowedReason);
         return "appointments/appointmentDetail";
     }
+	
+	private void setUpReferenceData(ModelMap modelMap) {
+		Map<Integer, String> ratingOptionMap = new LinkedHashMap<>();
+		ratingOptionMap.put(5, "5 Star");
+		ratingOptionMap.put(4, "4 Star");
+		ratingOptionMap.put(3, "3 Star");
+		ratingOptionMap.put(2, "2 Star");
+		ratingOptionMap.put(1, "1 Star");
+		modelMap.put("ratingOptionMap", ratingOptionMap);
+	}
 
 	@GetMapping("/all")
 	public String showAllAppointments(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {

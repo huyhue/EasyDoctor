@@ -68,7 +68,8 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String addPatientRegistration(@ModelAttribute("user") Patient user, BindingResult bindingResult, Model model) {
+	public String addPatientRegistration(@ModelAttribute("user") Patient user, BindingResult bindingResult,
+			Model model) {
 		if (bindingResult.hasErrors()) {
 			return "users/registerPatient";
 		}
@@ -76,8 +77,7 @@ public class HomeController {
 		User userExists = userService.findByUserName(user.getUserName());
 
 		if (userExists != null) {
-			model.addAttribute("alreadyRegisteredMessage",
-					"Oops!  There is already a user registered.");
+			model.addAttribute("alreadyRegisteredMessage", "Oops!  There is already a user registered.");
 			return "users/registerPatient";
 		} else {
 			user.setConfirmationToken(UUID.randomUUID().toString());
@@ -86,34 +86,33 @@ public class HomeController {
 		}
 		return "users/login";
 	}
-	
+
 	@RequestMapping(value = "/forgot", method = RequestMethod.GET)
 	public String showForgotPassword(@ModelAttribute("user") User user) {
 		return "users/forgotPassword";
 	}
-	
+
 	@RequestMapping(value = "/forgot", method = RequestMethod.POST)
 	public String resetForgotPassword(@ModelAttribute("user") User user, Model model) {
 		User existUser = userService.findByEmail(user.getEmail());
 		if (existUser != null) {
 			emailService.sendConfirmRegistration(existUser);
 			model.addAttribute("confirmationMessage", "A confirmation e-mail has been sent to " + user.getEmail());
-		}else {
+		} else {
 			model.addAttribute("alreadyRegisteredMessage", "A confirmation e-mail not exists.");
 		}
 		return "users/forgotPassword";
 	}
-
 
 	// Process confirmation link
 	@RequestMapping(value = "/register/confirm", method = RequestMethod.GET)
 	public String confirmRegistration(Model model, @RequestParam("token") String token) {
 		User user = userService.findByConfirmationToken(token);
 
-		if (user == null) { 
+		if (user == null) {
 			// No token found in DB
 			model.addAttribute("invalidToken", "Oops!  This is an invalid confirmation link.");
-		} else { 
+		} else {
 			// Token found
 			model.addAttribute("user", user);
 		}
@@ -125,7 +124,7 @@ public class HomeController {
 	@RequestMapping(value = "/register/confirm", method = RequestMethod.POST)
 	public String confirmRegistration(Model model, @ModelAttribute("user") User user) {
 		User userDR = userService.findByConfirmationToken(user.getConfirmationToken());
-		if(userDR != null) {
+		if (userDR != null) {
 			userService.savePasswordByUser(user);
 			model.addAttribute("successMessage", "Your password has been set!");
 		} else {
@@ -133,76 +132,63 @@ public class HomeController {
 		}
 		return "users/login";
 	}
-	
+
 	@PostMapping("/image/saveImageProfile")
-    public @ResponseBody
-    ResponseEntity<?> saveImageProfile(@AuthenticationPrincipal CustomUserDetails currentUser, final @RequestParam("profileImage") MultipartFile file) throws IOException {
+	public @ResponseBody ResponseEntity<?> saveImageProfile(@AuthenticationPrincipal CustomUserDetails currentUser,
+			final @RequestParam("profileImage") MultipartFile file) throws IOException {
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-			if (file.getContentType().equalsIgnoreCase("image/jpg")
-					|| file.getContentType().equalsIgnoreCase("image/jpeg")
-					|| file.getContentType().equalsIgnoreCase("image/png")) {
-				double fileSize = file.getSize();
+		if (file.getContentType().equalsIgnoreCase("image/jpg") || file.getContentType().equalsIgnoreCase("image/jpeg")
+				|| file.getContentType().equalsIgnoreCase("image/png")) {
+			double fileSize = file.getSize();
 
-				double kl = (fileSize / 1024);
-				double mb = (kl / 1024);
-				if (mb < 5) {
-					String uploadDir = "./uploads/" + currentUser.getEmail();
-					Path uploadPath = Paths.get(uploadDir);
-					String oldFileLocation = uploadDir + "/" + currentUser.getProfileImage();
-					Path getImage = Paths.get(oldFileLocation);
+			double kl = (fileSize / 1024);
+			double mb = (kl / 1024);
+			if (mb < 5) {
+				String uploadDir = "./uploads/" + currentUser.getEmail();
+				Path uploadPath = Paths.get(uploadDir);
+				String oldFileLocation = uploadDir + "/" + currentUser.getProfileImage();
+				Path getImage = Paths.get(oldFileLocation);
 
-					if (Files.exists(getImage)) {
-						Files.delete(getImage);
-						System.out.println("Files deleted");
-					}
+				if (Files.exists(getImage)) {
+					Files.delete(getImage);
+					System.out.println("Files deleted");
+				}
 
-					if (!Files.exists(uploadPath)) {
-						Files.createDirectories(uploadPath);
-					}
-					try (InputStream inputStream = file.getInputStream()) {
-						String newFileName = System.currentTimeMillis() + "_" + fileName;
-						userService.updateImage(currentUser.getId(), newFileName);
-						currentUser.setProfileImage(newFileName);
-						Path filePath = uploadPath.resolve(newFileName).normalize();
-						Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-					} catch (IOException e) {
-						throw new IOException("Error in uploading File!");
-					}
-				} else {
-					return new ResponseEntity<>("file is too large", HttpStatus.BAD_REQUEST);
+				if (!Files.exists(uploadPath)) {
+					Files.createDirectories(uploadPath);
+				}
+				try (InputStream inputStream = file.getInputStream()) {
+					String newFileName = System.currentTimeMillis() + "_" + fileName;
+					userService.updateImage(currentUser.getId(), newFileName);
+					currentUser.setProfileImage(newFileName);
+					Path filePath = uploadPath.resolve(newFileName).normalize();
+					Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+				} catch (IOException e) {
+					throw new IOException("Error in uploading File!");
 				}
 			} else {
-				return new ResponseEntity<>("Please enter a valid image file", HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<>("file is too large", HttpStatus.BAD_REQUEST);
 			}
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-	
+		} else {
+			return new ResponseEntity<>("Please enter a valid image file", HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
+
 	@GetMapping("/detail/{id}")
-    public String showDoctorDetails(@PathVariable("id") int doctorId, ModelMap modelMap, @AuthenticationPrincipal CustomUserDetails currentUser) {
+	public String showDoctorDetails(@PathVariable("id") int doctorId, ModelMap modelMap,
+			@AuthenticationPrincipal CustomUserDetails currentUser) {
 		Doctor doctor = userService.getDoctorById(doctorId);
 		modelMap.put("doctor", doctor);
-		setUpReferenceData(modelMap);
-
-        double doctorRatingDouble = userService.getRatingByDoctorId(doctorId);
-        int doctorRating = (int) Math.floor(doctorRatingDouble);
-        modelMap.put("doctorRating", doctorRating);
 		
-        Review review = new Review();
-        modelMap.put("review",review);
-//		List<Review>reviewList = bookService.reviewDoctorList(doctorId);
-//        modelMap.put("ListOfReview",reviewList);
-        return "doctors/doctorDetail";
-    }
-	
-	private void setUpReferenceData(ModelMap modelMap) {
-        Map<Integer, String> ratingOptionMap = new LinkedHashMap<>();
-        ratingOptionMap.put(5, "5 Star");
-        ratingOptionMap.put(4, "4 Star");
-        ratingOptionMap.put(3, "3 Star");
-        ratingOptionMap.put(2, "2 Star");
-        ratingOptionMap.put(1, "1 Star");
-        modelMap.put("ratingOptionMap", ratingOptionMap);
-    }
+		double doctorRatingDouble = userService.getRatingByDoctorId(doctorId);
+		int doctorRating = (int) Math.floor(doctorRatingDouble);
+		modelMap.put("doctorRating", doctorRating);
+
+		List<Review> reviewList = userService.getAllReviewByDoctorId(doctorId);
+		modelMap.put("reviewList", reviewList);
+		return "doctors/doctorDetail";
+	}
 
 	@GetMapping("/access-denied")
 	public String showAccessDeniedPage() {

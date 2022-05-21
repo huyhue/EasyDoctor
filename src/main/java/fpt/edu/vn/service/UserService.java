@@ -6,6 +6,7 @@ import java.util.List;
 import fpt.edu.vn.component.ChangePasswordForm;
 import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.Patient;
+import fpt.edu.vn.model.Review;
 import fpt.edu.vn.model.Role;
 import fpt.edu.vn.model.User;
 
@@ -33,5 +34,8 @@ public interface UserService {
 	Collection<Role> getRolesForDoctor();
 	Collection<Role> getRolesForPatient();
 	
+//	Review
 	double getRatingByDoctorId(int doctorId);
+	List<Review> getAllReviewByDoctorId(int doctorId);
+	void saveReviewByPatient(Review review);
 }

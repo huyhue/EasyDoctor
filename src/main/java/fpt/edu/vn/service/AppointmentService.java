@@ -51,4 +51,6 @@ public interface AppointmentService {
 	void updateAllAppointmentsStatuses();
 	
 	List<Appointment> getConfirmedAppointmentsByPatientId(int patientId);
+	
+	boolean isPatientAllowedToReview(int userId, int appointmentId);
 }
