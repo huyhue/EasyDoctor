@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout (~{::body},'availability','Availability settings')}"
+      th:replace="~{fragments/layout :: layout (~{::body},'availability','Change working plan')}"
       xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <body>
 <div class="row" style="margin-top: 50px" ;>
-    <div class="col-md-6 text-center">
-        <h2>Working plan</h2>
+    <div class="col-md-10 text-center">
+        <h2>Change Working Plan</h2>
         <table class="table table-striped text-center">
             <thead class="thead-dark">
 
@@ -87,7 +87,7 @@
         </table>
 
     </div>
-    <div class="col-md-6 text-center">
+   <!-- <div class="col-md-6 text-center">
         <h2>Breaks</h2>
         <table class="table table-striped text-center">
             <thead class="thead-dark">
@@ -232,9 +232,8 @@
 
         </form>
 
-    </div>
-<!--<input type="time" th:field="*{tuesday.workingHours.start}"
-                               th:value="${plan.tuesday.workingHours.start}">-->
+    </div>-->
+    
 </div>
 </body>
 

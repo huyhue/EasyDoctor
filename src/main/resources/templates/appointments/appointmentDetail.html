@@ -48,7 +48,8 @@
 												Rating
 											</option>
 										</select>
-									<input type="hidden" name="doctor" th:value="${appointment.doctor.id}" sth:field="*{doctor.id}"/>
+										<input type="hidden" name="doctor" th:value="${appointment.doctor.id}"
+											sth:field="*{doctor.id}" />
 										<div class="text-center" style="margin-top: 10px;">
 											<input type="submit" name="button" class="btn btn-primary" value="Submit" />
 										</div>
@@ -69,7 +70,7 @@
 					<table id="appointments" class="table">
 						<tr>
 							<td><b>Status</b></td>
-							<td><span th:text="${appointment.status}"> scheduled </span></td>
+							<td><span th:text="${appointment.status}" id="status"> scheduled </span></td>
 						</tr>
 						<tr th:if="${appointment.status.name()=='CANCELED'}">
 							<td><b>Canceled by</b></td>
@@ -87,18 +88,19 @@
 						<tr>
 							<td><b>Time</b></td>
 							<td><span
-									th:text="${#temporals.format(appointment.start, 'HH:mm')+' - '+ #temporals.format(appointment.end, 'HH:mm')}">14:00
+									th:text="${#temporals.format(appointment.start, 'HH:mm')+' - '+ #temporals.format(appointment.end, 'HH:mm')}"
+									id="startTime">14:00
 									- 15:00</span>
 							</td>
 						</tr>
 						<tr>
 							<td><b>Patient</b></td>
-							<td><span th:text="${appointment.patient.fullname}">Huyhue</span>
+							<td><span th:text="${appointment.patient.fullname}" id="patient">Huyhue</span>
 							</td>
 						</tr>
 						<tr>
 							<td><b>Doctor</b></td>
-							<td><span th:text="${appointment.doctor.fullname}">Huyhue</span>
+							<td><span th:text="${appointment.doctor.fullname}" id="doctor">Huyhue</span>
 							</td>
 						</tr>
 
@@ -131,6 +133,20 @@
 							</td>
 							<td th:unless="${allowedToCancel}">
 								<p th:text="${cancelNotAllowedReason}">Reason why appointment cannot be cancelled.</p>
+							</td>
+						</tr>
+						<tr>
+							<td><b>QR Code</b></td>
+							<td>
+							<div id="qrcode">
+								<canvas id="qr-code"></canvas>
+							</div>
+							<a id="download" download="easyQR-code.png">
+								<button class="btn btn-primary" id="button-download-qr-code" type="button"
+									style="margin-right: 3px;background: rgb(255,73,41);border-style: solid;border-color: rgb(255,73,41);"
+									onClick="download()" download="">Download
+								</button>
+							</a>
 							</td>
 						</tr>
 
@@ -189,6 +205,43 @@
 		</div>
 	</div>
 	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+	<!-- QR Code -->
+	<script>
+		var qr;
+
+		(function () {
+			qr = new QRious({
+				element: document.getElementById('qr-code'),
+				size: 200,
+				value: 'huyhue'
+			});
+		})();
+
+		window.onload = function () {
+			qrType = "appointment";
+			var doctor = document.getElementById('doctor').innerText;
+			var patient = document.getElementById('patient').innerText;
+			var status = document.getElementById('status').innerText;
+			var startTime = document.getElementById('startTime').innerText;
+
+			qrContent = "Easydoctor appointment: " + doctor + " " + patient + " ,status " + status + " ,startTime " + startTime;
+			console.log("test: " + qrContent);
+			qr.set({
+				foreground: 'black',
+				size: 200,
+				value: qrContent
+			});
+		};
+
+		function download() {
+			var download = document.getElementById("download");
+			qrImage = document.getElementById("qr-code").toDataURL("image/png")
+				.replace("image/png", "image/octet-stream");
+			download.setAttribute("href", qrImage);
+		}
+	</script>
 </body>
 
 </html>
