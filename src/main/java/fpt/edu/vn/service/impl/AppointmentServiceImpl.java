@@ -9,13 +9,13 @@ import fpt.edu.vn.component.TimePeroid;
 import fpt.edu.vn.exception.AppointmentNotFoundException;
 import fpt.edu.vn.model.Appointment;
 import fpt.edu.vn.model.AppointmentStatus;
-import fpt.edu.vn.model.ChatMessage;
+import fpt.edu.vn.model.Message;
 import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.Packages;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.model.WorkingPlan;
 import fpt.edu.vn.repository.AppointmentRepository;
-import fpt.edu.vn.repository.ChatMessageRepository;
+import fpt.edu.vn.repository.MessageRepository;
 import fpt.edu.vn.service.AppointmentService;
 import fpt.edu.vn.service.NotificationService;
 import fpt.edu.vn.service.PackagesService;
@@ -35,18 +35,18 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final AppointmentRepository appointmentRepository;
     private final UserService userService;
     private final PackagesService packagesService;
-    private final ChatMessageRepository chatMessageRepository;
+    private final MessageRepository messageRepository;
     private final NotificationService notificationService;
     private final JwtTokenServiceImpl jwtTokenService;
 
 	public AppointmentServiceImpl(AppointmentRepository appointmentRepository, UserService userService,
-			PackagesService packagesService, ChatMessageRepository chatMessageRepository,
+			PackagesService packagesService, MessageRepository messageRepository,
 			NotificationService notificationService, JwtTokenServiceImpl jwtTokenService) {
 		super();
 		this.appointmentRepository = appointmentRepository;
 		this.userService = userService;
 		this.packagesService = packagesService;
-		this.chatMessageRepository = chatMessageRepository;
+		this.messageRepository = messageRepository;
 		this.notificationService = notificationService;
 		this.jwtTokenService = jwtTokenService;
 	}
@@ -303,13 +303,18 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
     
     @Override
-    public void addMessageToAppointmentChat(int appointmentId, int authorId, ChatMessage chatMessage) {
+    public List<Message> getMessagesByAppointmentId(int appointmentId) {
+        return messageRepository.findByAppointmentId(appointmentId);
+    }
+    
+    @Override
+    public void addMessageToAppointmentChat(int appointmentId, int authorId, Message chatMessage) {
         Appointment appointment = getAppointmentByIdWithAuthorization(appointmentId);
         if (appointment.getDoctor().getId() == authorId || appointment.getPatient().getId() == authorId) {
             chatMessage.setAuthor(userService.getUserById(authorId));
             chatMessage.setAppointment(appointment);
             chatMessage.setCreatedAt(LocalDateTime.now());
-            chatMessageRepository.save(chatMessage);
+            messageRepository.save(chatMessage);
 //            notificationService.newChatMessageNotification(chatMessage, true);
         } else {
             throw new org.springframework.security.access.AccessDeniedException("Unauthorized");

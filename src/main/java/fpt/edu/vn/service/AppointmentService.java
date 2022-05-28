@@ -6,7 +6,7 @@ import java.util.List;
 
 import fpt.edu.vn.component.TimePeroid;
 import fpt.edu.vn.model.Appointment;
-import fpt.edu.vn.model.ChatMessage;
+import fpt.edu.vn.model.Message;
 import fpt.edu.vn.model.Packages;
 
 public interface AppointmentService {
@@ -44,7 +44,8 @@ public interface AppointmentService {
 	boolean acceptRejection(String token);
 	
 	//Chat
-	void addMessageToAppointmentChat(int appointmentId, int authorId, ChatMessage chatMessage);
+	void addMessageToAppointmentChat(int appointmentId, int authorId, Message chatMessage);
+	List<Message> getMessagesByAppointmentId(int appointmentId);
 	
 	//Auto
 	void updateUserAppointmentsStatuses(int userId);

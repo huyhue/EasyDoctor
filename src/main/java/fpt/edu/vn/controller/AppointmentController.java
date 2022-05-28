@@ -7,9 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.MediaType;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import fpt.edu.vn.component.ChatMessage;
 import fpt.edu.vn.model.Appointment;
-import fpt.edu.vn.model.ChatMessage;
+import fpt.edu.vn.model.Message;
 import fpt.edu.vn.model.Review;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.AppointmentService;
@@ -20,8 +25,13 @@ import fpt.edu.vn.service.UserService;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/appointments")
@@ -48,7 +58,7 @@ public class AppointmentController {
     public String showAppointmentDetail(@PathVariable("id") int appointmentId, Model model, ModelMap modelMap, @AuthenticationPrincipal CustomUserDetails currentUser) {
         Appointment appointment = appointmentService.getAppointmentByIdWithAuthorization(appointmentId);
         model.addAttribute("appointment", appointment);
-        model.addAttribute("chatMessage", new ChatMessage());
+        model.addAttribute("chatMessage", new Message());
         boolean allowedToRequestRejection = appointmentService.isPatientAllowedToRejectAppointment(currentUser.getId(), appointmentId);
         boolean allowedToAcceptRejection = appointmentService.isDoctorAllowedToAcceptRejection(currentUser.getId(), appointmentId);
         boolean allowedToReview = appointmentService.isPatientAllowedToReview(currentUser.getId(), appointmentId);
@@ -194,10 +204,24 @@ public class AppointmentController {
     }
 
     @PostMapping("/messages/new")
-    public String addNewChatMessage(@ModelAttribute("chatMessage") ChatMessage chatMessage, @RequestParam("appointmentId") int appointmentId, @AuthenticationPrincipal CustomUserDetails currentUser) {
+    public String addNewChatMessage(@ModelAttribute("chatMessage") Message chatMessage, @RequestParam("appointmentId") int appointmentId, @AuthenticationPrincipal CustomUserDetails currentUser) {
         int authorId = currentUser.getId();
         appointmentService.addMessageToAppointmentChat(appointmentId, authorId, chatMessage);
         return "redirect:/appointments/" + appointmentId;
+    }
+    
+    @RequestMapping(value = "/messages/all", method = RequestMethod.POST)
+    @ResponseBody
+    public String getMessages(@RequestParam("appointmentId") int appointmentId) {
+    	List<ChatMessage> list = new ArrayList<>();
+		List<Message> messageslist = appointmentService.getMessagesByAppointmentId(appointmentId);
+		for (Message me : messageslist) {
+			list.add(new ChatMessage(me.getMessage(), me.getAuthor().getId())); 
+		}
+		
+		Gson gsonBuilder = new GsonBuilder().create();
+        String messagelistJson = gsonBuilder.toJson(list);
+    	return messagelistJson;
     }
 
 	public static String formatDuration(Duration duration) {

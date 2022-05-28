@@ -46,7 +46,7 @@ public class Appointment extends BaseEntity implements Comparable<Appointment> {
     private Packages packages;
 
     @OneToMany(mappedBy = "appointment")
-    private List<ChatMessage> chatMessages;
+    private List<Message> chatMessages;
 
     @ManyToOne
     @JoinColumn(name = "id_invoice")
@@ -116,7 +116,7 @@ public class Appointment extends BaseEntity implements Comparable<Appointment> {
         this.status = status;
     }
 
-    public List<ChatMessage> getChatMessages() {
+    public List<Message> getChatMessages() {
         Collections.sort(chatMessages);
         return chatMessages;
     }
@@ -129,7 +129,7 @@ public class Appointment extends BaseEntity implements Comparable<Appointment> {
         this.canceler = canceler;
     }
 
-    public void setChatMessages(List<ChatMessage> chatMessages) {
+    public void setChatMessages(List<Message> chatMessages) {
         this.chatMessages = chatMessages;
     }
 

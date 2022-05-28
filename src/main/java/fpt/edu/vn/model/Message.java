@@ -1,11 +1,13 @@
 package fpt.edu.vn.model;
 
 import javax.persistence.*;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "messages")
-public class ChatMessage extends BaseEntity implements Comparable<ChatMessage> {
+public class Message extends BaseEntity implements Comparable<Message>, Serializable {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -21,7 +23,7 @@ public class ChatMessage extends BaseEntity implements Comparable<ChatMessage> {
     @JoinColumn(name = "id_appointment")
     private Appointment appointment;
 
-    public ChatMessage() {
+    public Message() {
 
     }
 
@@ -58,7 +60,14 @@ public class ChatMessage extends BaseEntity implements Comparable<ChatMessage> {
     }
 
     @Override
-    public int compareTo(ChatMessage o) {
+    public int compareTo(Message o) {
         return this.createdAt.compareTo(o.getCreatedAt());
     }
+
+	@Override
+	public String toString() {
+		return "Message [createdAt=" + createdAt + ", message=" + message + ", author=" + author + ", appointment="
+				+ appointment + "]";
+	}
+    
 }

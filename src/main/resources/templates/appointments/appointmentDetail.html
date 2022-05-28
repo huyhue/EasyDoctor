@@ -63,11 +63,10 @@
 			</div>
 
 			<div class="row">
-				<div class="col-md-1">
-				</div>
-				<div class="col-md-4">
+				<div class="col-md-5">
 
 					<table id="appointments" class="table">
+						<input type="hidden" th:value="${appointment.id}" id="appointment_id">
 						<tr>
 							<td><b>Status</b></td>
 							<td><span th:text="${appointment.status}" id="status"> scheduled </span></td>
@@ -153,7 +152,7 @@
 					</table>
 
 				</div>
-				<div class="col-md-5">
+				<div class="col-md-6">
 
 					<div class="chatbody">
 						<div class="panel panel-primary">
@@ -170,7 +169,7 @@
 							</div>
 
 							<div class="panel-body msg_container_base">
-								<div th:each="chatMessage : ${appointment.chatMessages}"
+								<!--<div th:each="chatMessage : ${appointment.chatMessages}"
 									class="row msg_container base_receive">
 									<div class="col-md-12 col-xs-12">
 										<div class="messages msg_receive">
@@ -180,7 +179,7 @@
 													th:text="${#temporals.format(chatMessage.createdAt, 'dd-MM-yyyy HH:mm')}"></span></time>
 										</div>
 									</div>
-								</div>
+								</div>-->
 							</div>
 
 							<form th:action="@{/appointments/messages/new}" th:object="${chatMessage}" method='POST'>
@@ -196,6 +195,7 @@
 							</form>
 						</div>
 					</div>
+					<!--  end chat -->
 
 				</div>
 
@@ -207,6 +207,9 @@
 	</div>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script th:src="@{/js/chat.js}"></script>
 	<!-- QR Code -->
 	<script>
 		var qr;
@@ -227,7 +230,6 @@
 			var startTime = document.getElementById('startTime').innerText;
 
 			qrContent = "Easydoctor appointment: " + doctor + " " + patient + " ,status " + status + " ,startTime " + startTime;
-			console.log("test: " + qrContent);
 			qr.set({
 				foreground: 'black',
 				size: 200,
