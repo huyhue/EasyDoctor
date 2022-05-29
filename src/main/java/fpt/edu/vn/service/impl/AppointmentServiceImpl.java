@@ -4,6 +4,7 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import fpt.edu.vn.component.ChatMessage;
 import fpt.edu.vn.component.DayPlan;
 import fpt.edu.vn.component.TimePeroid;
 import fpt.edu.vn.exception.AppointmentNotFoundException;
@@ -23,6 +24,7 @@ import fpt.edu.vn.service.UserService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -303,8 +305,15 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
     
     @Override
-    public List<Message> getMessagesByAppointmentId(int appointmentId) {
-        return messageRepository.findByAppointmentId(appointmentId);
+    public List<ChatMessage> getMessagesByAppointmentId(int appointmentId) {
+    	List<ChatMessage> list = new ArrayList<>();
+		List<Message> messageslist = messageRepository.findByAppointmentId(appointmentId);
+		DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+    	
+		for (Message me : messageslist) {
+			list.add(new ChatMessage(me.getMessage(), me.getAuthor().getFullname(), me.getAuthor().getNameRole(), me.getCreatedAt().format(formatter))); 
+		}
+        return list;
     }
     
     @Override

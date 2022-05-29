@@ -2,8 +2,7 @@
 
 var messageForm = document.querySelector('#messageForm');
 var messageInput = document.querySelector('#message');
-var messageArea = document.querySelector('#messageArea');
-var userlistArea = document.querySelector('#userlistArea');
+var messageArea = document.querySelector('.msg_container_base');
 var connectingElement = document.querySelector('.connecting');
 
 var stompClient = null;
@@ -36,12 +35,47 @@ function getLastMessages() {
 			if (data != null && data != undefined) {
 				var obj = JSON.parse(data);
 				console.log("test obj: " + obj);
-				var len = data.length;
+				var len = obj.length;
 
 				console.log("test json: " + data + ",len " + len);
-				for (var i = 0; i < obj.length; ++i) {
+				for (var i = len - 1; i >= 0; i--) {
                     console.log(obj[i].content);
+                    // Add to MessageArea
+					let messageElement = document.createElement('div');
+					messageElement.classList.add('row','msg_container','base_receive');
+					
+					let messageElement0 = document.createElement('div');
+					messageElement0.classList.add('col-md-1','col-xs-1');
+					messageElement.appendChild(messageElement0);
+					
+					let avatarElement = document.createElement('i');
+					avatarElement.classList.add('chat-avatar');
+					let avatarText = document.createTextNode(obj[i].sender[0]);
+					avatarElement.appendChild(avatarText);
+					avatarElement.style['background-color'] = getAvatarColor(obj[i].sender);
+					messageElement0.appendChild(avatarElement);
+					
+					let messageElement1 = document.createElement('div');
+					messageElement1.classList.add('col-md-11','col-xs-11');
+					messageElement.appendChild(messageElement1);
+					
+					let messageElement2 = document.createElement('div');
+					messageElement2.classList.add('messages','msg_receive');
+					messageElement1.appendChild(messageElement2);
+					
+					let textElement = document.createElement('p');
+					let messageText = document.createTextNode(obj[i].content);
+					textElement.appendChild(messageText);
+					messageElement2.appendChild(textElement);
+					
+					let usernameElement = document.createElement('span');
+					let usernameText = document.createTextNode(obj[i].role + " * " + obj[i].createdAt);
+					usernameElement.appendChild(usernameText);
+					messageElement2.appendChild(usernameElement);
+					
+					messageArea.appendChild(messageElement);
                 }
+                messageArea.scrollTop = messageArea.scrollHeight;
 				/*for (var i = len - 1; i >= 0; i--) {
 
 					// Add to MessageArea

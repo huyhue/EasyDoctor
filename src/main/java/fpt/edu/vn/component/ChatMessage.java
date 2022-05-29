@@ -3,9 +3,10 @@ package fpt.edu.vn.component;
 public class ChatMessage {
     private MessageType type;
     private String content;
-    
     private String sender;
     private int sender_id;
+    private String role;
+    private String createdAt;
 
     public enum MessageType {
         CHAT,
@@ -16,7 +17,15 @@ public class ChatMessage {
     public ChatMessage() {
 	}
 
-    public ChatMessage(String content, int sender_id) {
+	public ChatMessage(String content, String sender, String role,String createdAt) {
+		super();
+		this.content = content;
+		this.sender = sender;
+		this.role = role;
+		this.createdAt = createdAt;
+	}
+
+	public ChatMessage(String content, int sender_id) {
 		super();
 		this.content = content;
 		this.sender_id = sender_id;
@@ -53,6 +62,22 @@ public class ChatMessage {
     public void setSender_id(int sender_id) {
         this.sender_id = sender_id;
     }
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
+	}
 
 	@Override
 	public String toString() {

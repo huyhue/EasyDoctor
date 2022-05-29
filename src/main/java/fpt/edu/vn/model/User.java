@@ -126,6 +126,13 @@ public class User extends BaseEntity {
 	public void setRoles(Collection<Role> roles) {
 		this.roles = roles;
 	}
+	
+	public String getNameRole() {
+		if (roles.toString().contains("ROLE_DOCTOR")) {
+			return "Bác sĩ";
+		}
+		return "Bệnh nhân";
+	}
 
 	public String getMobile() {
 		return mobile;

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import fpt.edu.vn.component.ChatMessage;
 import fpt.edu.vn.component.TimePeroid;
 import fpt.edu.vn.model.Appointment;
 import fpt.edu.vn.model.Message;
@@ -45,7 +46,7 @@ public interface AppointmentService {
 	
 	//Chat
 	void addMessageToAppointmentChat(int appointmentId, int authorId, Message chatMessage);
-	List<Message> getMessagesByAppointmentId(int appointmentId);
+	List<ChatMessage> getMessagesByAppointmentId(int appointmentId);
 	
 	//Auto
 	void updateUserAppointmentsStatuses(int userId);

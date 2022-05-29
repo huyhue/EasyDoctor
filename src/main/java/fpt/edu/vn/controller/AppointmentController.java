@@ -213,11 +213,7 @@ public class AppointmentController {
     @RequestMapping(value = "/messages/all", method = RequestMethod.POST)
     @ResponseBody
     public String getMessages(@RequestParam("appointmentId") int appointmentId) {
-    	List<ChatMessage> list = new ArrayList<>();
-		List<Message> messageslist = appointmentService.getMessagesByAppointmentId(appointmentId);
-		for (Message me : messageslist) {
-			list.add(new ChatMessage(me.getMessage(), me.getAuthor().getId())); 
-		}
+		List<ChatMessage> list = appointmentService.getMessagesByAppointmentId(appointmentId);
 		
 		Gson gsonBuilder = new GsonBuilder().create();
         String messagelistJson = gsonBuilder.toJson(list);
