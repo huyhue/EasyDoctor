@@ -317,13 +317,15 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
     
     @Override
-    public void addMessageToAppointmentChat(int appointmentId, int authorId, Message chatMessage) {
-        Appointment appointment = getAppointmentByIdWithAuthorization(appointmentId);
-        if (appointment.getDoctor().getId() == authorId || appointment.getPatient().getId() == authorId) {
-            chatMessage.setAuthor(userService.getUserById(authorId));
-            chatMessage.setAppointment(appointment);
-            chatMessage.setCreatedAt(LocalDateTime.now());
-            messageRepository.save(chatMessage);
+    public void addMessageToAppointmentChat(ChatMessage chatMessage) {
+    	Message message = new Message();
+        Appointment appointment = getAppointmentByIdWithAuthorization(chatMessage.getId_appointment());
+        if (appointment.getDoctor().getId() == chatMessage.getSender_id() || appointment.getPatient().getId() == chatMessage.getSender_id()) {
+        	message.setAuthor(userService.findById(chatMessage.getSender_id()));
+        	message.setAppointment(appointment);
+        	message.setMessage(chatMessage.getContent());
+        	message.setCreatedAt(LocalDateTime.now());
+            messageRepository.save(message);
 //            notificationService.newChatMessageNotification(chatMessage, true);
         } else {
             throw new org.springframework.security.access.AccessDeniedException("Unauthorized");

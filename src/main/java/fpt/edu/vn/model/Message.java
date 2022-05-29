@@ -24,7 +24,6 @@ public class Message extends BaseEntity implements Comparable<Message>, Serializ
     private Appointment appointment;
 
     public Message() {
-
     }
 
     public LocalDateTime getCreatedAt() {

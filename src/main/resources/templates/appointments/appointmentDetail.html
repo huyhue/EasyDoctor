@@ -137,15 +137,15 @@
 						<tr>
 							<td><b>QR Code</b></td>
 							<td>
-							<div id="qrcode">
-								<canvas id="qr-code"></canvas>
-							</div>
-							<a id="download" download="easyQR-code.png">
-								<button class="btn btn-primary" id="button-download-qr-code" type="button"
-									style="margin-right: 3px;background: rgb(255,73,41);border-style: solid;border-color: rgb(255,73,41);"
-									onClick="download()" download="">Download
-								</button>
-							</a>
+								<div id="qrcode">
+									<canvas id="qr-code"></canvas>
+								</div>
+								<a id="download" download="easyQR-code.png">
+									<button class="btn btn-primary" id="button-download-qr-code" type="button"
+										style="margin-right: 3px;background: rgb(255,73,41);border-style: solid;border-color: rgb(255,73,41);"
+										onClick="download()" download="">Download
+									</button>
+								</a>
 							</td>
 						</tr>
 
@@ -169,6 +169,9 @@
 							</div>
 
 							<div class="panel-body msg_container_base">
+								<div class="connecting">
+									Connecting...
+								</div>
 								<!--<div th:each="chatMessage : ${appointment.chatMessages}"
 									class="row msg_container base_receive">
 									<div class="col-md-12 col-xs-12">
@@ -182,12 +185,11 @@
 								</div>-->
 							</div>
 
-							<form th:action="@{/appointments/messages/new}" th:object="${chatMessage}" method='POST'>
+							<form id="messageForm" name="messageForm" nameForm="messageForm">
 								<div class="input-group mb-3">
 									<input type="hidden" name="appointmentId" th:value="${appointment.id}">
-									<input type="text" class="form-control" th:field="*{message}"
-										placeholder="Write your message here..." aria-label="Recipient's username"
-										aria-describedby="basic-addon2">
+									<input type="text" class="form-control" id="message" placeholder="Nhắn tại đây..."
+										autocomplete="off" aria-describedby="basic-addon2">
 									<div class="input-group-append">
 										<button class="btn btn-outline-secondary" type="submit">Send</button>
 									</div>
@@ -195,55 +197,47 @@
 							</form>
 						</div>
 					</div>
-					<!--  end chat -->
-
 				</div>
-
 			</div>
-			<!--  end row-->
 
-		</div>
-	</div>
-	</div>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+			<script th:src="@{/js/chat.js}"></script>
+			<!-- QR Code -->
+			<script>
+				var qr;
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-    <script th:src="@{/js/chat.js}"></script>
-	<!-- QR Code -->
-	<script>
-		var qr;
+				(function () {
+					qr = new QRious({
+						element: document.getElementById('qr-code'),
+						size: 200,
+						value: 'huyhue'
+					});
+				})();
 
-		(function () {
-			qr = new QRious({
-				element: document.getElementById('qr-code'),
-				size: 200,
-				value: 'huyhue'
-			});
-		})();
+				window.onload = function () {
+					qrType = "appointment";
+					var doctor = document.getElementById('doctor').innerText;
+					var patient = document.getElementById('patient').innerText;
+					var status = document.getElementById('status').innerText;
+					var startTime = document.getElementById('startTime').innerText;
 
-		window.onload = function () {
-			qrType = "appointment";
-			var doctor = document.getElementById('doctor').innerText;
-			var patient = document.getElementById('patient').innerText;
-			var status = document.getElementById('status').innerText;
-			var startTime = document.getElementById('startTime').innerText;
+					qrContent = "Easydoctor appointment: " + doctor + " " + patient + " ,status " + status + " ,startTime " + startTime;
+					qr.set({
+						foreground: 'black',
+						size: 200,
+						value: qrContent
+					});
+				};
 
-			qrContent = "Easydoctor appointment: " + doctor + " " + patient + " ,status " + status + " ,startTime " + startTime;
-			qr.set({
-				foreground: 'black',
-				size: 200,
-				value: qrContent
-			});
-		};
-
-		function download() {
-			var download = document.getElementById("download");
-			qrImage = document.getElementById("qr-code").toDataURL("image/png")
-				.replace("image/png", "image/octet-stream");
-			download.setAttribute("href", qrImage);
-		}
-	</script>
+				function download() {
+					var download = document.getElementById("download");
+					qrImage = document.getElementById("qr-code").toDataURL("image/png")
+						.replace("image/png", "image/octet-stream");
+					download.setAttribute("href", qrImage);
+				}
+			</script>
 </body>
 
 </html>

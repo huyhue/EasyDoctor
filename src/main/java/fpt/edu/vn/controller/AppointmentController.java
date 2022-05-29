@@ -203,12 +203,12 @@ public class AppointmentController {
         return REJECTION_CONFIRMATION_VIEW;
     }
 
-    @PostMapping("/messages/new")
-    public String addNewChatMessage(@ModelAttribute("chatMessage") Message chatMessage, @RequestParam("appointmentId") int appointmentId, @AuthenticationPrincipal CustomUserDetails currentUser) {
-        int authorId = currentUser.getId();
-        appointmentService.addMessageToAppointmentChat(appointmentId, authorId, chatMessage);
-        return "redirect:/appointments/" + appointmentId;
-    }
+//    @PostMapping("/messages/new")
+//    public String addNewChatMessage(@ModelAttribute("chatMessage") Message chatMessage, @RequestParam("appointmentId") int appointmentId, @AuthenticationPrincipal CustomUserDetails currentUser) {
+//        int authorId = currentUser.getId();
+//        appointmentService.addMessageToAppointmentChat(appointmentId, authorId, chatMessage);
+//        return "redirect:/appointments/" + appointmentId;
+//    }
     
     @RequestMapping(value = "/messages/all", method = RequestMethod.POST)
     @ResponseBody

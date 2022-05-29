@@ -17,6 +17,7 @@ public interface UserService {
 	User findByConfirmationToken(String token);
 	
 	User getUserById(int userId);
+	User findById(int userId);
 	Doctor getDoctorById(int userId);
 	Patient getPatientById(int userId);
 	
@@ -24,6 +25,7 @@ public interface UserService {
 	void updateImage(int id, String fileImage);
 	void updatePatient(Patient patient);
 	void updateDoctor(Doctor doctor);
+	void updateUserActiveState(int id, boolean active);
 	
 	void savePasswordByUser(User user);
 	void savePatientRegister(Patient userRE);

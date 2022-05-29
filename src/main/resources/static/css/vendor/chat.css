@@ -108,7 +108,21 @@ img {
     border-left-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
 }
-
+.connecting {
+	display: inline-block;
+    padding-top: 5px;
+    text-align: center;
+    color: #777;
+    width: 100%;
+}
+.hidden {
+    display: none;
+}
+.event-message {
+    width: 100%;
+    text-align: center;
+    clear: both;
+}
 .base_sent {
     justify-content: flex-end;
     align-items: flex-end;

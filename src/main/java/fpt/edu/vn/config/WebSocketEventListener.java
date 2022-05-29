@@ -11,18 +11,22 @@ import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import fpt.edu.vn.component.ChatMessage;
+import fpt.edu.vn.service.UserService;
 
 @Component
 public class WebSocketEventListener {
-
     private static final Logger logger = LoggerFactory.getLogger(WebSocketEventListener.class);
 
-    @Autowired
+	@Autowired
     private SimpMessageSendingOperations messagingTemplate;
 
-    @Autowired
-//    private UserService userService;
-
+    private final UserService userService;
+    
+    public WebSocketEventListener(UserService userService) {
+		super();
+		this.userService = userService;
+	}
+    
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
         logger.info("Received a new web socket connection");
@@ -34,15 +38,16 @@ public class WebSocketEventListener {
 
         String username = (String) headerAccessor.getSessionAttributes().get("username");
         Integer user_id = (Integer) headerAccessor.getSessionAttributes().get("user_id");
+        logger.info("User  : " + username+user_id);
         if(username != null && user_id != null) {
             logger.info("User Disconnected : " + username);
 
             ChatMessage chatMessage = new ChatMessage();
-//            chatMessage.setType(ChatMessage.MessageType.LEAVE);
-//            chatMessage.setSender(username);
-//            chatMessage.setSender_id(user_id.intValue());
-//
-//            userService.updateUserActiveState(user_id.intValue(), 0);
+            chatMessage.setType(ChatMessage.MessageType.LEAVE);
+            chatMessage.setSender(username);
+            chatMessage.setSender_id(user_id.intValue());
+
+            userService.updateUserActiveState(user_id.intValue(), false);
 
             messagingTemplate.convertAndSend("/topic/public", chatMessage);
         }

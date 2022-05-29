@@ -5,6 +5,7 @@ public class ChatMessage {
     private String content;
     private String sender;
     private int sender_id;
+    private int id_appointment;
     private String role;
     private String createdAt;
 
@@ -79,10 +80,18 @@ public class ChatMessage {
 		this.createdAt = createdAt;
 	}
 
+	public int getId_appointment() {
+		return id_appointment;
+	}
+
+	public void setId_appointment(int id_appointment) {
+		this.id_appointment = id_appointment;
+	}
+
 	@Override
 	public String toString() {
-		return "ChatMessage [type=" + type + ", content=" + content + ", sender=" + sender + ", sender_id=" + sender_id
-				+ "]";
+		return "ChatMessage [content=" + content + ", sender=" + sender + ", sender_id=" + sender_id
+				+ ", id_appointment=" + id_appointment + ", role=" + role + "]";
 	}
     
 }

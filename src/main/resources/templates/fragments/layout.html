@@ -87,7 +87,9 @@
 						</li>
 						<li>
 							<p class="navbar-nav ml-auto navbar-text"> Logged as:
-								<span th:text="${#authentication.getPrincipal().getUsername()}">username</span> |
+								<span th:text="${#authentication.getPrincipal().getUsername()}"
+									id="user_name">username</span> |
+								<input type="hidden" th:value="${#authentication.getPrincipal().getId()}" id="user_id">
 							</p>
 						</li>
 						<li>
@@ -151,6 +153,7 @@
 			setTimeout(fetchdata, 5000);
 		});
 	</script>
-	
+
 </body>
+
 </html>

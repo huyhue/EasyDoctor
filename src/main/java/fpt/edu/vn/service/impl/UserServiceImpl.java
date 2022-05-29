@@ -13,7 +13,6 @@ import org.springframework.util.StringUtils;
 
 import fpt.edu.vn.component.ChangePasswordForm;
 import fpt.edu.vn.model.Doctor;
-import fpt.edu.vn.model.Gender;
 import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.Review;
 import fpt.edu.vn.model.Role;
@@ -46,17 +45,6 @@ public class UserServiceImpl implements UserService {
 		this.reviewRepository = reviewRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
-
-//	public UserServiceImpl(UserRepository userRepository, DoctorRepository doctorRepository,
-//			PatientRepository patientRepository, RoleRepository roleRepository,
-//			PasswordEncoder passwordEncoder) {
-//		super();
-//		this.userRepository = userRepository;
-//		this.doctorRepository = doctorRepository;
-//		this.patientRepository = patientRepository;
-//		this.roleRepository = roleRepository;
-//		this.passwordEncoder = passwordEncoder;
-//	}
 
 	@Override
 	public List<Patient> getAllPatients() {
@@ -99,6 +87,13 @@ public class UserServiceImpl implements UserService {
 		d.setPackages(doctor.getPackages());
 		doctorRepository.save(d);
 	}
+	
+	@Override
+	public void updateUserActiveState(int id, boolean active) {
+		User user = userRepository.findById(id).get();
+		user.setEnabled(active);
+		userRepository.save(user);
+	}
 
 	@Override
 	public User findByUserName(String username) {
@@ -126,6 +121,11 @@ public class UserServiceImpl implements UserService {
 	@PreAuthorize("#userId == principal.id")
 	public User getUserById(int userId) {
 		return userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+	}
+	
+	@Override
+	public User findById(int userId) {
+		return userRepository.findById(userId).get();
 	}
 
 	@Override
