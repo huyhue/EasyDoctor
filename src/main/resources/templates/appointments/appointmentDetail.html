@@ -157,14 +157,21 @@
 					<div class="chatbody">
 						<div class="panel panel-primary">
 							<div class="panel-heading top-bar">
-								<div class="col-md-8 col-xs-8">
-									<p>
-										Appointment chat with
+								<div class="row">
+									<div class="col-md-6 col-xs-6">
+
 										<span sec:authorize="hasRole('ROLE_DOCTOR')"
 											th:text="${appointment.patient.fullname}"></span>
 										<span sec:authorize="hasRole('ROLE_PATIENT')"
 											th:text="${appointment.doctor.fullname}"></span>
-									</p>
+										<strong id="online"></strong>
+									</div>
+									<div class="col-md-2 col-xs-2">
+										<form id="searchForm" name="searchForm" nameForm="searchForm">
+											<input type="text" id="search">
+											<button class="btn" type="submit">Send</button>
+										</form>
+									</div>
 								</div>
 							</div>
 
