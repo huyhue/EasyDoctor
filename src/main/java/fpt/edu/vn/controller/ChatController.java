@@ -28,10 +28,11 @@ public class ChatController {
     @SendTo("/topic/public")
     public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
 		logger.info("User ChatMessage : " + chatMessage.toString());
+		ChatMessage message = new ChatMessage();
         if (chatMessage.getType() == ChatMessage.MessageType.CHAT) {
-            appointmentService.addMessageToAppointmentChat(chatMessage);
+        	 message = appointmentService.addMessageToAppointmentChat(chatMessage);
         }
-        return chatMessage;
+        return message;
     }
 
     @MessageMapping("/chat.addUser")

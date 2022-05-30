@@ -45,8 +45,10 @@ public interface AppointmentService {
 	boolean acceptRejection(String token);
 	
 	//Chat
-	void addMessageToAppointmentChat(ChatMessage chatMessage);
+	ChatMessage addMessageToAppointmentChat(ChatMessage chatMessage);
 	List<ChatMessage> getMessagesByAppointmentId(int appointmentId);
+	Boolean getActiveUserByAppointment(int appointmentId, int userId);
+	List<ChatMessage> searchContentInMessages(String content);
 	
 	//Auto
 	void updateUserAppointmentsStatuses(int userId);

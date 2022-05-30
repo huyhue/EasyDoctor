@@ -202,18 +202,28 @@ public class AppointmentController {
         model.addAttribute("type", "accept");
         return REJECTION_CONFIRMATION_VIEW;
     }
-
-//    @PostMapping("/messages/new")
-//    public String addNewChatMessage(@ModelAttribute("chatMessage") Message chatMessage, @RequestParam("appointmentId") int appointmentId, @AuthenticationPrincipal CustomUserDetails currentUser) {
-//        int authorId = currentUser.getId();
-//        appointmentService.addMessageToAppointmentChat(appointmentId, authorId, chatMessage);
-//        return "redirect:/appointments/" + appointmentId;
-//    }
     
     @RequestMapping(value = "/messages/all", method = RequestMethod.POST)
     @ResponseBody
     public String getMessages(@RequestParam("appointmentId") int appointmentId) {
 		List<ChatMessage> list = appointmentService.getMessagesByAppointmentId(appointmentId);
+		
+		Gson gsonBuilder = new GsonBuilder().create();
+        String messagelistJson = gsonBuilder.toJson(list);
+    	return messagelistJson;
+    }
+    
+    @RequestMapping(value = "/messages/active", method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean getActiveUsers(@RequestParam("appointmentId") int appointmentId, @RequestParam("userId") int userId) {
+    	boolean active = appointmentService.getActiveUserByAppointment(appointmentId, userId);
+    	return active;
+    }
+    
+    @RequestMapping(value = "/messages/search", method = RequestMethod.POST)
+    @ResponseBody
+    public String searchMessage(@RequestParam("content") String content) {
+    	List<ChatMessage> list = appointmentService.searchContentInMessages(content);
 		
 		Gson gsonBuilder = new GsonBuilder().create();
         String messagelistJson = gsonBuilder.toJson(list);

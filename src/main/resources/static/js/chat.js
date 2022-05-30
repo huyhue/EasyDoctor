@@ -36,9 +36,10 @@ function getLastMessages() {
 		success: function(data) {
 			if (data != null && data != undefined) {
 				var obj = JSON.parse(data);
-				console.log("test obj: " + obj);
+				/*console.log("test obj: " + obj);*/
 				var len = obj.length;
-				for (var i = len - 1; i >= 0; i--) {
+				for (let i = 0; i < len; i++) {
+				/*for (var i = len - 1; i >= 0; i--) {*/
 					// Add to MessageArea
 					let messageElement = document.createElement('div');
 					messageElement.classList.add('row', 'msg_container', 'base_receive');
@@ -68,7 +69,7 @@ function getLastMessages() {
 					messageElement2.appendChild(textElement);
 
 					let usernameElement = document.createElement('span');
-					let usernameText = document.createTextNode(obj[i].role + " * " + obj[i].createdAt);
+					let usernameText = document.createTextNode(obj[i].role + " vào lúc " + obj[i].createdAt);
 					usernameElement.appendChild(usernameText);
 					messageElement2.appendChild(usernameElement);
 
@@ -85,7 +86,7 @@ function getLastMessages() {
 function connect() {
 	username = document.querySelector('#user_name').innerText.trim();
 	user_id = document.querySelector('#user_id').value.trim();
-	console.log("Test username: " + username + user_id);
+	/*console.log("Test username: " + username + user_id);*/
 
 	var socket = new SockJS('/ws');
 	stompClient = Stomp.over(socket);
