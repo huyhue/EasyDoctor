@@ -48,6 +48,9 @@ public class Appointment extends BaseEntity implements Comparable<Appointment> {
     @OneToMany(mappedBy = "appointment")
     private List<Message> chatMessages;
 
+    @Column(name = "reviewed", columnDefinition = "boolean default false")
+	private boolean reviewed;
+    
     @ManyToOne
     @JoinColumn(name = "id_invoice")
     private Invoice invoice;
@@ -148,4 +151,13 @@ public class Appointment extends BaseEntity implements Comparable<Appointment> {
     public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
     }
+
+	public boolean isReviewed() {
+		return reviewed;
+	}
+
+	public void setReviewed(boolean reviewed) {
+		this.reviewed = reviewed;
+	}
+
 }

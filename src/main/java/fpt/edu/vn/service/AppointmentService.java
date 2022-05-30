@@ -9,6 +9,7 @@ import fpt.edu.vn.component.TimePeroid;
 import fpt.edu.vn.model.Appointment;
 import fpt.edu.vn.model.Message;
 import fpt.edu.vn.model.Packages;
+import fpt.edu.vn.model.Review;
 
 public interface AppointmentService {
 	
@@ -56,5 +57,7 @@ public interface AppointmentService {
 	
 	List<Appointment> getConfirmedAppointmentsByPatientId(int patientId);
 	
+	//Review
 	boolean isPatientAllowedToReview(int userId, int appointmentId);
+	void saveReviewByAppointment(Review revieww, int appointmentId);
 }

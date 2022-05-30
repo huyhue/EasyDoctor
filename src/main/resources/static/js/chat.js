@@ -2,8 +2,8 @@
 
 var messageForm = document.querySelector('#messageForm');
 var messageInput = document.querySelector('#message');
-var searchForm = document.querySelector('#searchForm');
-var searchInput = document.querySelector('#search');
+/*var searchForm = document.querySelector('#searchForm');
+var searchInput = document.querySelector('#search');*/
 var messageArea = document.querySelector('.msg_container_base');
 var connectingElement = document.querySelector('.connecting');
 var onlineElement = document.querySelector('#online');
@@ -212,7 +212,7 @@ function sendMessage(event) {
 	event.preventDefault();
 }
 
-function searchMessage(event) {
+/*function searchMessage(event) {
 	var content = searchInput.value.trim();
 	$.ajax({
 		url: "/appointments/messages/search",
@@ -270,7 +270,7 @@ function searchMessage(event) {
 		},
 	});
 }
-
+*/
 
 
 function getAvatarColor(messageSender) {
@@ -283,4 +283,4 @@ function getAvatarColor(messageSender) {
 	return colors[index];
 }
 messageForm.addEventListener('submit', sendMessage, true)
-searchForm.addEventListener('submit', searchMessage, true)
+/*searchForm.addEventListener('submit', searchMessage, true)*/

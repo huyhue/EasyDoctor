@@ -111,21 +111,7 @@
 			<p>EasyDoctor v<span th:text="${currentVersion}">1.0</span></p>
 		</div>
 	</div>
-	<script type="text/javascript" th:inline="javascript">
-		$(document).ready(function () {
-			$('#profileImage').change(function () {
-				showImageThumbnail(this);
-			});
-			function showImageThumbnail(fileInput) {
-				file = fileInput.files[0];
-				var reader = new FileReader();
-				reader.onload = function (e) {
-					$('#avatar').attr('src', e.target.result);
-				};
-				reader.readAsDataURL(file);
-			}
-		});
-	</script>
+	
 
 	<script th:inline="javascript">
 		function fetchdata() {

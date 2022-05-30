@@ -307,8 +307,21 @@
 			</div>
 		</div>
 
-
 	</div>
+	<script>
+		$(document).ready(function () {
+			$('#profileImage').change(function () {
+				showImageThumbnail(this);
+			});
+			function showImageThumbnail(fileInput) {
+				file = fileInput.files[0];
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					$('#avatar').attr('src', e.target.result);
+				};
+				reader.readAsDataURL(file);
+			}
+		});
+	</script>
 </body>
-
 </html>

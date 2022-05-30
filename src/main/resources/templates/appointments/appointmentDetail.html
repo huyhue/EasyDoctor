@@ -33,7 +33,7 @@
 					<p>Cuộc hẹn với bác sĩ bạn thành công.</p>
 					<p>Vui lòng đánh giá bác sĩ ở form bên dưới:</p>
 
-					<form th:action="@{/patients/review}" method="POST" th:object="${review}">
+					<form th:action="@{/appointments/review}" method="POST" th:object="${review}">
 						<div class="card book-detail-page book-detail-card">
 							<div class="card-body">
 								<div class="row">
@@ -48,8 +48,10 @@
 												Rating
 											</option>
 										</select>
+										<input type="hidden" th:field="*{appointmentId}" th:value="${appointment.id}" />
 										<input type="hidden" name="doctor" th:value="${appointment.doctor.id}"
 											sth:field="*{doctor.id}" />
+										
 										<div class="text-center" style="margin-top: 10px;">
 											<input type="submit" name="button" class="btn btn-primary" value="Submit" />
 										</div>
@@ -159,19 +161,18 @@
 							<div class="panel-heading top-bar">
 								<div class="row">
 									<div class="col-md-6 col-xs-6">
-
 										<span sec:authorize="hasRole('ROLE_DOCTOR')"
 											th:text="${appointment.patient.fullname}"></span>
 										<span sec:authorize="hasRole('ROLE_PATIENT')"
 											th:text="${appointment.doctor.fullname}"></span>
 										<strong id="online"></strong>
 									</div>
-									<div class="col-md-2 col-xs-2">
+									<!--<div class="col-md-2 col-xs-2">
 										<form id="searchForm" name="searchForm" nameForm="searchForm">
 											<input type="text" id="search">
 											<button class="btn" type="submit">Send</button>
 										</form>
-									</div>
+									</div>-->
 								</div>
 							</div>
 

@@ -1,7 +1,5 @@
 package fpt.edu.vn.controller;
 
-import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,15 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import fpt.edu.vn.component.ChangePasswordForm;
-import fpt.edu.vn.component.UserForm;
+import fpt.edu.vn.model.Appointment;
 import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.Review;
-import fpt.edu.vn.model.User;
 import fpt.edu.vn.security.CustomUserDetails;
-import fpt.edu.vn.service.EmailService;
+import fpt.edu.vn.service.AppointmentService;
 import fpt.edu.vn.service.UserService;
 
 @Controller
@@ -30,13 +26,13 @@ import fpt.edu.vn.service.UserService;
 public class PatientController {
 
 	private final UserService userService;
-	private final EmailService emailService;
+	private final AppointmentService appointmentService;
 	private static final Logger log = LoggerFactory.getLogger(PatientController.class);
 
-	public PatientController(UserService userService, EmailService emailService) {
+	public PatientController(UserService userService, AppointmentService appointmentService) {
 		super();
 		this.userService = userService;
-		this.emailService = emailService;
+		this.appointmentService = appointmentService;
 	}
 
 	@GetMapping("/all")
@@ -78,14 +74,6 @@ public class PatientController {
     public String processPatientPasswordUpdate(@ModelAttribute("passwordChange") ChangePasswordForm passwordChange) {
         userService.updateUserPassword(passwordChange);
         return "redirect:/patients/" + passwordChange.getId();
-    }
-    
-    @PostMapping("/review")
-    public String addReviewPatient(@ModelAttribute("review") Review review, @AuthenticationPrincipal CustomUserDetails currentUser) {
-    	Review reviewUO = new Review(review.getFeedback(), review.getRating(), review.getDoctor(), userService.getPatientById(currentUser.getId()));
-    	
-    	userService.saveReviewByPatient(reviewUO);
-        return "redirect:/detail/" + review.getDoctor().getId();
     }
 
     @GetMapping("/new")

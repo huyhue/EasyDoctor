@@ -1,18 +1,16 @@
 package fpt.edu.vn.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.MediaType;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import fpt.edu.vn.component.ChatMessage;
+import fpt.edu.vn.component.ReviewForm;
 import fpt.edu.vn.model.Appointment;
 import fpt.edu.vn.model.Message;
 import fpt.edu.vn.model.Review;
@@ -25,19 +23,16 @@ import fpt.edu.vn.service.UserService;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/appointments")
 public class AppointmentController {
 	
 	private static final String REJECTION_CONFIRMATION_VIEW = "appointments/rejectionConfirmation";
+	
 	@Autowired
 	public OTPService otpService;
 	private final PackagesService packagesService;
@@ -66,7 +61,7 @@ public class AppointmentController {
         model.addAttribute("allowedToAcceptRejection", allowedToAcceptRejection);
         setUpReferenceData(modelMap);
         model.addAttribute("allowedToReview", allowedToReview);
-        model.addAttribute("review", new Review());
+        model.addAttribute("review", new ReviewForm());
         if (allowedToRequestRejection) {
             model.addAttribute("remainingTime", formatDuration(Duration.between(LocalDateTime.now(), appointment.getEnd().plusDays(1))));
         }
@@ -75,6 +70,15 @@ public class AppointmentController {
         model.addAttribute("allowedToCancel", cancelNotAllowedReason == null);
         model.addAttribute("cancelNotAllowedReason", cancelNotAllowedReason);
         return "appointments/appointmentDetail";
+    }
+	
+    @PostMapping("/review")
+    public String addReviewPatient(@ModelAttribute("review") ReviewForm review, @AuthenticationPrincipal CustomUserDetails currentUser) {
+    	Review reviewUO = new Review(review.getFeedback(), review.getRating(),review.getDoctor(), 
+    			userService.getPatientById(currentUser.getId()));
+    	
+    	appointmentService.saveReviewByAppointment(reviewUO, review.getAppointmentId());
+        return "redirect:/detail/" + review.getDoctor().getId();
     }
 	
 	private void setUpReferenceData(ModelMap modelMap) {
@@ -220,6 +224,7 @@ public class AppointmentController {
     	return active;
     }
     
+    //Chưa xài
     @RequestMapping(value = "/messages/search", method = RequestMethod.POST)
     @ResponseBody
     public String searchMessage(@RequestParam("content") String content) {

@@ -13,10 +13,12 @@ import fpt.edu.vn.model.AppointmentStatus;
 import fpt.edu.vn.model.Message;
 import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.Packages;
+import fpt.edu.vn.model.Review;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.model.WorkingPlan;
 import fpt.edu.vn.repository.AppointmentRepository;
 import fpt.edu.vn.repository.MessageRepository;
+import fpt.edu.vn.repository.ReviewRepository;
 import fpt.edu.vn.service.AppointmentService;
 import fpt.edu.vn.service.NotificationService;
 import fpt.edu.vn.service.PackagesService;
@@ -39,17 +41,21 @@ public class AppointmentServiceImpl implements AppointmentService {
 	private final PackagesService packagesService;
 	private final MessageRepository messageRepository;
 	private final NotificationService notificationService;
+	private final ReviewRepository reviewRepository;
 	private final JwtTokenServiceImpl jwtTokenService;
+
 
 	public AppointmentServiceImpl(AppointmentRepository appointmentRepository, UserService userService,
 			PackagesService packagesService, MessageRepository messageRepository,
-			NotificationService notificationService, JwtTokenServiceImpl jwtTokenService) {
+			NotificationService notificationService, ReviewRepository reviewRepository,
+			JwtTokenServiceImpl jwtTokenService) {
 		super();
 		this.appointmentRepository = appointmentRepository;
 		this.userService = userService;
 		this.packagesService = packagesService;
 		this.messageRepository = messageRepository;
 		this.notificationService = notificationService;
+		this.reviewRepository = reviewRepository;
 		this.jwtTokenService = jwtTokenService;
 	}
 
@@ -256,8 +262,16 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public boolean isPatientAllowedToReview(int userId, int appointmentId) {
 		User user = userService.getUserById(userId);
 		Appointment appointment = getAppointmentByIdWithAuthorization(appointmentId);
-
-		return appointment.getPatient().equals(user) && appointment.getStatus().equals(AppointmentStatus.INVOICED);
+		
+		return appointment.getPatient().equals(user) && appointment.isReviewed()==false && appointment.getStatus().equals(AppointmentStatus.INVOICED);
+	}
+	
+	@Override
+	public void saveReviewByAppointment(Review review, int appointmentId) {
+		Appointment appointment = getAppointmentById(appointmentId);
+		appointment.setReviewed(true);
+		appointmentRepository.save(appointment);
+		reviewRepository.save(review);
 	}
 
 	@Override
