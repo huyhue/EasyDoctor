@@ -33,7 +33,7 @@
 					<p>Cuộc hẹn với bác sĩ bạn thành công.</p>
 					<p>Vui lòng đánh giá bác sĩ ở form bên dưới:</p>
 
-					<form th:action="@{/appointments/review}" method="POST" th:object="${review}">
+					<form th:action="@{/appointments/review}" method="POST" th:object="${reviewForm}">
 						<div class="card book-detail-page book-detail-card">
 							<div class="card-body">
 								<div class="row">
@@ -48,7 +48,7 @@
 												Rating
 											</option>
 										</select>
-										<input type="hidden" th:field="*{appointmentId}" th:value="${appointment.id}" />
+										<input type="hidden" name="appointmentId" th:value="${appointment.id}" />
 										<input type="hidden" name="doctor" th:value="${appointment.doctor.id}"
 											sth:field="*{doctor.id}" />
 										

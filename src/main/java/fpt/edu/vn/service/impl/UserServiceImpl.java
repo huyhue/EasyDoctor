@@ -203,8 +203,4 @@ public class UserServiceImpl implements UserService {
 		return reviewRepository.getAllReviewByDoctorId(doctorId);
 	}
 	
-	@Override
-	public void saveReviewByPatient(Review review) {
-		reviewRepository.save(review);
-	}
 }

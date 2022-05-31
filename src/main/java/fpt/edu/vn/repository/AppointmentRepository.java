@@ -40,4 +40,10 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
     
     @Query("select a from Appointment a where a.status = 'CONFIRMED' and a.patient.id = :patientId")
     List<Appointment> findConfirmedByPatientId(@Param("patientId") int patientId);
+    
+    @Query("select a from Appointment a where a.canceler.id = :userId")
+    List<Appointment> findCanceledByUserId(@Param("userId") int userId);
+
+    @Query("select a from Appointment a where  a.status='SCHEDULED' and (a.patient.id = :userId or a.doctor.id = :userId)")
+    List<Appointment> findScheduledByUserId(@Param("userId") int userId);
 }

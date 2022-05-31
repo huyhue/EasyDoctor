@@ -61,7 +61,7 @@ public class AppointmentController {
         model.addAttribute("allowedToAcceptRejection", allowedToAcceptRejection);
         setUpReferenceData(modelMap);
         model.addAttribute("allowedToReview", allowedToReview);
-        model.addAttribute("review", new ReviewForm());
+        model.addAttribute("reviewForm", new ReviewForm());
         if (allowedToRequestRejection) {
             model.addAttribute("remainingTime", formatDuration(Duration.between(LocalDateTime.now(), appointment.getEnd().plusDays(1))));
         }
@@ -73,12 +73,12 @@ public class AppointmentController {
     }
 	
     @PostMapping("/review")
-    public String addReviewPatient(@ModelAttribute("review") ReviewForm review, @AuthenticationPrincipal CustomUserDetails currentUser) {
-    	Review reviewUO = new Review(review.getFeedback(), review.getRating(),review.getDoctor(), 
+    public String addReviewPatient(@ModelAttribute("reviewForm") ReviewForm reviewForm, @AuthenticationPrincipal CustomUserDetails currentUser) {
+    	Review reviewUO = new Review(reviewForm.getFeedback(), reviewForm.getRating(),reviewForm.getDoctor(), 
     			userService.getPatientById(currentUser.getId()));
     	
-    	appointmentService.saveReviewByAppointment(reviewUO, review.getAppointmentId());
-        return "redirect:/detail/" + review.getDoctor().getId();
+    	appointmentService.saveReviewByAppointment(reviewUO, reviewForm.getAppointmentId());
+        return "redirect:/detail/" + reviewForm.getDoctor().getId();
     }
 	
 	private void setUpReferenceData(ModelMap modelMap) {

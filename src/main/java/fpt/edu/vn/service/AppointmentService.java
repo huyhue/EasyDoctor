@@ -24,6 +24,10 @@ public interface AppointmentService {
 	void cancelUserAppointmentById(int appointmentId, int userId);
 	void updateAppointment(Appointment appointment);
 	
+	//Number
+	int getNumberScheduledAppointmentByUserId(int userId);
+	int getNumberCanceledAppointmentByUserId(int userId);
+	
 	boolean isAvailable(int packagesId, int doctorId, int patientId, LocalDateTime start);
 	
 	List<Appointment> getAllAppointments();

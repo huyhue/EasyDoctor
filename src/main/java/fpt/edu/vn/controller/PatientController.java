@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fpt.edu.vn.component.ChangePasswordForm;
-import fpt.edu.vn.model.Appointment;
 import fpt.edu.vn.model.Patient;
-import fpt.edu.vn.model.Review;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.AppointmentService;
 import fpt.edu.vn.service.UserService;
@@ -54,8 +52,8 @@ public class PatientController {
             model.addAttribute("account_type", "patients");
             model.addAttribute("formActionProfile", "/patients/update/profile");
             model.addAttribute("formActionPassword", "/patients/update/password");
-            model.addAttribute("numberOfScheduledAppointments", 1);
-            model.addAttribute("numberOfCanceledAppointments", 2);
+            model.addAttribute("numberScheduled", appointmentService.getNumberScheduledAppointmentByUserId(patientId));
+            model.addAttribute("numberCanceled", appointmentService.getNumberCanceledAppointmentByUserId(patientId));
             return "users/updateUserForm";
         } else {
             throw new org.springframework.security.access.AccessDeniedException("Unauthorized");

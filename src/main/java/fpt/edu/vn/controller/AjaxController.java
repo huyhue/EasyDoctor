@@ -1,12 +1,9 @@
 package fpt.edu.vn.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 
 import fpt.edu.vn.component.AppointmentRegisterForm;
 import fpt.edu.vn.model.Appointment;
-import fpt.edu.vn.model.Message;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.AppointmentService;
 import fpt.edu.vn.service.NotificationService;
@@ -15,20 +12,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @RequestMapping("/api")
 @RestController

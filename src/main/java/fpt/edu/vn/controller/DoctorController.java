@@ -45,8 +45,6 @@ public class DoctorController {
 	private final PackagesService packagesService;
 	private final WorkingPlanService workingPlanService;
 	private final AppointmentService appointmentService;
-	
-
 
 	public DoctorController(UserService userService, EmailService emailService, PackagesService packagesService,
 			WorkingPlanService workingPlanService, AppointmentService appointmentService) {
@@ -91,8 +89,9 @@ public class DoctorController {
             model.addAttribute("allPackages", packagesService.getAllPackages());
             model.addAttribute("formActionProfile", "/doctors/update/profile");
             model.addAttribute("formActionPassword", "/doctors/update/password");
-            model.addAttribute("numberOfScheduledAppointments", 1);
-            model.addAttribute("numberOfCanceledAppointments", 2);
+
+            model.addAttribute("numberScheduled", appointmentService.getNumberScheduledAppointmentByUserId(doctorId));
+            model.addAttribute("numberCanceled", appointmentService.getNumberCanceledAppointmentByUserId(doctorId));
             return "users/updateUserForm";
         } else {
             throw new org.springframework.security.access.AccessDeniedException("Unauthorized");

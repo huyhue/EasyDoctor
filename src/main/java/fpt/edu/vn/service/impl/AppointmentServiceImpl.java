@@ -44,7 +44,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 	private final ReviewRepository reviewRepository;
 	private final JwtTokenServiceImpl jwtTokenService;
 
-
 	public AppointmentServiceImpl(AppointmentRepository appointmentRepository, UserService userService,
 			PackagesService packagesService, MessageRepository messageRepository,
 			NotificationService notificationService, ReviewRepository reviewRepository,
@@ -262,10 +261,11 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public boolean isPatientAllowedToReview(int userId, int appointmentId) {
 		User user = userService.getUserById(userId);
 		Appointment appointment = getAppointmentByIdWithAuthorization(appointmentId);
-		
-		return appointment.getPatient().equals(user) && appointment.isReviewed()==false && appointment.getStatus().equals(AppointmentStatus.INVOICED);
+
+		return appointment.getPatient().equals(user) && appointment.isReviewed() == false
+				&& appointment.getStatus().equals(AppointmentStatus.INVOICED);
 	}
-	
+
 	@Override
 	public void saveReviewByAppointment(Review review, int appointmentId) {
 		Appointment appointment = getAppointmentById(appointmentId);
@@ -422,4 +422,14 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public List<Appointment> getConfirmedAppointmentsByPatientId(int patientId) {
 		return appointmentRepository.findConfirmedByPatientId(patientId);
 	}
+	
+	@Override
+    public int getNumberScheduledAppointmentByUserId(int userId) {
+        return appointmentRepository.findCanceledByUserId(userId).size();
+    }
+
+    @Override
+    public int getNumberCanceledAppointmentByUserId(int userId) {
+        return appointmentRepository.findScheduledByUserId(userId).size();
+    }
 }

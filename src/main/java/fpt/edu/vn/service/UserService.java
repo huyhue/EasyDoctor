@@ -39,5 +39,4 @@ public interface UserService {
 //	Review
 	double getRatingByDoctorId(int doctorId);
 	List<Review> getAllReviewByDoctorId(int doctorId);
-	void saveReviewByPatient(Review review);
 }
