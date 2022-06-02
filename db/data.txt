@@ -1,0 +1,29 @@
+Khai báo
+	Blood: O
+	tiền sử bệnh
+	Allergies Dị ứng
+	medicine used thuốc
+	symptom
+	note (ghi các câu hỏi để bác sĩ tư vấn)
+	patient
+
+Bác sĩ chuẩn đoán: kết quả khám
+	prescription
+	Diagnoses Chẩn đoán:
+	describe
+	advice
+	patient
+	doctor
+	time
+	Tải lên file PDF 
+	(loại kết quả: toa thuốc, chuẩn đoán hình ảnh,xét nghiệm, phiếu điều trị)
+	
+
+Created!
+You have successfully created a new database. The details are below.
+Username: xtE7zjw5H1
+Database name: xtE7zjw5H1
+Password: FeU8F4mrIb
+Server: remotemysql.com
+Port: 3306
+These are the username and password to log in to your database and phpMyAdmin

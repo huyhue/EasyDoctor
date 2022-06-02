@@ -73,6 +73,14 @@ public class PatientController {
         userService.updateUserPassword(passwordChange);
         return "redirect:/patients/" + passwordChange.getId();
     }
+    
+    @GetMapping("/recordMedical/{id}")
+	public String recordMedical(@PathVariable("id") int patientId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
+//		model.addAttribute("user", userService.getUserById(currentUser.getId()));
+    	
+    	
+		return "patients/recordMedical";
+	}
 
     @GetMapping("/new")
     public String showPatientRegistrationForm(Model model) {
