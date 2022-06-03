@@ -11,7 +11,8 @@ import java.io.File;
 public interface EmailService {
     void sendEmail(String to, String subject, String templateName, Context templateContext, File attachment);
 
-    void sendConfirmRegistration(User user);
+    void sendConfirmForgotPassword(User user);
+    void sendRegisterSuccess(User user);
     
     void sendNewAppointment(Appointment appointment);
     void sendAppointmentCanceledByPatient(Appointment appointment);

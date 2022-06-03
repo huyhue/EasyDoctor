@@ -80,6 +80,7 @@ public class HomeController {
 		} else {
 			user.setConfirmationToken(UUID.randomUUID().toString());
 			userService.savePatientRegister(user);
+			emailService.sendRegisterSuccess(user);
 			model.addAttribute("successMessage", "You registered successful.");
 		}
 		return "users/login";
@@ -94,7 +95,7 @@ public class HomeController {
 	public String resetForgotPassword(@ModelAttribute("user") User user, Model model) {
 		User existUser = userService.findByEmail(user.getEmail());
 		if (existUser != null) {
-			emailService.sendConfirmRegistration(existUser);
+			emailService.sendConfirmForgotPassword(existUser);
 			model.addAttribute("confirmationMessage", "A confirmation e-mail has been sent to " + user.getEmail());
 		} else {
 			model.addAttribute("alreadyRegisteredMessage", "A confirmation e-mail not exists.");
