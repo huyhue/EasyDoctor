@@ -5,7 +5,7 @@
 <body>
 	<div class="row" style="margin-top: 50px">
 		<div class="col">
-			<h3 class="display-1 textShadowSm m-3 text-center">Huyhuy</h3>
+			<h3 class="textShadowSm m-3 text-center">Bệnh nhân: [[${patient.fullname}]]</h3>
 		</div>
 	</div>
 
@@ -13,20 +13,20 @@
 		<div class="col">
 			<ul class="list-group shadow">
 				<li class="list-group-item bg-dark text-light">Thông tin bệnh nhân:</li>
-				<li class="list-group-item"><strong>DOB:</strong></li>
-				<li class="list-group-item"><strong>DOB:</strong></li>
-				<li class="list-group-item"><strong>DOB:</strong></li>
-				<li class="list-group-item"><strong>DOB:</strong></li>
+				<li class="list-group-item"><strong>Email: </strong>[[${patient.email}]]</li>
+				<li class="list-group-item"><strong>Tuổi: </strong>[[${patient.age}]]</li>
+				<li class="list-group-item"><strong>Giới tính: </strong>[[${patient.gender}]]</li>
+				<li class="list-group-item"><strong>Số điện thoại: </strong>[[${patient.mobile}]]</li>
 			</ul>
 		</div>
 
 		<div class="col">
 			<ul class="list-group mb-5 shadow">
-				<li class="list-group-item bg-dark text-light">Tiền sử bệnh:</li>
-				<li class="list-group-item"><strong>DOB:</strong></li>
-				<li class="list-group-item"><strong>DOB:</strong></li>
-				<li class="list-group-item"><strong>DOB:</strong></li>
-				<li class="list-group-item"><strong>DOB:</strong></li>
+				<li class="list-group-item bg-dark text-light">Bệnh lý:</li>
+				<li class="list-group-item"><strong>Nhóm máu:</strong></li>
+				<li class="list-group-item"><strong>Huyết áp:</strong></li>
+				<li class="list-group-item"><strong>Thuốc:</strong></li>
+				<li class="list-group-item"><strong>Triệu chứng:</strong></li>
 			</ul>
 		</div>
 	</div>
@@ -34,27 +34,94 @@
 		<h5 class="textShadowSm m-3 text-center">Lịch sử khám bệnh</h5>
 	</div>
 
-<div class="row">
-	<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-		<a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab"
-			aria-controls="v-pills-home" aria-selected="true">Home</a>
-		<a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
-			aria-controls="v-pills-profile" aria-selected="false">Profile</a>
-		<a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab"
-			aria-controls="v-pills-messages" aria-selected="false">Messages</a>
-		<a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab"
-			aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+	<div class="row">
+		<div id="accordion" th:each="history : ${listHistory}">
+			<div class="card">
+				<div class="card-header" id="{'heading' + ${history.id}}">
+					<h5 class="mb-0">
+						<button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+							aria-expanded="true" aria-controls="collapseOne">
+							[[${history.start}]]
+						</button>
+					</h5>
+				</div>
+
+				<div id="collapseOne" class="collapse" aria-labelledby="'heading' + ${history.id}"
+					data-parent="#accordion">
+					<div class="card-body">
+						<h5 class="card-title">[[${history.diagnose}]]</h5>
+						<p class="card-text"> [[${history.notes}]]</p>
+						<p class="card-text">Thuốc: [[${history.medicine}]]</p>
+						<p class="card-text">Bác sĩ: [[${history.doctor}]]</p>
+						<p class="card-text">[[${history.advice}]]</p>
+						<a th:href="@{'/dowload/' + ${history.result}}" class="btn btn-primary">Dowload
+							[[${history.type}]]</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</div>
-	<div class="tab-content" id="v-pills-tabContent">
-		<div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">...
-		</div>
-		<div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">...</div>
-		<div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...
-		</div>
-		<div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...
+
+	<div class="row m-3">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Nhận xét bác
+			sĩ</button>
+
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Kết quả khám bệnh</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group">
+								<label for="recipient-name" class="col-form-label">Chẩn đoán bệnh:</label>
+								<input type="text" class="form-control" id="recipient-name">
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="col-form-label">Mô tả:</label>
+								<textarea class="form-control" id="message-text"></textarea>
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="col-form-label">Lời khuyên:</label>
+								<textarea class="form-control" id="message-text"></textarea>
+							</div>
+							<div class="form-group">
+								<label for="inputGroupSelect01" class="col-form-label">Loại kết quả:</label>
+								<select class="custom-select" id="inputGroupSelect01">
+									<option selected>Toa thuốc</option>
+									<option value="1">Chuẩn đoán hình ảnh</option>
+									<option value="2">Xét nghiệm</option>
+									<option value="3">Phiếu điều trị</option>
+									<option value="3">Khác</option>
+								</select>
+								<div class="custom-file">
+									<input type="file" class="custom-file-input" id="inputGroupFile01">
+									<label class="custom-file-label" for="inputGroupFile01">Chọn file kết quả</label>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Send message</button>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
+
+	<script>
+		$('#v-pills-tab a').on('click', function (e) {
+			e.preventDefault()
+			$(this).tab('show')
+		})
+	</script>
 </body>
 
 </html>

@@ -1,5 +1,7 @@
 package fpt.edu.vn.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fpt.edu.vn.component.ChangePasswordForm;
+import fpt.edu.vn.model.History;
 import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.AppointmentService;
@@ -76,9 +79,10 @@ public class PatientController {
     
     @GetMapping("/recordMedical/{id}")
 	public String recordMedical(@PathVariable("id") int patientId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
-//		model.addAttribute("user", userService.getUserById(currentUser.getId()));
-    	
-    	
+    	Patient patient = userService.getPatientById(patientId);    	
+    	List<History> listHistory = userService.getHistoryByPatientId(patientId);    	
+    	model.addAttribute("patient", patient);
+    	model.addAttribute("listHistory", listHistory);
 		return "patients/recordMedical";
 	}
 

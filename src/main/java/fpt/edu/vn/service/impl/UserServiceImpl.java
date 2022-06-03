@@ -13,11 +13,13 @@ import org.springframework.util.StringUtils;
 
 import fpt.edu.vn.component.ChangePasswordForm;
 import fpt.edu.vn.model.Doctor;
+import fpt.edu.vn.model.History;
 import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.Review;
 import fpt.edu.vn.model.Role;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.repository.DoctorRepository;
+import fpt.edu.vn.repository.HistoryRepository;
 import fpt.edu.vn.repository.PatientRepository;
 import fpt.edu.vn.repository.ReviewRepository;
 import fpt.edu.vn.repository.RoleRepository;
@@ -32,17 +34,19 @@ public class UserServiceImpl implements UserService {
 	private final PatientRepository patientRepository;
 	private final RoleRepository roleRepository;
 	private final ReviewRepository reviewRepository;
+	private final HistoryRepository historyRepository;
 	private final PasswordEncoder passwordEncoder;
 
 	public UserServiceImpl(UserRepository userRepository, DoctorRepository doctorRepository,
 			PatientRepository patientRepository, RoleRepository roleRepository, ReviewRepository reviewRepository,
-			PasswordEncoder passwordEncoder) {
+			HistoryRepository historyRepository, PasswordEncoder passwordEncoder) {
 		super();
 		this.userRepository = userRepository;
 		this.doctorRepository = doctorRepository;
 		this.patientRepository = patientRepository;
 		this.roleRepository = roleRepository;
 		this.reviewRepository = reviewRepository;
+		this.historyRepository = historyRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
 
@@ -201,6 +205,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<Review> getAllReviewByDoctorId(int doctorId) {
 		return reviewRepository.getAllReviewByDoctorId(doctorId);
+	}
+	
+	@Override
+	public List<History> getHistoryByPatientId(int patientId) {
+		return historyRepository.findByPatientId(patientId);
 	}
 	
 }
