@@ -12,46 +12,50 @@ import org.hibernate.annotations.TypeDefs;
 import javax.persistence.*;
 import java.time.LocalTime;
 
-@TypeDefs(@TypeDef(name = "json", typeClass = JsonStringType.class))
+@TypeDefs(@TypeDef(name = "LONGTEXT", typeClass = JsonStringType.class))
 @Entity
 @Table(name = "working_plans")
 public class WorkingPlan {
-
-    @Id
-    @Column(name = "id_doctor")
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @MapsId
+	/*
+	 * @Id
+	 * 
+	 * @Column(name = "id_doctor") private int id;
+	 * 
+	 * @MapsId
+	 */
     @OneToOne
     @JoinColumn(name = "id_doctor")
     private Doctor doctor;
 
-    @Type(type = "json")
-    @Column(columnDefinition = "json", name = "monday")
+    @Type(type = "LONGTEXT")
+    @Column(columnDefinition = "LONGTEXT", name = "monday")
     private DayPlan monday;
 
-    @Type(type = "json")
-    @Column(columnDefinition = "json", name = "tuesday")
+    @Type(type = "LONGTEXT")
+    @Column(columnDefinition = "LONGTEXT", name = "tuesday")
     private DayPlan tuesday;
 
-    @Type(type = "json")
-    @Column(columnDefinition = "json", name = "wednesday")
+    @Type(type = "LONGTEXT")
+    @Column(columnDefinition = "LONGTEXT", name = "wednesday")
     private DayPlan wednesday;
 
-    @Type(type = "json")
-    @Column(columnDefinition = "json", name = "thursday")
+    @Type(type = "LONGTEXT")
+    @Column(columnDefinition = "LONGTEXT", name = "thursday")
     private DayPlan thursday;
 
-    @Type(type = "json")
-    @Column(columnDefinition = "json", name = "friday")
+    @Type(type = "LONGTEXT")
+    @Column(columnDefinition = "LONGTEXT", name = "friday")
     private DayPlan friday;
 
-    @Type(type = "json")
-    @Column(columnDefinition = "json", name = "saturday")
+    @Type(type = "LONGTEXT")
+    @Column(columnDefinition = "LONGTEXT", name = "saturday")
     private DayPlan saturday;
 
-    @Type(type = "json")
-    @Column(columnDefinition = "json", name = "sunday")
+    @Type(type = "LONGTEXT")
+    @Column(columnDefinition = "LONGTEXT", name = "sunday")
     private DayPlan sunday;
 
 
