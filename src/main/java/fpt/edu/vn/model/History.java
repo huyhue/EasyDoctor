@@ -9,13 +9,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "histories")
 public class History extends BaseEntity  {
-	
 	@Column(name = "doctor")
 	private String doctor;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-	@Column(name = "start")
-	private LocalDateTime start;
+	@Column(name = "updatedAt")
+	private LocalDateTime updatedAt;
 	
 	@Column(name = "medicine")
 	private String medicine;
@@ -34,7 +33,10 @@ public class History extends BaseEntity  {
 	
 	@Column(name = "result", nullable = true)
 	private String result;
-
+	
+	@Column(name = "pulished", columnDefinition = "boolean default false")
+	private boolean pulished;
+	
 	@ManyToOne
 	@JoinColumn(name = "id_patient")
 	private Patient patient;
@@ -50,12 +52,12 @@ public class History extends BaseEntity  {
 		this.doctor = doctor;
 	}
 
-	public LocalDateTime getStart() {
-		return start;
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
 	}
 
-	public void setStart(LocalDateTime start) {
-		this.start = start;
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 	public String getMedicine() {
@@ -113,6 +115,13 @@ public class History extends BaseEntity  {
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
-	
+
+	public boolean isPulished() {
+		return pulished;
+	}
+
+	public void setPulished(boolean pulished) {
+		this.pulished = pulished;
+	}
 	
 }

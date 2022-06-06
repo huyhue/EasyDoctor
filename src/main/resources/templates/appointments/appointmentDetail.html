@@ -51,7 +51,7 @@
 										<input type="hidden" name="appointmentId" th:value="${appointment.id}" />
 										<input type="hidden" name="doctor" th:value="${appointment.doctor.id}"
 											sth:field="*{doctor.id}" />
-										
+
 										<div class="text-center" style="margin-top: 10px;">
 											<input type="submit" name="button" class="btn btn-primary" value="Submit" />
 										</div>
@@ -59,9 +59,70 @@
 								</div>
 							</div>
 						</div>
-
 					</form>
 				</div>
+
+				<div class="col-md-9 p-3 mb-2 bg-success text-dark text-center">
+					<p>Mời bác sĩ điền kết quả khám bệnh tại đây.</p>
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Nhận
+						xét bác sĩ</button>
+					<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<form th:action="@{/doctors/saveResult}" th:object="${history}" method="POST">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Kết quả khám bệnh</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<input type="hidden" name="patient" th:value="${appointment.patient.id}"
+											sth:field="*{patient.id}" />
+										<div class="form-group">
+											<label for="diagnose" class="col-form-label">Chẩn đoán bệnh:</label>
+											<input type="text" class="form-control" th:field="*{diagnose}">
+										</div>
+										<div class="form-group">
+											<textarea class="form-control" placeholder="Mô tả bệnh"
+												th:field="*{notes}"></textarea>
+										</div>
+										<div class="form-group">
+											<textarea class="form-control" placeholder="Lời khuyên"
+												th:field="*{advice}"></textarea>
+										</div>
+										<div class="form-group">
+											<label for="medicine" class="col-form-label">Thuốc:</label>
+											<textarea class="form-control" th:field="*{medicine}"></textarea>
+										</div>
+										<div class="form-group">
+											<label for="type" class="col-form-label">Loại kết quả:</label>
+											<select class="custom-select" th:field="*{type}">
+												<option value="Toa thuốc" selected>Toa thuốc</option>
+												<option value="Toa thuốc">Chuẩn đoán hình ảnh</option>
+												<option value="Xét nghiệm">Xét nghiệm</option>
+												<option value="Phiếu điều trị">Phiếu điều trị</option>
+												<option value="Khác">Khác</option>
+											</select>
+											<div class="custom-file">
+												<input type="file" class="custom-file-input" th:field="*{result}">
+												<label class="custom-file-label" for="result">Chọn file kết quả</label>
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-dismiss="modal">Đóng</button>
+										<button type="button" class="btn btn-success" data-dismiss="modal">Lưu
+											nháp</button>
+										<button type="submit" class="btn btn-primary">Lưu</button>
+									</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<!--end row result-->
 			</div>
 
 			<div class="row">
@@ -75,10 +136,11 @@
 						</tr>
 						<tr th:if="${appointment.status.name()=='CANCELED'}">
 							<td><b>Canceled by</b></td>
-							<td><span th:text="${appointment.canceler.fullname}">Canceller
-									name</span>
-							</td>
-
+							<td><span th:text="${appointment.canceler.fullname}">cancel</span></td>
+						</tr>
+						<tr th:if="${appointment.status.name()=='CONFIRMED'}">
+							<td><b>Result</b></td>
+							<td><span th:text="${appointment.canceler.fullname}">cancel</span></td>
 						</tr>
 
 						<tr>
@@ -167,6 +229,8 @@
 											th:text="${appointment.doctor.fullname}"></span>
 										<strong id="online"></strong>
 									</div>
+									<a th:href="@{'/patients/recordMedical/'+${appointment.patient.id}}">Hồ sơ bệnh
+										án</a>
 									<!--<div class="col-md-2 col-xs-2">
 										<form id="searchForm" name="searchForm" nameForm="searchForm">
 											<input type="text" id="search">

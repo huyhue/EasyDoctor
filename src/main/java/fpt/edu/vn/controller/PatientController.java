@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fpt.edu.vn.component.ChangePasswordForm;
@@ -41,67 +42,40 @@ public class PatientController {
 //		model.addAttribute("user", userService.getUserById(currentUser.getId()));
 		return "patients/patientList";
 	}
-	
+
 	@GetMapping("/{id}")
-    public String showPatientDetails(@PathVariable("id") int patientId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
+	public String showPatientDetails(@PathVariable("id") int patientId, Model model,
+			@AuthenticationPrincipal CustomUserDetails currentUser) {
 		Patient patient = userService.getPatientById(patientId);
 		if (currentUser.getId() == patientId || currentUser.hasRole("ROLE_ADMIN")) {
-            if (!model.containsAttribute("user")) {
-                model.addAttribute("user", patient);
-            }
-            if (!model.containsAttribute("passwordChange")) {
-                model.addAttribute("passwordChange", new ChangePasswordForm(patientId));
-            }
-            model.addAttribute("account_type", "patients");
-            model.addAttribute("formActionProfile", "/patients/update/profile");
-            model.addAttribute("formActionPassword", "/patients/update/password");
-            model.addAttribute("numberScheduled", appointmentService.getNumberScheduledAppointmentByUserId(patientId));
-            model.addAttribute("numberCanceled", appointmentService.getNumberCanceledAppointmentByUserId(patientId));
-            return "users/updateUserForm";
-        } else {
-            throw new org.springframework.security.access.AccessDeniedException("Unauthorized");
-        }
+			if (!model.containsAttribute("user")) {
+				model.addAttribute("user", patient);
+			}
+			if (!model.containsAttribute("passwordChange")) {
+				model.addAttribute("passwordChange", new ChangePasswordForm(patientId));
+			}
+			model.addAttribute("account_type", "patients");
+			model.addAttribute("formActionProfile", "/patients/update/profile");
+			model.addAttribute("formActionPassword", "/patients/update/password");
+			model.addAttribute("numberScheduled", appointmentService.getNumberScheduledAppointmentByUserId(patientId));
+			model.addAttribute("numberCanceled", appointmentService.getNumberCanceledAppointmentByUserId(patientId));
+			return "users/updateUserForm";
+		} else {
+			throw new org.springframework.security.access.AccessDeniedException("Unauthorized");
+		}
 
-    }
-
-    @PostMapping("/update/profile")
-    public String processPatientUpdate(@ModelAttribute("user") Patient user, Model model, BindingResult bindingResult) {
-    	log.info(">> Patient " );
-    	userService.updatePatient(user);
-        return "redirect:/patients/" + user.getId();
-    }
-    
-    @PostMapping("/update/password")
-    public String processPatientPasswordUpdate(@ModelAttribute("passwordChange") ChangePasswordForm passwordChange) {
-        userService.updateUserPassword(passwordChange);
-        return "redirect:/patients/" + passwordChange.getId();
-    }
-    
-    @GetMapping("/recordMedical/{id}")
-	public String recordMedical(@PathVariable("id") int patientId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
-    	Patient patient = userService.getPatientById(patientId);    	
-    	List<History> listHistory = userService.getHistoryByPatientId(patientId);    	
-    	model.addAttribute("patient", patient);
-    	model.addAttribute("listHistory", listHistory);
-		return "patients/recordMedical";
 	}
 
-    @GetMapping("/new")
-    public String showPatientRegistrationForm(Model model) {
+	@PostMapping("/update/profile")
+	public String processPatientUpdate(@ModelAttribute("user") Patient user, Model model, BindingResult bindingResult) {
+		log.info(">> Patient ");
+		userService.updatePatient(user);
+		return "redirect:/patients/" + user.getId();
+	}
 
-        return "users/";
-    }
-
-    @PostMapping("/new")
-    public String processPatientRegistrationForm() {
-
-        return "redirect:/Patients/all";
-    }
-
-    @PostMapping("/delete")
-    public String processDeletePatientRequest(@RequestParam("PatientId") int PatientId) {
-
-        return "redirect:/Patients/all";
-    }
-	
+	@PostMapping("/update/password")
+	public String processPatientPasswordUpdate(@ModelAttribute("passwordChange") ChangePasswordForm passwordChange) {
+		userService.updateUserPassword(passwordChange);
+		return "redirect:/patients/" + passwordChange.getId();
+	}
 }
