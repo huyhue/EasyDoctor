@@ -13,6 +13,10 @@ public class History extends BaseEntity  {
 	private String doctor;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	@Column(name = "startedAt")
+	private LocalDateTime startedAt;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	@Column(name = "updatedAt")
 	private LocalDateTime updatedAt;
 	
@@ -122,6 +126,14 @@ public class History extends BaseEntity  {
 
 	public void setPulished(boolean pulished) {
 		this.pulished = pulished;
+	}
+
+	public LocalDateTime getStartedAt() {
+		return startedAt;
+	}
+
+	public void setStartedAt(LocalDateTime startedAt) {
+		this.startedAt = startedAt;
 	}
 	
 }

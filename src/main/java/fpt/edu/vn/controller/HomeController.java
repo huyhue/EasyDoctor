@@ -193,7 +193,7 @@ public class HomeController {
 	@GetMapping("/recordMedical/{id}")
 	public String recordMedical(@PathVariable("id") int patientId, Model model,
 			@AuthenticationPrincipal CustomUserDetails currentUser) {
-		Patient patient = userService.getPatientById(patientId);
+		Patient patient = (Patient) userService.findById(patientId);
 		List<History> listHistory = userService.getHistoryByPatientId(patientId);
 		History history = new History();
 		model.addAttribute("patient", patient);

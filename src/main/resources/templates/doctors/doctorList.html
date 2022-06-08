@@ -13,6 +13,67 @@
 
 			<div class="row" th:each="doctor : ${doctors}">
 
+				<div class="modal fade" id="declarationModal" tabindex="-1" role="dialog"
+					aria-labelledby="noteModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="noteModalLabel">Vui lòng khai báo trước khi đặt lịch</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<form action="#" th:action="@{/declaration}" method="POST" id="declaration-form">
+									<div class="form-row">
+										<div class="form-group col-md-6">
+											<label for="blood">Nhóm máu</label>
+											<select id="blood" class="form-control">
+												<option selected>O</option>
+												<option>A</option>
+												<option>B</option>
+												<option>AB</option>
+												<option>Khác</option>
+											</select>
+										</div>
+										<div class="form-group col-md-6">
+											<label for="background">Bệnh nền</label>
+											<select id="background" class="form-control">
+												<option selected>Bệnh tiều đường</option>
+												<option>Huyết áp cao</option>
+												<option>Gout</option>
+												<option>Bệnh gan</option>
+												<option>Bệnh tim mạch</option>
+												<option>Béo phì, thừa cân</option>
+												<option>Rối loạn tiền đình</option>
+												<option>Khác</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="note-description" class="col-form-label">Bạn có đang dùng thuốc nào không ?</label>
+										<input class="form-control" name="medicine" id="medicine"></input>
+									</div>
+									<div class="form-group">
+										<label for="note-description" class="col-form-label">Bạn có triệu chứng nào
+											không ?</label>
+										<input class="form-control" name="symptom" id="symptom"></input>
+									</div>
+									<div class="form-group">
+										<label for="note-description" class="col-form-label">Các vấn đề khác ?</label>
+										<textarea class="form-control" name="notes" id="notes" rows="2" maxlength="200"></textarea>
+									</div>
+									<button id="declarationSubmit" type="submit" class="d-none"></button>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary"
+									onclick="$('#declarationSubmit').click();">Lưu thay đổi</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
 				<div class="col-lg-6">
 					<div class="member d-flex align-items-start">
 						<div class="pic"><img src="/img/doctors/doctors-1.jpg" class="img-fluid" alt=""></div>
@@ -26,11 +87,12 @@
 							<!--<small class="text-muted"
                                th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(doctor.startPracticeDate) + 1} years|"></small>-->
 							<div class="social">
-								<a th:href="@{'/appointments/new/' + ${doctor.id}}"><i
-										class="fas fa-book-medical"></i></a>
+								<button type="button" class="btn btn-info" onclick="showDeclarationModal()"><i
+										class="fas fa-book-medical"></i> Đặt ngay</button>
+								<!--<a th:href="@{'/appointments/new/' + ${doctor.id}}"></a>
 								<a href=""><i class="ri-facebook-fill"></i></a>
 								<a href=""><i class="ri-instagram-fill"></i></a>
-								<a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+								<a href=""> <i class="ri-linkedin-box-fill"></i> </a>-->
 							</div>
 						</div>
 					</div>

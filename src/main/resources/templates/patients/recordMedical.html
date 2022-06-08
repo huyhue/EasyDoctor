@@ -41,7 +41,7 @@
 					<h5 class="mb-0">
 						<button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
 							aria-expanded="true" aria-controls="collapseOne">
-							[[${history.updatedAt}]]
+							[[${#temporals.format(history.startedAt, 'dd-MM-yyyy')}]]
 						</button>
 					</h5>
 				</div>
@@ -54,6 +54,7 @@
 						<p class="card-text">Thuốc: [[${history.medicine}]]</p>
 						<p class="card-text">Bác sĩ: [[${history.doctor}]]</p>
 						<p class="card-text">[[${history.advice}]]</p>
+						<small class="text-muted">[[${#temporals.format(history.updatedAt, 'dd-MM-yyyy')}]]</small><br>
 						<a th:href="@{'/dowload/' + ${history.result}}" class="btn btn-primary">Dowload
 							[[${history.type}]]</a>
 					</div>

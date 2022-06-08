@@ -62,67 +62,62 @@
 					</form>
 				</div>
 
-				<div class="col-md-9 p-3 mb-2 bg-success text-dark text-center">
-					<p>Mời bác sĩ điền kết quả khám bệnh tại đây.</p>
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Nhận
-						xét bác sĩ</button>
-					<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-						aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<form th:action="@{/doctors/saveResult}" th:object="${history}" method="POST">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLabel">Kết quả khám bệnh</h5>
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
+				<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+					aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<form th:object="${history}" method="POST">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">Kết quả khám bệnh</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<input type="hidden" name="patient" th:value="${appointment.patient.id}"
+										sth:field="*{patient.id}" />
+									<input type="hidden" th:value="${appointment.start}" name="startedAt">
+									<div class="form-group">
+										<label for="diagnose" class="col-form-label">Chẩn đoán bệnh:</label>
+										<input type="text" class="form-control" th:field="*{diagnose}">
 									</div>
-									<div class="modal-body">
-										<input type="hidden" name="patient" th:value="${appointment.patient.id}"
-											sth:field="*{patient.id}" />
-										<div class="form-group">
-											<label for="diagnose" class="col-form-label">Chẩn đoán bệnh:</label>
-											<input type="text" class="form-control" th:field="*{diagnose}">
-										</div>
-										<div class="form-group">
-											<textarea class="form-control" placeholder="Mô tả bệnh"
-												th:field="*{notes}"></textarea>
-										</div>
-										<div class="form-group">
-											<textarea class="form-control" placeholder="Lời khuyên"
-												th:field="*{advice}"></textarea>
-										</div>
-										<div class="form-group">
-											<label for="medicine" class="col-form-label">Thuốc:</label>
-											<textarea class="form-control" th:field="*{medicine}"></textarea>
-										</div>
-										<div class="form-group">
-											<label for="type" class="col-form-label">Loại kết quả:</label>
-											<select class="custom-select" th:field="*{type}">
-												<option value="Toa thuốc" selected>Toa thuốc</option>
-												<option value="Toa thuốc">Chuẩn đoán hình ảnh</option>
-												<option value="Xét nghiệm">Xét nghiệm</option>
-												<option value="Phiếu điều trị">Phiếu điều trị</option>
-												<option value="Khác">Khác</option>
-											</select>
-											<div class="custom-file">
-												<input type="file" class="custom-file-input" th:field="*{result}">
-												<label class="custom-file-label" for="result">Chọn file kết quả</label>
-											</div>
+									<div class="form-group">
+										<textarea class="form-control" placeholder="Mô tả bệnh"
+											th:field="*{notes}"></textarea>
+									</div>
+									<div class="form-group">
+										<textarea class="form-control" placeholder="Lời khuyên"
+											th:field="*{advice}"></textarea>
+									</div>
+									<div class="form-group">
+										<label for="medicine" class="col-form-label">Thuốc:</label>
+										<textarea class="form-control" th:field="*{medicine}"></textarea>
+									</div>
+									<div class="form-group">
+										<label for="type" class="col-form-label">Loại kết quả:</label>
+										<select class="custom-select" th:field="*{type}">
+											<option value="Toa thuốc" selected>Toa thuốc</option>
+											<option value="Toa thuốc">Chuẩn đoán hình ảnh</option>
+											<option value="Xét nghiệm">Xét nghiệm</option>
+											<option value="Phiếu điều trị">Phiếu điều trị</option>
+											<option value="Khác">Khác</option>
+										</select>
+										<div class="custom-file">
+											<input type="file" class="custom-file-input" th:field="*{result}">
+											<label class="custom-file-label" for="result">Chọn file kết quả</label>
 										</div>
 									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary"
-											data-dismiss="modal">Đóng</button>
-										<button type="button" class="btn btn-success" data-dismiss="modal">Lưu
-											nháp</button>
-										<button type="submit" class="btn btn-primary">Lưu</button>
-									</div>
-							</form>
-						</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+									<button type="submit" class="btn btn-success"
+										th:formaction="@{/doctors/saveDraftResult}">Lưu Nháp</button>
+									<button type="submit" class="btn btn-primary"
+										th:formaction="@{/doctors/saveResult}">Lưu</button>
+								</div>
+						</form>
 					</div>
 				</div>
-				<!--end row result-->
 			</div>
 
 			<div class="row">
@@ -132,7 +127,11 @@
 						<input type="hidden" th:value="${appointment.id}" id="appointment_id">
 						<tr>
 							<td><b>Status</b></td>
-							<td><span th:text="${appointment.status}" id="status"> scheduled </span></td>
+							<td><span th:text="${appointment.status}" id="status">trạng thái </span>
+								<button type="button" sec:authorize="hasRole('ROLE_DOCTOR')" class="btn btn-primary"
+									data-toggle="modal" data-target="#exampleModal">Nhận
+									xét bác sĩ</button>
+							</td>
 						</tr>
 						<tr th:if="${appointment.status.name()=='CANCELED'}">
 							<td><b>Canceled by</b></td>
@@ -260,45 +259,45 @@
 					</div>
 				</div>
 			</div>
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+		<script th:src="@{/js/chat.js}"></script>
+		<!-- QR Code -->
+		<script>
+			var qr;
 
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-			<script th:src="@{/js/chat.js}"></script>
-			<!-- QR Code -->
-			<script>
-				var qr;
+			(function () {
+				qr = new QRious({
+					element: document.getElementById('qr-code'),
+					size: 200,
+					value: 'huyhue'
+				});
+			})();
 
-				(function () {
-					qr = new QRious({
-						element: document.getElementById('qr-code'),
-						size: 200,
-						value: 'huyhue'
-					});
-				})();
+			window.onload = function () {
+				qrType = "appointment";
+				var doctor = document.getElementById('doctor').innerText;
+				var patient = document.getElementById('patient').innerText;
+				var status = document.getElementById('status').innerText;
+				var startTime = document.getElementById('startTime').innerText;
 
-				window.onload = function () {
-					qrType = "appointment";
-					var doctor = document.getElementById('doctor').innerText;
-					var patient = document.getElementById('patient').innerText;
-					var status = document.getElementById('status').innerText;
-					var startTime = document.getElementById('startTime').innerText;
+				qrContent = "Easydoctor appointment: " + doctor + " " + patient + " ,status " + status + " ,startTime " + startTime;
+				qr.set({
+					foreground: 'black',
+					size: 200,
+					value: qrContent
+				});
+			};
 
-					qrContent = "Easydoctor appointment: " + doctor + " " + patient + " ,status " + status + " ,startTime " + startTime;
-					qr.set({
-						foreground: 'black',
-						size: 200,
-						value: qrContent
-					});
-				};
-
-				function download() {
-					var download = document.getElementById("download");
-					qrImage = document.getElementById("qr-code").toDataURL("image/png")
-						.replace("image/png", "image/octet-stream");
-					download.setAttribute("href", qrImage);
-				}
-			</script>
+			function download() {
+				var download = document.getElementById("download");
+				qrImage = document.getElementById("qr-code").toDataURL("image/png")
+					.replace("image/png", "image/octet-stream");
+				download.setAttribute("href", qrImage);
+			}
+		</script>
 </body>
 
 </html>

@@ -19,8 +19,8 @@ public class Patient extends User {
     private String address;
 	
 	@OneToOne
-    @JoinColumn(name = "id_pathological")
-    private Pathological pathological;
+    @JoinColumn(name = "id_declaration")
+    private Declaration declaration;
 	
 	@OneToMany(mappedBy = "patient")
     private List<Appointment> appointments;
@@ -47,12 +47,12 @@ public class Patient extends User {
 		this.address = address;
 	}
 
-	public Pathological getPathological() {
-		return pathological;
+	public Declaration getDeclaration() {
+		return declaration;
 	}
 
-	public void setPathological(Pathological pathological) {
-		this.pathological = pathological;
+	public void setDeclaration(Declaration declaration) {
+		this.declaration = declaration;
 	}
 
 	public List<Appointment> getAppointments() {
