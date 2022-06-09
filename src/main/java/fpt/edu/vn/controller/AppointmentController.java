@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.context.Context;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -130,7 +132,10 @@ public class AppointmentController {
 			model.addAttribute("start", LocalDateTime.parse(start));
 			model.addAttribute("end",
 					LocalDateTime.parse(start).plusMinutes(packagesService.getPackagesById(packagesId).getDuration()));
-			emailService.sendAppointmentOTPConfirm(currentUser.getEmail());
+//			emailService.sendAppointmentOTPConfirm(currentUser.getEmail());
+			
+			int otp = otpService.generateOTP(currentUser.getEmail());
+	        model.addAttribute("OTPSEND", String.valueOf(otp));
 			return "appointments/newAppointmentSummary";
 		} else {
 			return "redirect:/appointments/new" + doctorId;

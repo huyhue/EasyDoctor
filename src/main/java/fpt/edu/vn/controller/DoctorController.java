@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import fpt.edu.vn.component.ChangePasswordForm;
 import fpt.edu.vn.component.TimePeroid;
 import fpt.edu.vn.model.Appointment;
+import fpt.edu.vn.model.Declaration;
 import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.History;
 import fpt.edu.vn.model.WorkingPlan;
@@ -66,6 +68,7 @@ public class DoctorController {
 			recentDoctors.add(appointment.getDoctor());
 		}
 		model.addAttribute("recentDoctors", recentDoctors);
+		model.addAttribute("declaration", userService.getDeclarationByPatientId(currentUser.getId()));
 		return "doctors/doctorList";
 	}
 

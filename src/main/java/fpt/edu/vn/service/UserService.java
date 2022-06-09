@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import fpt.edu.vn.component.ChangePasswordForm;
+import fpt.edu.vn.model.Declaration;
 import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.History;
 import fpt.edu.vn.model.Patient;
@@ -44,4 +45,9 @@ public interface UserService {
 //	History
 	List<History> getHistoryByPatientId(int patientId);
 	void saveResultByDoctor(History history);
+	
+//	Declaration
+	Declaration getDeclarationByPatientId(int patientId);
+	void saveDeclarationByPatientId(Declaration declaration);
+	void updateDeclarationByPatientId(Declaration declaration);
 }

@@ -1,18 +1,18 @@
 // For opening the note modal
-function showDeclarationModal(id, blood, background, medicine, symptom, notes) {
+function showDeclarationModal(declarationId, doctorId) {
         console.log(background);
 
-    if(id) {
+    if(declarationId) {
         const declarationForm = document.getElementById("declaration-form");
-        declarationForm.setAttribute("action", `/declaration/${id}`);
+        declarationForm.setAttribute("action", `/patients/declaration/${declarationId}/${doctorId}`);
     }
 
-    $('#id').val(id ? id : '');
+    /*$('#id').val(id ? id : '');
     $('#blood').val(blood ? blood : '');
     $('#background').val(background ? background : '');
     $('#medicine').val(medicine ? medicine : '');
     $('#symptom').val(symptom ? symptom : '');
-    $('#notes').val(notes ? notes : '');
+    $('#notes').val(notes ? notes : '');*/
     $('#declarationModal').modal('show');
 }
 

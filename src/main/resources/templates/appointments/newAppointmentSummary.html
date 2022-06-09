@@ -53,9 +53,9 @@
 					</td>
 				</tr>
 				<tr class="text-center">
+					<p>Gmail lỗi nên tạm thời: <span th:text="${OTPSEND}"></span></p>
 					<td colspan="2">
 						<h5>Kiểm tra mail để nhập OTP xác nhận:</h5>
-						<!--<form th:action="@{/appointments/new}" method="POST">-->
 						<form id="validateOtp" name="validateOtp" method="post">
 							<input type="hidden" name="packagesId" id="packagesId" th:value="${packages.id}">
 							<input type="hidden" name="doctorId" id="doctorId" th:value="${doctorId}">

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import fpt.edu.vn.component.ChangePasswordForm;
+import fpt.edu.vn.model.Declaration;
 import fpt.edu.vn.model.History;
 import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.security.CustomUserDetails;
@@ -77,5 +80,22 @@ public class PatientController {
 	public String processPatientPasswordUpdate(@ModelAttribute("passwordChange") ChangePasswordForm passwordChange) {
 		userService.updateUserPassword(passwordChange);
 		return "redirect:/patients/" + passwordChange.getId();
+	}
+
+	@PostMapping("/declaration/{doctorId}")
+	public String addNewDeclaration(@PathVariable Integer doctorId,
+			@ModelAttribute("declaration") Declaration declaration,
+			@AuthenticationPrincipal CustomUserDetails currentUser) {
+		
+		declaration.setPatient(userService.getPatientById(currentUser.getId()));
+		userService.saveDeclarationByPatientId(declaration);
+		return "redirect:/appointments/new/" + doctorId;
+	}
+	
+	@PostMapping("/declaration/{declarationId}/{doctorId}")
+	public String changeDeclaration(@PathVariable Integer declarationId, @PathVariable Integer doctorId,
+			@ModelAttribute("declaration") Declaration declaration) {
+		userService.updateDeclarationByPatientId(declaration);
+		return "redirect:/appointments/new/" + doctorId;
 	}
 }

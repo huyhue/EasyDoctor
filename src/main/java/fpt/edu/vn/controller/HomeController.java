@@ -202,7 +202,6 @@ public class HomeController {
 		return "patients/recordMedical";
 	}
 
-
 	@GetMapping("/access-denied")
 	public String showAccessDeniedPage() {
 		return "access-denied";

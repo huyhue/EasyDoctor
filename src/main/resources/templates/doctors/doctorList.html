@@ -24,44 +24,45 @@
 								</button>
 							</div>
 							<div class="modal-body">
-								<form action="#" th:action="@{/declaration}" method="POST" id="declaration-form">
+								<form action="#" th:action="@{'/patients/declaration/'+ ${doctor.id}}" th:object="${declaration}" method="POST" id="declaration-form">
 									<div class="form-row">
 										<div class="form-group col-md-6">
+											<input th:if="${declaration.id}" th:field="*{id}" id="declaration-id" name="declarationId" type="hidden">
 											<label for="blood">Nhóm máu</label>
-											<select id="blood" class="form-control">
-												<option selected>O</option>
-												<option>A</option>
-												<option>B</option>
-												<option>AB</option>
-												<option>Khác</option>
+											<select id="blood" class="form-control" th:field="*{blood}">
+												<option value="O" selected>O</option>
+												<option value="A">A</option>
+												<option value="B">B</option>
+												<option value="AB">AB</option>
+												<option value="Other">Khác</option>
 											</select>
 										</div>
 										<div class="form-group col-md-6">
 											<label for="background">Bệnh nền</label>
-											<select id="background" class="form-control">
-												<option selected>Bệnh tiều đường</option>
-												<option>Huyết áp cao</option>
-												<option>Gout</option>
-												<option>Bệnh gan</option>
-												<option>Bệnh tim mạch</option>
-												<option>Béo phì, thừa cân</option>
-												<option>Rối loạn tiền đình</option>
-												<option>Khác</option>
+											<select id="background" class="form-control" th:field="*{background}">
+												<option value="Bệnh tiều đường" selected>Bệnh tiều đường</option>
+												<option value="Huyết áp">Huyết áp</option>
+												<option value="Gout">Gout</option>
+												<option value="Bệnh gan">Bệnh gan</option>
+												<option value="Bệnh tim mạch">Bệnh tim mạch</option>
+												<option value="Béo phì, thừa cân">Béo phì, thừa cân</option>
+												<option value="Rối loạn tiền đình">Rối loạn tiền đình</option>
+												<option value="Other">Khác</option>
 											</select>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="note-description" class="col-form-label">Bạn có đang dùng thuốc nào không ?</label>
-										<input class="form-control" name="medicine" id="medicine"></input>
+										<input class="form-control" name="medicine" th:field="*{medicine}" id="medicine"></input>
 									</div>
 									<div class="form-group">
 										<label for="note-description" class="col-form-label">Bạn có triệu chứng nào
 											không ?</label>
-										<input class="form-control" name="symptom" id="symptom"></input>
+										<input class="form-control" name="symptom" th:field="*{symptom}" id="symptom"></input>
 									</div>
 									<div class="form-group">
 										<label for="note-description" class="col-form-label">Các vấn đề khác ?</label>
-										<textarea class="form-control" name="notes" id="notes" rows="2" maxlength="200"></textarea>
+										<textarea class="form-control" name="notes" th:field="*{notes}" id="notes" rows="2" maxlength="200"></textarea>
 									</div>
 									<button id="declarationSubmit" type="submit" class="d-none"></button>
 								</form>
@@ -69,6 +70,7 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-primary"
 									onclick="$('#declarationSubmit').click();">Lưu thay đổi</button>
+								<a th:href="@{'/appointments/new/' + ${doctor.id}}"><button type="button" class="btn btn-danger">Bỏ qua</button></a>
 							</div>
 						</div>
 					</div>
@@ -87,7 +89,7 @@
 							<!--<small class="text-muted"
                                th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(doctor.startPracticeDate) + 1} years|"></small>-->
 							<div class="social">
-								<button type="button" class="btn btn-info" onclick="showDeclarationModal()"><i
+								<button type="button" class="btn btn-info"  th:onclick="javascript: showDeclarationModal([[${declaration.id}]], [[${doctor.id}]])"><i
 										class="fas fa-book-medical"></i> Đặt ngay</button>
 								<!--<a th:href="@{'/appointments/new/' + ${doctor.id}}"></a>
 								<a href=""><i class="ri-facebook-fill"></i></a>
