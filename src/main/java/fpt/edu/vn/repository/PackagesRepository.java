@@ -9,13 +9,7 @@ import fpt.edu.vn.model.Packages;
 import java.util.List;
 
 public interface PackagesRepository extends JpaRepository<Packages, Integer> {
+	
     @Query("select p from Packages p inner join p.doctors d where d.id in :doctorId")
     List<Packages> findPackagesByDoctorId(@Param("doctorId") int doctorId);
-
-//    @Query("select w from Packages w where w.targetCustomer = :target ")
-//    List<Packages> findByTargetCustomer(@Param("target") String targetCustomer);
-//
-//    @Query("select w from Packages w inner join w.providers p where p.id in :providerId and w.targetCustomer = :target ")
-//    List<Packages> findByTargetCustomerAndProviderId(@Param("target") String targetCustomer, @Param("providerId") int providerId);
-
 }

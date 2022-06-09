@@ -73,7 +73,7 @@ public class EmailServiceImpl implements EmailService {
     public void sendRegisterSuccess(User user) {
         Context context = new Context();
         context.setVariable("user", user);
-        sendEmail(user.getEmail(), "Đăng ký thành công", "registerSuccess", context, null);
+        sendEmail(user.getEmail(), "Đăng ký thành công", "registerSucess", context, null);
     }
     
     @Async

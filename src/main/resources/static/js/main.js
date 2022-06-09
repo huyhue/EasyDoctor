@@ -1,3 +1,21 @@
+// For opening the note modal
+function showDeclarationModal(declarationId, doctorId) {
+        console.log(background);
+
+    if(declarationId) {
+        const declarationForm = document.getElementById("declaration-form");
+        declarationForm.setAttribute("action", `/patients/declaration/${declarationId}/${doctorId}`);
+    }
+
+    /*$('#id').val(id ? id : '');
+    $('#blood').val(blood ? blood : '');
+    $('#background').val(background ? background : '');
+    $('#medicine').val(medicine ? medicine : '');
+    $('#symptom').val(symptom ? symptom : '');
+    $('#notes').val(notes ? notes : '');*/
+    $('#declarationModal').modal('show');
+}
+
 $(document).ready(function() {
 	$('#loader').hide();
 	$('#successImage').css('display', 'none');

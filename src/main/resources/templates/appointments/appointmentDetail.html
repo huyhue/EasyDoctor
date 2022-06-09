@@ -4,237 +4,302 @@
 	xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <body>
-	<div class="row" style="margin-top: 50px">
+	<div class="row justify-content-center" style="margin-top: 50px">
+		<div clas="col-md-1">
+		</div>
+		<div th:if="${allowedToRequestRejection}" class="col-md-9 p-3 mb-2 bg-warning text-dark text-center">
+			<p>You have <span class="font-weight-bold" th:text="${remainingTime}">3h 45m</span> to deny that
+				this appointment took place.</p>
+			<p>After that time it will be invoiced automatically.</p>
 
-		<div class="container">
-			<div class="row justify-content-center">
-				<div clas="col-md-1">
-				</div>
-				<div th:if="${allowedToRequestRejection}" class="col-md-9 p-3 mb-2 bg-warning text-dark text-center">
-					<p>You have <span class="font-weight-bold" th:text="${remainingTime}">3h 45m</span> to deny that
-						this appointment took place.</p>
-					<p>After that time it will be invoiced automatically.</p>
+			<form th:action="@{/appointments/reject}" method='POST'>
+				<input type="hidden" name="appointmentId" th:value="${appointment.id}">
+				<input type="submit" class="btn btn-danger" value="Reject" />
+			</form>
+		</div>
+		<div th:if="${allowedToAcceptRejection}" class="col-md-9 p-3 mb-2 bg-warning text-dark text-center">
+			<p>Patient claims that this appointment didn't take place.</p>
+			<p>If you agree with that, click the button below:</p>
 
-					<form th:action="@{/appointments/reject}" method='POST'>
-						<input type="hidden" name="appointmentId" th:value="${appointment.id}">
-						<input type="submit" class="btn btn-danger" value="Reject" />
-					</form>
-				</div>
-				<div th:if="${allowedToAcceptRejection}" class="col-md-9 p-3 mb-2 bg-warning text-dark text-center">
-					<p>Patient claims that this appointment didn't take place.</p>
-					<p>If you agree with that, click the button below:</p>
+			<form th:action="@{/appointments/acceptRejection}" method='POST'>
+				<input type="hidden" name="appointmentId" th:value="${appointment.id}">
+				<input type="submit" class="btn btn-danger" value="Accept" />
+			</form>
+		</div>
+		<div th:if="${allowedToReview}" class="col-md-9 p-3 mb-2 bg-success text-dark text-center">
+			<p>Cuộc hẹn với bác sĩ bạn thành công.</p>
+			<p>Vui lòng đánh giá bác sĩ ở form bên dưới:</p>
 
-					<form th:action="@{/appointments/acceptRejection}" method='POST'>
-						<input type="hidden" name="appointmentId" th:value="${appointment.id}">
-						<input type="submit" class="btn btn-danger" value="Accept" />
-					</form>
-				</div>
-				<div th:if="${allowedToReview}" class="col-md-9 p-3 mb-2 bg-success text-dark text-center">
-					<p>Cuộc hẹn với bác sĩ bạn thành công.</p>
-					<p>Vui lòng đánh giá bác sĩ ở form bên dưới:</p>
+			<form th:action="@{/appointments/review}" method="POST" th:object="${reviewForm}">
+				<div class="card book-detail-page book-detail-card">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-sm-10 form-group">
+								<textarea class="form-control" type="text" th:field="*{feedback}" rows="3"
+									placeholder="Nhập nhận xét ở đây"></textarea>
+							</div>
+							<div class="col-sm-2 form-group">
+								<select class="form-control" th:field="*{rating}">
+									<option th:each="rate : ${ratingOptionMap}" th:value="${rate.key}"
+										th:text="${rate.value}">
+										Rating
+									</option>
+								</select>
+								<input type="hidden" name="appointmentId" th:value="${appointment.id}" />
+								<input type="hidden" name="doctor" th:value="${appointment.doctor.id}"
+									sth:field="*{doctor.id}" />
 
-					<form th:action="@{/appointments/review}" method="POST" th:object="${reviewForm}">
-						<div class="card book-detail-page book-detail-card">
-							<div class="card-body">
-								<div class="row">
-									<div class="col-sm-10 form-group">
-										<textarea class="form-control" type="text" th:field="*{feedback}" rows="3"
-											placeholder="Nhập nhận xét ở đây"></textarea>
-									</div>
-									<div class="col-sm-2 form-group">
-										<select class="form-control" th:field="*{rating}">
-											<option th:each="rate : ${ratingOptionMap}" th:value="${rate.key}"
-												th:text="${rate.value}">
-												Rating
-											</option>
-										</select>
-										<input type="hidden" name="appointmentId" th:value="${appointment.id}" />
-										<input type="hidden" name="doctor" th:value="${appointment.doctor.id}"
-											sth:field="*{doctor.id}" />
-										
-										<div class="text-center" style="margin-top: 10px;">
-											<input type="submit" name="button" class="btn btn-primary" value="Submit" />
-										</div>
-									</div>
+								<div class="text-center" style="margin-top: 10px;">
+									<input type="submit" name="button" class="btn btn-primary" value="Submit" />
 								</div>
 							</div>
 						</div>
-
-					</form>
+					</div>
 				</div>
-			</div>
+			</form>
+		</div>
+	</div>
 
-			<div class="row">
-				<div class="col-md-5">
-
-					<table id="appointments" class="table">
-						<input type="hidden" th:value="${appointment.id}" id="appointment_id">
-						<tr>
-							<td><b>Status</b></td>
-							<td><span th:text="${appointment.status}" id="status"> scheduled </span></td>
-						</tr>
-						<tr th:if="${appointment.status.name()=='CANCELED'}">
-							<td><b>Canceled by</b></td>
-							<td><span th:text="${appointment.canceler.fullname}">Canceller
-									name</span>
-							</td>
-
-						</tr>
-
-						<tr>
-							<td><b>Date</b></td>
-							<td><span th:text="${#temporals.format(appointment.start, 'dd-MM-yyyy')}">10-01-2019</span>
-							</td>
-						</tr>
-						<tr>
-							<td><b>Time</b></td>
-							<td><span
-									th:text="${#temporals.format(appointment.start, 'HH:mm')+' - '+ #temporals.format(appointment.end, 'HH:mm')}"
-									id="startTime">14:00
-									- 15:00</span>
-							</td>
-						</tr>
-						<tr>
-							<td><b>Patient</b></td>
-							<td><span th:text="${appointment.patient.fullname}" id="patient">Huyhue</span>
-							</td>
-						</tr>
-						<tr>
-							<td><b>Doctor</b></td>
-							<td><span th:text="${appointment.doctor.fullname}" id="doctor">Huyhue</span>
-							</td>
-						</tr>
-
-						<tr>
-							<td><b>Packages</b></td>
-							<td><span th:text="${appointment.packages.name}"> english </span></td>
-						</tr>
-						<tr>
-							<td><b>Description</b></td>
-							<td><span th:text="${appointment.packages.description}">description</span></td>
-						</tr>
-
-
-						<tr>
-							<td><b>Price</b></td>
-							<td><span th:text="${appointment.packages.price}"> 50 </span> VND</td>
-						</tr>
-						<tr th:if="${appointment.status.name()=='INVOICED'}">
-							<td><b>Invoice</b></td>
-							<td><a th:href="@{'/invoices/download/'+${appointment.invoice.id}}">Download</a></td>
-						</tr>
-
-						<tr>
-							<td><b>Cancellation</b></td>
-							<td th:if="${allowedToCancel}">
-								<form th:action="@{/appointments/cancel}" method='POST'>
-									<input type="hidden" name="appointmentId" th:value="${appointment.id}">
-									<input type="submit" class="btn btn-danger" value="Cancel" />
-								</form>
-							</td>
-							<td th:unless="${allowedToCancel}">
-								<p th:text="${cancelNotAllowedReason}">Reason why appointment cannot be cancelled.</p>
-							</td>
-						</tr>
-						<tr>
-							<td><b>QR Code</b></td>
-							<td>
-								<div id="qrcode">
-									<canvas id="qr-code"></canvas>
-								</div>
-								<a id="download" download="easyQR-code.png">
-									<button class="btn btn-primary" id="button-download-qr-code" type="button"
-										style="margin-right: 3px;background: rgb(255,73,41);border-style: solid;border-color: rgb(255,73,41);"
-										onClick="download()" download="">Download
-									</button>
-								</a>
-							</td>
-						</tr>
-
-					</table>
-
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<form th:object="${history}" method="POST">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Kết quả khám bệnh</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<input th:if="${history.id}" th:field="*{id}" id="history-id" name="historyId" type="hidden">
+						<input type="hidden" name="patient" th:value="${appointment.patient.id}"
+							sth:field="*{patient.id}" />
+						<input type="hidden" name="appointment" th:value="${appointment.id}"
+							sth:field="*{appointment.id}" />
+						<div class="form-group">
+							<label for="diagnose" class="col-form-label">Chẩn đoán bệnh:</label>
+							<input type="text" class="form-control" th:field="*{diagnose}">
+						</div>
+						<div class="form-group">
+							<textarea class="form-control" placeholder="Mô tả bệnh" th:field="*{notes}"></textarea>
+						</div>
+						<div class="form-group">
+							<textarea class="form-control" placeholder="Lời khuyên" th:field="*{advice}"></textarea>
+						</div>
+						<div class="form-group">
+							<label for="medicine" class="col-form-label">Thuốc:</label>
+							<textarea class="form-control" th:field="*{medicine}"></textarea>
+						</div>
+						<div class="form-group">
+							<label for="type" class="col-form-label">Loại kết quả:</label>
+							<select class="custom-select" th:field="*{type}">
+								<option value="Toa thuốc" selected>Toa thuốc</option>
+								<option value="Toa thuốc">Chuẩn đoán hình ảnh</option>
+								<option value="Xét nghiệm">Xét nghiệm</option>
+								<option value="Phiếu điều trị">Phiếu điều trị</option>
+								<option value="Khác">Khác</option>
+							</select>
+							<div class="custom-file">
+								<input type="file" class="custom-file-input" th:field="*{result}">
+								<label class="custom-file-label" for="result">Chọn file kết quả</label>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-success" th:formaction="@{/doctors/saveDraftResult}">Lưu
+							Nháp</button>
+						<button type="submit" class="btn btn-primary"
+							th:formaction="@{/doctors/saveResult}">Lưu</button>
+					</div>
 				</div>
-				<div class="col-md-6">
+			</form>
+		</div>
+	</div>
 
-					<div class="chatbody">
-						<div class="panel panel-primary">
-							<div class="panel-heading top-bar">
-								<div class="row">
-									<div class="col-md-6 col-xs-6">
-										<span sec:authorize="hasRole('ROLE_DOCTOR')"
-											th:text="${appointment.patient.fullname}"></span>
-										<span sec:authorize="hasRole('ROLE_PATIENT')"
-											th:text="${appointment.doctor.fullname}"></span>
-										<strong id="online"></strong>
-									</div>
-									<!--<div class="col-md-2 col-xs-2">
+
+	<div class="row">
+		<div class="col-md-5">
+
+			<table id="appointments" class="table">
+				<input type="hidden" th:value="${appointment.id}" id="appointment_id">
+				<tr>
+					<td><b>Status</b></td>
+					<td><span th:text="${appointment.status}" id="status">trạng thái </span>
+					</td>
+				</tr>
+				<tr th:if="${history.pulished == false}" sec:authorize="hasRole('ROLE_DOCTOR')">
+					<td><b>Kết quả</b></td>
+					<td>
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Nhận
+							xét</button>
+					</td>
+				</tr>
+				<tr th:if="${appointment.status.name()=='CANCELED'}">
+					<td><b>Canceled by</b></td>
+					<td><span th:text="${appointment.canceler.fullname}">cancel</span></td>
+				</tr>
+				<tr th:if="${appointment.status.name()=='CONFIRMED'}">
+					<td><b>Result</b></td>
+					<td><span th:text="${appointment.canceler.fullname}">cancel</span></td>
+				</tr>
+
+				<tr>
+					<td><b>Date</b></td>
+					<td><span th:text="${#temporals.format(appointment.start, 'dd-MM-yyyy')}">10-01-2019</span>
+					</td>
+				</tr>
+				<tr>
+					<td><b>Time</b></td>
+					<td><span
+							th:text="${#temporals.format(appointment.start, 'HH:mm')+' - '+ #temporals.format(appointment.end, 'HH:mm')}"
+							id="startTime">14:00
+							- 15:00</span>
+					</td>
+				</tr>
+				<tr>
+					<td><b>Patient</b></td>
+					<td><span th:text="${appointment.patient.fullname}" id="patient">Huyhue</span>
+					</td>
+				</tr>
+				<tr>
+					<td><b>Doctor</b></td>
+					<td><span th:text="${appointment.doctor.fullname}" id="doctor">Huyhue</span>
+					</td>
+				</tr>
+
+				<tr>
+					<td><b>Packages</b></td>
+					<td><span th:text="${appointment.packages.name}"> english </span></td>
+				</tr>
+				<tr>
+					<td><b>Description</b></td>
+					<td><span th:text="${appointment.packages.description}">description</span></td>
+				</tr>
+
+
+				<tr>
+					<td><b>Price</b></td>
+					<td><span th:text="${appointment.packages.price}"> 50 </span> VND</td>
+				</tr>
+				<tr th:if="${appointment.status.name()=='INVOICED'}">
+					<td><b>Invoice</b></td>
+					<td><a th:href="@{'/invoices/download/'+${appointment.invoice.id}}">Download</a></td>
+				</tr>
+
+				<tr>
+					<td><b>Cancellation</b></td>
+					<td th:if="${allowedToCancel}">
+						<form th:action="@{/appointments/cancel}" method='POST'>
+							<input type="hidden" name="appointmentId" th:value="${appointment.id}">
+							<input type="submit" class="btn btn-danger" value="Cancel" />
+						</form>
+					</td>
+					<td th:unless="${allowedToCancel}">
+						<p th:text="${cancelNotAllowedReason}">Reason why appointment cannot be cancelled.</p>
+					</td>
+				</tr>
+				<tr>
+					<td><b>QR Code</b></td>
+					<td>
+						<div id="qrcode">
+							<canvas id="qr-code"></canvas>
+						</div>
+						<a id="download" download="easyQR-code.png">
+							<button class="btn btn-primary" id="button-download-qr-code" type="button"
+								style="margin-right: 3px;background: rgb(255,73,41);border-style: solid;border-color: rgb(255,73,41);"
+								onClick="download()" download="">Download
+							</button>
+						</a>
+					</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<div class="col-md-6">
+
+			<div class="chatbody">
+				<div class="panel panel-primary">
+					<div class="panel-heading top-bar">
+						<div class="row">
+							<div class="col-md-6 col-xs-6">
+								<span sec:authorize="hasRole('ROLE_DOCTOR')"
+									th:text="${appointment.patient.fullname}"></span>
+								<span sec:authorize="hasRole('ROLE_PATIENT')"
+									th:text="${appointment.doctor.fullname}"></span>
+								<strong id="online"></strong>
+							</div>
+							<a th:href="@{'/recordMedical/'+${appointment.patient.id}}" target="_blank">Hồ sơ bệnh
+								án</a>
+							<!--<div class="col-md-2 col-xs-2">
 										<form id="searchForm" name="searchForm" nameForm="searchForm">
 											<input type="text" id="search">
 											<button class="btn" type="submit">Send</button>
 										</form>
 									</div>-->
-								</div>
-							</div>
-
-							<div class="panel-body msg_container_base">
-								<div class="connecting">
-									Connecting...
-								</div>
-							</div>
-
-							<form id="messageForm" name="messageForm" nameForm="messageForm">
-								<div class="input-group mb-3">
-									<input type="hidden" name="appointmentId" th:value="${appointment.id}">
-									<input type="text" class="form-control" id="message" placeholder="Nhắn tại đây..."
-										autocomplete="off" aria-describedby="basic-addon2">
-									<div class="input-group-append">
-										<button class="btn btn-outline-secondary" type="submit">Send</button>
-									</div>
-								</div>
-							</form>
 						</div>
 					</div>
+
+					<div class="panel-body msg_container_base">
+						<div class="connecting">
+							Connecting...
+						</div>
+					</div>
+
+					<form id="messageForm" name="messageForm" nameForm="messageForm">
+						<div class="input-group mb-3">
+							<input type="hidden" name="appointmentId" th:value="${appointment.id}">
+							<input type="text" class="form-control" id="message" placeholder="Nhắn tại đây..."
+								autocomplete="off" aria-describedby="basic-addon2">
+							<div class="input-group-append">
+								<button class="btn btn-outline-secondary" type="submit">Send</button>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
+		</div>
+	</div>
 
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-			<script th:src="@{/js/chat.js}"></script>
-			<!-- QR Code -->
-			<script>
-				var qr;
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+	<script th:src="@{/js/chat.js}"></script>
+	<!-- QR Code -->
+	<script>
+		var qr;
 
-				(function () {
-					qr = new QRious({
-						element: document.getElementById('qr-code'),
-						size: 200,
-						value: 'huyhue'
-					});
-				})();
+		(function () {
+			qr = new QRious({
+				element: document.getElementById('qr-code'),
+				size: 200,
+				value: 'huyhue'
+			});
+		})();
 
-				window.onload = function () {
-					qrType = "appointment";
-					var doctor = document.getElementById('doctor').innerText;
-					var patient = document.getElementById('patient').innerText;
-					var status = document.getElementById('status').innerText;
-					var startTime = document.getElementById('startTime').innerText;
+		window.onload = function () {
+			qrType = "appointment";
+			var doctor = document.getElementById('doctor').innerText;
+			var patient = document.getElementById('patient').innerText;
+			var status = document.getElementById('status').innerText;
+			var startTime = document.getElementById('startTime').innerText;
 
-					qrContent = "Easydoctor appointment: " + doctor + " " + patient + " ,status " + status + " ,startTime " + startTime;
-					qr.set({
-						foreground: 'black',
-						size: 200,
-						value: qrContent
-					});
-				};
+			qrContent = "Easydoctor appointment: " + doctor + " " + patient + " ,status " + status + " ,startTime " + startTime;
+			qr.set({
+				foreground: 'black',
+				size: 200,
+				value: qrContent
+			});
+		};
 
-				function download() {
-					var download = document.getElementById("download");
-					qrImage = document.getElementById("qr-code").toDataURL("image/png")
-						.replace("image/png", "image/octet-stream");
-					download.setAttribute("href", qrImage);
-				}
-			</script>
+		function download() {
+			var download = document.getElementById("download");
+			qrImage = document.getElementById("qr-code").toDataURL("image/png")
+				.replace("image/png", "image/octet-stream");
+			download.setAttribute("href", qrImage);
+		}
+	</script>
 </body>
 
 </html>

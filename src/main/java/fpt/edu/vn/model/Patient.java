@@ -19,11 +19,14 @@ public class Patient extends User {
     private String address;
 	
 	@OneToOne
-    @JoinColumn(name = "id_pathological")
-    private Pathological pathological;
+    @JoinColumn(name = "id_declaration")
+    private Declaration declaration;
 	
 	@OneToMany(mappedBy = "patient")
     private List<Appointment> appointments;
+	
+	@OneToMany(mappedBy = "patient")
+	private List<History> histories;
 	
 	@OneToMany(mappedBy = "patient")
     private List<Review> reviews;
@@ -44,12 +47,12 @@ public class Patient extends User {
 		this.address = address;
 	}
 
-	public Pathological getPathological() {
-		return pathological;
+	public Declaration getDeclaration() {
+		return declaration;
 	}
 
-	public void setPathological(Pathological pathological) {
-		this.pathological = pathological;
+	public void setDeclaration(Declaration declaration) {
+		this.declaration = declaration;
 	}
 
 	public List<Appointment> getAppointments() {
@@ -67,4 +70,13 @@ public class Patient extends User {
 	public void setReviews(List<Review> reviews) {
 		this.reviews = reviews;
 	}
+
+	public List<History> getHistories() {
+		return histories;
+	}
+
+	public void setHistories(List<History> histories) {
+		this.histories = histories;
+	}
+
 }

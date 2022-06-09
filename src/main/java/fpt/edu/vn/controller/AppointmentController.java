@@ -6,12 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import fpt.edu.vn.component.ChatMessage;
 import fpt.edu.vn.component.ReviewForm;
 import fpt.edu.vn.model.Appointment;
+import fpt.edu.vn.model.History;
 import fpt.edu.vn.model.Message;
 import fpt.edu.vn.model.Review;
 import fpt.edu.vn.security.CustomUserDetails;
@@ -54,6 +56,7 @@ public class AppointmentController {
         Appointment appointment = appointmentService.getAppointmentByIdWithAuthorization(appointmentId);
         model.addAttribute("appointment", appointment);
         model.addAttribute("chatMessage", new Message());
+		model.addAttribute("history", userService.getHistoryByAppointmentId(appointmentId));
         boolean allowedToRequestRejection = appointmentService.isPatientAllowedToRejectAppointment(currentUser.getId(), appointmentId);
         boolean allowedToAcceptRejection = appointmentService.isDoctorAllowedToAcceptRejection(currentUser.getId(), appointmentId);
         boolean allowedToReview = appointmentService.isPatientAllowedToReview(currentUser.getId(), appointmentId);
@@ -128,7 +131,10 @@ public class AppointmentController {
 			model.addAttribute("start", LocalDateTime.parse(start));
 			model.addAttribute("end",
 					LocalDateTime.parse(start).plusMinutes(packagesService.getPackagesById(packagesId).getDuration()));
-			emailService.sendAppointmentOTPConfirm(currentUser.getEmail());
+//			emailService.sendAppointmentOTPConfirm(currentUser.getEmail());
+			
+			int otp = otpService.generateOTP(currentUser.getEmail());
+	        model.addAttribute("OTPSEND", String.valueOf(otp));
 			return "appointments/newAppointmentSummary";
 		} else {
 			return "redirect:/appointments/new" + doctorId;

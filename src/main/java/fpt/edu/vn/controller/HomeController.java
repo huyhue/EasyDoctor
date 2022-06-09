@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import fpt.edu.vn.model.Doctor;
+import fpt.edu.vn.model.History;
 import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.Review;
 import fpt.edu.vn.model.User;
@@ -187,6 +188,18 @@ public class HomeController {
 		List<Review> reviewList = userService.getAllReviewByDoctorId(doctorId);
 		modelMap.put("reviewList", reviewList);
 		return "doctors/doctorDetail";
+	}
+	
+	@GetMapping("/recordMedical/{id}")
+	public String recordMedical(@PathVariable("id") int patientId, Model model,
+			@AuthenticationPrincipal CustomUserDetails currentUser) {
+		Patient patient = (Patient) userService.findById(patientId);
+		List<History> listHistory = userService.getHistoryByPatientId(patientId);
+		History history = new History();
+		model.addAttribute("patient", patient);
+		model.addAttribute("history", history);
+		model.addAttribute("listHistory", listHistory);
+		return "patients/recordMedical";
 	}
 
 	@GetMapping("/access-denied")

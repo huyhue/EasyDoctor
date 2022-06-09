@@ -12,14 +12,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import fpt.edu.vn.component.ChangePasswordForm;
+import fpt.edu.vn.model.Declaration;
 import fpt.edu.vn.model.Doctor;
+import fpt.edu.vn.model.History;
 import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.Review;
 import fpt.edu.vn.model.Role;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.repository.DoctorRepository;
+import fpt.edu.vn.repository.HistoryRepository;
 import fpt.edu.vn.repository.PatientRepository;
 import fpt.edu.vn.repository.ReviewRepository;
+import fpt.edu.vn.repository.DeclarationRepository;
 import fpt.edu.vn.repository.RoleRepository;
 import fpt.edu.vn.repository.UserRepository;
 import fpt.edu.vn.service.UserService;
@@ -32,10 +36,13 @@ public class UserServiceImpl implements UserService {
 	private final PatientRepository patientRepository;
 	private final RoleRepository roleRepository;
 	private final ReviewRepository reviewRepository;
+	private final HistoryRepository historyRepository;
+	private final DeclarationRepository declarationRepository;
 	private final PasswordEncoder passwordEncoder;
 
 	public UserServiceImpl(UserRepository userRepository, DoctorRepository doctorRepository,
 			PatientRepository patientRepository, RoleRepository roleRepository, ReviewRepository reviewRepository,
+			HistoryRepository historyRepository, DeclarationRepository declarationRepository,
 			PasswordEncoder passwordEncoder) {
 		super();
 		this.userRepository = userRepository;
@@ -43,6 +50,8 @@ public class UserServiceImpl implements UserService {
 		this.patientRepository = patientRepository;
 		this.roleRepository = roleRepository;
 		this.reviewRepository = reviewRepository;
+		this.historyRepository = historyRepository;
+		this.declarationRepository = declarationRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
 
@@ -203,4 +212,44 @@ public class UserServiceImpl implements UserService {
 		return reviewRepository.getAllReviewByDoctorId(doctorId);
 	}
 	
+	@Override
+	public List<History> getHistoryByPatientId(int patientId) {
+		return historyRepository.findByPatientId(patientId);
+	}
+	
+	@Override
+	public void saveResultByDoctor(History history) {
+		historyRepository.save(history);
+	}
+	
+	@Override
+	public History getHistoryByAppointmentId(int id) {
+		History history = historyRepository.getHistoryByAppointmentId(id);
+		return (history == null) ? new History() : history;
+	}
+	
+	@Override
+	public Declaration getDeclarationByPatientId(int patientId) {
+		Declaration declaration = declarationRepository.getDeclarationByPatientId(patientId);
+		return (declaration == null) ? new Declaration() : declaration;
+	}
+	
+	@Override
+	public void saveDeclarationByPatientId(Declaration declaration) {
+		Patient patient = declaration.getPatient();
+		patient.setDeclaration(declaration);
+//		patientRepository.save(declaration);
+		declarationRepository.save(declaration);
+	}
+	
+	@Override
+	public void updateDeclarationByPatientId(Declaration declaration) {
+		Declaration declarationUO = declarationRepository.findById(declaration.getId()).get();
+		declarationUO.setBackground(declaration.getBackground());
+		declarationUO.setBlood(declaration.getBlood());
+		declarationUO.setMedicine(declaration.getMedicine());
+		declarationUO.setNotes(declaration.getNotes());
+		declarationUO.setSymptom(declaration.getSymptom());
+		declarationRepository.save(declarationUO);
+	}
 }
