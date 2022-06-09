@@ -6,7 +6,6 @@
 <body>
 	<div class="row justify-content-center">
 		<div class="col-md-6 mt-3">
-
 			<table class="table">
 				<thead>
 					<tr class="text-center">
@@ -53,7 +52,7 @@
 					</td>
 				</tr>
 				<tr class="text-center">
-					<p>Gmail lỗi nên tạm thời: <span th:text="${OTPSEND}"></span></p>
+					<!--<p>Gmail lỗi nên tạm thời: <span th:text="${OTPSEND}"></span></p>-->
 					<td colspan="2">
 						<h5>Kiểm tra mail để nhập OTP xác nhận:</h5>
 						<form id="validateOtp" name="validateOtp" method="post">
@@ -65,14 +64,64 @@
 							<button type="submit" class="btn btn-primary">Xác nhận đặt</button>
 						</form>
 					</td>
-
-					
 				</tr>
 			</table>
+			<div class="text-center">
+				<span class="font-weight-bold">OTP:</span>
+				<input class="password-view" id="otpInput" style="all:unset" type="password" readonly=""
+					th:value="${OTPSEND}"></input>
+				<button class="btn fa fa-copy copy-otp-btn" style="background-color: transparent;"></button>
+				<button class="btn fa fa-eye show-otp-btn" style="background-color: transparent;"></button>
+			</div>
 			<div id="count" class="text-center text-danger"></div>
 		</div>
 	</div>
 	<script type="text/javascript">
+		const showOtpBtns = document.getElementsByClassName("show-otp-btn");
+		const copyOtpBtns = document.getElementsByClassName("copy-otp-btn");
+
+		const originalClassesShowBtn = showOtpBtns[0].getAttribute("class");
+		const originalClassesCopyBtn = copyOtpBtns[0].getAttribute("class");
+		console.log("Testing: " + originalClassesShowBtn);
+		Array.prototype.map.call(showOtpBtns, element =>
+			element.addEventListener("click", showOtp)
+		);
+
+		Array.prototype.map.call(copyOtpBtns, element =>
+			element.addEventListener("click", copyOtp)
+		);
+
+		function showOtp(e) {
+			const otpInput = document.getElementById('otpInput');
+			if (otpInput.getAttribute("type") === "password") {
+				otpInput.setAttribute("type", "text");
+				showOtpBtns.setAttribute("class", "btn fa fa-eye-slash show-password-btn");
+			} else {
+				otpInput.setAttribute("type", "password");
+				showOtpBtns.setAttribute("class", originalClassesShowBtn);
+			}
+		}
+
+		function copyOtp(e) {
+			const otpInput = document.getElementById('otpInput');
+			const value = otpInput.value;
+			const placeholder = document.createElement("input");
+			document.body.append(placeholder);
+			placeholder.value = value;
+			placeholder.select();
+			placeholder.setSelectionRange(0, 99999);
+			document.execCommand("copy");
+			document.body.removeChild(placeholder);
+			// TODO confirm that it has been copied
+			e.target.textContent = "Copied!";
+			e.target.setAttribute("class", "btn show-password-btn");
+			setTimeout(() => {
+				e.target.textContent = "";
+				e.target.setAttribute("class", originalClassesCopyBtn);
+			}, 800)
+		}
+
+
 		var timeLeft = 60;
 		var elem = document.getElementById('count');
 		var timerId = setInterval(countdown, 1000);
@@ -81,13 +130,13 @@
 			if (timeLeft == -1) {
 				clearTimeout(timerId);
 				window.location.href = "/";
-			alert("Hết giờ. Vui lòng đặt lịch khám lại!");
+				alert("Hết giờ. Vui lòng đặt lịch khám lại!");
 			} else {
 				elem.innerHTML = timeLeft + ' seconds remaining';
 				timeLeft--;
 			}
 		}
-		
+
 		$(document).ready(function () {
 			$("#validateOtp").submit(function (event) {
 				//stop submit the form, we will post it manually.
@@ -102,10 +151,10 @@
 					cache: false,
 					timeout: 600000,
 					success: function (response) {
-						if(response=="SUCCESS"){
+						if (response == "SUCCESS") {
 							window.location.href = "/appointments/all";
 							alert("Chúc mừng bạn đặt lịch thành công");
-						}else {
+						} else {
 							alert("OTP không phù hợp. Vui lòng nhập lại!");
 						}
 					},

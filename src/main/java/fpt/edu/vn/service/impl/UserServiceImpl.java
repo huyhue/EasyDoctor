@@ -218,9 +218,14 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-//	@PreAuthorize("#doctor.id == principal.id or hasRole('ADMIN')")
 	public void saveResultByDoctor(History history) {
 		historyRepository.save(history);
+	}
+	
+	@Override
+	public History getHistoryByAppointmentId(int id) {
+		History history = historyRepository.getHistoryByAppointmentId(id);
+		return (history == null) ? new History() : history;
 	}
 	
 	@Override

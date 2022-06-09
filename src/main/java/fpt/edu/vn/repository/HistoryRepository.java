@@ -12,4 +12,7 @@ public interface HistoryRepository extends JpaRepository<History, Integer> {
 	
 	@Query("select h from History h where h.patient.id = :patientId and h.pulished = True")
 	List<History> findByPatientId(@Param("patientId") int patientId);
+	
+	@Query("select h from History h where h.appointment.id = :appointmentId")
+	History getHistoryByAppointmentId(@Param("appointmentId") int appointmentId);
 }

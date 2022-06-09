@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.context.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -57,7 +56,7 @@ public class AppointmentController {
         Appointment appointment = appointmentService.getAppointmentByIdWithAuthorization(appointmentId);
         model.addAttribute("appointment", appointment);
         model.addAttribute("chatMessage", new Message());
-		model.addAttribute("history", new History());
+		model.addAttribute("history", userService.getHistoryByAppointmentId(appointmentId));
         boolean allowedToRequestRejection = appointmentService.isPatientAllowedToRejectAppointment(currentUser.getId(), appointmentId);
         boolean allowedToAcceptRejection = appointmentService.isDoctorAllowedToAcceptRejection(currentUser.getId(), appointmentId);
         boolean allowedToReview = appointmentService.isPatientAllowedToReview(currentUser.getId(), appointmentId);

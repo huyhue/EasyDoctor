@@ -45,6 +45,7 @@ public interface UserService {
 //	History
 	List<History> getHistoryByPatientId(int patientId);
 	void saveResultByDoctor(History history);
+	History getHistoryByAppointmentId(int id);
 	
 //	Declaration
 	Declaration getDeclarationByPatientId(int patientId);
