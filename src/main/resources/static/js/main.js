@@ -10,29 +10,30 @@ function showDeclarationModal(declarationId, doctorId) {
 $(document).ready(function() {
 	$('#loader').hide();
 	$('#successImage').css('display', 'none');
+	
 	$("#profileImage").change(function() {
 		var formData = new FormData($('#uploadForm')[0]);
+		formData.append("file", $(this)[0].files[0]);
 		$('#loader').show();
 		$.ajax({
 			type: 'POST',
 			enctype: 'multipart/form-data',
-			url: "/image/saveImageProfile",
+			url: "/file/saveImageProfile",
 			data: formData,
 			processData: false,
 			contentType: false,
 			cache: false,
 			success: function(data, statusText, xhr) {
 				console.log(xhr.status);
+				alert("Upload thành công");
 				if (xhr.status == "200") {
 					$('#loader').hide();
-					console.log("huy: "+data);
 				}
 				if (xhr.status == "400") {
-					console.log("Fail: " + data);
+					
 				}
 			},
 			error: function(e) {
-				console.log(e);
 				$('#loader').hide();
 				$('#successImage').css('display', 'block');
 				$("#successImage").css("text-color", "red");
@@ -45,7 +46,6 @@ $(document).ready(function() {
 	$("#certification").change(function() {
 		var formData = new FormData($('#certificationForm')[0]);
 		formData.append("file", $(this)[0].files[0]);
-		console.log("FILE name: "+formData);
 		$.ajax({
 			type: 'POST',
 			enctype: 'multipart/form-data',

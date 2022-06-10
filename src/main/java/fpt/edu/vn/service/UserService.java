@@ -47,8 +47,6 @@ public interface UserService {
 	
 //	History
 	List<History> getHistoryByPatientId(int patientId);
-	void saveResultByDoctor(History history, MultipartFile[] files);
-	void saveCertificationByDoctor(MultipartFile file, int doctorId);
 	History getHistoryByAppointmentId(int id);
 	
 //	Declaration
@@ -59,5 +57,8 @@ public interface UserService {
 //	FileModel
 	FileModel getFileByFileId(int id);
 	FileModel getCertificationByUserId(int userId);
-	FileModel getImageByUserId(int userId);
+	String getImageByUserId(int userId);
+	void saveImageProfileByUser(MultipartFile file, int id);
+	void saveResultByDoctor(History history, MultipartFile[] files);
+	void saveCertificationByDoctor(MultipartFile file, int doctorId);
 }

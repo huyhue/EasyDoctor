@@ -265,18 +265,35 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public void saveImageProfileByUser(MultipartFile file, int id) {
+		try {
+			FileModel fileModel = fileModelRepository.findImageByUserId(id);
+			if (fileModel != null) {
+				fileModelRepository.delete(fileModel);
+			}
+			fileModel = new FileModel(file.getOriginalFilename(), file.getContentType(), file.getBytes(),
+					userRepository.findById(id).get());
+			fileModelRepository.save(fileModel);
+		} catch (Exception e) {
+			System.err.print("Loi roi " + e.getMessage());
+		}
+	}
+
+	@Override
 	public FileModel getFileByFileId(int id) {
 		return fileModelRepository.findById(id).get();
 	}
 
 	@Override
 	public FileModel getCertificationByUserId(int userId) {
-		return fileModelRepository.findCertificationByUserId(userId);
+		FileModel file = fileModelRepository.findCertificationByUserId(userId);
+		return file;
 	}
 
 	@Override
-	public FileModel getImageByUserId(int userId) {
-		return fileModelRepository.findImageByUserId(userId);
+	public String getImageByUserId(int userId) {
+		FileModel file = fileModelRepository.findImageByUserId(userId);
+		return (file == null) ? "/img/avatar.png" : "/file/" + file.getId();
 	}
 
 	@Override

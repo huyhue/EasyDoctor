@@ -224,6 +224,15 @@ public class HomeController {
 		userService.saveCertificationByDoctor(file, currentUser.getId());
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	@PostMapping("/file/saveImageProfile")
+	public @ResponseBody ResponseEntity<?> saveImageProfileUser(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal CustomUserDetails currentUser) throws IOException {
+		if (file.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		userService.saveImageProfileByUser(file, currentUser.getId());
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
 	@GetMapping("/access-denied")
 	public String showAccessDeniedPage() {

@@ -82,6 +82,7 @@ public class DoctorController {
 			if (!model.containsAttribute("passwordChange")) {
 				model.addAttribute("passwordChange", new ChangePasswordForm(doctorId));
 			}
+			model.addAttribute("imageProfile", userService.getImageByUserId(doctorId));
 			model.addAttribute("certification", userService.getCertificationByUserId(doctorId));
 			model.addAttribute("account_type", "doctors");
 			model.addAttribute("allPackages", packagesService.getAllPackages());

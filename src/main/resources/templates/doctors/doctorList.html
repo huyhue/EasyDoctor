@@ -70,7 +70,6 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-primary"
 									onclick="$('#declarationSubmit').click();">Lưu thay đổi</button>
-								<a th:href="@{'/appointments/new/' + ${doctor.id}}"><button type="button" class="btn btn-danger">Bỏ qua</button></a>
 							</div>
 						</div>
 					</div>
@@ -91,14 +90,12 @@
 							<div class="social">
 								<button type="button" class="btn btn-info"  th:onclick="javascript: showDeclarationModal([[${declaration.id}]], [[${doctor.id}]])"><i
 										class="fas fa-book-medical"></i> Đặt ngay</button>
-								<!--<a th:href="@{'/appointments/new/' + ${doctor.id}}"></a>
-								<a href=""><i class="ri-facebook-fill"></i></a>
-								<a href=""><i class="ri-instagram-fill"></i></a>
-								<a href=""> <i class="ri-linkedin-box-fill"></i> </a>-->
 							</div>
 						</div>
 					</div>
 				</div>
+				
+				
 
 			</div>
 
