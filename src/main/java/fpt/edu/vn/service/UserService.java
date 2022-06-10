@@ -3,6 +3,8 @@ package fpt.edu.vn.service;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import fpt.edu.vn.component.ChangePasswordForm;
 import fpt.edu.vn.model.Declaration;
 import fpt.edu.vn.model.Doctor;
@@ -44,7 +46,7 @@ public interface UserService {
 	
 //	History
 	List<History> getHistoryByPatientId(int patientId);
-	void saveResultByDoctor(History history);
+	void saveResultByDoctor(History history, MultipartFile[] files);
 	History getHistoryByAppointmentId(int id);
 	
 //	Declaration

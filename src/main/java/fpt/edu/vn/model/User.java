@@ -45,6 +45,9 @@ public class User extends BaseEntity {
 	
 	@OneToMany(mappedBy = "user")
     private List<Notification> notifications;
+	
+	@OneToMany(mappedBy = "user")
+	private List<FileModel> files;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))

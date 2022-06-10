@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import fpt.edu.vn.component.ChangePasswordForm;
 import fpt.edu.vn.component.TimePeroid;
@@ -140,21 +141,21 @@ public class DoctorController {
 	}
 
 	@RequestMapping(value = "/saveResult", method = RequestMethod.POST)
-	public String saveResultByDoctor(@ModelAttribute("history") History history,
+	public String saveResultByDoctor(@ModelAttribute("history") History history, @RequestParam("files") MultipartFile[] files,
 			@AuthenticationPrincipal CustomUserDetails currentUser) {
 		history.setPulished(true);
 		history.setDoctor(userService.getUserById(currentUser.getId()).getFullname());
 		history.setUpdatedAt(LocalDateTime.now());
-		userService.saveResultByDoctor(history);
+		userService.saveResultByDoctor(history, files);
 		return "redirect:/recordMedical/" + history.getPatient().getId();
 	}
 
 	@RequestMapping(value = "/saveDraftResult", method = RequestMethod.POST)
-	public String saveDraftResultByDoctor(@ModelAttribute("history") History history,
+	public String saveDraftResultByDoctor(@ModelAttribute("history") History history, @RequestParam("files") MultipartFile[] files,
 			@AuthenticationPrincipal CustomUserDetails currentUser) {
 		history.setDoctor(userService.getUserById(currentUser.getId()).getFullname());
 		history.setUpdatedAt(LocalDateTime.now());
-		userService.saveResultByDoctor(history);
+		userService.saveResultByDoctor(history, files);
 		return "redirect:/recordMedical/" + history.getPatient().getId();
 	}
 

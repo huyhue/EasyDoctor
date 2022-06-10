@@ -1,5 +1,6 @@
 package fpt.edu.vn.service.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -10,16 +11,19 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import fpt.edu.vn.component.ChangePasswordForm;
 import fpt.edu.vn.model.Declaration;
 import fpt.edu.vn.model.Doctor;
+import fpt.edu.vn.model.FileModel;
 import fpt.edu.vn.model.History;
 import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.Review;
 import fpt.edu.vn.model.Role;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.repository.DoctorRepository;
+import fpt.edu.vn.repository.FileModelRepository;
 import fpt.edu.vn.repository.HistoryRepository;
 import fpt.edu.vn.repository.PatientRepository;
 import fpt.edu.vn.repository.ReviewRepository;
@@ -37,13 +41,14 @@ public class UserServiceImpl implements UserService {
 	private final RoleRepository roleRepository;
 	private final ReviewRepository reviewRepository;
 	private final HistoryRepository historyRepository;
+	private final FileModelRepository fileModelRepository;
 	private final DeclarationRepository declarationRepository;
 	private final PasswordEncoder passwordEncoder;
 
 	public UserServiceImpl(UserRepository userRepository, DoctorRepository doctorRepository,
 			PatientRepository patientRepository, RoleRepository roleRepository, ReviewRepository reviewRepository,
-			HistoryRepository historyRepository, DeclarationRepository declarationRepository,
-			PasswordEncoder passwordEncoder) {
+			HistoryRepository historyRepository, FileModelRepository fileModelRepository,
+			DeclarationRepository declarationRepository, PasswordEncoder passwordEncoder) {
 		super();
 		this.userRepository = userRepository;
 		this.doctorRepository = doctorRepository;
@@ -51,6 +56,7 @@ public class UserServiceImpl implements UserService {
 		this.roleRepository = roleRepository;
 		this.reviewRepository = reviewRepository;
 		this.historyRepository = historyRepository;
+		this.fileModelRepository = fileModelRepository;
 		this.declarationRepository = declarationRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
@@ -96,7 +102,7 @@ public class UserServiceImpl implements UserService {
 		d.setPackages(doctor.getPackages());
 		doctorRepository.save(d);
 	}
-	
+
 	@Override
 	public void updateUserActiveState(int id, boolean active) {
 		User user = userRepository.findById(id).get();
@@ -131,7 +137,7 @@ public class UserServiceImpl implements UserService {
 	public User getUserById(int userId) {
 		return userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("User not found"));
 	}
-	
+
 	@Override
 	public User findById(int userId) {
 		return userRepository.findById(userId).get();
@@ -211,29 +217,51 @@ public class UserServiceImpl implements UserService {
 	public List<Review> getAllReviewByDoctorId(int doctorId) {
 		return reviewRepository.getAllReviewByDoctorId(doctorId);
 	}
-	
+
 	@Override
 	public List<History> getHistoryByPatientId(int patientId) {
 		return historyRepository.findByPatientId(patientId);
 	}
-	
+
 	@Override
-	public void saveResultByDoctor(History history) {
+	public void saveResultByDoctor(History history, MultipartFile[] files) {
 		historyRepository.save(history);
+
+		try {
+			List<FileModel> storedFile = new ArrayList<FileModel>();
+
+			for (MultipartFile file : files) {
+				FileModel fileModel = fileModelRepository.findByNameAndHistoryId(file.getOriginalFilename(), "result/" + history.getId());
+				if (fileModel != null) {
+					// update new contents
+					fileModel.setData(file.getBytes());
+				} else {
+					fileModel = new FileModel(file.getOriginalFilename(), file.getContentType(), 
+							"result/" + history.getId(), file.getBytes(), history.getPatient());
+				}
+
+				storedFile.add(fileModel);
+			}
+
+			// Save all Files to database
+			fileModelRepository.saveAll(storedFile);
+		} catch (Exception e) {
+			System.err.print("Loi roi " + e.getMessage());
+		}
 	}
-	
+
 	@Override
 	public History getHistoryByAppointmentId(int id) {
 		History history = historyRepository.getHistoryByAppointmentId(id);
 		return (history == null) ? new History() : history;
 	}
-	
+
 	@Override
 	public Declaration getDeclarationByPatientId(int patientId) {
 		Declaration declaration = declarationRepository.getDeclarationByPatientId(patientId);
 		return (declaration == null) ? new Declaration() : declaration;
 	}
-	
+
 	@Override
 	public void saveDeclarationByPatientId(Declaration declaration) {
 		Patient patient = declaration.getPatient();
@@ -241,7 +269,7 @@ public class UserServiceImpl implements UserService {
 //		patientRepository.save(declaration);
 		declarationRepository.save(declaration);
 	}
-	
+
 	@Override
 	public void updateDeclarationByPatientId(Declaration declaration) {
 		Declaration declarationUO = declarationRepository.findById(declaration.getId()).get();
