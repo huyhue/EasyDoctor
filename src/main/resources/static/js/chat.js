@@ -39,7 +39,6 @@ function getActiveUser() {
 
 		},
 		success: function(data) {
-			console.log("test data: " + data);
 			if (data == true) {
 				onlineElement.textContent = "Online";
 				onlineElement.style.color = '#5ad763';

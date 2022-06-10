@@ -226,28 +226,57 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void saveResultByDoctor(History history, MultipartFile[] files) {
 		historyRepository.save(history);
+		if (files != null) {
+			try {
+				List<FileModel> storedFile = new ArrayList<FileModel>();
 
-		try {
-			List<FileModel> storedFile = new ArrayList<FileModel>();
-
-			for (MultipartFile file : files) {
-				FileModel fileModel = fileModelRepository.findByNameAndHistoryId(file.getOriginalFilename(), "result/" + history.getId());
-				if (fileModel != null) {
-					// update new contents
-					fileModel.setData(file.getBytes());
-				} else {
-					fileModel = new FileModel(file.getOriginalFilename(), file.getContentType(), 
-							"result/" + history.getId(), file.getBytes(), history.getPatient());
+				for (MultipartFile file : files) {
+					FileModel fileModel = fileModelRepository.findByNameAndUserId(file.getOriginalFilename(),
+							history.getPatient().getId());
+					if (fileModel != null) {
+						fileModel.setData(file.getBytes());
+					} else {
+						fileModel = new FileModel(file.getOriginalFilename(), file.getContentType(), file.getBytes(),
+								history.getPatient(), history);
+					}
+					storedFile.add(fileModel);
 				}
 
-				storedFile.add(fileModel);
+				fileModelRepository.saveAll(storedFile);
+			} catch (Exception e) {
+				System.err.print("Loi roi " + e.getMessage());
 			}
+		}
+	}
 
-			// Save all Files to database
-			fileModelRepository.saveAll(storedFile);
+	@Override
+	public void saveCertificationByDoctor(MultipartFile file, int doctorId) {
+		try {
+			FileModel fileModel = fileModelRepository.findCertificationByUserId(doctorId);
+			if (fileModel != null) {
+				fileModelRepository.delete(fileModel);
+			}
+			fileModel = new FileModel(file.getOriginalFilename(), file.getContentType(), file.getBytes(),
+					userRepository.findById(doctorId).get());
+			fileModelRepository.save(fileModel);
 		} catch (Exception e) {
 			System.err.print("Loi roi " + e.getMessage());
 		}
+	}
+
+	@Override
+	public FileModel getFileByFileId(int id) {
+		return fileModelRepository.findById(id).get();
+	}
+
+	@Override
+	public FileModel getCertificationByUserId(int userId) {
+		return fileModelRepository.findCertificationByUserId(userId);
+	}
+
+	@Override
+	public FileModel getImageByUserId(int userId) {
+		return fileModelRepository.findImageByUserId(userId);
 	}
 
 	@Override

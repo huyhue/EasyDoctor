@@ -217,6 +217,14 @@ public class User extends BaseEntity {
 		return false;
 	}
 
+	public List<FileModel> getFiles() {
+		return files;
+	}
+
+	public void setFiles(List<FileModel> files) {
+		this.files = files;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)

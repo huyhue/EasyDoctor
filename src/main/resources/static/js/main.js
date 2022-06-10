@@ -1,18 +1,9 @@
 // For opening the note modal
 function showDeclarationModal(declarationId, doctorId) {
-        console.log(background);
-
     if(declarationId) {
         const declarationForm = document.getElementById("declaration-form");
         declarationForm.setAttribute("action", `/patients/declaration/${declarationId}/${doctorId}`);
     }
-
-    /*$('#id').val(id ? id : '');
-    $('#blood').val(blood ? blood : '');
-    $('#background').val(background ? background : '');
-    $('#medicine').val(medicine ? medicine : '');
-    $('#symptom').val(symptom ? symptom : '');
-    $('#notes').val(notes ? notes : '');*/
     $('#declarationModal').modal('show');
 }
 
@@ -21,7 +12,6 @@ $(document).ready(function() {
 	$('#successImage').css('display', 'none');
 	$("#profileImage").change(function() {
 		var formData = new FormData($('#uploadForm')[0]);
-		console.log("hello huyhue1");
 		$('#loader').show();
 		$.ajax({
 			type: 'POST',
@@ -50,6 +40,30 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
+	
+	$("#certification").change(function() {
+		var formData = new FormData($('#certificationForm')[0]);
+		formData.append("file", $(this)[0].files[0]);
+		console.log("FILE name: "+formData);
+		$.ajax({
+			type: 'POST',
+			enctype: 'multipart/form-data',
+			url: "/file/saveCertification",
+			data: formData,
+			processData: false,
+			contentType: false,
+			cache: false,
+			success: function(data, statusText, xhr) {
+				alert("Upload chứng chỉ thành công");
+			},
+			error: function(e) {
+				alert("Upload chứng chỉ thất bại");
+				location.reload();
+			}
+		});
+	});
+	
 });
 
 

@@ -45,7 +45,8 @@
 							<label>Chứng chỉ</label>
 						</div>
 						<div class="col-sm-8 form-group">
-							[[${doctor.getCertification()}]]
+							<a th:href="@{'/file/' + ${certification.id}}" target="_blank" style="margin: 5px;" ><i class="fas fa-solid fa-file-import"></i>
+										Xem chứng chỉ</a>
 						</div>
 					</div>
 

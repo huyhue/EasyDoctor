@@ -9,7 +9,10 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -26,7 +29,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
 import fpt.edu.vn.model.Doctor;
+import fpt.edu.vn.model.FileModel;
 import fpt.edu.vn.model.History;
 import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.Review;
@@ -184,7 +189,7 @@ public class HomeController {
 		double doctorRatingDouble = userService.getRatingByDoctorId(doctorId);
 		int doctorRating = (int) Math.floor(doctorRatingDouble);
 		modelMap.put("doctorRating", doctorRating);
-
+		modelMap.put("certification", userService.getCertificationByUserId(doctorId));
 		List<Review> reviewList = userService.getAllReviewByDoctorId(doctorId);
 		modelMap.put("reviewList", reviewList);
 		return "doctors/doctorDetail";
@@ -195,11 +200,29 @@ public class HomeController {
 			@AuthenticationPrincipal CustomUserDetails currentUser) {
 		Patient patient = (Patient) userService.findById(patientId);
 		List<History> listHistory = userService.getHistoryByPatientId(patientId);
-		History history = new History();
 		model.addAttribute("patient", patient);
-		model.addAttribute("history", history);
 		model.addAttribute("listHistory", listHistory);
 		return "patients/recordMedical";
+	}
+	
+	@GetMapping("/file/{fileId}")
+    public ResponseEntity<Resource> accessFile(@PathVariable Integer fileId) {
+        // Load file from database
+		FileModel file = userService.getFileByFileId(fileId);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(file.getContentType()))
+                .header("attachment; filename=\"" + file.getName() + "\"")
+                .body(new ByteArrayResource(file.getData()));
+    }
+	
+	@PostMapping("/file/saveCertification")
+	public @ResponseBody ResponseEntity<?> saveCertification(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal CustomUserDetails currentUser) throws IOException {
+		if (file.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		userService.saveCertificationByDoctor(file, currentUser.getId());
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@GetMapping("/access-denied")

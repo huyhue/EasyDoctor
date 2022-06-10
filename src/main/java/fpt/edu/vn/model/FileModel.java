@@ -15,9 +15,6 @@ public class FileModel extends BaseEntity {
 
     @Column(name = "content_type")
     private String contentType;
-    
-    @Column(name = "type")
-    private String type;
 
     @Lob
     @Column(name = "data")
@@ -26,24 +23,30 @@ public class FileModel extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_history")
+    private History history;
 
     public FileModel() {
     }
 
-    public FileModel(String name, String contentType, String type, byte[] data, User user) {
+	public FileModel(String name, String contentType, byte[] data, User user, History history) {
 		super();
 		this.name = name;
 		this.contentType = contentType;
-		this.type = type;
+		this.data = data;
+		this.user = user;
+		this.history = history;
+	}
+
+	public FileModel(String name, String contentType, byte[] data, User user) {
+		super();
+		this.name = name;
+		this.contentType = contentType;
 		this.data = data;
 		this.user = user;
 	}
-
-	public FileModel(String name, String contentType, byte[] data) {
-        this.name = name;
-        this.contentType = contentType;
-        this.data = data;
-    }
 
 	public String getName() {
 		return name;
@@ -61,13 +64,6 @@ public class FileModel extends BaseEntity {
 		this.contentType = contentType;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
 
 	public byte[] getData() {
 		return data;

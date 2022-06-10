@@ -6,7 +6,7 @@
 	<div class="row p-3">
 		<div class="col-sm-3">
 			<!--left col-->
-			<div class="text-center">
+			<!--<div class="text-center">
 				<img th:src="@{${user.profileImage != ''}  ? ${user.ProfileImagePath} : 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png'}"
 					class="avatar img-circle img-thumbnail" alt="avatar" id="avatar">
 				<form id="uploadForm">
@@ -16,7 +16,7 @@
 				<div id="successImage">File is too large</div>
 				<img src="/img/loader.gif" alt="loader" style="width: 150px;height: 120px;" id="loader">
 				</p>
-			</div>
+			</div>-->
 
 			</hr><br>
 
@@ -28,13 +28,11 @@
 					<ul class="list-group">
 						<li class="list-group-item d-flex justify-content-between align-items-center">
 							Scheduled
-							<span class="badge badge-primary badge-pill"
-								th:text="${numberScheduled}">2</span>
+							<span class="badge badge-primary badge-pill" th:text="${numberScheduled}">2</span>
 						</li>
 						<li class="list-group-item d-flex justify-content-between align-items-center">
 							Canceled this month
-							<span class="badge badge-danger badge-pill"
-								th:text="${numberCanceled}">1</span>
+							<span class="badge badge-danger badge-pill" th:text="${numberCanceled}">1</span>
 						</li>
 					</ul>
 				</div>
@@ -103,8 +101,8 @@
 							<div class="form-group col-md-6">
 								<label for="gender">Gender</label><br>
 								<div class="form-check form-check-inline">
-									<input name="gender" type="radio"  th:value="MALE" class="form-check-input" id="radio1"
-										th:field="*{gender}" />
+									<input name="gender" type="radio" th:value="MALE" class="form-check-input"
+										id="radio1" th:field="*{gender}" />
 									<label class="form-chek-label" for="radio1">Male</label>
 								</div>
 								<div class="form-check form-check-inline">
@@ -178,20 +176,22 @@
 							</div>
 							<div class="form-row">
 								<div class="form-group col-md-6">
-									<label for="clinic.name">Certification</label>
-									<input type="text" class="form-control"
-										th:classappend="${#fields.hasErrors('certification') ? 'is-invalid' :''}"
-										th:field="*{certification}">
-									<div th:if="${#fields.hasErrors('certification')}" class="invalid-feedback">
-										<p th:errors="*{certification}"></p>
-									</div>
+									<label for="certification">Certification</label>
+									<form id="certificationForm" method="post" enctpye="multipart/form-data" >
+										<a th:href="@{'/file/' + ${certification.id}}" target="_blank" style="margin: 5px;" ><i class="fas fa-solid fa-file-import"></i>
+										[[${certification.name}]]
+										</a>
+										<input class="form-control" id="certification" name="file" type="file"
+											accept="application/pdf" />
+									</form>
 								</div>
 								<div class="form-group col-md-6">
 									<label>Packages</label><br>
 									<ul>
 										<li th:each="packages : ${allPackages}">
 											<input type="checkbox" th:field="*{packages}" th:value="${packages.id}" />
-											<label th:for="${#ids.prev('packages')}" th:text="${packages.name}">Name</label>
+											<label th:for="${#ids.prev('packages')}"
+												th:text="${packages.name}">Name</label>
 										</li>
 									</ul>
 								</div>
@@ -324,4 +324,5 @@
 		});
 	</script>
 </body>
+
 </html>
