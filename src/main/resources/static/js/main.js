@@ -1,9 +1,12 @@
 // For opening the note modal
 function showDeclarationModal(declarationId, doctorId) {
+    const declarationForm = document.getElementById("declaration-form");
+    
     if(declarationId) {
-        const declarationForm = document.getElementById("declaration-form");
         declarationForm.setAttribute("action", `/patients/declaration/${declarationId}/${doctorId}`);
-    }
+    } else {
+		declarationForm.setAttribute("action", `/patients/declaration/${doctorId}`);
+	}
     $('#declarationModal').modal('show');
 }
 

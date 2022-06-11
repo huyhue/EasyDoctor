@@ -14,8 +14,6 @@ public class Doctor extends User {
 	
 	private Date startPracticeDate;
 	
-    private String certification;
-	
 	@OneToOne
     @JoinColumn(name = "id_specialty")
     private Specialty specialty;
@@ -44,7 +42,6 @@ public class Doctor extends User {
 	@Override
 	public void update(UserForm updateData) {
 		super.update(updateData);
-		this.setCertification(updateData.getCertification());
 	}
 
 	public String getDescription() {
@@ -78,14 +75,6 @@ public class Doctor extends User {
 
 	public void setSpecialty(Specialty specialty) {
 		this.specialty = specialty;
-	}
-
-	public String getCertification() {
-		return certification;
-	}
-
-	public void setCertification(String certification) {
-		this.certification = certification;
 	}
 
 	public List<Appointment> getAppointments() {

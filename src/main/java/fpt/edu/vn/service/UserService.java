@@ -13,6 +13,7 @@ import fpt.edu.vn.model.History;
 import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.Review;
 import fpt.edu.vn.model.Role;
+import fpt.edu.vn.model.Specialty;
 import fpt.edu.vn.model.User;
 
 public interface UserService {
@@ -27,7 +28,6 @@ public interface UserService {
 	Patient getPatientById(int userId);
 	
 	void updateUserPassword(ChangePasswordForm passwordChangeForm);
-	void updateImage(int id, String fileImage);
 	void updatePatient(Patient patient);
 	void updateDoctor(Doctor doctor);
 	void updateUserActiveState(int id, boolean active);
@@ -61,4 +61,7 @@ public interface UserService {
 	void saveImageProfileByUser(MultipartFile file, int id);
 	void saveResultByDoctor(History history, MultipartFile[] files);
 	void saveCertificationByDoctor(MultipartFile file, int doctorId);
+	
+//	Specialty
+	List<Specialty> getAllSpecialty();
 }

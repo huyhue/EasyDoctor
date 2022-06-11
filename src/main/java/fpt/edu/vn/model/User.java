@@ -34,9 +34,6 @@ public class User extends BaseEntity {
 	@Enumerated(value = EnumType.STRING)
 	private Gender gender;
 
-	@Column(name = "profile_img", nullable = true)
-	private String profileImage;
-
 	@Column(name = "enabled", columnDefinition = "boolean default false")
 	private boolean enabled;
 
@@ -58,7 +55,7 @@ public class User extends BaseEntity {
 	}
 
 	public User(String userName, String password, String email, String mobile, String fullname, Integer age,
-			Gender gender, String profileImage, boolean enabled, String confirmationToken, Collection<Role> roles) {
+			Gender gender, boolean enabled, String confirmationToken, Collection<Role> roles) {
 		super();
 		this.userName = userName;
 		this.password = password;
@@ -67,7 +64,6 @@ public class User extends BaseEntity {
 		this.fullname = fullname;
 		this.age = age;
 		this.gender = gender;
-		this.profileImage = profileImage;
 		this.enabled = enabled;
 		this.confirmationToken = confirmationToken;
 		this.roles = roles;
@@ -183,29 +179,12 @@ public class User extends BaseEntity {
 		this.age = age;
 	}
 
-	public String getProfileImage() {
-		return profileImage;
-	}
-
-	public void setProfileImage(String profileImage) {
-		this.profileImage = profileImage;
-	}
-
 	public List<Notification> getNotifications() {
 		return notifications;
 	}
 
 	public void setNotifications(List<Notification> notifications) {
 		this.notifications = notifications;
-	}
-
-	@Transient
-	public String getProfileImagePath() {
-		if (profileImage == null) {
-			return "/uploads/default/default.jpg";
-		}
-
-		return "/uploads/" + getEmail() + "/" + getProfileImage();
 	}
 
 	public boolean hasRole(String roleName) {
@@ -243,10 +222,9 @@ public class User extends BaseEntity {
 	@Override
 	public String toString() {
 		return "User [userName=" + userName + ", password=" + password + ", email=" + email + ", mobile=" + mobile
-				+ ", fullname=" + fullname + ", age=" + age + ", gender=" + gender + ", profileImage=" + profileImage
-				+ ", enabled=" + enabled + ", confirmationToken=" + confirmationToken + ", roles=" + roles + "]";
+				+ ", fullname=" + fullname + ", age=" + age + ", gender=" + gender + ", enabled=" + enabled
+				+ ", confirmationToken=" + confirmationToken + ", notifications=" + notifications + ", files=" + files
+				+ ", roles=" + roles + "]";
 	}
-
-	
 
 }

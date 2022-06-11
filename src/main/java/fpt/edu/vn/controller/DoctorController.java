@@ -60,6 +60,7 @@ public class DoctorController {
 	@GetMapping("/all")
 	public String showAllDoctors(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
 		model.addAttribute("doctors", userService.getAllDoctorsByPatient());
+		model.addAttribute("specialties", userService.getAllSpecialty());
 		Set<Doctor> recentDoctors = new HashSet<>();
 
 		List<Appointment> list = appointmentService.getAppointmentByPatientId(currentUser.getId());

@@ -21,6 +21,7 @@ import fpt.edu.vn.model.History;
 import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.Review;
 import fpt.edu.vn.model.Role;
+import fpt.edu.vn.model.Specialty;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.repository.DoctorRepository;
 import fpt.edu.vn.repository.FileModelRepository;
@@ -29,6 +30,7 @@ import fpt.edu.vn.repository.PatientRepository;
 import fpt.edu.vn.repository.ReviewRepository;
 import fpt.edu.vn.repository.DeclarationRepository;
 import fpt.edu.vn.repository.RoleRepository;
+import fpt.edu.vn.repository.SpecialtyRepository;
 import fpt.edu.vn.repository.UserRepository;
 import fpt.edu.vn.service.UserService;
 
@@ -43,12 +45,14 @@ public class UserServiceImpl implements UserService {
 	private final HistoryRepository historyRepository;
 	private final FileModelRepository fileModelRepository;
 	private final DeclarationRepository declarationRepository;
+	private final SpecialtyRepository specialtyRepository;
 	private final PasswordEncoder passwordEncoder;
 
 	public UserServiceImpl(UserRepository userRepository, DoctorRepository doctorRepository,
 			PatientRepository patientRepository, RoleRepository roleRepository, ReviewRepository reviewRepository,
 			HistoryRepository historyRepository, FileModelRepository fileModelRepository,
-			DeclarationRepository declarationRepository, PasswordEncoder passwordEncoder) {
+			DeclarationRepository declarationRepository, SpecialtyRepository specialtyRepository,
+			PasswordEncoder passwordEncoder) {
 		super();
 		this.userRepository = userRepository;
 		this.doctorRepository = doctorRepository;
@@ -58,6 +62,7 @@ public class UserServiceImpl implements UserService {
 		this.historyRepository = historyRepository;
 		this.fileModelRepository = fileModelRepository;
 		this.declarationRepository = declarationRepository;
+		this.specialtyRepository = specialtyRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
 
@@ -98,7 +103,6 @@ public class UserServiceImpl implements UserService {
 		d.setGender(doctor.getGender());
 		d.setStartPracticeDate(doctor.getStartPracticeDate());
 		d.setDescription(doctor.getDescription());
-		d.setCertification(doctor.getCertification());
 		d.setPackages(doctor.getPackages());
 		doctorRepository.save(d);
 	}
@@ -148,13 +152,6 @@ public class UserServiceImpl implements UserService {
 	public void updateUserPassword(ChangePasswordForm passwordChangeForm) {
 		User user = userRepository.findById(passwordChangeForm.getId()).get();
 		user.setPassword(passwordEncoder.encode(passwordChangeForm.getPassword()));
-		userRepository.save(user);
-	}
-
-	@Override
-	public void updateImage(int id, String fileImage) {
-		User user = userRepository.findById(id).get();
-		user.setProfileImage(fileImage);
 		userRepository.save(user);
 	}
 
@@ -325,5 +322,10 @@ public class UserServiceImpl implements UserService {
 		declarationUO.setNotes(declaration.getNotes());
 		declarationUO.setSymptom(declaration.getSymptom());
 		declarationRepository.save(declarationUO);
+	}
+	
+	@Override
+	public List<Specialty> getAllSpecialty() {
+		return specialtyRepository.findAll();
 	}
 }
