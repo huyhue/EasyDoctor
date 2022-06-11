@@ -5,110 +5,25 @@
 <body>
 	<section id="doctors" class="doctors">
 		<div class="container">
-
-			<div class="section-title">
-				<h2>Doctors</h2>
-				<p>Develop future google map, filter combo box, recommend doctor,...</p>
-			</div>
-
-			<div class="row" th:each="doctor : ${doctors}">
-
-				<div class="modal fade" id="declarationModal" tabindex="-1" role="dialog"
-					aria-labelledby="noteModalLabel" aria-hidden="true">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="noteModalLabel">Vui lòng khai báo trước khi đặt lịch</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								<form action="#" th:action="@{'/patients/declaration/'+ ${doctor.id}}" th:object="${declaration}" method="POST" id="declaration-form">
-									<div class="form-row">
-										<div class="form-group col-md-6">
-											<input th:if="${declaration.id}" th:field="*{id}" id="declaration-id" name="declarationId" type="hidden">
-											<label for="blood">Nhóm máu</label>
-											<select id="blood" class="form-control" th:field="*{blood}">
-												<option value="O" selected>O</option>
-												<option value="A">A</option>
-												<option value="B">B</option>
-												<option value="AB">AB</option>
-												<option value="Other">Khác</option>
-											</select>
-										</div>
-										<div class="form-group col-md-6">
-											<label for="background">Bệnh nền</label>
-											<select id="background" class="form-control" th:field="*{background}">
-												<option value="Bệnh tiều đường" selected>Bệnh tiều đường</option>
-												<option value="Huyết áp">Huyết áp</option>
-												<option value="Gout">Gout</option>
-												<option value="Bệnh gan">Bệnh gan</option>
-												<option value="Bệnh tim mạch">Bệnh tim mạch</option>
-												<option value="Béo phì, thừa cân">Béo phì, thừa cân</option>
-												<option value="Rối loạn tiền đình">Rối loạn tiền đình</option>
-												<option value="Other">Khác</option>
-											</select>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="note-description" class="col-form-label">Bạn có đang dùng thuốc nào không ?</label>
-										<input class="form-control" name="medicine" th:field="*{medicine}" id="medicine"></input>
-									</div>
-									<div class="form-group">
-										<label for="note-description" class="col-form-label">Bạn có triệu chứng nào
-											không ?</label>
-										<input class="form-control" name="symptom" th:field="*{symptom}" id="symptom"></input>
-									</div>
-									<div class="form-group">
-										<label for="note-description" class="col-form-label">Các vấn đề khác ?</label>
-										<textarea class="form-control" name="notes" th:field="*{notes}" id="notes" rows="2" maxlength="200"></textarea>
-									</div>
-									<button id="declarationSubmit" type="submit" class="d-none"></button>
-								</form>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-primary"
-									onclick="$('#declarationSubmit').click();">Lưu thay đổi</button>
-								<a th:href="@{'/appointments/new/' + ${doctor.id}}"><button type="button" class="btn btn-danger">Bỏ qua</button></a>
-							</div>
-						</div>
+			<div class="section-title text-center">
+				<h2>Danh sách bác sĩ</h2>
+				<!--<p>Develop future google map, filter combo box, recommend doctor,...</p>-->
+				<div class="form-group col-md-6 row mx-auto m-3">
+					<label for="specialty" class="col-md-3 col-form-label "><b>Chuyên khoa</b></label>
+					<div class="col-md-9">
+						<select id="specialty" class="form-control filter">
+							<option value="-1">Tất cả</option>
+							<option th:each="specialty : ${specialties}" th:value="${specialty.id}"
+								th:text="${specialty.name}"></option>
+						</select>
+						<span class="errorMsg" id="errorMsgFkId"></span>
 					</div>
 				</div>
-
-				<div class="col-lg-6">
-					<div class="member d-flex align-items-start">
-						<div class="pic"><img src="/img/doctors/doctors-1.jpg" class="img-fluid" alt=""></div>
-						<div class="member-info">
-							<a th:href="@{'/detail/' + ${doctor.id}}">
-								<h4> [[${doctor.fullname}]]</h4>
-							</a>
-							<span>[[${doctor.getClinic().getName()}]]</span>
-							<p>[[${doctor.getSpecialty().getName()}]]</p>
-							<span>[[${doctor.description}]]</span>
-							<!--<small class="text-muted"
-                               th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(doctor.startPracticeDate) + 1} years|"></small>-->
-							<div class="social">
-								<button type="button" class="btn btn-info"  th:onclick="javascript: showDeclarationModal([[${declaration.id}]], [[${doctor.id}]])"><i
-										class="fas fa-book-medical"></i> Đặt ngay</button>
-								<!--<a th:href="@{'/appointments/new/' + ${doctor.id}}"></a>
-								<a href=""><i class="ri-facebook-fill"></i></a>
-								<a href=""><i class="ri-instagram-fill"></i></a>
-								<a href=""> <i class="ri-linkedin-box-fill"></i> </a>-->
-							</div>
-						</div>
-					</div>
-				</div>
-
 			</div>
 
+			<div class="row">
 
-			<div class="section-title" th:if="${not #lists.isEmpty(recentDoctors)}">
-				<h2>Recent Doctors</h2>
-				<p>View a list of recently examined doctors</p>
-				<div class="row" th:each="doctor : ${recentDoctors}">
-
-					<div class="col-lg-6">
+					<div class="col-lg-6 mt-4" th:each="doctor : ${doctors}">
 						<div class="member d-flex align-items-start">
 							<div class="pic"><img src="/img/doctors/doctors-1.jpg" class="img-fluid" alt=""></div>
 							<div class="member-info">
@@ -121,11 +36,36 @@
 								<!--<small class="text-muted"
                                th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(doctor.startPracticeDate) + 1} years|"></small>-->
 								<div class="social">
-									<a th:href="@{'/appointments/new/' + ${doctor.id}}"><i
-											class="fas fa-book-medical"></i></a>
-									<a href=""><i class="ri-facebook-fill"></i></a>
-									<a href=""><i class="ri-instagram-fill"></i></a>
-									<a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+									<button type="button" class="btn btn-info"
+										th:onclick="javascript: showDeclarationModal([[${declaration.id}]], [[${doctor.id}]])"><i
+											class="fas fa-book-medical"></i> Đặt ngay</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+			</div>
+			<div th:replace="fragments/modal.html"></div>
+			
+			<div class="mt-4" th:if="${not #lists.isEmpty(recentDoctors)}">
+				<h2 class="text-center">Bác sĩ đã đặt gần đây</h2>
+				<div class="row">
+					<div class="col-lg-6 mt-4" th:each="doctor : ${recentDoctors}">
+						<div class="member d-flex align-items-start">
+							<div class="pic"><img src="/img/doctors/doctors-1.jpg" class="img-fluid" alt=""></div>
+							<div class="member-info">
+								<a th:href="@{'/detail/' + ${doctor.id}}">
+									<h4> [[${doctor.fullname}]]</h4>
+								</a>
+								<span>[[${doctor.getClinic().getName()}]]</span>
+								<p>[[${doctor.getSpecialty().getName()}]]</p>
+								<span>[[${doctor.description}]]</span>
+								<!--<small class="text-muted"
+                               th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(doctor.startPracticeDate) + 1} years|"></small>-->
+								<div class="social">
+									<button type="button" class="btn btn-warning"
+										th:onclick="javascript: showDeclarationModal([[${declaration.id}]], [[${doctor.id}]])"><i
+											class="fas fa-book-medical"></i> Đặt lại</button>
 								</div>
 							</div>
 						</div>
@@ -134,7 +74,11 @@
 			</div>
 
 		</div>
-	</section><!-- End Doctors Section Recent doctor-->
+	</section>
+
+	<script>
+
+	</script>
 
 </body>
 

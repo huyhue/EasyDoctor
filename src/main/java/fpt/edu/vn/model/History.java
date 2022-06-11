@@ -1,6 +1,7 @@
 package fpt.edu.vn.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -44,6 +45,9 @@ public class History extends BaseEntity  {
 	@OneToOne
     @JoinColumn(name = "id_appointment")
     private Appointment appointment;
+	
+	@OneToMany(mappedBy = "history")
+	private List<FileModel> fileModels;
 
 	public History() {
 	}
@@ -134,6 +138,14 @@ public class History extends BaseEntity  {
 
 	public void setAppointment(Appointment appointment) {
 		this.appointment = appointment;
+	}
+
+	public List<FileModel> getFileModels() {
+		return fileModels;
+	}
+
+	public void setFileModels(List<FileModel> fileModels) {
+		this.fileModels = fileModels;
 	}
 
 }

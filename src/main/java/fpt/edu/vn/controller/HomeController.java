@@ -9,7 +9,10 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -26,7 +29,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
 import fpt.edu.vn.model.Doctor;
+import fpt.edu.vn.model.FileModel;
 import fpt.edu.vn.model.History;
 import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.Review;
@@ -133,58 +138,58 @@ public class HomeController {
 		return "users/login";
 	}
 
-	@PostMapping("/image/saveImageProfile")
-	public @ResponseBody ResponseEntity<?> saveImageProfile(@AuthenticationPrincipal CustomUserDetails currentUser,
-			final @RequestParam("profileImage") MultipartFile file) throws IOException {
-		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-		if (file.getContentType().equalsIgnoreCase("image/jpg") || file.getContentType().equalsIgnoreCase("image/jpeg")
-				|| file.getContentType().equalsIgnoreCase("image/png")) {
-			double fileSize = file.getSize();
-
-			double kl = (fileSize / 1024);
-			double mb = (kl / 1024);
-			if (mb < 5) {
-				String uploadDir = "./uploads/" + currentUser.getEmail();
-				Path uploadPath = Paths.get(uploadDir);
-				String oldFileLocation = uploadDir + "/" + currentUser.getProfileImage();
-				Path getImage = Paths.get(oldFileLocation);
-
-				if (Files.exists(getImage)) {
-					Files.delete(getImage);
-					System.out.println("Files deleted");
-				}
-
-				if (!Files.exists(uploadPath)) {
-					Files.createDirectories(uploadPath);
-				}
-				try (InputStream inputStream = file.getInputStream()) {
-					String newFileName = System.currentTimeMillis() + "_" + fileName;
-					userService.updateImage(currentUser.getId(), newFileName);
-					currentUser.setProfileImage(newFileName);
-					Path filePath = uploadPath.resolve(newFileName).normalize();
-					Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-				} catch (IOException e) {
-					throw new IOException("Error in uploading File!");
-				}
-			} else {
-				return new ResponseEntity<>("file is too large", HttpStatus.BAD_REQUEST);
-			}
-		} else {
-			return new ResponseEntity<>("Please enter a valid image file", HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-	}
+//	@PostMapping("/image/saveImageProfile")
+//	public @ResponseBody ResponseEntity<?> saveImageProfile(@AuthenticationPrincipal CustomUserDetails currentUser,
+//			final @RequestParam("profileImage") MultipartFile file) throws IOException {
+//		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+//		if (file.getContentType().equalsIgnoreCase("image/jpg") || file.getContentType().equalsIgnoreCase("image/jpeg")
+//				|| file.getContentType().equalsIgnoreCase("image/png")) {
+//			double fileSize = file.getSize();
+//
+//			double kl = (fileSize / 1024);
+//			double mb = (kl / 1024);
+//			if (mb < 5) {
+//				String uploadDir = "./uploads/" + currentUser.getEmail();
+//				Path uploadPath = Paths.get(uploadDir);
+//				String oldFileLocation = uploadDir + "/" + currentUser.getProfileImage();
+//				Path getImage = Paths.get(oldFileLocation);
+//
+//				if (Files.exists(getImage)) {
+//					Files.delete(getImage);
+//					System.out.println("Files deleted");
+//				}
+//
+//				if (!Files.exists(uploadPath)) {
+//					Files.createDirectories(uploadPath);
+//				}
+//				try (InputStream inputStream = file.getInputStream()) {
+//					String newFileName = System.currentTimeMillis() + "_" + fileName;
+//					userService.updateImage(currentUser.getId(), newFileName);
+//					currentUser.setProfileImage(newFileName);
+//					Path filePath = uploadPath.resolve(newFileName).normalize();
+//					Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+//				} catch (IOException e) {
+//					throw new IOException("Error in uploading File!");
+//				}
+//			} else {
+//				return new ResponseEntity<>("file is too large", HttpStatus.BAD_REQUEST);
+//			}
+//		} else {
+//			return new ResponseEntity<>("Please enter a valid image file", HttpStatus.BAD_REQUEST);
+//		}
+//		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//	}
 
 	@GetMapping("/detail/{id}")
 	public String showDoctorDetails(@PathVariable("id") int doctorId, ModelMap modelMap,
 			@AuthenticationPrincipal CustomUserDetails currentUser) {
 		Doctor doctor = userService.getDoctorById(doctorId);
 		modelMap.put("doctor", doctor);
-		
+		modelMap.put("declaration", userService.getDeclarationByPatientId(currentUser.getId()));
 		double doctorRatingDouble = userService.getRatingByDoctorId(doctorId);
 		int doctorRating = (int) Math.floor(doctorRatingDouble);
 		modelMap.put("doctorRating", doctorRating);
-
+		modelMap.put("certification", userService.getCertificationByUserId(doctorId));
 		List<Review> reviewList = userService.getAllReviewByDoctorId(doctorId);
 		modelMap.put("reviewList", reviewList);
 		return "doctors/doctorDetail";
@@ -195,11 +200,38 @@ public class HomeController {
 			@AuthenticationPrincipal CustomUserDetails currentUser) {
 		Patient patient = (Patient) userService.findById(patientId);
 		List<History> listHistory = userService.getHistoryByPatientId(patientId);
-		History history = new History();
 		model.addAttribute("patient", patient);
-		model.addAttribute("history", history);
 		model.addAttribute("listHistory", listHistory);
 		return "patients/recordMedical";
+	}
+	
+	@GetMapping("/file/{fileId}")
+    public ResponseEntity<Resource> accessFile(@PathVariable Integer fileId) {
+        // Load file from database
+		FileModel file = userService.getFileByFileId(fileId);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(file.getContentType()))
+                .header("attachment; filename=\"" + file.getName() + "\"")
+                .body(new ByteArrayResource(file.getData()));
+    }
+	
+	@PostMapping("/file/saveCertification")
+	public @ResponseBody ResponseEntity<?> saveCertification(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal CustomUserDetails currentUser) throws IOException {
+		if (file.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		userService.saveCertificationByDoctor(file, currentUser.getId());
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@PostMapping("/file/saveImageProfile")
+	public @ResponseBody ResponseEntity<?> saveImageProfileUser(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal CustomUserDetails currentUser) throws IOException {
+		if (file.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		userService.saveImageProfileByUser(file, currentUser.getId());
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@GetMapping("/access-denied")

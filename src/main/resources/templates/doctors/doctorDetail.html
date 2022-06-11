@@ -3,7 +3,7 @@
 	th:replace="~{fragments/layout :: layout (~{::body},'doctors','Doctor Detail')}">
 
 <body>
-	<h2 class="text-center">[[${doctor.fullname}]]</h2>
+	<h2 class="text-center" style="margin: 30px">[[${doctor.fullname}]]</h2>
 
 	<div class="card book-detail-page doctor-detail-page">
 		<div class="card-body">
@@ -45,7 +45,9 @@
 							<label>Chứng chỉ</label>
 						</div>
 						<div class="col-sm-8 form-group">
-							[[${doctor.getCertification()}]]
+							<a th:if="${certification}" th:href="@{'/file/' + ${certification.id}}" target="_blank"
+								style="margin: 5px;"><i class="fas fa-solid fa-eye"></i>
+								Xem chứng chỉ</a>
 						</div>
 					</div>
 
@@ -70,11 +72,13 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-4 form-group">
-						<a th:href="@{'/appointments/new/' + ${doctor.id}}">
-							<button type="button" class="btn btn-info"><i class="fas fa-book-medical"></i> Đặt ngay</button>
-							</a>
+							<button type="button" class="btn btn-info" th:onclick="javascript: showDeclarationModal([[${declaration.id}]], [[${doctor.id}]])"><i
+										class="fas fa-book-medical"></i> Đặt ngay</button>
 						</div>
 						<div class="col-sm-8 form-group">
+							<a th:href="@{'/appointments/new/' + ${doctor.id}}">
+								<button type="button" class="btn btn-success"><i class="fas fa-newspaper"></i> Bài viết</button>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -83,7 +87,6 @@
 	</div>
 
 	<h2 class="text-center">Review of doctor</h2>
-
 	<div class="card review-block">
 		<div th:if="${#lists.isEmpty(reviewList)}">
 			<span>
@@ -106,6 +109,8 @@
 			</div>
 		</div>
 	</div>
+	
+	<div th:replace="fragments/modal.html"></div>
 </body>
 
 </html>

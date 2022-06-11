@@ -1,5 +1,6 @@
 package fpt.edu.vn.service.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -10,21 +11,26 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import fpt.edu.vn.component.ChangePasswordForm;
 import fpt.edu.vn.model.Declaration;
 import fpt.edu.vn.model.Doctor;
+import fpt.edu.vn.model.FileModel;
 import fpt.edu.vn.model.History;
 import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.Review;
 import fpt.edu.vn.model.Role;
+import fpt.edu.vn.model.Specialty;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.repository.DoctorRepository;
+import fpt.edu.vn.repository.FileModelRepository;
 import fpt.edu.vn.repository.HistoryRepository;
 import fpt.edu.vn.repository.PatientRepository;
 import fpt.edu.vn.repository.ReviewRepository;
 import fpt.edu.vn.repository.DeclarationRepository;
 import fpt.edu.vn.repository.RoleRepository;
+import fpt.edu.vn.repository.SpecialtyRepository;
 import fpt.edu.vn.repository.UserRepository;
 import fpt.edu.vn.service.UserService;
 
@@ -37,12 +43,15 @@ public class UserServiceImpl implements UserService {
 	private final RoleRepository roleRepository;
 	private final ReviewRepository reviewRepository;
 	private final HistoryRepository historyRepository;
+	private final FileModelRepository fileModelRepository;
 	private final DeclarationRepository declarationRepository;
+	private final SpecialtyRepository specialtyRepository;
 	private final PasswordEncoder passwordEncoder;
 
 	public UserServiceImpl(UserRepository userRepository, DoctorRepository doctorRepository,
 			PatientRepository patientRepository, RoleRepository roleRepository, ReviewRepository reviewRepository,
-			HistoryRepository historyRepository, DeclarationRepository declarationRepository,
+			HistoryRepository historyRepository, FileModelRepository fileModelRepository,
+			DeclarationRepository declarationRepository, SpecialtyRepository specialtyRepository,
 			PasswordEncoder passwordEncoder) {
 		super();
 		this.userRepository = userRepository;
@@ -51,7 +60,9 @@ public class UserServiceImpl implements UserService {
 		this.roleRepository = roleRepository;
 		this.reviewRepository = reviewRepository;
 		this.historyRepository = historyRepository;
+		this.fileModelRepository = fileModelRepository;
 		this.declarationRepository = declarationRepository;
+		this.specialtyRepository = specialtyRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
 
@@ -92,11 +103,10 @@ public class UserServiceImpl implements UserService {
 		d.setGender(doctor.getGender());
 		d.setStartPracticeDate(doctor.getStartPracticeDate());
 		d.setDescription(doctor.getDescription());
-		d.setCertification(doctor.getCertification());
 		d.setPackages(doctor.getPackages());
 		doctorRepository.save(d);
 	}
-	
+
 	@Override
 	public void updateUserActiveState(int id, boolean active) {
 		User user = userRepository.findById(id).get();
@@ -131,7 +141,7 @@ public class UserServiceImpl implements UserService {
 	public User getUserById(int userId) {
 		return userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("User not found"));
 	}
-	
+
 	@Override
 	public User findById(int userId) {
 		return userRepository.findById(userId).get();
@@ -142,13 +152,6 @@ public class UserServiceImpl implements UserService {
 	public void updateUserPassword(ChangePasswordForm passwordChangeForm) {
 		User user = userRepository.findById(passwordChangeForm.getId()).get();
 		user.setPassword(passwordEncoder.encode(passwordChangeForm.getPassword()));
-		userRepository.save(user);
-	}
-
-	@Override
-	public void updateImage(int id, String fileImage) {
-		User user = userRepository.findById(id).get();
-		user.setProfileImage(fileImage);
 		userRepository.save(user);
 	}
 
@@ -211,29 +214,97 @@ public class UserServiceImpl implements UserService {
 	public List<Review> getAllReviewByDoctorId(int doctorId) {
 		return reviewRepository.getAllReviewByDoctorId(doctorId);
 	}
-	
+
 	@Override
 	public List<History> getHistoryByPatientId(int patientId) {
 		return historyRepository.findByPatientId(patientId);
 	}
-	
+
 	@Override
-	public void saveResultByDoctor(History history) {
+	public void saveResultByDoctor(History history, MultipartFile[] files) {
 		historyRepository.save(history);
+		if (files != null) {
+			try {
+				List<FileModel> storedFile = new ArrayList<FileModel>();
+
+				for (MultipartFile file : files) {
+					FileModel fileModel = fileModelRepository.findByNameAndUserId(file.getOriginalFilename(),
+							history.getPatient().getId());
+					if (fileModel != null) {
+						fileModel.setData(file.getBytes());
+					} else {
+						fileModel = new FileModel(file.getOriginalFilename(), file.getContentType(), file.getBytes(),
+								history.getPatient(), history);
+					}
+					storedFile.add(fileModel);
+				}
+
+				fileModelRepository.saveAll(storedFile);
+			} catch (Exception e) {
+				System.err.print("Loi roi " + e.getMessage());
+			}
+		}
 	}
-	
+
+	@Override
+	public void saveCertificationByDoctor(MultipartFile file, int doctorId) {
+		try {
+			FileModel fileModel = fileModelRepository.findCertificationByUserId(doctorId);
+			if (fileModel != null) {
+				fileModelRepository.delete(fileModel);
+			}
+			fileModel = new FileModel(file.getOriginalFilename(), file.getContentType(), file.getBytes(),
+					userRepository.findById(doctorId).get());
+			fileModelRepository.save(fileModel);
+		} catch (Exception e) {
+			System.err.print("Loi roi " + e.getMessage());
+		}
+	}
+
+	@Override
+	public void saveImageProfileByUser(MultipartFile file, int id) {
+		try {
+			FileModel fileModel = fileModelRepository.findImageByUserId(id);
+			if (fileModel != null) {
+				fileModelRepository.delete(fileModel);
+			}
+			fileModel = new FileModel(file.getOriginalFilename(), file.getContentType(), file.getBytes(),
+					userRepository.findById(id).get());
+			fileModelRepository.save(fileModel);
+		} catch (Exception e) {
+			System.err.print("Loi roi " + e.getMessage());
+		}
+	}
+
+	@Override
+	public FileModel getFileByFileId(int id) {
+		return fileModelRepository.findById(id).get();
+	}
+
+	@Override
+	public FileModel getCertificationByUserId(int userId) {
+		FileModel file = fileModelRepository.findCertificationByUserId(userId);
+		return file;
+	}
+
+	@Override
+	public String getImageByUserId(int userId) {
+		FileModel file = fileModelRepository.findImageByUserId(userId);
+		return (file == null) ? "/img/avatar.png" : "/file/" + file.getId();
+	}
+
 	@Override
 	public History getHistoryByAppointmentId(int id) {
 		History history = historyRepository.getHistoryByAppointmentId(id);
 		return (history == null) ? new History() : history;
 	}
-	
+
 	@Override
 	public Declaration getDeclarationByPatientId(int patientId) {
 		Declaration declaration = declarationRepository.getDeclarationByPatientId(patientId);
 		return (declaration == null) ? new Declaration() : declaration;
 	}
-	
+
 	@Override
 	public void saveDeclarationByPatientId(Declaration declaration) {
 		Patient patient = declaration.getPatient();
@@ -241,7 +312,7 @@ public class UserServiceImpl implements UserService {
 //		patientRepository.save(declaration);
 		declarationRepository.save(declaration);
 	}
-	
+
 	@Override
 	public void updateDeclarationByPatientId(Declaration declaration) {
 		Declaration declarationUO = declarationRepository.findById(declaration.getId()).get();
@@ -251,5 +322,10 @@ public class UserServiceImpl implements UserService {
 		declarationUO.setNotes(declaration.getNotes());
 		declarationUO.setSymptom(declaration.getSymptom());
 		declarationRepository.save(declarationUO);
+	}
+	
+	@Override
+	public List<Specialty> getAllSpecialty() {
+		return specialtyRepository.findAll();
 	}
 }

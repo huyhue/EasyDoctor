@@ -7,9 +7,8 @@
 		<div class="col-sm-3">
 			<!--left col-->
 			<div class="text-center">
-				<img th:src="@{${user.profileImage != ''}  ? ${user.ProfileImagePath} : 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png'}"
-					class="avatar img-circle img-thumbnail" alt="avatar" id="avatar">
-				<form id="uploadForm">
+				<img th:src="@{${imageProfile}}" class="avatar img-circle img-thumbnail" alt="avatar" id="avatar">
+				<form id="uploadForm" method="post" enctpye="multipart/form-data">
 					<input id="profileImage" name="profileImage" type="file" accept="image/png, image/jpeg" />
 				</form>
 				<p class="text-center">
@@ -28,13 +27,11 @@
 					<ul class="list-group">
 						<li class="list-group-item d-flex justify-content-between align-items-center">
 							Scheduled
-							<span class="badge badge-primary badge-pill"
-								th:text="${numberScheduled}">2</span>
+							<span class="badge badge-primary badge-pill" th:text="${numberScheduled}">2</span>
 						</li>
 						<li class="list-group-item d-flex justify-content-between align-items-center">
 							Canceled this month
-							<span class="badge badge-danger badge-pill"
-								th:text="${numberCanceled}">1</span>
+							<span class="badge badge-danger badge-pill" th:text="${numberCanceled}">1</span>
 						</li>
 					</ul>
 				</div>
@@ -46,15 +43,15 @@
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
 				<li class="nav-item">
 					<a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-						aria-controls="profile" aria-selected="true">Profile</a>
+						aria-controls="profile" aria-selected="true">Thông tin cá nhân</a>
 				</li>
 				<li sec:authorize="hasRole('ROLE_DOCTOR') or hasRole('ROLE_PATIENT')" class="nav-item">
 					<a class="nav-link" id="newPassword-tab" data-toggle="tab" href="#newPassword" role="tab"
 						aria-controls="newPassword" aria-selected="false">Password</a>
 				</li>
 				<li sec:authorize="hasRole('ROLE_PATIENT')" class="nav-item">
-					<a class="nav-link" id="pathological-tab" data-toggle="tab" href="#pathological" role="tab"
-						aria-controls="pathological" aria-selected="false">Pathological</a>
+					<a class="nav-link" id="declaration-tab" data-toggle="tab" href="#declaration" role="tab"
+						aria-controls="declaration" aria-selected="false">Khai báo</a>
 				</li>
 				<li sec:authorize="hasRole('ROLE_PATIENT') or hasRole('ROLE_DOCTOR')" class="nav-item">
 					<a class="nav-link" id="payment-tab" data-toggle="tab" href="#payment" role="tab"
@@ -103,8 +100,8 @@
 							<div class="form-group col-md-6">
 								<label for="gender">Gender</label><br>
 								<div class="form-check form-check-inline">
-									<input name="gender" type="radio"  th:value="MALE" class="form-check-input" id="radio1"
-										th:field="*{gender}" />
+									<input name="gender" type="radio" th:value="MALE" class="form-check-input"
+										id="radio1" th:field="*{gender}" />
 									<label class="form-chek-label" for="radio1">Male</label>
 								</div>
 								<div class="form-check form-check-inline">
@@ -178,20 +175,24 @@
 							</div>
 							<div class="form-row">
 								<div class="form-group col-md-6">
-									<label for="clinic.name">Certification</label>
-									<input type="text" class="form-control"
-										th:classappend="${#fields.hasErrors('certification') ? 'is-invalid' :''}"
-										th:field="*{certification}">
-									<div th:if="${#fields.hasErrors('certification')}" class="invalid-feedback">
-										<p th:errors="*{certification}"></p>
-									</div>
+									<label for="certification">Certification</label>
+									<form id="certificationForm" method="post" enctpye="multipart/form-data">
+									
+										<a th:if="${certification}" th:href="@{'/file/' + ${certification.id}}" target="_blank"
+											style="margin: 5px;"><i class="fas fa-solid fa-file-import"></i>
+											[[${certification.name}]]
+										</a>
+										<input class="form-control" id="certification" name="file" type="file"
+											accept="application/pdf" />
+									</form>
 								</div>
 								<div class="form-group col-md-6">
 									<label>Packages</label><br>
 									<ul>
 										<li th:each="packages : ${allPackages}">
 											<input type="checkbox" th:field="*{packages}" th:value="${packages.id}" />
-											<label th:for="${#ids.prev('packages')}" th:text="${packages.name}">Name</label>
+											<label th:for="${#ids.prev('packages')}"
+												th:text="${packages.name}">Name</label>
 										</li>
 									</ul>
 								</div>
@@ -266,27 +267,28 @@
 					</form>
 				</div>
 
-				<div class="tab-pane fade pt-3" id="pathological" role="tabpanel" aria-labelledby="pathological-tab">
-					<form method="POST">
-
+				<th:block th:if="${account_type =='patients'}">
+					<div class="tab-pane fade pt-3" id="declaration" role="tabpanel" aria-labelledby="declaration-tab">
 						<div class="form-row">
 							<div class="form-group col-md-6">
-								<label for="">Bạn có tiền sử bệnh án nào không ?</label>
+								<strong>Nhóm máu: [[${user.declaration.blood}]]</strong>
 							</div>
 							<div class="form-group col-md-6">
-								<label for="">Bạn có đang dùng thuốc nào không ?</label>
+								<strong>Bệnh nền: [[${user.declaration.background}]]</strong>
 							</div>
 							<div class="form-group col-md-6">
-								<label for="">Bạn có bị dị ứng không ?</label>
+								<strong>Thuốc: [[${user.declaration.medicine}]]</strong>
 							</div>
 							<div class="form-group col-md-6">
-								<label for="">Các vấn đề khác ?</label>
+								<strong>Triệu chứng: [[${user.declaration.symptom}]]</strong>
+							</div>
+							<div class="form-group col-md-6">
+								<strong>Khác: [[${user.declaration.notes}]]</strong>
 							</div>
 						</div>
-						<button type="submit" class="btn btn-primary">Add Info</button>
-					</form>
-				</div>
-
+						<button type="submit" class="btn btn-info">Thay đổi</button>
+					</div>
+				</th:block>
 				<div class="tab-pane fade pt-3" id="payment" role="tabpanel" aria-labelledby="payment-tab">
 					<form method="POST">
 
@@ -324,4 +326,5 @@
 		});
 	</script>
 </body>
+
 </html>

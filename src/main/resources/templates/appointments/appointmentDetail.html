@@ -63,7 +63,7 @@
 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 		aria-hidden="true">
 		<div class="modal-dialog" role="document">
-			<form th:object="${history}" method="POST">
+			<form th:object="${history}" method="POST" enctype="multipart/form-data">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalLabel">Kết quả khám bệnh</h5>
@@ -100,9 +100,9 @@
 								<option value="Phiếu điều trị">Phiếu điều trị</option>
 								<option value="Khác">Khác</option>
 							</select>
-							<div class="custom-file">
-								<input type="file" class="custom-file-input" th:field="*{result}">
-								<label class="custom-file-label" for="result">Chọn file kết quả</label>
+							<div class="form-group">
+								<input class="form-control" id="files" multiple
+                               name="files" placeholder="Upload Multiple Files" type="file"></input>
 							</div>
 						</div>
 					</div>
@@ -137,10 +137,6 @@
 				</tr>
 				<tr th:if="${appointment.status.name()=='CANCELED'}">
 					<td><b>Canceled by</b></td>
-					<td><span th:text="${appointment.canceler.fullname}">cancel</span></td>
-				</tr>
-				<tr th:if="${appointment.status.name()=='CONFIRMED'}">
-					<td><b>Result</b></td>
 					<td><span th:text="${appointment.canceler.fullname}">cancel</span></td>
 				</tr>
 

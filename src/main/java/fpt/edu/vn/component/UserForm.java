@@ -76,7 +76,6 @@ public class UserForm {
 
     public UserForm(Doctor doctor) {
         this((User) doctor);
-        this.setCertification(doctor.getCertification());
     }
 
 	public int getId() {

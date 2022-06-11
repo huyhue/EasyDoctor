@@ -1,48 +1,42 @@
 // For opening the note modal
 function showDeclarationModal(declarationId, doctorId) {
-        console.log(background);
-
+    const declarationForm = document.getElementById("declaration-form");
+    
     if(declarationId) {
-        const declarationForm = document.getElementById("declaration-form");
         declarationForm.setAttribute("action", `/patients/declaration/${declarationId}/${doctorId}`);
-    }
-
-    /*$('#id').val(id ? id : '');
-    $('#blood').val(blood ? blood : '');
-    $('#background').val(background ? background : '');
-    $('#medicine').val(medicine ? medicine : '');
-    $('#symptom').val(symptom ? symptom : '');
-    $('#notes').val(notes ? notes : '');*/
+    } else {
+		declarationForm.setAttribute("action", `/patients/declaration/${doctorId}`);
+	}
     $('#declarationModal').modal('show');
 }
 
 $(document).ready(function() {
 	$('#loader').hide();
 	$('#successImage').css('display', 'none');
+	
 	$("#profileImage").change(function() {
 		var formData = new FormData($('#uploadForm')[0]);
-		console.log("hello huyhue1");
+		formData.append("file", $(this)[0].files[0]);
 		$('#loader').show();
 		$.ajax({
 			type: 'POST',
 			enctype: 'multipart/form-data',
-			url: "/image/saveImageProfile",
+			url: "/file/saveImageProfile",
 			data: formData,
 			processData: false,
 			contentType: false,
 			cache: false,
 			success: function(data, statusText, xhr) {
 				console.log(xhr.status);
+				alert("Upload thành công");
 				if (xhr.status == "200") {
 					$('#loader').hide();
-					console.log("huy: "+data);
 				}
 				if (xhr.status == "400") {
-					console.log("Fail: " + data);
+					
 				}
 			},
 			error: function(e) {
-				console.log(e);
 				$('#loader').hide();
 				$('#successImage').css('display', 'block');
 				$("#successImage").css("text-color", "red");
@@ -50,6 +44,29 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
+	
+	$("#certification").change(function() {
+		var formData = new FormData($('#certificationForm')[0]);
+		formData.append("file", $(this)[0].files[0]);
+		$.ajax({
+			type: 'POST',
+			enctype: 'multipart/form-data',
+			url: "/file/saveCertification",
+			data: formData,
+			processData: false,
+			contentType: false,
+			cache: false,
+			success: function(data, statusText, xhr) {
+				alert("Upload chứng chỉ thành công");
+			},
+			error: function(e) {
+				alert("Upload chứng chỉ thất bại");
+				location.reload();
+			}
+		});
+	});
+	
 });
 
 

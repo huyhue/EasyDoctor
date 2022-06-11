@@ -55,9 +55,12 @@
 						<p class="card-text">Thuốc: [[${history.medicine}]]</p>
 						<p class="card-text">Bác sĩ: [[${history.doctor}]]</p>
 						<p class="card-text">[[${history.advice}]]</p>
-						<small class="text-muted">[[${#temporals.format(history.updatedAt, 'dd-MM-yyyy')}]]</small><br>
-						<a th:href="@{'/dowload/' + ${history.result}}" class="btn btn-primary">Dowload
-							[[${history.type}]]</a>
+						
+						<p class="card-text">[[${history.type}]]: </p>
+						<span th:each="file : ${history.fileModels}">
+							<a th:href="@{'/file/' + ${file.id}}" target="_blank" style="margin: 5px;" ><i class="fas fa-solid fa-file-import fa-2x"></i></a>
+						</span><br>
+						<small class="text-muted">[[${#temporals.format(history.updatedAt, 'dd-MM-yyyy')}]]</small>
 					</div>
 				</div>
 			</div>
@@ -73,5 +76,4 @@
 
 	</script>
 </body>
-
 </html>
