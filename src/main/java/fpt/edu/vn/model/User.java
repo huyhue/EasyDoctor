@@ -30,6 +30,9 @@ public class User extends BaseEntity {
 
 	@Column(name = "age")
 	private Integer age;
+	
+	@Column(name = "profile_img", nullable = true)
+	private String profileImage;
 
 	@Enumerated(value = EnumType.STRING)
 	private Gender gender;
@@ -171,12 +174,28 @@ public class User extends BaseEntity {
 		this.confirmationToken = confirmationToken;
 	}
 
+	public String getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
+	}
+
 	public Integer getAge() {
 		return age;
 	}
 
 	public void setAge(Integer age) {
 		this.age = age;
+	}
+	
+	@Transient
+	public String getProfileImagePath() {
+		if (profileImage == null) {
+			return "/img/avatar.png";
+		}
+		return getProfileImage();
 	}
 
 	public List<Notification> getNotifications() {

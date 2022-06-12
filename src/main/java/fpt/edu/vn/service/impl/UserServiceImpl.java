@@ -263,14 +263,19 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void saveImageProfileByUser(MultipartFile file, int id) {
+		User user = findById(id);
 		try {
 			FileModel fileModel = fileModelRepository.findImageByUserId(id);
 			if (fileModel != null) {
 				fileModelRepository.delete(fileModel);
 			}
 			fileModel = new FileModel(file.getOriginalFilename(), file.getContentType(), file.getBytes(),
-					userRepository.findById(id).get());
+					user);
 			fileModelRepository.save(fileModel);
+			
+			
+			user.setProfileImage("/file/"+fileModel.getId());
+			userRepository.save(user);
 		} catch (Exception e) {
 			System.err.print("Loi roi " + e.getMessage());
 		}
