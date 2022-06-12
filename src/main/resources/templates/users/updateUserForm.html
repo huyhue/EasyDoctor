@@ -7,7 +7,7 @@
 		<div class="col-sm-3">
 			<!--left col-->
 			<div class="text-center">
-				<img th:src="@{${imageProfile}}" class="avatar img-circle img-thumbnail" alt="avatar" id="avatar">
+				<img th:src="@{${user.profileImage}}" class="avatar img-circle img-thumbnail" alt="avatar" id="avatar">
 				<form id="uploadForm" method="post" enctpye="multipart/form-data">
 					<input id="profileImage" name="profileImage" type="file" accept="image/png, image/jpeg" />
 				</form>
@@ -177,9 +177,10 @@
 								<div class="form-group col-md-6">
 									<label for="certification">Certification</label>
 									<form id="certificationForm" method="post" enctpye="multipart/form-data">
-									
-										<a th:if="${certification}" th:href="@{'/file/' + ${certification.id}}" target="_blank"
-											style="margin: 5px;"><i class="fas fa-solid fa-file-import"></i>
+
+										<a th:if="${certification}" th:href="@{'/file/' + ${certification.id}}"
+											target="_blank" style="margin: 5px;"><i
+												class="fas fa-solid fa-file-import"></i>
 											[[${certification.name}]]
 										</a>
 										<input class="form-control" id="certification" name="file" type="file"
@@ -267,9 +268,12 @@
 					</form>
 				</div>
 
-				<th:block th:if="${account_type =='patients'}">
+				<th:block th:if="${account_type == 'patients'}">
 					<div class="tab-pane fade pt-3" id="declaration" role="tabpanel" aria-labelledby="declaration-tab">
-						<div class="form-row">
+						<div th:if="${user.declaration == null}">
+							<h3>Bạn chưa khai báo. Vui lòng khai báo đặt lịch để cập nhật.</h3>
+						</div>
+						<div class="form-row" th:if="${user.declaration != null}">
 							<div class="form-group col-md-6">
 								<strong>Nhóm máu: [[${user.declaration.blood}]]</strong>
 							</div>
@@ -286,9 +290,9 @@
 								<strong>Khác: [[${user.declaration.notes}]]</strong>
 							</div>
 						</div>
-						<button type="submit" class="btn btn-info">Thay đổi</button>
 					</div>
 				</th:block>
+
 				<div class="tab-pane fade pt-3" id="payment" role="tabpanel" aria-labelledby="payment-tab">
 					<form method="POST">
 

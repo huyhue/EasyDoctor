@@ -50,7 +50,7 @@ public class PatientController {
 			if (!model.containsAttribute("passwordChange")) {
 				model.addAttribute("passwordChange", new ChangePasswordForm(patientId));
 			}
-			model.addAttribute("imageProfile", userService.getImageByUserId(patientId));
+			model.addAttribute("declaration", userService.getDeclarationByPatientId(currentUser.getId()));
 			model.addAttribute("account_type", "patients");
 			model.addAttribute("formActionProfile", "/patients/update/profile");
 			model.addAttribute("formActionPassword", "/patients/update/password");

@@ -12,50 +12,46 @@ import org.hibernate.annotations.TypeDefs;
 import javax.persistence.*;
 import java.time.LocalTime;
 
-@TypeDefs(@TypeDef(name = "LONGTEXT", typeClass = JsonStringType.class))
+@TypeDefs(@TypeDef(name = "json", typeClass = JsonStringType.class))
 @Entity
 @Table(name = "working_plans")
 public class WorkingPlan {
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id
+    @Column(name = "id_doctor")
     private int id;
-	/*
-	 * @Id
-	 * 
-	 * @Column(name = "id_doctor") private int id;
-	 * 
-	 * @MapsId
-	 */
+
+    @MapsId
     @OneToOne
     @JoinColumn(name = "id_doctor")
     private Doctor doctor;
 
-    @Type(type = "LONGTEXT")
-    @Column(columnDefinition = "LONGTEXT", name = "monday")
+    @Type(type = "json")
+    @Column(columnDefinition = "json", name = "monday")
     private DayPlan monday;
 
-    @Type(type = "LONGTEXT")
-    @Column(columnDefinition = "LONGTEXT", name = "tuesday")
+    @Type(type = "json")
+    @Column(columnDefinition = "json", name = "tuesday")
     private DayPlan tuesday;
 
-    @Type(type = "LONGTEXT")
-    @Column(columnDefinition = "LONGTEXT", name = "wednesday")
+    @Type(type = "json")
+    @Column(columnDefinition = "json", name = "wednesday")
     private DayPlan wednesday;
 
-    @Type(type = "LONGTEXT")
-    @Column(columnDefinition = "LONGTEXT", name = "thursday")
+    @Type(type = "json")
+    @Column(columnDefinition = "json", name = "thursday")
     private DayPlan thursday;
 
-    @Type(type = "LONGTEXT")
-    @Column(columnDefinition = "LONGTEXT", name = "friday")
+    @Type(type = "json")
+    @Column(columnDefinition = "json", name = "friday")
     private DayPlan friday;
 
-    @Type(type = "LONGTEXT")
-    @Column(columnDefinition = "LONGTEXT", name = "saturday")
+    @Type(type = "json")
+    @Column(columnDefinition = "json", name = "saturday")
     private DayPlan saturday;
 
-    @Type(type = "LONGTEXT")
-    @Column(columnDefinition = "LONGTEXT", name = "sunday")
+    @Type(type = "json")
+    @Column(columnDefinition = "json", name = "sunday")
     private DayPlan sunday;
 
 

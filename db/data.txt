@@ -1,3 +1,28 @@
+<!--$.get("/user/searchDoctor?id=" + fkId,
+					function (data, status) {
+						if (data == '') {
+							$("#accordion").empty();
+							$.confirm({
+								type: 'red',
+								title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Alert!!',
+								content: 'Sorry,Your search item not Found!!',
+								buttons: {
+									ok: function () {
+									}
+								}
+							});
+						} else {
+							var dynamicDocList = '';
+							var increment = 0;
+							$("#accordion").empty();
+							$.each(data, function (dtoValue, branchbank) {
+								increment++;
+								dynamicDocList = '<div class="card"><div class="card-header"><a class="collapsed card-link" data-toggle="collapse"href="#collapseTwo' + increment + '"><div><i class="icofont-man-in-glasses" style="font-size:20px;"></i> <span>' + branchbank.firstname + '</span></div><div><span style="font-size: 10px;"></span></div></a></div><div id="collapseTwo' + increment + '" class="collapse"	data-parent="#accordion"><div class="card-body"><img src="' + 'data:image/jpg;base64,' + branchbank.image + '" class="rounded" alt="Cinque Terre" style="width:60px;height:60px;"><br><br> <span><b>Education:</b> ' + branchbank.uniName + '</span><br><span><b>Specilized:</b> ' + branchbank.desName + '</span><br><span><b>Phone:</b> ' + branchbank.phone + '</span><br><span><b>Email:</b> ' + branchbank.email + '</span><br><br><p><b>About:</b> ' + branchbank.about + '</p><a  href="appoinment?sp=' + branchbank.id + '" class="btn btn-sm btn-info" id="btn-search"><i class="icofont-law-order"></i> Appoinment</a></div></div></div>';
+								$("#accordion").append(dynamicDocList);
+							});
+						}
+					});-->
+					
 Khai báo
 	Blood: O
 	tiền sử bệnh

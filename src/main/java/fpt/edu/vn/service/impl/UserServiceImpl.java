@@ -187,6 +187,7 @@ public class UserServiceImpl implements UserService {
 		Patient patient = new Patient(userRE.getUserName(), passwordEncoder.encode(userRE.getPassword()),
 				userRE.getConfirmationToken(), getRolesForPatient());
 		patient.setEmail(userRE.getEmail());
+		patient.setProfileImage("/img/avatar.png");
 		userRepository.save(patient);
 	}
 
@@ -272,7 +273,6 @@ public class UserServiceImpl implements UserService {
 			fileModel = new FileModel(file.getOriginalFilename(), file.getContentType(), file.getBytes(),
 					user);
 			fileModelRepository.save(fileModel);
-			
 			
 			user.setProfileImage("/file/"+fileModel.getId());
 			userRepository.save(user);

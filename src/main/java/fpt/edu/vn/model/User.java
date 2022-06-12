@@ -2,6 +2,8 @@ package fpt.edu.vn.model;
 
 import javax.persistence.*;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import fpt.edu.vn.component.UserForm;
 
 import java.util.Collection;
@@ -31,7 +33,7 @@ public class User extends BaseEntity {
 	@Column(name = "age")
 	private Integer age;
 	
-	@Column(name = "profile_img", nullable = true)
+	@Column(name = "profile_img")
 	private String profileImage;
 
 	@Enumerated(value = EnumType.STRING)
