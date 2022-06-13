@@ -1,4 +1,4 @@
-<!--$.get("/user/searchDoctor?id=" + fkId,
+$.get("/user/searchDoctor?id=" + fkId,
 					function (data, status) {
 						if (data == '') {
 							$("#accordion").empty();
@@ -21,7 +21,23 @@
 								$("#accordion").append(dynamicDocList);
 							});
 						}
-					});-->
+					});
+					
+					
+		
+		$.ajax({
+					url: "/patients/searchDoctor",
+					type: "POST",
+					data: {
+						specialtyId: specialtyId
+					},
+					error: function () {
+						alert("Fail");
+					},
+					success: function (data, statusText, xhr) {
+						alert("OK");
+					}
+				});
 					
 Khai báo
 	Blood: O

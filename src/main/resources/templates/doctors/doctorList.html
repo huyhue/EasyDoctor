@@ -11,12 +11,14 @@
 				<div class="form-group col-md-6 row mx-auto m-3">
 					<label for="specialty" class="col-md-3 col-form-label "><b>Chuyên khoa</b></label>
 					<div class="col-md-9">
-						<select id="specialty" class="form-control filter">
-							<option value="-1">Tất cả</option>
-							<option th:each="specialty : ${specialties}" th:value="${specialty.id}"
-								th:text="${specialty.name}"></option>
-						</select>
-						<span class="errorMsg" id="errorMsgFkId"></span>
+						<form id="filterForm">
+							<select id="specialty" class="form-control filter">
+								<option value="-1">Tất cả</option>
+								<option th:each="specialty : ${specialties}" th:value="${specialty.id}"
+									th:text="${specialty.name}"></option>
+							</select>
+							<span class="errorMsg" id="errorMsgFkId"></span>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -79,10 +81,23 @@
 	<script>
 		$(document).ready(function () {
 			$("#specialty").on("change", function () {
-				var specialty = $("#specialty option:selected").val();
-				console.log("Test: "+specialty);
+				var id = $("#specialty option:selected").val();
+				console.log("Test: " + id);
 				$("#accordion").empty();
-					
+
+
+				$.ajax({
+					url: "/patients/getDoctors/" + id,
+					type: "POST",
+					error: function () {
+						alert("Fail");
+					},
+					success: function (data, statusText, xhr) {
+						alert("OK");
+					}
+				});
+
+
 			});
 		});
 	</script>

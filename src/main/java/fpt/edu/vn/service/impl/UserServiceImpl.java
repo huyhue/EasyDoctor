@@ -135,6 +135,11 @@ public class UserServiceImpl implements UserService {
 	public List<Doctor> getAllDoctorsByPatient() {
 		return doctorRepository.findAll();
 	}
+	
+	@Override
+	public List<Doctor> getAllDoctorsBySpecialty(int specialtyId) {
+		return doctorRepository.findBySpecialtyId(specialtyId);
+	}
 
 	@Override
 	@PreAuthorize("#userId == principal.id")

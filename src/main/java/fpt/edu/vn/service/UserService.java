@@ -34,9 +34,11 @@ public interface UserService {
 	
 	void savePasswordByUser(User user);
 	void savePatientRegister(Patient userRE);
-	
+
+//	Doctor
 	List<Doctor> getAllDoctors();
 	List<Doctor> getAllDoctorsByPatient();
+	List<Doctor> getAllDoctorsBySpecialty(int specialtyId);
 	
 	Collection<Role> getRolesForDoctor();
 	Collection<Role> getRolesForPatient();

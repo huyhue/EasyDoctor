@@ -8,6 +8,7 @@ import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.AppointmentService;
 import fpt.edu.vn.service.NotificationService;
+import fpt.edu.vn.service.UserService;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,10 +28,14 @@ public class AjaxController {
 
 	private final AppointmentService appointmentService;
 	private final NotificationService notificationService;
+	private final UserService userService;
 
-	public AjaxController(AppointmentService appointmentService, NotificationService notificationService) {
+	public AjaxController(AppointmentService appointmentService, NotificationService notificationService,
+			UserService userService) {
+		super();
 		this.appointmentService = appointmentService;
 		this.notificationService = notificationService;
+		this.userService = userService;
 	}
 
 	@GetMapping("/user/{userId}/appointments")
@@ -59,9 +64,5 @@ public class AjaxController {
 		return notificationService.getUnreadNotifications(currentUser.getId()).size();
 	}
 	
-//	@GetMapping(value = "/searchDoctor")
-//	@ResponseBody
-//	public List<Doctor> searchDoctor(@RequestParam("id") String id) {
-//		return doctorDetailsService.searchDisease(id);
-//	}
+	
 }

@@ -13,7 +13,6 @@ import com.google.gson.GsonBuilder;
 import fpt.edu.vn.component.ChatMessage;
 import fpt.edu.vn.component.ReviewForm;
 import fpt.edu.vn.model.Appointment;
-import fpt.edu.vn.model.History;
 import fpt.edu.vn.model.Message;
 import fpt.edu.vn.model.Review;
 import fpt.edu.vn.security.CustomUserDetails;
