@@ -51,17 +51,16 @@
 						<div class="dropdown-divider"></div>
 
 						<span sec:authorize="isAuthenticated()">
-							<a th:href="@{/admin/profile}" class="dropdown-item"> <i class="fas fa-envelope mr-2"></i>
+							<a th:href="@{/admin/profile}" class="dropdown-item"> <i class="fas fa-solid fa-address-card mr-2"></i>
 								Profile
 							</a>
 						</span>
 						<div class="dropdown-divider"></div>
-
-
 						<span sec:authorize="isAuthenticated()">
-							<a th:href="@{/logout}" class="dropdown-item"> <i class="fas fa-file mr-2"></i>
-								LogOut
-							</a></span>
+							<a th:href="@{/perform_logout}" class="dropdown-item"> <i class="fas fa-outdent mr-2"></i>
+								Log out
+							</a>
+						</span>
 					</div>
 				</li>
 
@@ -72,7 +71,8 @@
 		<!-- Main Sidebar Container -->
 		<aside class="main-sidebar sidebar-dark-primary elevation-4">
 			<!-- Brand Logo -->
-			<a th:href="@{/admin/home}" class="brand-link"> <span class="brand-text font-weight-light"><b>Easy Doctor</b></span>
+			<a th:href="@{/admin/home}" class="brand-link"> <span class="brand-text font-weight-light"><b>Easy
+						Doctor</b></span>
 			</a>
 
 			<!-- Sidebar -->
@@ -107,6 +107,25 @@
 						</li>
 
 
+						<li class="nav-item" id="nav-userId"><a href="javascript:void(0);" class="nav-link"> <i
+									class="nav-icon fa fa fa-suitcase"></i>
+								<p>
+									Clinic <i class="fas fa-angle-left right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item"><a th:href="@{/admin/viewUser}" class="nav-link" id="nav-viewUser">
+										<i class="far fa-circle nav-icon"></i>
+										<p>Add Clinic</p>
+									</a>
+								</li>
+								<li class="nav-item"><a th:href="@{/admin/viewUser}" class="nav-link" id="nav-viewUser">
+										<i class="far fa-circle nav-icon"></i>
+										<p>Add Package</p>
+									</a>
+								</li>
+							</ul>
+						</li>
 						<li class="nav-item" id="doctorId"><a href="javascript:void(0);" class="nav-link"> <i
 									class="nav-icon fa fa-user-md"></i>
 								<p>
@@ -136,11 +155,11 @@
 								<li class="nav-item"><a th:href="@{/admin/viewAmbBooking}" class="nav-link"
 										id="nav-viewAmbBooking"> <i
 											class="far fa-prescription-bottle-medical nav-icon"></i>
-										<p>Prescription</p>
+										<p>View Patient</p>
 									</a></li>
 								<li class="nav-item"><a th:href="@{/admin/viewBloodBooking}" class="nav-link"
-										id="nav-viewBloodBooking"> <i class="far fa-circle nav-icon"></i>
-										<p>xBlood</p>
+										id="nav-viewBloodBooking"> <i class="far fa-file-invoice nav-icon"></i>
+										<p>Invoice</p>
 									</a></li>
 							</ul>
 						</li>
@@ -148,7 +167,7 @@
 						<li class="nav-item" id="nav-doctAppoint"><a href="javascript:void(0);" class="nav-link"> <i
 									class="nav-icon fa fa-calendar"></i>
 								<p>
-									Doctor Appoinment <i class="fas fa-angle-left right"></i>
+									Appoinment <i class="fas fa-angle-left right"></i>
 								</p>
 							</a>
 							<ul class="nav nav-treeview">
@@ -157,25 +176,6 @@
 										<p>View Appoinment</p>
 									</a></li>
 
-							</ul>
-						</li>
-						<li class="nav-item" id="nav-userId"><a href="javascript:void(0);" class="nav-link"> <i
-									class="nav-icon fa fa fa-suitcase"></i>
-								<p>
-									Clinic <i class="fas fa-angle-left right"></i>
-								</p>
-							</a>
-							<ul class="nav nav-treeview">
-								<li class="nav-item"><a th:href="@{/admin/viewUser}" class="nav-link" id="nav-viewUser">
-										<i class="far fa-circle nav-icon"></i>
-										<p>Add Clinic</p>
-									</a>
-								</li>
-								<li class="nav-item"><a th:href="@{/admin/viewUser}" class="nav-link" id="nav-viewUser">
-										<i class="far fa-circle nav-icon"></i>
-										<p>Add Examination Package</p>
-									</a>
-								</li>
 							</ul>
 						</li>
 						<li class="nav-item" id="nav-itemBlog"><a href="javascript:void(0);" class="nav-link"> <i
@@ -195,13 +195,13 @@
 						<li class="nav-item" id="messageId"><a href="javascript:void(0);" class="nav-link"> <i
 									class="nav-icon fa fa-comments"></i>
 								<p>
-									Message <i class="fas fa-angle-left right"></i>
+									Review <i class="fas fa-angle-left right"></i>
 								</p>
 							</a>
 							<ul class="nav nav-treeview">
 								<li class="nav-item"><a th:href="@{/admin/pMsg}" class="nav-link" id="nav-viewMessage">
 										<i class="far fa-circle nav-icon"></i>
-										<p>View Message</p>
+										<p>View Review</p>
 									</a></li>
 
 							</ul>
@@ -292,16 +292,16 @@
 				<th:block th:include="${adminContent}" />
 			</section>
 		</div>
-        
-    </div>
-		<footer class="main-footer" style="font-size: 12px;">
-			<p>EasyDoctor v<span th:text="${currentVersion}">1.0</span></p>
-			<!--<strong>Copyright &copy; 2020 <a href="">EasyDoctor</a>.
+
+	</div>
+	<footer class="main-footer" style="font-size: 12px;">
+		<p>EasyDoctor v<span th:text="${currentVersion}">1.0</span></p>
+		<!--<strong>Copyright &copy; 2020 <a href="">EasyDoctor</a>.
 			</strong> All rights reserved.
 			<div class="float-right d-none d-sm-inline-block">
 				<b>Version 1.1.1</b>
 			</div>-->
-		</footer>
+	</footer>
 	</div>
 	<!-- ./wrapper -->
 	<script src="/plugins/jquery/jquery.min.js"></script>

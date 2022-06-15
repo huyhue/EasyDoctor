@@ -68,3 +68,22 @@ Password: FeU8F4mrIb
 Server: remotemysql.com
 Port: 3306
 These are the username and password to log in to your database and phpMyAdmin
+
+$("#specialty").on("change", function () {
+				var id = $("#specialty option:selected").val();
+				console.log("Test: " + id);
+				$("#accordion").empty();
+
+
+				$.ajax({
+					url: "/patients/getDoctors/" + id,
+					type: "POST",
+					error: function () {
+						alert("Fail");
+					},
+					success: function (data, statusText, xhr) {
+						alert("OK");
+					}
+				});
+
+			});
