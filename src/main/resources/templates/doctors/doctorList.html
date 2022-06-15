@@ -8,25 +8,32 @@
 			<div class="section-title text-center">
 				<h2>Danh sách bác sĩ</h2>
 				<!--<p>Develop future google map, filter combo box, recommend doctor,...</p>-->
-				<div class="form-group col-md-6 row mx-auto m-3">
-					<label for="specialty" class="col-md-3 col-form-label "><b>Chuyên khoa</b></label>
+				<div class="form-group  row mx-auto m-3">
+					<label for="specialty" class="col-md-3 col-form-label "><b>Tìm kiếm</b></label>
 					<div class="col-md-9">
-							<select id="specialty" class="form-control filter">
-								<option value="-1">Tất cả</option>
-								<option th:each="specialty : ${specialties}" th:value="${specialty.id}"
-									th:text="${specialty.name}"></option>
-							</select>
-							<span class="errorMsg" id="errorMsgFkId"></span>
-							<button type="button" class="btn btn-success" id="btnFind" style="margin-top:30px;">
-								<i class="icofont-search-job"></i> Find
-							</button>
+
+						<div class="form-row">
+							<div class="col">
+								<input type="text" class="form-control" id="searchName"
+									placeholder="Tìm kiếm tên bác sĩ">
+							</div>
+							<div class="col">
+								<select id="specialty" class="form-control filter">
+									<option value="-1">Tất cả</option>
+									<option th:each="specialty : ${specialties}" th:value="${specialty.id}"
+										th:text="${specialty.name}"></option>
+								</select>
+								<span class="errorMsg" id="errorMsgFkId"></span>
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</div>
 
-			<div class="row" id="accordion">
+			<ul class="row page" id="accordion">
 
-				<div class="col-lg-6 mt-4" th:each="doctor : ${doctors}">
+				<li class="col-lg-6 mt-4" th:each="doctor : ${doctors}" id="item-doctor">
 					<div class="member d-flex align-items-start">
 						<div class="pic"><img th:src="@{${doctor.profileImage}}" class="img-fluid" alt=""></div>
 						<div class="member-info">
@@ -45,11 +52,10 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</li>
 
-			</div>
+			</ul>
 			<div th:replace="fragments/modal.html"></div>
-
 			<div class="mt-4" th:if="${not #lists.isEmpty(recentDoctors)}">
 				<h2 class="text-center">Bác sĩ đã đặt gần đây</h2>
 				<div class="row">
@@ -58,7 +64,7 @@
 							<div class="pic"><img src="/img/doctors/doctors-1.jpg" class="img-fluid" alt=""></div>
 							<div class="member-info">
 								<a th:href="@{'/detail/' + ${doctor.id}}">
-									<h4> [[${doctor.fullname}]]</h4>
+									<h3> [[${doctor.fullname}]]</h3>
 								</a>
 								<span>[[${doctor.getClinic().getName()}]]</span>
 								<p>[[${doctor.getSpecialty().getName()}]]</p>
@@ -80,29 +86,97 @@
 	</section>
 
 	<script>
-		$(document).ready(function () {
-			$("#btnFind").click(function () {
-				var id = $("#specialty option:selected").val();
-				console.log("Test: " + id);
-				$("#accordion").empty();
-				
-				$.ajax({
-					url: "/patients/getDoctors?id=" + id,
-					type: "GET",
-					error: function () {
-						alert("Fail");
-					},
-					success: function (data, statusText, xhr) {
-						alert("OK");
+		const doctorList = document.querySelectorAll('#item-doctor');
+		const nameList = document.querySelectorAll('h4');
+		const searchName = document.querySelector("#searchName");
+		let itemsPerPage = 5;
+		console.log("test length: " + doctorList.length);
+
+		// Function to show the page we want according to each starting and ending index
+		const showPage = (list, page) => { // Takes as arguments any given list and which page we want to select
+			let startIndex = (page * itemsPerPage) - itemsPerPage; // Ex: For Page 2 * 10 items per page = 20 - 10 items per Page means the starting index is 10
+			let endIndex = page * itemsPerPage - 1; // Ex: For Page 2 * 10 items per page = 20 - 1 items per Page means the ending index is 19
+			for (i = 0; i < list.length; i++) {
+				list[i].style.display = 'none'; // For as long as the list goes hide all the elements
+				if (i >= startIndex && i <= endIndex) {
+					list[i].style.display = 'block'; // And only show back the ones in the range of the starting and ending indexes we want
+				}
+			}
+		};
+
+		// Add pagination links
+		const addPaginationLinks = (list) => {
+			removeElementsByClass('pagination') // Remove old elements every time you start running the function so that we don't create endless elements
+			let numberOfButtons = Math.ceil(list.length / itemsPerPage); // We need to round up the number of pages/buttons even if we don't get a full page
+			let htmlDiv = document.getElementsByClassName('page')[0]; // Get the div with the class of .page to add child elements to (in this case the buttons for the pagination links)
+			let newDiv = document.createElement('DIV'); // Creating and nesting elements to hold each pagination link in the webpage
+			let newUl = document.createElement('UL');
+			newDiv.classList.add("pagination")
+			htmlDiv.appendChild(newDiv)
+			newDiv.appendChild(newUl)
+			for (i = 0; i < numberOfButtons; i++) {
+				let li = document.createElement('LI');
+				let link = document.createElement('A');
+				link.setAttribute("href", "#");
+				li.appendChild(link)
+				newUl.appendChild(li)
+				link.innerText = `${i + 1}` // Add numbers to a tags
+				if (i == 0) { // If it is the first/current page
+					link.classList.add("active") // Always starts with an "active" state, it's the page we're on
+				}
+			}
+			let links = document.querySelectorAll('a')
+			for (i = 0; i < links.length; i++) {
+				links[i].addEventListener("click", function () {
+					for (i = 0; i < links.length; i++) {
+						links[i].classList.remove('active') // Remove the active state for all the pagination links when any of them is clicked
 					}
+					event.target.classList.add('active') // But add it back to the selected pagination link
+					showPage(list, event.target.innerText) // Call the function taking the list items and setting the number of the page according to the text on the buttons
 				});
-				
-				});
-			
-			
+			}
+		};
+		
+		// Call the functions
+		showPage(doctorList, 1);
+		addPaginationLinks(doctorList);
+
+		// Function to remove the old pagination links when the functions are called as a "restart"
+		function removeElementsByClass(className) {
+			var elements = document.getElementsByClassName(className);
+			while (elements.length > 0) {
+				elements[0].parentNode.removeChild(elements[0]);
+			}
+		}
+
+		const findMatches = () => {
+			let search = searchName.value; // Search works even if input is in all caps
+			let results = [] // Create an array to store the matches
+			removeElementsByClass('no_results') // Remove old paragraphs we created every time we run the function
+			for (i = 0; i < doctorList.length; i++) {
+				doctorList[i].style.display = 'none'; // Hide every element on the list .toLowerCase();
+				if (doctorList[i].innerText.indexOf(search) !== -1) {
+					results.push(doctorList[i]) // Unless they match the search, in that case push the item to the results array
+				}
+			}
+			showPage(results, 1);
+			addPaginationLinks(results);
+			console.log("test results: " + results[0]);
+			if (results.length == 0) { // If there are no matches
+				removeElementsByClass('no_results') // Remove old paragraphs we created every time we run the function
+				let parent = document.getElementsByClassName('page')[0]; // Get the parent div
+				let newP = document.createElement('P'); // Create a new paragraph for the message
+				newP.classList.add("no_results")
+				parent.appendChild(newP)
+				newP.innerText = "Không có bác sĩ nào"
+				newP.style.marginTop = "50px";
+			}
+		}
+
+		searchName.addEventListener("keyup", function () {
+			findMatches();
 		});
 	</script>
-
 </body>
 
 </html>

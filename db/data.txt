@@ -87,3 +87,26 @@ $("#specialty").on("change", function () {
 				});
 
 			});
+			
+			
+			$(document).ready(function () {
+			$("#btnFind").click(function () {
+				var id = $("#specialty option:selected").val();
+				console.log("Test: " + id);
+				$("#accordion").empty();
+
+				$.ajax({
+					url: "/patients/getDoctors?id=" + id,
+					type: "GET",
+					error: function () {
+						alert("Fail");
+					},
+					success: function (data, statusText, xhr) {
+						alert("OK");
+					}
+				});
+
+			});
+
+
+		});
