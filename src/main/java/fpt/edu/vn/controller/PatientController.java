@@ -102,13 +102,4 @@ public class PatientController {
 		return "redirect:/appointments/new/" + doctorId;
 	}
 
-	@GetMapping("/getDoctors")
-	@ResponseBody
-	public List<Doctor> findDoctorBySpecialtyId(@RequestParam("id") String id) {
-		List<Doctor> list = userService.getAllDoctorsBySpecialty(id);
-//		
-//		Gson gsonBuilder = new GsonBuilder().create();
-//        String doctorlistJson = gsonBuilder.toJson(list);
-	
-	}
 }

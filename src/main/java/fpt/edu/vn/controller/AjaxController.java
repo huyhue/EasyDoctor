@@ -64,5 +64,4 @@ public class AjaxController {
 		return notificationService.getUnreadNotifications(currentUser.getId()).size();
 	}
 	
-	
 }
