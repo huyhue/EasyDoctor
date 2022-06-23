@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	th:replace="~{fragments/layout :: layout (~{::body},'forum','Diễn đàn')}">
+
+<body>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap');
+
+		button:focus,
+		input:focus {
+			outline: none;
+			box-shadow: none;
+		}
+
+		a,
+		a:hover {
+			text-decoration: none;
+		}
+
+		body {
+			font-family: 'Nunito', sans-serif;
+		}
+
+		/*--------------------*/
+		.category-lists-slider {
+			position: relative;
+		}
+
+		#catgory-slider .swiper-slide {
+			width: auto;
+		}
+
+		.category-button {
+			text-align: center;
+			font-size: 13px;
+			font-weight: 700;
+			border: 2px solid #37a7f1;
+			background-color: #fff;
+			color: #37a7f1;
+			padding: 8px 28px;
+			border-radius: 50px;
+			display: inline-block;
+			cursor: pointer;
+			user-select: none;
+		}
+
+		.category-button.active {
+			background-color: #37a7f1;
+			color: #fff;
+		}
+
+		.slider-button {
+			width: 25px;
+			height: 25px;
+			background-color: #37a7f1;
+			box-shadow: 0px 2px 4px rgb(0 0 0 / 30%);
+			border-radius: 50%;
+			color: #fff;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 12px;
+			position: absolute;
+			top: 5px;
+			z-index: 1;
+			cursor: pointer;
+		}
+
+		.slider-button.slider-prev {
+			left: -30px;
+		}
+
+		.slider-button.slider-next {
+			right: -30px;
+		}
+
+		.slider-button.swiper-button-disabled {
+			opacity: 0;
+			visibility: hidden;
+		}
+
+		.box {
+			padding: 30px;
+			margin-top: 20px;
+			background-color: #d9eefd;
+			border-radius: 6px;
+			transition: 0.3s;
+			height: 100%;
+		}
+
+		.box i {
+			font-size: 40px;
+			margin-bottom: 20px;
+			color: #37a7f1;
+		}
+
+
+
+		@media (max-width: 575px) {
+			.category-lists-slider {
+				margin-top: 40px;
+			}
+
+			.category-button {
+				font-size: 12px;
+				padding: 4px 14px;
+			}
+
+			.slider-button {
+				top: -40px;
+			}
+
+			.slider-button.slider-prev {
+				left: inherit;
+				right: 32px;
+			}
+
+			.slider-button.slider-next {
+				right: 0;
+			}
+		}
+	</style>
+	<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+	<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+
+	<div class="row mt-5">
+		<div class="col-md-12 text-center">
+			<h2 style="color: #37a7f1;">
+				<b>Forum cho bệnh nhân và bác sĩ</b>
+			</h2>
+		</div>
+	</div>
+
+	<div class="row mt-3 justify-content-center">
+		<div class="col-md-12">
+			<div class="category-lists-slider">
+				<div class="swiper-container" id="catgory-slider">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">
+							<div class="category-button active" data-id="data1">
+								Tất cả bài đăng
+							</div>
+						</div>
+						<div class="swiper-slide" th:each="specialty : ${specialties}" >
+							<div class="category-button" data-id="data2">
+								[[${specialty.name}]]
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="slider-button slider-prev"><i class="fa fa-chevron-left"></i></div>
+				<div class="slider-button slider-next"><i class="fa fa-chevron-right"></i></div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		// ----------swiper-slider---------
+		var swiper = '';
+		$(window).on('load', function () {
+			swiper = new Swiper('#catgory-slider', {
+				loop: false,
+				slidesPerView: "auto",
+				allowTouchMove: false,
+				spaceBetween: 5,
+				mousewheel: true,
+				slideToClickedSlide: true,
+				centeredSlides: false,
+				navigation: {
+					nextEl: '.slider-next',
+					prevEl: '.slider-prev',
+				}
+			});
+		});
+
+
+		$(".category-button").click(function () {
+			$(".category-button").removeClass("active");
+			$(this).addClass('active');
+			var getid = $(this).data('id');
+			$(".data-text").removeClass('active');
+			$("#" + getid).addClass("active");
+		});
+
+	</script>
+</body>
+
+</html>

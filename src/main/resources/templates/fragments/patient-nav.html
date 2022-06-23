@@ -8,7 +8,7 @@
 				<a class="nav-link" th:href="@{/appointments/all}">Appointments</a>
 			</li>
 			<li class="nav-item" th:classappend="${activeLink} == 'forum' ? 'active':''">
-				<a class="nav-link">Forum</a>
+				<a class="nav-link" th:href="@{/forum/list}">Forum</a>
 			</li>
 			<li class="nav-item" th:classappend="${activeLink} == 'account' ? 'active':''">
 				<a class="nav-link" th:href="@{'/patients/' + ${#authentication.getPrincipal().getId()}}">My account</a>

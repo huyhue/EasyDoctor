@@ -14,8 +14,8 @@
                    th:classappend="${activeLink} == 'availability' ? 'active':''">Working plan</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" 
-                   th:classappend="${activeLink} == 'availability' ? 'active':''">Forum</a>
+                <a class="nav-link" th:href="@{/forum/list}"
+                   th:classappend="${activeLink} == 'forum' ? 'active':''">Forum</a>
             </li>
             <li class="nav-item" th:classappend="${activeLink} == 'account' ? 'active':''">
                 <a class="nav-link" th:href="@{'/doctors/' + ${#authentication.getPrincipal().getId()}}" 
