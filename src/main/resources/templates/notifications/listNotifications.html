@@ -1,59 +1,97 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout (~{::body},'notifications','Notifications List')}"
-      xmlns:sec="http://www.w3.org/1999/xhtml">
+	th:replace="~{fragments/layout :: layout (~{::body},'notifications','Notifications List')}"
+	xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <body>
+	<div class="row mt-5 mb-3">
+		<div class="col-md-12 text-center">
+			<h2 style="color: #37a7f1;">
+				<b>Thông báo EasyDoctor</b>
+			</h2>
+		</div>
+	</div>
+	<div class="row align-items-center justify-content-center">
 
+		<div class="col-md-2">
+			<select id="reads" class="form-control filter">
+				<option value="true"> Đã đọc</option>
+				<option value="false"> Chưa đọc</option>
+			</select>
+		</div>
+		<div class="col-md-2">
+			<form th:action="@{/notifications/markAllAsRead}" id="markAllAsRead" method="POST">
+				<a class="btn btn-info" href="#"
+					onclick="document.getElementById('markAllAsRead').submit(); return false;"><i
+						class="fas fa-solid fa-book-open"></i> Đọc tất cả</a>
+			</form>
+		</div>
+	</div>
 
-<div class="row align-items-center justify-content-center" style="margin-top: 50px">
+	<div class="row align-items-center justify-content-center" style="margin-top: 20px">
+		<div>
+			<table id="notifications" class="table table-striped text-center mt-2">
+				<thead class="thead-light">
+					<tr>
+						<th> Thời gian</th>
+						<th> Tiêu đề</th>
+						<th> Nội dung</th>
+						<th style="display: none;"> Đọc</th>
+						<th> Xem</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${notifications.size()==0}">
+						<td colspan="5"> Không có thông báo nào</td>
+					</tr>
+					<tr th:each="notification : ${notifications}">
+						<td><span th:text="${#dates.format(notification.createdAt, 'dd-MMM-yyyy')}"> thoi gian </span>
+						</td>
+						<td><span th:text="${notification.title}"> Noi dung</span></td>
+						<td><span th:text="${notification.message}"> Thong tin</span></td>
+						<td style="display: none;"><span th:text="${notification.isRead}"> Doc</span></td>
+						<td>
+							<a th:if="${notification.isRead == true}" th:href="@{'/notifications/'+${notification.id}}">
+								<i class="fas fa-eye fa-2x"></i>
+							</a>
+							<a th:if="${notification.isRead == false}"
+								th:href="@{'/notifications/'+${notification.id}}">
+								<i class="fas fa-eye-slash fa-2x"></i>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 
-
-    <div>
-        <div style="text-align:right">
-            <form th:action="@{/notifications/markAllAsRead}" id="markAllAsRead" method="POST">
-                <a class="btn btn-success" href="#"
-                   onclick="document.getElementById('markAllAsRead').submit(); return false;">Mark All As Read</a>
-            </form>
-        </div>
-        <table id="notifications" class="table table-striped text-center mt-2">
-
-            <thead class="thead-dark">
-
-            <tr>
-                <th> Date</th>
-                <th> Title</th>
-                <th> Message</th>
-                <th> Action</th>
-                <th> Seen</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:if="${notifications.size()==0}">
-                <td colspan="5"> No notifications available</td>
-            </tr>
-            <tr th:each="notification : ${notifications}">
-                <td><span th:text="${#dates.format(notification.createdAt, 'dd-MMM-yyyy')}"> 01-01-2019 </span></td>
-                <td><span th:text="${notification.title}"> New appointment </span></td>
-                <td><span th:text="${notification.message}"> meesage</span></td>
-                <td><a th:href="@{'/notifications/'+${notification.id}}">See</a></td>
-                <td><span th:text="${notification.isRead()}">true</span></td>
-
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-</div>
-
-<script>
-    $(document).ready(function () {
-        $('#notifications').DataTable({
-            "order": [
-                [0, "desc"]
-            ]
-        });
-    });
-</script>
+	<script>
+		$(document).ready(function () {
+			$('#notifications').DataTable({
+				"dom": '<"toolbar">lrtip',
+				"bFilter": true,
+				"bLengthChange": false,
+				"order": [
+					[0, "desc"]
+				],
+				"initComplete": function () {
+					this.api().columns([3]).every(function () {
+						var column = this;
+						column.draw();
+						var select = $("#reads")
+							.on('change', function () {
+								var searchString = $(this).val();
+								console.log("test: "+searchString)
+								searchString = searchString.replace('<span>', '');
+								searchString = searchString.replace('</span>', '');
+								var val = $.fn.dataTable.util.escapeRegex(searchString);
+								column.search(val ? '^' + val + '$' : '', true, false).draw();
+							});
+					});
+				}
+			});
+		});
+	</script>
 </body>
+
 </html>

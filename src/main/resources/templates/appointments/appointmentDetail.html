@@ -196,22 +196,21 @@
 					</td>
 				</tr>
 				<tr>
-					<td><b>QR Code</b></td>
+					<td>
+					<a id="download" download="easyQR-code.png">
+							<button class="btn btn-primary" id="button-download-qr-code" type="button"
+								style="margin-right: 3px;background: rgb(255, 128, 64);border-style: solid;border-color: rgb(255,73,41);"
+								onClick="download()" download=""><i class="fas fa-download"></i> Download
+							</button>
+						</a>
+					</td>
 					<td>
 						<div id="qrcode">
 							<canvas id="qr-code"></canvas>
 						</div>
-						<a id="download" download="easyQR-code.png">
-							<button class="btn btn-primary" id="button-download-qr-code" type="button"
-								style="margin-right: 3px;background: rgb(255,73,41);border-style: solid;border-color: rgb(255,73,41);"
-								onClick="download()" download="">Download
-							</button>
-						</a>
 					</td>
 				</tr>
-
 			</table>
-
 		</div>
 		<div class="col-md-6">
 

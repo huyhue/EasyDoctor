@@ -4,16 +4,23 @@
       xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <body>
-<div class="row" style="margin-top: 50px" ;>
-    <div class="col-md-10 text-center">
-        <h2>Change Working Plan</h2>
-        <table class="table table-striped text-center">
-            <thead class="thead-dark">
 
+<div class="row mt-5">
+		<div class="col-md-12 text-center">
+			<h2 style="color: #37a7f1;">
+				<b>Thay Đổi Kế Hoạch Cho Bác Sĩ</b>
+			</h2>
+		</div>
+	</div>
+	
+<div class="row mt-3 justify-content-center">
+    <div class="col-md-10">
+        <table class="table table-striped text-center">
+            <thead class="thead-light">
             <tr>
-                <th>Day</th>
-                <th>Start</th>
-                <th>End</th>
+                <th>Thứ</th>
+                <th>Thời gian bắt đầu</th>
+                <th>Thời gian kết thúc</th>
                 <th>Breaks</th>
             </tr>
             </thead>
@@ -21,64 +28,64 @@
                 <input type="hidden" th:field="*{id}" th:value="${plan.id}">
                 <input type="hidden" th:field="*{doctor.id}" th:value="${plan.doctor.id}">
                 <tr>
-                    <td>Monday</td>
-                    <td><input type="time" th:field="*{monday.workingHours.start}"
+                    <td>Thứ Hai</td>
+                    <td><input type="time" th:field="*{monday.workingHours.start}" class="form-control" 
                                th:value="${plan.monday.workingHours.start}"></td>
-                    <td><input type="time" th:field="*{monday.workingHours.end}"
+                    <td><input type="time" th:field="*{monday.workingHours.end}"  class="form-control" 
                                th:value="${plan.monday.workingHours.start}"></td>
                     <td><span th:text="${plan.monday.breaks.size()}">3</span></td>
                 </tr>
                 <tr>
-                    <td>Tuesday</td>
-                    <td><input type="time" th:field="*{tuesday.workingHours.start}"
+                    <td>Thứ Ba</td>
+                    <td><input type="time" th:field="*{tuesday.workingHours.start}" class="form-control"
                                th:value="${plan.tuesday.workingHours.start}"></td>
-                    <td><input type="time" th:field="*{tuesday.workingHours.end}"
+                    <td><input type="time" th:field="*{tuesday.workingHours.end}" class="form-control"
                                th:value="${plan.tuesday.workingHours.start}"></td>
                     <td><span th:text="${plan.tuesday.breaks.size()}">3</span></td>
                 </tr>
                 <tr>
-                    <td>Wednesday</td>
-                    <td><input type="time" th:field="*{wednesday.workingHours.start}"
+                    <td>Thứ Tư</td>
+                    <td><input type="time" th:field="*{wednesday.workingHours.start}" class="form-control"
                                th:value="${plan.wednesday.workingHours.start}"></td>
-                    <td><input type="time" th:field="*{wednesday.workingHours.end}"
+                    <td><input type="time" th:field="*{wednesday.workingHours.end}" class="form-control"
                                th:value="${plan.wednesday.workingHours.start}"></td>
                     <td><span th:text="${plan.wednesday.breaks.size()}">3</span></td>
                 </tr>
                 <tr>
-                    <td>Thursday</td>
-                    <td><input type="time" th:field="*{thursday.workingHours.start}"
+                    <td>Thứ Năm</td>
+                    <td><input type="time" th:field="*{thursday.workingHours.start}" class="form-control"
                                th:value="${plan.thursday.workingHours.start}"></td>
-                    <td><input type="time" th:field="*{thursday.workingHours.end}"
+                    <td><input type="time" th:field="*{thursday.workingHours.end}" class="form-control"
                                th:value="${plan.thursday.workingHours.start}"></td>
                     <td><span th:text="${plan.thursday.breaks.size()}">3</span></td>
                 </tr>
                 <tr>
-                    <td>Friday</td>
-                    <td><input type="time" th:field="*{friday.workingHours.start}"
+                    <td>Thứ Sáu</td>
+                    <td><input type="time" th:field="*{friday.workingHours.start}" class="form-control"
                                th:value="${plan.friday.workingHours.start}"></td>
-                    <td><input type="time" th:field="*{friday.workingHours.end}"
+                    <td><input type="time" th:field="*{friday.workingHours.end}" class="form-control"
                                th:value="${plan.friday.workingHours.start}"></td>
                     <td><span th:text="${plan.friday.breaks.size()}">3</span></td>
                 </tr>
                 <tr>
-                    <td>Saturday</td>
-                    <td><input type="time" th:field="*{saturday.workingHours.start}"
+                    <td>Thứ Bảy</td>
+                    <td><input type="time" th:field="*{saturday.workingHours.start}" class="form-control"
                                th:value="${plan.saturday.workingHours.start}"></td>
-                    <td><input type="time" th:field="*{saturday.workingHours.end}"
+                    <td><input type="time" th:field="*{saturday.workingHours.end}" class="form-control"
                                th:value="${plan.saturday.workingHours.start}"></td>
                     <td><span th:text="${plan.saturday.breaks.size()}">3</span></td>
                 </tr>
                 <tr>
-                    <td>Sunday</td>
-                    <td><input type="time" th:field="*{sunday.workingHours.start}"
+                    <td>Chủ Nhật</td>
+                    <td><input type="time" th:field="*{sunday.workingHours.start}" class="form-control"
                                th:value="${plan.sunday.workingHours.start}"></td>
-                    <td><input type="time" th:field="*{sunday.workingHours.end}"
+                    <td><input type="time" th:field="*{sunday.workingHours.end}" class="form-control"
                                th:value="${plan.sunday.workingHours.start}"></td>
                     <td><span th:text="${plan.sunday.breaks.size()}">3</span></td>
                 </tr>
                 <tr>
                     <td colspan="4">
-                        <button type="submit" name="submit" value="value" class="btn btn-success">Save</button>
+                        <button type="submit" name="submit" value="value" class="btn btn-success">Lưu thay đổi</button>
                     </td>
                 </tr>
 
