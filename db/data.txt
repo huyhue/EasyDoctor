@@ -163,3 +163,20 @@ $("#specialty").on("change", function () {
 				'REJECTION_REQUESTED',
 				'REJECTED',
 				'EXCHANGE_REQUESTED'];
+				
+				function openTabs(el) {
+				var btn = el.currentTarget; // lắng nghe sự kiện và hiển thị các element
+				var electronic = btn.dataset.electronic; // lấy giá trị trong data-electronic
+				console.log(btn.value);
+				tabContent.forEach(function (el) {
+					el.classList.remove("active");
+				});
+				tabLinks.forEach(function (el) {
+					el.classList.remove("active");
+				});
+				document.querySelector("#" + electronic).classList.add("active");
+				btn.classList.add("active");
+
+
+
+			}

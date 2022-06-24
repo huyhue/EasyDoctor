@@ -57,146 +57,132 @@
 	</div>
 	<!-- Tab links -->
 	<div class="tabs">
-		<button class="tablinks active" value="ALL" data-electronic="allAppointment">Tất Cả (<span th:text="${appointments.size()}"> 60 </span>)</button>
-		<button class="tablinks" value="SCHEDULED" data-electronic="scheduled">Đã Lên Lịch ()</button>
-		<button class="tablinks" value="FINISHED" data-electronic="finished">Đã Kết Thúc ()</button>
-		<button class="tablinks" value="CONFIRMED" data-electronic="confirmed">Đã Xác Nhận ()</button>
-		<button class="tablinks" value="CANCELED" data-electronic="canceled">Đã Hủy ()</button>
-		<button class="tablinks" value="INVOICED" data-electronic="invoiced">In Hóa Đơn ()</button>
+		<button class="tablinks active" value="ALL" data-electronic="allAppointment">Tất Cả (<span
+				th:text="${appointments.size()}"> 60 </span>)</button>
+		<button class="tablinks" value="SCHEDULED" data-electronic="scheduled">Đã Lên Lịch (<span
+				class="count1"></span>)</button>
+		<button class="tablinks" value="FINISHED" data-electronic="finished">Đã Kết Thúc (<span
+				class="count2"></span>)</button>
+		<button class="tablinks" value="CONFIRMED" data-electronic="confirmed">Đã Xác Nhận (<span
+				class="count3"></span>)</button>
+		<button class="tablinks" value="CANCELED" data-electronic="canceled">Đã Hủy (<span
+				class="count4"></span>)</button>
+		<button class="tablinks" value="INVOICED" data-electronic="invoiced">In Hóa Đơn (<span
+				class="count5"></span>)</button>
 		<button class="tablinks" value="REJECTION_REQUESTED" data-electronic="rejection_requested">Yêu cầu từ chối
-			()</button>
-		<button class="tablinks" value="REJECTED" data-electronic="rejected">Đã từ chối ()</button>
+			(<span class="count6"></span>)</button>
+		<button class="tablinks" value="REJECTED" data-electronic="rejected">Đã từ chối (<span
+				class="count7"></span>)</button>
 	</div>
 
 	<!-- Tab content -->
-	<div class="wrapper_tabcontent">
-		<div id="allAppointment" class="tabcontent active">
-
-			<h3>Combo Trạm Hàn Hakko 936 + Sensor Hàn A1321</h3>
-		</div>
-
-		<div id="scheduled" class="tabcontent">
-			<h3>Raspberry Pi 4 Model B 2019</h3>
-		</div>
-
-		<div id="finished" class="tabcontent">
-			<h3>Module Khuếch Đại Âm Thanh Bluetooth Stereo 30W/40W Công Suất Cao XY-P40W</h3>
-		</div>
-		<div id="confirmed" class="tabcontent">
-			<h3>Raspberry Pi 4 Model B 2019</h3>
-		</div>
-
-		<div id="canceled" class="tabcontent">
-			<h3>Module Khuếch Đại Âm Thanh Bluetooth Stereo 30W/40W Công Suất Cao XY-P40W</h3>
-		</div>
-		<div id="invoiced" class="tabcontent">
-			<h3>Raspberry Pi 4 Model B invoiced</h3>
-		</div>
-
-		<div id="rejection_requested" class="tabcontent">
-			<h3>Module Khuếch Đại Âm Thanh Bluetooth rejection_requested 30W/40W Công Suất Cao XY-P40W</h3>
-		</div>
-		<div id="rejected" class="tabcontent">
-			<h3>Raspberry Pi 4 Model B rejected</h3>
-		</div>
+	<div class="wrapper_tabcontent" style="margin-top: 50px">
+		<table id="appointments" class="table text-center">
+			<thead class="thead-light">
+				<tr>
+					<th> Packages</th>
+					<th> Status</th>
+					<th> Start</th>
+					<th sec:authorize="!hasRole('ROLE_DOCTOR')"> Doctor</th>
+					<th sec:authorize="!hasRole('ROLE_PATIENT')"> Patient</th>
+					<th> Duration</th>
+					<th> Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${appointments == null}">
+					<td colspan="2"> Không có cuộc hẹn nào</td>
+				</tr>
+				<tr th:each="appointment : ${appointments}"
+					th:classappend="${appointment.status.name() == 'CANCELED' || appointment.status.name()  == 'FINISHED' || appointment.status.name()  == 'INVOICED' || appointment.status.name()  == 'REJECTION_REQUESTED' || appointment.status.name()  == 'REJECTED'} ? table-secondary : table-success">
+					<td><span th:text="${appointment.packages.name}"> Packages </span></td>
+					<td><span th:text="${appointment.status}" class="statusTable"> Scheduled </span></td>
+					<td><span th:text="${#temporals.format(appointment.start, 'yyyy-MM-dd HH:mm')}"> 21-01-2019
+							15:00</span>
+					</td>
+					<td sec:authorize="!hasRole('ROLE_DOCTOR')"><span th:text="${appointment.doctor.fullname}">
+							Doctor </span>
+					</td>
+					<td sec:authorize="!hasRole('ROLE_PATIENT')"><span th:text="${appointment.patient.fullname}">
+							Patient </span>
+					</td>
+					<td><span th:text="${appointment.packages.duration + ' min'}"> 60 min </span></td>
+					<td><a class="btn btn-secondary" th:href="@{'/appointments/' + ${appointment.id}}"
+							role="button">Details</a></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 
-	<!-- Page Content -->
-	<div class="row align-items-center justify-content-center" style="margin-top: 50px">
-		<div th:fragment="patientAppointments">
-
-			<table id="appointments" class="table text-center">
-				<thead class="thead-dark">
-					<tr>
-						<th> Packages</th>
-						<th> Status</th>
-						<th> Start</th>
-						<th sec:authorize="!hasRole('ROLE_DOCTOR')"> Doctor</th>
-						<th sec:authorize="!hasRole('ROLE_PATIENT')"> Patient</th>
-						<th> Duration</th>
-						<th> Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:if="${appointments == null}">
-						<td colspan="2"> No Appointments Available</td>
-					</tr>
-					<tr th:each="appointment : ${appointments}"
-						th:classappend="${appointment.status.name() == 'CANCELED' || appointment.status.name()  == 'FINISHED' || appointment.status.name()  == 'INVOICED' || appointment.status.name()  == 'REJECTION_REQUESTED' || appointment.status.name()  == 'REJECTED'} ? table-secondary : table-success">
-						<td><span th:text="${appointment.packages.name}"> Packages </span></td>
-						<td><span th:text="${appointment.status}"> Scheduled </span></td>
-						<td><span th:text="${#temporals.format(appointment.start, 'yyyy-MM-dd HH:mm')}"> 21-01-2019
-								15:00</span>
-						</td>
-						<td sec:authorize="!hasRole('ROLE_DOCTOR')"><span th:text="${appointment.doctor.fullname}">
-								Doctor </span>
-						</td>
-						<td sec:authorize="!hasRole('ROLE_PATIENT')"><span th:text="${appointment.patient.fullname}">
-								Patient </span>
-						</td>
-						<td><span th:text="${appointment.packages.duration + ' min'}"> 60 min </span></td>
-						<td><a class="btn btn-secondary" th:href="@{'/appointments/' + ${appointment.id}}"
-								role="button">Details</a></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-
-		<script>
-
-			var statuses = [
-				'FINISHED',
-				'CONFIRMED',
-				'INVOICED',
-				'CANCELED',
-				'DENIED',
-				'REJECTION_REQUESTED',
-				'REJECTED',
-				'EXCHANGE_REQUESTED'];
-
-
+	<script>
+		$(document).ready(function () {
+			showCount();
 			var tabLinks = document.querySelectorAll(".tablinks");
-			var tabContent = document.querySelectorAll(".tabcontent");
-
 			tabLinks.forEach(function (el) {
-				el.addEventListener("click", openTabs);
+				el.addEventListener("click", () => {
+					$('#appointments').DataTable({
+						destroy: true,
+						"bFilter": true,
+						"bLengthChange": true,
+						"order": [
+							[2, "asc"]
+						],
+						"initComplete": function () {
+							this.api().columns([1]).every(function () {
+								var column = this;
+								var searchString = el.value;
+								if (searchString == 'ALL') {
+									column.draw();
+								} else {
+									var val = $.fn.dataTable.util.escapeRegex(searchString);
+									column.search(val ? '^' + val + '$' : '', true, false).draw();
+								}
+							});
+						}
+					});
+					tabLinks.forEach(function (el) {
+						el.classList.remove("active");
+					});
+					el.classList.add("active");
+				});
 			});
+		});
 
-
-			function openTabs(el) {
-				var btn = el.currentTarget; // lắng nghe sự kiện và hiển thị các element
-				var electronic = btn.dataset.electronic; // lấy giá trị trong data-electronic
-				console.log(btn.value);
-				tabContent.forEach(function (el) {
-					el.classList.remove("active");
-				});
-				tabLinks.forEach(function (el) {
-					el.classList.remove("active");
-				});
-				document.querySelector("#" + electronic).classList.add("active");
-				btn.classList.add("active");
-
-				$('#appointments').DataTable({
-					"bFilter": true,
-					"bLengthChange": false,
-					"order": [
-						[2, "asc"]
-					],
-					"initComplete": function () {
-						this.api().columns([1]).every(function () {
-							var column = this;
-							var searchString = btn.value;
-							console.log( "test: "+searchString);
-							var val = $.fn.dataTable.util.escapeRegex(searchString);
-							column.search(val ? '^' + val + '$' : '', true, false).draw();
-						});
-					}
-				});
-
+		function showCount() {
+			var statusTable = document.querySelectorAll(".statusTable");
+			var count1 = 0, count2 = 0, count3 = 0, count4 = 0, count5 = 0, count6 = 0, count7 = 0;
+			for (var i = 0; i < statusTable.length; i++) {
+				if (statusTable[i].innerText == "SCHEDULED") {
+					count1++;
+				}
+				if (statusTable[i].innerText == "FINISHED") {
+					count2++;
+				}
+				if (statusTable[i].innerText == "CONFIRMED") {
+					count3++;
+				}
+				if (statusTable[i].innerText == "CANCELED") {
+					count4++;
+				}
+				if (statusTable[i].innerText == "INVOICED") {
+					count5++;
+				}
+				if (statusTable[i].innerText == "REJECTION_REQUESTED") {
+					count6++;
+				}
+				if (statusTable[i].innerText == "REJECTED") {
+					count7++;
+				}
 			}
-		</script>
-	</div>
-
+			$(".count1").text(count1);
+			$(".count2").text(count2);
+			$(".count3").text(count3);
+			$(".count4").text(count4);
+			$(".count5").text(count5);
+			$(".count6").text(count6);
+			$(".count7").text(count7);
+		}
+	</script>
 </body>
 
 </html>
