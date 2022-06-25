@@ -432,4 +432,28 @@ public class AppointmentServiceImpl implements AppointmentService {
     public int getNumberCanceledAppointmentByUserId(int userId) {
         return appointmentRepository.findScheduledByUserId(userId).size();
     }
+    
+    @Override
+    public long[] getCountAppointmentByStatus(int doctorId, String dateTime) {
+    	long count[] = new long[6];
+    	if (dateTime == "now") {
+    		count[0] = appointmentRepository.countAppointmentByStatus(doctorId);
+			/*
+			 * count[1] = appointmentRepository.countAppointmentByStatus(doctorId,
+			 * "FINISHED"); count[2] =
+			 * appointmentRepository.countAppointmentByStatus(doctorId, "CONFIRMED");
+			 * count[3] = appointmentRepository.countAppointmentByStatus(doctorId,
+			 * "CANCELED");
+			 */
+		}else {
+	        count[0] = 1;
+	        count[1] = 2;
+	        count[2] = 0;
+	        count[3] = 3;
+	        count[4] = 2;
+	        count[5] = 1;
+		}
+    	return count;
+    }
+    
 }

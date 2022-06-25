@@ -116,17 +116,18 @@ public class DoctorController {
 	@GetMapping("/availability")
 	public String showAvailability(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
 		model.addAttribute("plan", workingPlanService.getWorkingPlanByDoctorId(currentUser.getId()));
-		model.addAttribute("breakModel", new TimePeroid());
+//		model.addAttribute("breakModel", new TimePeroid());
 		return "doctors/doctorAvailability";
 	}
 
 	@PostMapping("/availability")
 	public String processWorkingPlanUpdate(@ModelAttribute("plan") WorkingPlan plan) {
 		workingPlanService.updateWorkingPlan(plan);
+		
 		return "redirect:/doctors/availability";
 	}
 
-	// http://localhost:8080/providers/availability/breakes/add
+	//xoa
 	@PostMapping("/availability/breakes/add")
 	public String processAddBreak(@ModelAttribute("breakModel") TimePeroid breakToAdd,
 			@RequestParam("planId") int planId, @RequestParam("dayOfWeek") String dayOfWeek) {
@@ -135,6 +136,7 @@ public class DoctorController {
 		return "redirect:/doctors/availability";
 	}
 
+	//xoa
 	@PostMapping("/availability/breakes/delete")
 	public String processDeleteBreak(@ModelAttribute("breakModel") TimePeroid breakToDelete,
 			@RequestParam("planId") int planId, @RequestParam("dayOfWeek") String dayOfWeek) {

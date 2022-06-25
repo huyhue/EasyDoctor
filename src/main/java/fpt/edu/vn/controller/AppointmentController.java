@@ -99,6 +99,7 @@ public class AppointmentController {
             model.addAttribute("appointments", appointmentService.getAppointmentByPatientId(currentUser.getId()));
         } else if (currentUser.hasRole("ROLE_DOCTOR")) {
             model.addAttribute("appointments", appointmentService.getAppointmentByDoctorId(currentUser.getId()));
+            model.addAttribute("values", appointmentService.getCountAppointmentByStatus(currentUser.getId(),"now"));
         }
 		return "appointments/listAppointments";
 	}

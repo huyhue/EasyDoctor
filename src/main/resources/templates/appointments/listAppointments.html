@@ -47,6 +47,15 @@
 		.tabcontent.active {
 			display: block;
 		}
+
+		canvas {
+			padding-left: 0;
+			padding-right: 0;
+			margin-left: auto;
+			margin-right: auto;
+			display: block;
+			width: 800px;
+		}
 	</style>
 	<div class="row mt-5 mb-3">
 		<div class="col-md-12 text-center">
@@ -55,6 +64,26 @@
 			</h2>
 		</div>
 	</div>
+
+	<th:block sec:authorize="hasRole('ROLE_DOCTOR')">
+		<div class="row mb-3">
+			<div class="col-md-3">
+				<form action="/insights" method="POST">
+					<div class="mb-3">
+						<label for="dateTime">Chọn ngày:</label>
+						<input type="date" class="form-control" id="dateTime" name="dateTime" />
+					</div>
+					<button type="submit" class="btn btn-outline-light" style="background-color: rgb(0, 128, 255)">
+						Thống kê
+					</button>
+				</form>
+			</div>
+			<div class="col-md-6">
+				<canvas id="myChart" style="width: 100%; max-width: 700px"></canvas>
+			</div>
+		</div>
+	</th:block>
+
 	<!-- Tab links -->
 	<div class="tabs">
 		<button class="tablinks active" value="ALL" data-electronic="allAppointment">Tất Cả (<span
@@ -113,7 +142,15 @@
 			</tbody>
 		</table>
 	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
 
+		var yValues = /*[[${values}]]*/ "values";
+		console.log("test value: " + yValues);
+
+		/*]]>*/
+	</script>
 	<script>
 		$(document).ready(function () {
 			showCount();
@@ -182,6 +219,34 @@
 			$(".count6").text(count6);
 			$(".count7").text(count7);
 		}
+
+		var xValues = ["Lên lịch", "Kết thúc", "Xác nhận", "Hủy","Hóa đơn","Yêu cầu từ chối"];
+		var barColors = [
+			"#b91d47",
+			"#00aba9",
+			"#2b5797",
+			"#e8c3b9",
+			"#1e7145",
+		];
+
+		new Chart("myChart", {
+			type: "doughnut",
+			data: {
+				labels: xValues,
+				datasets: [
+					{
+						backgroundColor: barColors,
+						data: yValues,
+					},
+				],
+			},
+			options: {
+				title: {
+					display: true,
+					text: "Biểu đồ số cuộc hẹn trong ngày",
+				},
+			},
+		});
 	</script>
 </body>
 

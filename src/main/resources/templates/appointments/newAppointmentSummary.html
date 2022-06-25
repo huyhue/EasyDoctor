@@ -4,17 +4,42 @@
 	xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <body>
+	<div class="row mt-5">
+		<div class="col-md-12 text-center">
+			<h2 style="color: #37a7f1;">
+				<b>Tóm Tắt Đặt Lịch Khám</b>
+			</h2>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="wizard my-3">
+				<ul class="nav nav-tabs justify-content-center">
+					<li class="nav-item flex-fill" title="Chọn gói khám">
+						<a class="nav-link rounded-circle mx-auto d-flex align-items-center justify-content-center">
+							<i class="fas fa-box fa-2x"></i>
+						</a>
+					</li>
+					<li class="nav-item flex-fill" title="Chọn thời gian">
+						<a class="nav-link rounded-circle mx-auto d-flex align-items-center justify-content-center">
+							<i class="fas fa-clock fa-2x"></i>
+						</a>
+					</li>
+					<li class="nav-item flex-fill" title="Tóm tắc cuộc hẹn">
+						<a
+							class="nav-link active rounded-circle mx-auto d-flex align-items-center justify-content-center">
+							<i class="fas fa-star fa-2x"></i>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
 	<div class="row justify-content-center">
 		<div class="col-md-6 mt-3">
 			<table class="table">
-				<thead>
-					<tr class="text-center">
-						<td colspan="2">
-							<h3>Tóm tắt đặt lịch khám</h3>
-						</td>
-					</tr>
-				</thead>
-
 				<tr>
 					<td><b>Date</b></td>
 					<td><span th:text="${#temporals.format(start, 'dd-MM-yyyy')}">10-01-2022</span></td>

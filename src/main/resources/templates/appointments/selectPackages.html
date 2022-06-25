@@ -3,7 +3,39 @@
 	xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <body>
-	<div class="row align-items-center justify-content-center" style="margin-top: 50px">
+	<div class="row mt-5">
+		<div class="col-md-12 text-center">
+			<h2 style="color: #37a7f1;">
+				<b>Chọn Gói Khám Bệnh</b>
+			</h2>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="wizard my-3">
+				<ul class="nav nav-tabs justify-content-center">
+					<li class="nav-item flex-fill" title="Chọn gói khám">
+						<a class="nav-link active rounded-circle mx-auto d-flex align-items-center justify-content-center">
+							<i class="fas fa-box fa-2x"></i>
+						</a>
+					</li>
+					<li class="nav-item flex-fill" title="Chọn thời gian">
+						<a class="nav-link rounded-circle mx-auto d-flex align-items-center justify-content-center">
+							<i class="fas fa-clock fa-2x"></i>
+						</a>
+					</li>
+					<li class="nav-item flex-fill" title="Tóm tắc cuộc hẹn">
+						<a class="nav-link rounded-circle mx-auto d-flex align-items-center justify-content-center">
+							<i class="fas fa-star fa-2x"></i>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="row align-items-center justify-content-center" style="margin-top: 20px">
 		<div th:if="${#lists.isEmpty(packages)}">
 			<span>
 				<h5>Bác sĩ chưa có packages nào. Vui lòng chọn bác sĩ khác.</h5>
@@ -21,7 +53,6 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
 </body>
 

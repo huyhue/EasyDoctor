@@ -64,4 +64,7 @@ public interface AppointmentService {
 	//Review
 	boolean isPatientAllowedToReview(int userId, int appointmentId);
 	void saveReviewByAppointment(Review revieww, int appointmentId);
+	
+	//Statitics
+	long[] getCountAppointmentByStatus(int doctorId, String dateTime);
 }
