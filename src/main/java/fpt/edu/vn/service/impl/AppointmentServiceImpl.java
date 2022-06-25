@@ -24,12 +24,16 @@ import fpt.edu.vn.service.NotificationService;
 import fpt.edu.vn.service.PackagesService;
 import fpt.edu.vn.service.UserService;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -422,38 +426,40 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public List<Appointment> getConfirmedAppointmentsByPatientId(int patientId) {
 		return appointmentRepository.findConfirmedByPatientId(patientId);
 	}
-	
-	@Override
-    public int getNumberScheduledAppointmentByUserId(int userId) {
-        return appointmentRepository.findCanceledByUserId(userId).size();
-    }
 
-    @Override
-    public int getNumberCanceledAppointmentByUserId(int userId) {
-        return appointmentRepository.findScheduledByUserId(userId).size();
-    }
-    
-    @Override
-    public long[] getCountAppointmentByStatus(int doctorId, String dateTime) {
-    	long count[] = new long[6];
-    	if (dateTime == "now") {
-    		count[0] = appointmentRepository.countAppointmentByStatus(doctorId);
-			/*
-			 * count[1] = appointmentRepository.countAppointmentByStatus(doctorId,
-			 * "FINISHED"); count[2] =
-			 * appointmentRepository.countAppointmentByStatus(doctorId, "CONFIRMED");
-			 * count[3] = appointmentRepository.countAppointmentByStatus(doctorId,
-			 * "CANCELED");
-			 */
-		}else {
-	        count[0] = 1;
-	        count[1] = 2;
-	        count[2] = 0;
-	        count[3] = 3;
-	        count[4] = 2;
-	        count[5] = 1;
+	@Override
+	public int getNumberScheduledAppointmentByUserId(int userId) {
+		return appointmentRepository.findCanceledByUserId(userId).size();
+	}
+
+	@Override
+	public int getNumberCanceledAppointmentByUserId(int userId) {
+		return appointmentRepository.findScheduledByUserId(userId).size();
+	}
+
+	@Override
+	public long[] getCountAppointmentByStatus(int doctorId, String dateTime) {
+		long count[] = new long[6];
+		Date date;
+		try {
+			if (dateTime == null) {
+				date = new Date();
+			}else {
+				DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				date = (Date) formatter.parse(dateTime);
+			}
+			
+			count[0] = appointmentRepository.countAppointmentByStatus(doctorId, date);
+			count[1] = appointmentRepository.countAppointmentByStatus1(doctorId, date);
+			count[2] = appointmentRepository.countAppointmentByStatus2(doctorId, date);
+			count[3] = appointmentRepository.countAppointmentByStatus3(doctorId, date);
+			count[4] = appointmentRepository.countAppointmentByStatus4(doctorId, date);
+			count[5] = appointmentRepository.countAppointmentByStatus5(doctorId, date);
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-    	return count;
-    }
-    
+		return count;
+	}
+
 }

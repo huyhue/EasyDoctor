@@ -68,10 +68,10 @@
 	<th:block sec:authorize="hasRole('ROLE_DOCTOR')">
 		<div class="row mb-3">
 			<div class="col-md-3">
-				<form action="/insights" method="POST">
+				<form action="/appointments/statities" method="POST">
 					<div class="mb-3">
 						<label for="dateTime">Chọn ngày:</label>
-						<input type="date" class="form-control" id="dateTime" name="dateTime" />
+						<input type="date" class="form-control" id="dateTimeC" name="dateTime" />
 					</div>
 					<button type="submit" class="btn btn-outline-light" style="background-color: rgb(0, 128, 255)">
 						Thống kê
@@ -153,6 +153,7 @@
 	</script>
 	<script>
 		$(document).ready(function () {
+			document.getElementById('dateTimeC').value = moment().format('YYYY-MM-DD');
 			showCount();
 			var tabLinks = document.querySelectorAll(".tablinks");
 			tabLinks.forEach(function (el) {
