@@ -156,8 +156,7 @@
       background-color: #4ba6c3;
       color: #fff;
     }
-    /*Progress appointment booking
-*/
+    /*Progress appointment booking*/
     .wizard,
     .wizard .nav-tabs,
     .wizard .nav-tabs .nav-item {
@@ -209,7 +208,7 @@
         transition: 0.1s ease-in-out;
     }
 
-    .nav-tabs .nav-item .nav-link.active:after {
+    .wizard .nav-tabs .nav-item .nav-link.active:after {
         content: " ";
         position: absolute;
         left: 50%;

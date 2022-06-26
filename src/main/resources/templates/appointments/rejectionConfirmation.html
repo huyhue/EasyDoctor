@@ -8,7 +8,7 @@
 	<div class="row align-items-center justify-content-center" style="margin-top: 50px">
 		<div th:if="${type eq 'request'}">
 			<div th:if="${result}" class="p-5 my-5 text-white shadow-lg rounded" style="background-color: rgb(0, 128, 255)">
-				<p>You succesfully requested rejection for this appointment. </p>
+				<h5>You succesfully requested rejection for this appointment. </h5>
 				<p>If doctor will confirm that it will be not invoiced.</p>
 			</div>
 
@@ -20,17 +20,17 @@
 
 		<div th:if="${type eq 'accept'}" class="p-5 my-5 text-white shadow-lg rounded" style="background-color: rgb(0, 128, 255)">
 			<div th:if="${result}">
-				<p>Appointment status has been succesfully set to rejected </p>
+				<h5>Appointment status has been succesfully set to rejected </h5>
 				<p>It will be not invoiced.</p>
 			</div>
 			<div th:if="${result==false}" class="p-5 my-2 text-white shadow-lg rounded" style="background-color: rgb(255, 0, 0)">
-				<p>Error occured!</p>
+				<h5>Đã xảy ra lỗi!</h5>
 				<p>Make sure that this appointments isn't already rejected</p>
 			</div>
 		</div>
 
 		<div sec:authorize="!isAuthenticated()" class="p-5 my-2 text-white shadow-lg rounded" style="background-color: rgb(255, 0, 0)">
-			<p>You can sign in <a th:href="@{/login}">here</a></p>
+			<h5>You can sign in <a th:href="@{/login}">here</a></h5>
 		</div>
 
 	</div>
