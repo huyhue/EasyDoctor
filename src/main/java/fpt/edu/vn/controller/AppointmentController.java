@@ -182,11 +182,12 @@ public class AppointmentController {
 		}
 	}
 
-	@PostMapping("/cancel")
+	@GetMapping("/cancel")
+	@ResponseBody
 	public String cancelAppointment(@RequestParam("appointmentId") int appointmentId,
 			@AuthenticationPrincipal CustomUserDetails currentUser) {
 		appointmentService.cancelUserAppointmentById(appointmentId, currentUser.getId());
-		return "redirect:/appointments/all";
+		return "200";
 	}
 
     @PostMapping("/reject")

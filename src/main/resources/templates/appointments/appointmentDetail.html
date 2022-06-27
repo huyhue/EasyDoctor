@@ -101,8 +101,8 @@
 								<option value="Khác">Khác</option>
 							</select>
 							<div class="form-group">
-								<input class="form-control" id="files" multiple
-                               name="files" placeholder="Upload Multiple Files" type="file"></input>
+								<input class="form-control" id="files" multiple name="files"
+									placeholder="Upload Multiple Files" type="file"></input>
 							</div>
 						</div>
 					</div>
@@ -173,7 +173,6 @@
 					<td><span th:text="${appointment.packages.description}">description</span></td>
 				</tr>
 
-
 				<tr>
 					<td><b>Price</b></td>
 					<td><span th:text="${appointment.packages.price}"> 50 </span> VND</td>
@@ -186,18 +185,15 @@
 				<tr>
 					<td><b>Cancellation</b></td>
 					<td th:if="${allowedToCancel}">
-						<form th:action="@{/appointments/cancel}" method='POST'>
-							<input type="hidden" name="appointmentId" th:value="${appointment.id}">
-							<input type="submit" class="btn btn-danger" value="Cancel" />
-						</form>
+						<input type="submit" id="cancel" class="btn btn-danger" value="Hủy cuộc hẹn" />
 					</td>
 					<td th:unless="${allowedToCancel}">
-						<p th:text="${cancelNotAllowedReason}">Reason why appointment cannot be cancelled.</p>
+						<p th:text="${cancelNotAllowedReason}">Lý do hủy.</p>
 					</td>
 				</tr>
 				<tr>
 					<td>
-					<a id="download" download="easyQR-code.png">
+						<a id="download" download="easyQR-code.png">
 							<button class="btn btn-primary" id="button-download-qr-code" type="button"
 								style="margin-right: 3px;background: rgb(255, 128, 64);border-style: solid;border-color: rgb(255,73,41);"
 								onClick="download()" download=""><i class="fas fa-download"></i> Download
@@ -294,6 +290,36 @@
 				.replace("image/png", "image/octet-stream");
 			download.setAttribute("href", qrImage);
 		}
+
+		$("#cancel").click(function () {
+			var appointmentId = $('#appointment_id').val();
+			$.confirm({
+				type: 'orange',
+				title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:orange;"></i> ' + 'Confirm!!',
+				content: 'Bạn có chắc chắn muốn xóa cuộc hẹn không?',
+				autoClose: 'No|8000',
+				buttons: {
+					Yes: function () {
+						console.log("OK"+appointmentId);
+						$.ajax({
+							url: "/appointments/cancel?appointmentId=" + appointmentId,
+							type: 'GET',
+							dataType: 'json',
+							success: function (data) {
+								location.reload();
+							},
+							error: function (xhr, status, error) {
+								console.log("Something Wrong!");
+								location.reload();
+							}
+						});
+					},
+					No: function () {
+						console.log("NOK");
+					}
+				}
+			});
+		});
 	</script>
 </body>
 
