@@ -23,9 +23,10 @@ import fpt.edu.vn.service.AppointmentService;
 import fpt.edu.vn.service.NotificationService;
 import fpt.edu.vn.service.PackagesService;
 import fpt.edu.vn.service.UserService;
+import fpt.edu.vn.service.WorkingPlanService;
 
+import java.sql.Time;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -34,6 +35,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -162,6 +164,23 @@ public class AppointmentServiceImpl implements AppointmentService {
 		TimePeroid timePeroid = new TimePeroid(start.toLocalTime(),
 				start.toLocalTime().plusMinutes(packages.getDuration()));
 		return getAvailableHours(doctorId, patientId, packagesId, start.toLocalDate()).contains(timePeroid);
+	}
+
+	@Override
+	public void cancelAppointmentByChangeWorkingPlan(int doctorId) {
+		List<Appointment> appointments = appointmentRepository.findScheduledByUserId(doctorId);
+		Doctor d = userService.getDoctorById(doctorId);
+		WorkingPlan workingPlan = d.getWorkingPlan();
+
+		for (Appointment appointment : appointments) {
+			TimePeroid selectedDay = workingPlan.getDay(appointment.getStart().getDayOfWeek().toString().toLowerCase())
+					.getWorkingHours();
+			List<Appointment> cancel = appointmentRepository.findAppointmentToCancel(appointment.getId(),
+					selectedDay.getStart().toString(), selectedDay.getEnd().toString());
+			if (cancel != null) {
+				cancelUserAppointmentById(appointment.getId(), doctorId);
+			}
+		}
 	}
 
 	@Override
@@ -444,11 +463,11 @@ public class AppointmentServiceImpl implements AppointmentService {
 		try {
 			if (dateTime == null) {
 				date = new Date();
-			}else {
+			} else {
 				DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 				date = (Date) formatter.parse(dateTime);
 			}
-			
+
 			count[0] = appointmentRepository.countAppointmentByStatus(doctorId, date);
 			count[1] = appointmentRepository.countAppointmentByStatus1(doctorId, date);
 			count[2] = appointmentRepository.countAppointmentByStatus2(doctorId, date);

@@ -37,6 +37,8 @@ public interface AppointmentService {
 	Appointment getAppointmentByIdWithAuthorization(int id);
 	Appointment getAppointmentById(int id);
 	
+	void cancelAppointmentByChangeWorkingPlan(int doctorId);
+	
 	//Cancel
 	String getCancelNotAllowedReason(int userId, int appointmentId);
 	List<Appointment> getCanceledAppointmentsByPatientIdForCurrentMonth(int patientId);

@@ -6,8 +6,10 @@ import org.springframework.data.repository.query.Param;
 
 import fpt.edu.vn.model.Appointment;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -66,4 +68,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
     
     @Query("select COUNT(a) from Appointment a where a.doctor.id = :doctorId and DATE(a.start) =:date and a.status = 'REJECTION_REQUESTED'")
     int countAppointmentByStatus5(@Param("doctorId") int doctorId, @Param("date") Date date);
+    
+    @Query("select a from Appointment a where a.id = :id and TIME(a.start) >=:timeStart and TIME(a.end) <=:timeEnd")
+    List<Appointment> findAppointmentToCancel(@Param("id") int id, @Param("timeStart") String timeStart, @Param("timeEnd") String timeEnd);
 }

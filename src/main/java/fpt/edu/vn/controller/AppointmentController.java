@@ -1,14 +1,11 @@
 package fpt.edu.vn.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -25,7 +22,6 @@ import fpt.edu.vn.service.OTPService;
 import fpt.edu.vn.service.PackagesService;
 import fpt.edu.vn.service.UserService;
 
-import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
@@ -240,17 +236,6 @@ public class AppointmentController {
     public Boolean getActiveUsers(@RequestParam("appointmentId") int appointmentId, @RequestParam("userId") int userId) {
     	boolean active = appointmentService.getActiveUserByAppointment(appointmentId, userId);
     	return active;
-    }
-    
-    //Chưa xài
-    @RequestMapping(value = "/messages/search", method = RequestMethod.POST)
-    @ResponseBody
-    public String searchMessage(@RequestParam("content") String content) {
-    	List<ChatMessage> list = appointmentService.searchContentInMessages(content);
-		
-		Gson gsonBuilder = new GsonBuilder().create();
-        String messagelistJson = gsonBuilder.toJson(list);
-    	return messagelistJson;
     }
 
 	public static String formatDuration(Duration duration) {

@@ -121,9 +121,9 @@ public class DoctorController {
 	}
 
 	@PostMapping("/availability")
-	public String processWorkingPlanUpdate(@ModelAttribute("plan") WorkingPlan plan) {
+	public String processWorkingPlanUpdate(@ModelAttribute("plan") WorkingPlan plan, @AuthenticationPrincipal CustomUserDetails currentUser) {
 		workingPlanService.updateWorkingPlan(plan);
-		
+		appointmentService.cancelAppointmentByChangeWorkingPlan(currentUser.getId());
 		return "redirect:/doctors/availability";
 	}
 
