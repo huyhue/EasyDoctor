@@ -27,7 +27,8 @@ public class AdminController {
 		this.userService = userService;
 		this.emailService = emailService;
 	}
-
+	
+//	Redirect Page
 	@GetMapping("/home")
 	public String showHome(Model model) {
 		model.addAttribute("totalUniversity", 5);
@@ -36,6 +37,12 @@ public class AdminController {
 		model.addAttribute("totalUrl", 5);
 		return "admin/home";
 	}
+	
+	@GetMapping("/packages")
+	public String viewPackage(Model model) {
+		return "admin/packages";
+	}
 
+//	Handle Ajax
 	
 }
