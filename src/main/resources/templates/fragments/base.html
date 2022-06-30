@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="/plugins/summernote/summernote-bs4.min.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<div layout:fragment="css"></div>
 </head>
 
@@ -107,19 +108,19 @@
 						</li>
 
 
-						<li class="nav-item" id="nav-userId"><a href="javascript:void(0);" class="nav-link"> <i
+						<li class="nav-item" id="nav-clinicId"><a href="javascript:void(0);" class="nav-link"> <i
 									class="nav-icon fa fa fa-suitcase"></i>
 								<p>
 									Clinic <i class="fas fa-angle-left right"></i>
 								</p>
 							</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item"><a th:href="@{/admin/viewUser}" class="nav-link" id="nav-viewUser">
+								<li class="nav-item"><a th:href="@{/admin/clinics}" class="nav-link" id="nav-clinics">
 										<i class="far fa-circle nav-icon"></i>
 										<p>Add Clinic</p>
 									</a>
 								</li>
-								<li class="nav-item"><a th:href="@{/admin/packages}" class="nav-link" id="nav-viewUser">
+								<li class="nav-item"><a th:href="@{/admin/packages}" class="nav-link" id="nav-packages">
 										<i class="far fa-circle nav-icon"></i>
 										<p>Add Package</p>
 									</a>

@@ -12,4 +12,6 @@ public interface PackagesRepository extends JpaRepository<Packages, Integer> {
 	
     @Query("select p from Packages p inner join p.doctors d where d.id in :doctorId")
     List<Packages> findPackagesByDoctorId(@Param("doctorId") int doctorId);
+    
+    Packages findByName(String name);
 }

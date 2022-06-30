@@ -23,9 +23,7 @@ import fpt.edu.vn.service.AppointmentService;
 import fpt.edu.vn.service.NotificationService;
 import fpt.edu.vn.service.PackagesService;
 import fpt.edu.vn.service.UserService;
-import fpt.edu.vn.service.WorkingPlanService;
 
-import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -35,7 +33,6 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 @Service

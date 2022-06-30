@@ -211,67 +211,6 @@ function sendMessage(event) {
 	event.preventDefault();
 }
 
-/*function searchMessage(event) {
-	var content = searchInput.value.trim();
-	$.ajax({
-		url: "/appointments/messages/search",
-		type: "POST",
-		data: {
-			content: content
-		},
-		error: function() {
-
-		},
-		success: function(data) {
-			console.log("Search data: " + data);
-			if (data != null && data != undefined) {
-				var obj = JSON.parse(data);
-				var len = obj.length;
-				for (let i = 0; i < len; i++) {
-					// Add to MessageArea
-					let messageElement = document.createElement('div');
-					messageElement.classList.add('row', 'msg_container', 'base_receive');
-
-					let messageElement0 = document.createElement('div');
-					messageElement0.classList.add('col-md-1', 'col-xs-1');
-					messageElement.appendChild(messageElement0);
-
-					let avatarElement = document.createElement('i');
-					avatarElement.classList.add('chat-avatar');
-					let avatarText = document.createTextNode(obj[i].sender[0]);
-					avatarElement.appendChild(avatarText);
-					avatarElement.style['background-color'] = getAvatarColor(obj[i].sender);
-					messageElement0.appendChild(avatarElement);
-
-					let messageElement1 = document.createElement('div');
-					messageElement1.classList.add('col-md-11', 'col-xs-11');
-					messageElement.appendChild(messageElement1);
-
-					let messageElement2 = document.createElement('div');
-					messageElement2.classList.add('messages', 'msg_receive');
-					messageElement1.appendChild(messageElement2);
-
-					let textElement = document.createElement('p');
-					let messageText = document.createTextNode("Search: "+obj[i].content);
-					textElement.appendChild(messageText);
-					messageElement2.appendChild(textElement);
-
-					let usernameElement = document.createElement('span');
-					let usernameText = document.createTextNode(obj[i].role + " vào lúc " + obj[i].createdAt);
-					usernameElement.appendChild(usernameText);
-					messageElement2.appendChild(usernameElement);
-
-					messageArea.appendChild(messageElement);
-				}
-				messageArea.scrollTop = messageArea.scrollHeight;
-			}
-			
-		},
-	});
-}
-*/
-
-
 function getAvatarColor(messageSender) {
 	var hash = 0;
 	for (var i = 0; i < messageSender.length; i++) {
@@ -282,4 +221,3 @@ function getAvatarColor(messageSender) {
 	return colors[index];
 }
 messageForm.addEventListener('submit', sendMessage, true)
-/*searchForm.addEventListener('submit', searchMessage, true)*/

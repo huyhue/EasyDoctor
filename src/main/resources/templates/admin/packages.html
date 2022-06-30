@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org" 
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	th:replace="~{fragments/base :: base (~{::body},'Packages')}">
+
 <body>
 	<div class="content-header" id="scroll">
 		<div class="container-fluid">
@@ -67,14 +67,14 @@
 						<div class="form-group">
 							<label>Cancelable by patient ?<span class="errorMsg">*</span></label><br>
 							<div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="editable" id="option1" value="1">
-                                <label class="form-check-label" for="option1">Yes</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="editable" id="option2" value="0">
-                                <label class="form-check-label" for="option2">No</label>
-                            </div>
-							<span class="errorMsg" id="errorMsgUserName"></span>
+								<input class="form-check-input" type="radio" id="option1" name="editable" value="True">
+								<label class="form-check-label" for="option1">Yes</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" id="option2" name="editable" value="False">
+								<label class="form-check-label" for="option2">No</label>
+							</div>
+							<span class="errorMsg" id="errorMsgEditable"></span>
 						</div>
 					</div>
 				</div>
@@ -82,14 +82,14 @@
 				<div class="margin">
 					<div class="btn-group">
 						<button style="color: #ffffff;" type="button" class="btn btn-block bg-gradient-info btn-sm"
-							id="btn-uni-save">
+							id="btn-save">
 							<i class="far fa-save"></i> Save
 						</button>
 					</div>
 
 					<div class="btn-group">
 						<button style="color: #ffffff;" type="button" class="btn btn-block bg-gradient-warning btn-sm"
-							id="btn-uni-reset">
+							id="btn-reset">
 							<i class="fas fa-sync"></i> Reset
 						</button>
 					</div>
@@ -112,15 +112,15 @@
 			</div>
 			<!-- /.card-header -->
 			<div class="card-body" style="display: block;">
-				<table class="table table-bordered" id="tbl-university">
+				<table class="table table-bordered" id="tbl-packages">
 					<thead>
 						<tr style="text-align:center;">
 							<th style="width: 10px">#</th>
 							<th>Name</th>
 							<th>Price</th>
 							<th>Duration</th>
-							<th>Description</th>
 							<th>Cancelable</th>
+							<th>Description</th>
 							<th style="width: 100px">Action</th>
 						</tr>
 					</thead>
@@ -132,33 +132,232 @@
 		</div>
 	</div>
 
-<div layout:fragment="script">
 	<script type="text/javascript">
-	
-	
-	
-	
-	
-	
+		$(document).ready(function () {
+			$("#nav-packages").addClass("active");
+			$("#nav-clinicId").addClass("active menu-is-opening menu-open");
+
+			var i = 0;
+			var table = $('#tbl-packages').DataTable({
+				"sAjaxSource": "/admin/getListPackages",
+				"sAjaxDataProp": "",
+				"aoColumns": [
+					{
+						"mData": "id",
+						"render": function (data, type, row) {
+							i += 1;
+							return i;
+						}
+					}, {
+						"mData": "name"
+					}, {
+						"mData": "price"
+					}, {
+						"mData": "duration"
+					}, {
+						"mData": "editable"
+					}, {
+						"mData": "description"
+					}, {
+						"className": "dt-btn",
+						"render": function () {
+							return '<div class="btn-group btn-group-sm"> <a href="#" class="btn btn-info" id="editUnID"><i class="fas fa-user-edit"></i></a><a href="#" class="btn btn-danger" id="deleteUnID"><i class="fas fa-trash"></i></a></div>';
+						}
+					}],
+				"fnCreatedRow": function (nRow, aData, iDataIndex) {
+					$('td:eq(1)', nRow).attr("data-id", aData.id);
+				}
+			});
+
+			$("#btn-save").click(function () {
+				if (dataValidation()) {
+					var uniList = {};
+					uniList.name = $("#name").val();
+					uniList.price = $("#price").val();
+					uniList.duration = $("#duration").val();
+					uniList.editable = $("input[name='editable']:checked").val();
+					uniList.description = $("#description").val();
+					uniList.id = $("#updateId").val();
+					$.ajax({
+						type: "POST",
+						contentType: "application/json",
+						url: "/admin/savePackages",
+						data: JSON.stringify(uniList),
+						timeout: 100000,
+						async: true,
+						dataType: 'json',
+						success: function (data) {
+							if (data.msgCode == '200') {
+								$.confirm({
+									type: 'green',
+									title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
+									content: 'Save successfully.',
+									buttons: {
+										ok: function () { }
+									}
+								});
+								i = 0;
+								table.ajax.reload();
+								resetText();
+							} else if (data.msgCode == '205') {
+								$.confirm({
+									type: 'green',
+									title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
+									content: 'Update successfully.',
+									buttons: {
+										ok: function () { }
+									}
+								});
+								i = 0;
+								table.ajax.reload();
+								resetText();
+							} else if (data.msgCode == "exitName") {
+								$("#errorMsgName").text("Name already exit!!");
+								$("#name").css('border', '1px solid red');
+								$("#name").focus();
+							}
+						},
+						error: function (
+							xhr,
+							status,
+							error) {
+							showCustomAlert('D', "Sorry,Something wrong.Please contact with IT Team!!");
+						}
+					});
+				}
+			});
+
+			function dataValidation() {
+				var status = true;
+				var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+
+				if ($("#name").val() == "") {
+					status = false;
+					$("#errorMsgName").text("Required Field!!");
+					$("#name").css('border', '1px solid red');
+					$("#name").focus();
+					return status;
+				}
+				return status;
+			}
+
+			function resetText() {
+				$("#name").val('');
+				$("#errorMsgName").text("");
+				$("#name").css('border', '1px solid #CED4DA');
+
+				$("#price").val('');
+				$("#errorMsgPrice").text("");
+				$("#price").css('border', '1px solid #CED4DA');
+
+				$("#duration").val('');
+				$("#errorMsgDuration").text("");
+				$("#duration").css('border', '1px solid #CED4DA');
+
+				$("#option1").prop('checked', false);
+				$("#option2").prop('checked', false);
+				$("#errorMsgEditable").text("");
+
+				$("#description").val('');
+				$("#errorMsgDescription").text("");
+				$("#description").css('border', '1px solid #CED4DA');
+
+				$("#updateId").val('');
+			}
+
+			$("#btn-reset").click(function () {
+				resetText();
+			});
+
+			$('#tbl-packages tbody').on('click', '#deleteUnID', function () {
+				var curRow = $(this).closest('tr');
+				var uniId = curRow.find('td:eq(1)').attr("data-id");
+				
+				if (uniId != '') {
+					$.confirm({
+						type: 'orange',
+						title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:orange;"></i> ' + 'Confirm!!',
+						content: 'Do you want to delete?',
+						buttons: {
+							Yes: function () {
+								$.ajax({
+									url: "/admin/deletePackages?id=" + uniId,
+									type: 'GET',
+									dataType: 'json',
+									success: function (data) {
+										if (data.msgCode == '200') {
+											i = 0;
+											$.confirm({
+												type: 'green',
+												title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
+												content: 'Delete successfully.',
+												buttons: {
+													ok: function () { }
+												}
+											});
+											table.ajax.reload();
+										}
+									},
+									error: function (xhr, status, error) {
+										showAlertByType('Something Wrong!', "F");
+									}
+								});
+							},
+							No: function () {}
+						}
+					});
+				}
+			});
+			
+			$('#tbl-packages tbody').on('click', '#editUnID', function () {
+				var curRow = $(this).closest('tr');
+				var id = curRow.find('td:eq(1)').attr("data-id");
+				var name = curRow.find('td:eq(1)').text();
+				var price = curRow.find('td:eq(2)').text();
+				var duration = curRow.find('td:eq(3)').text();
+				var editable = curRow.find('td:eq(4)').text();
+				var description = curRow.find('td:eq(5)').text();
+    
+				$("#updateId").val(id);
+				$("#name").val(name);
+				$("#price").val(price);
+				$("#duration").val(duration);
+				$("#description").val(description);
+				
+				console.log("Test 1: " + editable);
+				if(editable == 'true'){
+					console.log("Test editable: " + editable);
+					 $("#option1").prop('checked', true);
+				}
+				else{
+					$("#option2").prop('checked', true);
+				}
+				
+				$('html, body').animate({
+					scrollTop: $('#scroll').offset().top
+				}, 500);
+			});
+
+		});
 	</script>
-</div>
 
-<div layout:fragment="css">
-	<style>
-		.errorMsg {
-			color: red;
-			font-size: 13px;
-		}
+	<div layout:fragment="css">
+		<style>
+			.errorMsg {
+				color: red;
+				font-size: 13px;
+			}
 
-		table.dataTable thead th,
-		table.dataTable thead td {
-			border-bottom: 1px solid #DEE2E6;
-		}
+			table.dataTable thead th,
+			table.dataTable thead td {
+				border-bottom: 1px solid #DEE2E6;
+			}
 
-		table.dataTable.no-footer {
-			border-bottom: 1px solid #DEE2E6;
-		}
-	</style>
-</div>
+			table.dataTable.no-footer {
+				border-bottom: 1px solid #DEE2E6;
+			}
+		</style>
+	</div>
 </body>
+
 </html>

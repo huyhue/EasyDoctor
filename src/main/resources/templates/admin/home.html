@@ -1,151 +1,205 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	th:replace="~{fragments/base :: base (~{::body},'Admin Home')}">
+
 <body>
-<div>
-	<div class="content-header">
+	<div>
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h4 class="m-0">DashBoard</h4>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a th:href="@{/admin/home}">Home</a></li>
+							<li class="breadcrumb-item active">Dashboard</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="container-fluid">
-			<div class="row mb-2">
-				<div class="col-sm-6">
-					<h4 class="m-0">DashBoard hello</h4>
-				</div>
-				<div class="col-sm-6">
-					<ol class="breadcrumb float-sm-right">
-						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Home</a></li>
-						<li class="breadcrumb-item active">Dashboard</li>
-					</ol>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-12 col-sm-6 col-md-3">
-				<div class="info-box">
-					<span class="info-box-icon bg-info elevation-1"><i class="fa fa-users"></i></span>
-					<div class="info-box-content">
-						<span class="info-box-text">Number Of User</span> <span
-							class="info-box-number" th:text="${totalUniversity}"> 
-						</span>
+			<div class="row">
+				<div class="col-12 col-sm-6 col-md-3">
+					<div class="info-box">
+						<span class="info-box-icon bg-info elevation-1"><i class="fa fa-users"></i></span>
+						<div class="info-box-content">
+							<span class="info-box-text">Number Of Patient</span> <span class="info-box-number"
+								th:text="${totalPatient}">
+							</span>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="col-12 col-sm-6 col-md-3">
-				<div class="info-box mb-3">
-					<span class="info-box-icon bg-danger elevation-1"><i class="fa fa-user-md"></i></span>
+				<div class="col-12 col-sm-6 col-md-3">
+					<div class="info-box mb-3">
+						<span class="info-box-icon bg-danger elevation-1"><i class="fa fa-user-md"></i></span>
 
-					<div class="info-box-content">
-						<span class="info-box-text">Number Of Doctor</span> <span
-							class="info-box-number" th:text="${totalContact}"></span>
+						<div class="info-box-content">
+							<span class="info-box-text">Number Of Doctor</span> <span class="info-box-number"
+								th:text="${totalDoctor}"></span>
+						</div>
 					</div>
 				</div>
-			</div>
-			<!-- fix for small devices only -->
-			<div class="clearfix hidden-md-up"></div>
+				<!-- fix for small devices only -->
+				<div class="clearfix hidden-md-up"></div>
 
-			<div class="col-12 col-sm-6 col-md-3">
-				<div class="info-box mb-3">
-					<span class="info-box-icon bg-success elevation-1"><i class="fa fa-comments"></i></span>
+				<div class="col-12 col-sm-6 col-md-3">
+					<div class="info-box mb-3">
+						<span class="info-box-icon bg-success elevation-1"><i class="fa fa-comments"></i></span>
 
-					<div class="info-box-content">
-						<span class="info-box-text">Number Of Post</span> <span
-							class="info-box-number" th:text="${totalPost}"></span>
+						<div class="info-box-content">
+							<span class="info-box-text">Number Of Post</span> <span class="info-box-number"
+								th:text="${totalPost}"></span>
+						</div>
+						<!-- /.info-box-content -->
 					</div>
-					<!-- /.info-box-content -->
+					<!-- /.info-box -->
 				</div>
-				<!-- /.info-box -->
-			</div>
-			
-			<!-- /.col -->
-			<div class="col-12 col-sm-6 col-md-3">
-				<div class="info-box mb-3">
-					<span class="info-box-icon bg-warning elevation-1"><i class="fa fa-blog"></i></span>
 
-					<div class="info-box-content">
-						<span class="info-box-text">Number Of Online</span> <span
-							class="info-box-number" th:text="${totalUrl}"></span>
+				<!-- /.col -->
+				<div class="col-12 col-sm-6 col-md-3">
+					<div class="info-box mb-3">
+						<span class="info-box-icon bg-warning elevation-1"><i class="fa fa-blog"></i></span>
+
+						<div class="info-box-content">
+							<span class="info-box-text">Number Of Appointment</span> <span class="info-box-number"
+								th:text="${totalAppointment}"></span>
+						</div>
+						<!-- /.info-box-content -->
 					</div>
-					<!-- /.info-box-content -->
+					<!-- /.info-box -->
 				</div>
-				<!-- /.info-box -->
+				<!-- /.col -->
 			</div>
-			<!-- /.col -->
-		</div>
 
 
 
 
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card">
-					<div class="card-header">
-						<h5 class="card-title">Monthly Recap Report</h5>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header">
+							<h5 class="card-title">Weekly summary report</h5>
 
-						<div class="card-tools">
-							<button type="button" class="btn btn-tool"
-								data-card-widget="collapse">
-								<i class="fas fa-minus"></i>
-							</button>
-							<div class="btn-group">
-								<button type="button" class="btn btn-tool dropdown-toggle"
-									data-toggle="dropdown">
-									<i class="fas fa-wrench"></i>
+							<div class="card-tools">
+								<button type="button" class="btn btn-tool" data-card-widget="collapse">
+									<i class="fas fa-minus"></i>
 								</button>
-								<div class="dropdown-menu dropdown-menu-right" role="menu">
-									<a href="#" class="dropdown-item">Action</a> <a href="#"
-										class="dropdown-item">Another action</a> <a href="#"
-										class="dropdown-item">Something else here</a> <a
-										class="dropdown-divider"></a> <a href="#"
-										class="dropdown-item">Separated link</a>
+								<div class="btn-group">
+									<button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
+										<i class="fas fa-wrench"></i>
+									</button>
+									<div class="dropdown-menu dropdown-menu-right" role="menu">
+										<a href="#" class="dropdown-item">Action</a> <a href="#"
+											class="dropdown-item">Another action</a> <a href="#"
+											class="dropdown-item">Something else here</a> <a
+											class="dropdown-divider"></a> <a href="#" class="dropdown-item">Separated
+											link</a>
+									</div>
 								</div>
-							</div>
-							<button type="button" class="btn btn-tool"
-								data-card-widget="remove">
-								<i class="fas fa-times"></i>
-							</button>
-						</div>
-					</div>
-					<!-- /.card-header -->
-					<div class="card-body">
-						<div class="row">
-							<div class="col-md-12">
-								
-							
-							
-								<div class="chart">
-									<!-- Sales Chart Canvas -->
-									<canvas id="salesChart" height="180" style="height: 180px;"></canvas>
-								</div>
-								
-								
-								
-								
-								<!-- /.chart-responsive -->
+								<button type="button" class="btn btn-tool" data-card-widget="remove">
+									<i class="fas fa-times"></i>
+								</button>
 							</div>
 						</div>
-						<!-- /.row -->
+						<!-- /.card-header -->
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="chart">
+										<!-- Sales Chart Canvas <canvas id="salesChart" height="180" style="height: 180px;"></canvas>-->
+										<canvas class="my-5" id="myChart"></canvas>
+									</div>
+									<!-- /.chart-responsive -->
+								</div>
+							</div>
+							<!-- /.row -->
+						</div>
+						<!-- ./card-body -->
+
+						<!-- /.card-footer -->
 					</div>
-					<!-- ./card-body -->
-					
-					<!-- /.card-footer -->
+					<!-- /.card -->
 				</div>
-				<!-- /.card -->
+				<!-- /.col -->
 			</div>
-			<!-- /.col -->
 		</div>
 	</div>
-</div>
 
-<div layout:fragment="script">
-	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-					 $("#nav-linkDashboard").addClass("active");
-						});
-		</script>			
-</div>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+	<div layout:fragment="script">
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$("#nav-linkDashboard").addClass("active");
+
+				function newDate(num) {
+					let today = new Date();
+					today.setDate(today.getDate() - num);
+					let result = today.toLocaleDateString();
+					return result;
+				}
+
+				var ctx = document.getElementById('myChart').getContext('2d');
+				var chart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						labels: [newDate(6), newDate(5), newDate(4), newDate(3), newDate(2), newDate(1), newDate(0)],
+						datasets: [
+							{
+								label: 'Total Patient',
+								backgroundColor: '#17a2b8',
+								borderColor: '#17a2b8',
+								fill: false,
+								lineTension: 0.1,
+								data: [0, 0, 0, 0, 0, 0, 0]
+							}, {
+								label: 'Total Doctor',
+								backgroundColor: '#dc3545',
+								borderColor: '#dc3545',
+								fill: false,
+								lineTension: 0.1,
+								data: [0, 0, 0, 0, 0, 0, 0]
+							}, {
+								label: 'Total Post',
+								backgroundColor: '#28a745',
+								borderColor: '#28a745',
+								fill: false,
+								lineTension: 0.1,
+								data: [0, 0, 0, 0, 0, 0, 0]
+							}, {
+								label: 'Total Appointment',
+								backgroundColor: '#ffc107',
+								borderColor: '#ffc107',
+								fill: false,
+								lineTension: 0.1,
+								data: [0, 0, 0, 0, 0, 0, 0]
+							}
+						]
+					},
+
+					options: {}
+				});
+
+				chart.data.datasets[0].data.push(1)
+				chart.data.datasets[0].data.shift()
+				chart.update()
+
+				chart.data.datasets[1].data.push(2)
+				chart.data.datasets[1].data.shift()
+				chart.update()
+				
+				chart.data.datasets[3].data.push(3)
+				chart.data.datasets[3].data.shift()
+				chart.update()
+				
+				chart.data.datasets[4].data.push(4)
+				chart.data.datasets[4].data.shift()
+				chart.update()
+			});
+		</script>
+	</div>
 
 </body>
+
 </html>

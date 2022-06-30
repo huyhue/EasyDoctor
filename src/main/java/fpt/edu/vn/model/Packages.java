@@ -1,6 +1,9 @@
 package fpt.edu.vn.model;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 @Entity
@@ -22,9 +25,7 @@ public class Packages extends BaseEntity {
     @Column(name = "editable", columnDefinition = "boolean default false")
     private boolean editable;
 
-    @Column(name = "target")
-    private String targetCustomer;
-
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "packages_doctors", joinColumns = @JoinColumn(name = "id_packages"), inverseJoinColumns = @JoinColumn(name = "id_user"))
     private List<User> doctors;
@@ -78,14 +79,6 @@ public class Packages extends BaseEntity {
 
     public void setEditable(boolean editable) {
         this.editable = editable;
-    }
-
-    public String getTargetCustomer() {
-        return targetCustomer;
-    }
-
-    public void setTargetCustomer(String targetCustomer) {
-        this.targetCustomer = targetCustomer;
     }
 
     public void setDuration(Integer duration) {
