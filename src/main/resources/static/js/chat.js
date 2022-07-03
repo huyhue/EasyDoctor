@@ -149,13 +149,13 @@ function onMessageReceived(payload) {
 
 	if (message.type === 'JOIN') {
 		messageElement.classList.add('event-message');
-		let actionUser = document.createTextNode(message.sender + ' tham gia!');
+		let actionUser = document.createTextNode(message.sender + ' tham gia chat!');
 		messageElement.appendChild(actionUser);
 		getActiveUser();
 
 	} else if (message.type === 'LEAVE') {
 		messageElement.classList.add('event-message');
-		let actionUser = document.createTextNode(message.sender + ' đã rời!');
+		let actionUser = document.createTextNode(message.sender + ' đã rời chat!');
 		messageElement.appendChild(actionUser);
 		getActiveUser();
 
@@ -187,7 +187,7 @@ function onMessageReceived(payload) {
 		let usernameText = document.createTextNode(message.role + " vào lúc " + message.createdAt);
 		usernameElement.appendChild(usernameText);
 		messageElement2.appendChild(usernameElement);
-
+		getActiveUser();
 	}
 	messageArea.appendChild(messageElement);
 	messageArea.scrollTop = messageArea.scrollHeight;

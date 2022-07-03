@@ -6,19 +6,16 @@ import org.springframework.data.repository.query.Param;
 
 import fpt.edu.vn.model.Appointment;
 
-import java.sql.Time;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
 
-	@Query("select a from Appointment a where a.doctor.id = :doctorId")
+	@Query("select a from Appointment a where a.doctor.id = :doctorId ORDER BY a.start DESC")
     List<Appointment> findByDoctorId(@Param("doctorId") int doctorId);
 	
-	@Query("select a from Appointment a where a.patient.id = :patientId")
+	@Query("select a from Appointment a where a.patient.id = :patientId ORDER BY a.start DESC")
 	List<Appointment> findByPatientId(@Param("patientId") int patientId);
 	
 	@Query("select a from Appointment a where a.doctor.id = :doctorId and  a.start >=:dayStart and  a.start <=:dayEnd")
