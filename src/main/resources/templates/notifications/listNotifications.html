@@ -45,7 +45,7 @@
 						<td colspan="5"> Không có thông báo nào</td>
 					</tr>
 					<tr th:each="notification : ${notifications}">
-						<td><span th:text="${#dates.format(notification.createdAt, 'dd-MMM-yyyy')}"> thoi gian </span>
+						<td><span th:text="${#dates.format(notification.createdAt, 'dd-MM-yyyy')}"> thoi gian </span>
 						</td>
 						<td><span th:text="${notification.title}"> Noi dung</span></td>
 						<td><span th:text="${notification.message}"> Thong tin</span></td>
@@ -81,7 +81,7 @@
 						var select = $("#reads")
 							.on('change', function () {
 								var searchString = $(this).val();
-								console.log("test: "+searchString)
+								console.log("test: " + searchString)
 								searchString = searchString.replace('<span>', '');
 								searchString = searchString.replace('</span>', '');
 								var val = $.fn.dataTable.util.escapeRegex(searchString);

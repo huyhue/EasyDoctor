@@ -5,7 +5,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "notifications")
-public class Notification extends BaseEntity {
+public class Notification extends BaseEntity implements Comparable<Notification>{
 
     @Column(name = "title")
     private String title;
@@ -76,5 +76,14 @@ public class Notification extends BaseEntity {
     public void setRead(boolean isRead) {
         this.isRead = isRead;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        return ((Notification) obj).getTitle().equals(getTitle());
+    }
 
+    @Override
+    public int compareTo(Notification notification) {
+        return getCreatedAt().compareTo(notification.getCreatedAt());
+    }
 }

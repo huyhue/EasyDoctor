@@ -1,0 +1,154 @@
+<div th:if="${allowedToReview}" class="modal fade" id="reviewModal" tabindex="-1" role="dialog"
+	aria-labelledby="noteModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-success">
+				<h5 class="modal-title" id="noteModalLabel">Cuộc hẹn với bác sĩ đã thành công. Mời bạn review bác sĩ.
+				</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form th:action="@{/appointments/review}" method="POST" th:object="${reviewForm}" id="review-form">
+					<div class="form-group">
+						<input type="hidden" name="appointmentId" th:value="${appointment.id}" />
+						<input type="hidden" name="doctor" th:value="${appointment.doctor.id}"
+							sth:field="*{doctor.id}" />
+						<strong for="feedback">Nhận xét</strong>
+						<textarea class="form-control" type="text" th:field="*{feedback}" rows="3"
+							placeholder="Nhập nhận xét ở đây"></textarea>
+					</div>
+					<div class="form-group">
+						<strong for="rating">Đánh giá sao</strong>
+						<select class="form-control" th:field="*{rating}">
+							<option th:each="rate : ${ratingOptionMap}" th:value="${rate.key}" th:text="${rate.value}">
+								Rating
+							</option>
+						</select>
+					</div>
+					<button id="reviewSubmit" type="submit" class="d-none"></button>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="$('#reviewSubmit').click();">Đánh Giá</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div th:if="${allowedToRequestRejection}" class="modal fade" id="requestRejectionModal" tabindex="-1" role="dialog"
+	aria-labelledby="noteModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				<h4 class="modal-title" id="noteModalLabel">Từ chối cuộc hẹn.</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<h5>Bạn có <span class="font-weight-bold bg-danger text-light" th:text="${remainingTime}">3h 45m</span> để từ chối cuộc hẹn
+					diễn ra do có việc nên không tới khám bệnh.</h5>
+				<strong>Sau thời gian này hóa đơn sẽ tự động được in. Nếu bạn không Click chọn.</strong>
+				<form th:action="@{/appointments/reject}" method='POST'>
+					<input type="hidden" name="appointmentId" th:value="${appointment.id}">
+					<button id="requestRejectionSubmit" type="submit" class="d-none"></button>
+				</form>
+			</div>
+			<div class="modal-footer d-flex justify-content-center">
+				<button type="button" class="btn btn-danger" onclick="$('#requestRejectionSubmit').click();">Từ
+					chối</button>
+				<button type="button" class="btn btn-info" data-dismiss="modal">Bỏ qua</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div th:if="${allowedToAcceptRejection}" class="modal fade" id="acceptRejectionModal" tabindex="-1" role="dialog"
+	aria-labelledby="noteModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				<h4 class="modal-title" id="noteModalLabel">Đồng ý từ chối cuộc hẹn.</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<h5>Bệnh nhân đã khẳng định rằng cuộc hẹn đã không được diễn ra.</h5>
+				<strong>Bác sĩ có đồng ý không. Vui lòng Click ở bên dưới.</strong>
+				<form th:action="@{/appointments/acceptRejection}" method='POST'>
+					<input type="hidden" name="appointmentId" th:value="${appointment.id}">
+					<button id="acceptRejectionSubmit" type="submit" class="d-none"></button>
+				</form>
+			</div>
+			<div class="modal-footer d-flex justify-content-center">
+				<button type="button" class="btn btn-danger" onclick="$('#acceptRejectionSubmit').click();">Chấp
+					nhận</button>
+				<button type="button" class="btn btn-info" data-dismiss="modal">Bỏ qua</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<form th:object="${history}" method="POST" enctype="multipart/form-data">
+			<div class="modal-content">
+				<div class="modal-header bg-info">
+					<h5 class="modal-title" id="exampleModalLabel">Kết quả khám bệnh</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<input th:if="${history.id}" th:field="*{id}" id="history-id" name="historyId" type="hidden">
+					<input type="hidden" name="patient" th:value="${appointment.patient.id}"
+						sth:field="*{patient.id}" />
+					<input type="hidden" name="appointment" th:value="${appointment.id}"
+						sth:field="*{appointment.id}" />
+					<div class="form-group">
+						<label for="diagnose" class="col-form-label">Chẩn đoán bệnh:</label>
+						<input type="text" class="form-control" th:field="*{diagnose}">
+					</div>
+					<div class="form-group">
+						<textarea class="form-control" placeholder="Mô tả bệnh" th:field="*{notes}"></textarea>
+					</div>
+					<div class="form-group">
+						<textarea class="form-control" placeholder="Lời khuyên" th:field="*{advice}"></textarea>
+					</div>
+					<div class="form-group">
+						<label for="medicine" class="col-form-label">Thuốc:</label>
+						<textarea class="form-control" th:field="*{medicine}"></textarea>
+					</div>
+					<div class="form-group">
+						<label for="type" class="col-form-label">Loại kết quả:</label>
+						<select class="custom-select" th:field="*{type}">
+							<option value="Toa thuốc" selected>Toa thuốc</option>
+							<option value="Toa thuốc">Chuẩn đoán hình ảnh</option>
+							<option value="Xét nghiệm">Xét nghiệm</option>
+							<option value="Phiếu điều trị">Phiếu điều trị</option>
+							<option value="Khác">Khác</option>
+						</select>
+						<div class="form-group">
+							<input class="form-control" id="files" multiple name="files"
+								placeholder="Upload Multiple Files" type="file"></input>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-success" th:formaction="@{/doctors/saveDraftResult}">Lưu
+						Nháp</button>
+					<button type="submit" class="btn btn-primary" th:formaction="@{/doctors/saveResult}">Lưu</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

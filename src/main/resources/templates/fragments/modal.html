@@ -9,8 +9,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form action="#" th:object="${declaration}"
-					method="POST" id="declaration-form">
+				<form action="#" th:object="${declaration}" method="POST" id="declaration-form">
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<input th:if="${declaration.id}" th:field="*{id}" id="declaration-id" name="declarationId"

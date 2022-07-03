@@ -4,123 +4,17 @@
 	xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <body>
-	<div class="row justify-content-center" style="margin-top: 50px">
-		<div clas="col-md-1">
-		</div>
-		<div th:if="${allowedToRequestRejection}" class="col-md-9 p-3 mb-2 bg-warning text-dark text-center">
-			<p>You have <span class="font-weight-bold" th:text="${remainingTime}">3h 45m</span> to deny that
-				this appointment took place.</p>
-			<p>After that time it will be invoiced automatically.</p>
-
-			<form th:action="@{/appointments/reject}" method='POST'>
-				<input type="hidden" name="appointmentId" th:value="${appointment.id}">
-				<input type="submit" class="btn btn-danger" value="Reject" />
-			</form>
-		</div>
-		<div th:if="${allowedToAcceptRejection}" class="col-md-9 p-3 mb-2 bg-warning text-dark text-center">
-			<p>Patient claims that this appointment didn't take place.</p>
-			<p>If you agree with that, click the button below:</p>
-
-			<form th:action="@{/appointments/acceptRejection}" method='POST'>
-				<input type="hidden" name="appointmentId" th:value="${appointment.id}">
-				<input type="submit" class="btn btn-danger" value="Accept" />
-			</form>
-		</div>
-		<div th:if="${allowedToReview}" class="col-md-9 p-3 mb-2 bg-success text-dark text-center">
-			<p>Cuộc hẹn với bác sĩ bạn thành công.</p>
-			<p>Vui lòng đánh giá bác sĩ ở form bên dưới:</p>
-
-			<form th:action="@{/appointments/review}" method="POST" th:object="${reviewForm}">
-				<div class="card book-detail-page book-detail-card">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-sm-10 form-group">
-								<textarea class="form-control" type="text" th:field="*{feedback}" rows="3"
-									placeholder="Nhập nhận xét ở đây"></textarea>
-							</div>
-							<div class="col-sm-2 form-group">
-								<select class="form-control" th:field="*{rating}">
-									<option th:each="rate : ${ratingOptionMap}" th:value="${rate.key}"
-										th:text="${rate.value}">
-										Rating
-									</option>
-								</select>
-								<input type="hidden" name="appointmentId" th:value="${appointment.id}" />
-								<input type="hidden" name="doctor" th:value="${appointment.doctor.id}"
-									sth:field="*{doctor.id}" />
-
-								<div class="text-center" style="margin-top: 10px;">
-									<input type="submit" name="button" class="btn btn-primary" value="Submit" />
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</form>
+	<div class="row mt-5 mb-3">
+		<div class="col-md-12 text-center">
+			<h2 style="color: #37a7f1;">
+				<b>CHI TIẾT CUỘC HẸN</b>
+			</h2>
 		</div>
 	</div>
-
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-		aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<form th:object="${history}" method="POST" enctype="multipart/form-data">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Kết quả khám bệnh</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<input th:if="${history.id}" th:field="*{id}" id="history-id" name="historyId" type="hidden">
-						<input type="hidden" name="patient" th:value="${appointment.patient.id}"
-							sth:field="*{patient.id}" />
-						<input type="hidden" name="appointment" th:value="${appointment.id}"
-							sth:field="*{appointment.id}" />
-						<div class="form-group">
-							<label for="diagnose" class="col-form-label">Chẩn đoán bệnh:</label>
-							<input type="text" class="form-control" th:field="*{diagnose}">
-						</div>
-						<div class="form-group">
-							<textarea class="form-control" placeholder="Mô tả bệnh" th:field="*{notes}"></textarea>
-						</div>
-						<div class="form-group">
-							<textarea class="form-control" placeholder="Lời khuyên" th:field="*{advice}"></textarea>
-						</div>
-						<div class="form-group">
-							<label for="medicine" class="col-form-label">Thuốc:</label>
-							<textarea class="form-control" th:field="*{medicine}"></textarea>
-						</div>
-						<div class="form-group">
-							<label for="type" class="col-form-label">Loại kết quả:</label>
-							<select class="custom-select" th:field="*{type}">
-								<option value="Toa thuốc" selected>Toa thuốc</option>
-								<option value="Toa thuốc">Chuẩn đoán hình ảnh</option>
-								<option value="Xét nghiệm">Xét nghiệm</option>
-								<option value="Phiếu điều trị">Phiếu điều trị</option>
-								<option value="Khác">Khác</option>
-							</select>
-							<div class="form-group">
-								<input class="form-control" id="files" multiple name="files"
-									placeholder="Upload Multiple Files" type="file"></input>
-							</div>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-success" th:formaction="@{/doctors/saveDraftResult}">Lưu
-							Nháp</button>
-						<button type="submit" class="btn btn-primary"
-							th:formaction="@{/doctors/saveResult}">Lưu</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-
+	<div th:replace="fragments/modalAppointment.html"></div>
 
 	<div class="row">
 		<div class="col-md-5">
-
 			<table id="appointments" class="table">
 				<input type="hidden" th:value="${appointment.id}" id="appointment_id">
 				<tr>
@@ -128,7 +22,8 @@
 					<td><span th:text="${appointment.status}" id="status">trạng thái </span>
 					</td>
 				</tr>
-				<tr th:if="${history.pulished == false}" sec:authorize="hasRole('ROLE_DOCTOR')">
+				<tr th:if="${history.pulished == false} and ${appointment.status.name()!='CANCELED'}"
+					sec:authorize="hasRole('ROLE_DOCTOR')">
 					<td><b>Kết quả</b></td>
 					<td>
 						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Nhận
@@ -139,14 +34,13 @@
 					<td><b>Canceled by</b></td>
 					<td><span th:text="${appointment.canceler.fullname}">cancel</span></td>
 				</tr>
-
 				<tr>
-					<td><b>Date</b></td>
+					<td><b>Ngày</b></td>
 					<td><span th:text="${#temporals.format(appointment.start, 'dd-MM-yyyy')}">10-01-2019</span>
 					</td>
 				</tr>
 				<tr>
-					<td><b>Time</b></td>
+					<td><b>Giờ</b></td>
 					<td><span
 							th:text="${#temporals.format(appointment.start, 'HH:mm')+' - '+ #temporals.format(appointment.end, 'HH:mm')}"
 							id="startTime">14:00
@@ -154,36 +48,36 @@
 					</td>
 				</tr>
 				<tr>
-					<td><b>Patient</b></td>
+					<td><b>Bệnh nhân</b></td>
 					<td><span th:text="${appointment.patient.fullname}" id="patient">Huyhue</span>
 					</td>
 				</tr>
 				<tr>
-					<td><b>Doctor</b></td>
+					<td><b>Bác sĩ</b></td>
 					<td><span th:text="${appointment.doctor.fullname}" id="doctor">Huyhue</span>
 					</td>
 				</tr>
 
 				<tr>
-					<td><b>Packages</b></td>
+					<td><b>Gói khám</b></td>
 					<td><span th:text="${appointment.packages.name}"> english </span></td>
 				</tr>
 				<tr>
-					<td><b>Description</b></td>
+					<td><b>Mô tả</b></td>
 					<td><span th:text="${appointment.packages.description}">description</span></td>
 				</tr>
 
 				<tr>
-					<td><b>Price</b></td>
+					<td><b>Giá</b></td>
 					<td><span th:text="${appointment.packages.price}"> 50 </span> VND</td>
 				</tr>
 				<tr th:if="${appointment.status.name()=='INVOICED'}">
-					<td><b>Invoice</b></td>
+					<td><b>Hóa đơn</b></td>
 					<td><a th:href="@{'/invoices/download/'+${appointment.invoice.id}}">Download</a></td>
 				</tr>
 
 				<tr>
-					<td><b>Cancellation</b></td>
+					<td><b>Hủy cuộc hẹn</b></td>
 					<td th:if="${allowedToCancel}">
 						<input type="submit" id="cancel" class="btn btn-danger" value="Hủy cuộc hẹn" />
 					</td>
@@ -228,7 +122,7 @@
 
 					<div class="panel-body msg_container_base">
 						<div class="connecting">
-							Connecting...
+							Đang kết nối...
 						</div>
 					</div>
 
@@ -238,7 +132,7 @@
 							<input type="text" class="form-control" id="message" placeholder="Nhắn tại đây..."
 								autocomplete="off" aria-describedby="basic-addon2">
 							<div class="input-group-append">
-								<button class="btn btn-outline-secondary" type="submit">Send</button>
+								<button class="btn btn-outline-secondary" type="submit">Gửi</button>
 							</div>
 						</div>
 					</form>
@@ -247,10 +141,30 @@
 		</div>
 	</div>
 
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 	<script th:src="@{/js/chat.js}"></script>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+
+		$(document).ready(function () {
+			var review = /*[[${allowedToReview}]]*/ "values";
+			var requestRejection = /*[[${allowedToRequestRejection}]]*/ "values";
+			var acceptRejection = /*[[${allowedToAcceptRejection}]]*/ "values";
+			if (review) {
+				$('#reviewModal').modal('show');
+			}
+			if (requestRejection) {
+				$('#requestRejectionModal').modal('show');
+			}
+			if (acceptRejection) {
+				$('#acceptRejectionModal').modal('show');
+			}
+		});
+		/*]]>*/
+	</script>
 	<!-- QR Code -->
 	<script>
 		var qr;
@@ -294,7 +208,7 @@
 				autoClose: 'No|8000',
 				buttons: {
 					Yes: function () {
-						console.log("OK"+appointmentId);
+						console.log("OK" + appointmentId);
 						$.ajax({
 							url: "/appointments/cancel?appointmentId=" + appointmentId,
 							type: 'GET',
@@ -309,7 +223,6 @@
 						});
 					},
 					No: function () {
-						console.log("NOK");
 					}
 				}
 			});
