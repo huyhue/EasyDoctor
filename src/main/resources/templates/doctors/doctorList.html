@@ -6,7 +6,7 @@
 	<section id="doctors" class="doctors">
 		<div class="container">
 			<div class="section-title text-center">
-				<h2 style="margin: 30px" >Danh sách bác sĩ EasyDoctor</h2>
+				<h2 style="margin: 30px; color: #37a7f1;">DANH SÁCH CÁC BÁC SĨ</h2>
 				<!--<p>Develop future google map, filter combo box, recommend doctor,...</p>-->
 				<div class="row m-3">
 					<div class="col-md-11 d-flex justify-content-center">
@@ -29,7 +29,7 @@
 				</div>
 			</div>
 
-			<ul class="row page" id="accordion">
+			<ul class="row page" id="accordion" style="list-style-type: none;">
 
 				<li class="col-lg-6 mt-4" th:each="doctor : ${doctors}" id="item-doctor">
 					<div class="member d-flex align-items-start">
@@ -85,117 +85,121 @@
 	</section>
 
 	<script>
-		const doctorList = document.querySelectorAll('#item-doctor');
-		const searchName = document.querySelector("#searchName");
-		const searchSpecialty = document.querySelector("#specialty");
-		let itemsPerPage = 6;
+		window.addEventListener('load', (event) => {
+			const doctorList = document.querySelectorAll('#item-doctor');
+			const searchName = document.querySelector("#searchName");
+			const searchSpecialty = document.querySelector("#specialty");
+			let itemsPerPage = 6;
 
-		const showPage = (list, page) => {
-			let startIndex = (page * itemsPerPage) - itemsPerPage; 
-			let endIndex = page * itemsPerPage - 1; 
-			for (i = 0; i < list.length; i++) {
-				list[i].style.display = 'none'; 
-				if (i >= startIndex && i <= endIndex) {
-					list[i].style.display = 'block'; 
-				}
-			}
-		};
-
-		const addPaginationLinks = (list) => {
-			removeElementsByClass('pagination')
-			let numberOfButtons = Math.ceil(list.length / itemsPerPage); 
-			let htmlDiv = document.getElementById('page-pagination'); 
-			let newDiv = document.createElement('DIV'); 
-			let newUl = document.createElement('UL');
-			newDiv.classList.add("pagination")
-			htmlDiv.appendChild(newDiv)
-			newDiv.appendChild(newUl)
-			for (i = 0; i < numberOfButtons; i++) {
-				let li = document.createElement('LI');
-				let link = document.createElement('A');
-				link.setAttribute("href", "#");
-				li.appendChild(link)
-				newUl.appendChild(li)
-				link.innerText = `${i + 1}` 
-				if (i == 0) { 
-					link.classList.add("active")
-				}
-			}
-			let links = document.querySelectorAll('a')
-			for (i = 0; i < links.length; i++) {
-				links[i].addEventListener("click", function () {
-					for (i = 0; i < links.length; i++) {
-						links[i].classList.remove('active') // Remove the active state for all the pagination links when any of them is clicked
+			const showPage = (list, page) => {
+				let startIndex = (page * itemsPerPage) - itemsPerPage;
+				let endIndex = page * itemsPerPage - 1;
+				for (i = 0; i < list.length; i++) {
+					list[i].style.display = 'none';
+					if (i >= startIndex && i <= endIndex) {
+						list[i].style.display = 'block';
 					}
-					event.target.classList.add('active') // But add it back to the selected pagination link
-					showPage(list, event.target.innerText) // Call the function taking the list items and setting the number of the page according to the text on the buttons
-				});
-			}
-		};
+				}
+			};
 
-		showPage(doctorList, 1);
-		addPaginationLinks(doctorList);
+			const addPaginationLinks = (list) => {
+				removeElementsByClass('pagination')
+				let numberOfButtons = Math.ceil(list.length / itemsPerPage);
+				let htmlDiv = document.getElementById('page-pagination');
+				let newDiv = document.createElement('DIV');
+				let newUl = document.createElement('UL');
+				newDiv.classList.add("pagination")
+				htmlDiv.appendChild(newDiv)
+				newDiv.appendChild(newUl)
+				for (i = 0; i < numberOfButtons; i++) {
+					let li = document.createElement('LI');
+					let link = document.createElement('A');
+					link.setAttribute("href", "#");
+					li.appendChild(link)
+					newUl.appendChild(li)
+					link.innerText = `${i + 1}`
+					if (i == 0) {
+						link.classList.add("active")
+					}
+				}
+				let links = document.querySelectorAll('a')
+				for (i = 0; i < links.length; i++) {
+					links[i].addEventListener("click", function () {
+						for (i = 0; i < links.length; i++) {
+							links[i].classList.remove('active') // Remove the active state for all the pagination links when any of them is clicked
+						}
+						event.target.classList.add('active') // But add it back to the selected pagination link
+						showPage(list, event.target.innerText) // Call the function taking the list items and setting the number of the page according to the text on the buttons
+					});
+				}
+			};
 
-		function removeElementsByClass(className) {
-			var elements = document.getElementsByClassName(className);
-			while (elements.length > 0) {
-				elements[0].parentNode.removeChild(elements[0]);
-			}
-		}
+			showPage(doctorList, 1);
+			addPaginationLinks(doctorList);
 
-		const findMatches = () => {
-			let search = searchName.value.toLowerCase();
-			let results = []
-			removeElementsByClass('no_results')
-			for (i = 0; i < doctorList.length; i++) {
-				doctorList[i].style.display = 'none';
-				if (doctorList[i].innerText.toLowerCase().indexOf(search) !== -1) {
-					results.push(doctorList[i])
+			function removeElementsByClass(className) {
+				var elements = document.getElementsByClassName(className);
+				while (elements.length > 0) {
+					elements[0].parentNode.removeChild(elements[0]);
 				}
 			}
-			showPage(results, 1);
-			addPaginationLinks(results);
-			if (results.length == 0) {
-				removeElementsByClass('no_results') 
-				let parent = document.getElementsByClassName('page')[0];
-				let newP = document.createElement('h4'); 
-				newP.classList.add("no_results")
-				parent.appendChild(newP)
-				newP.innerText = "Không có bác sĩ nào được tìm thấy."
-				newP.style.margin = "25px";
-			}
-		}
-		const findMatchesSpecialty = () => {
-			let search = searchSpecialty.value;
-			let results = []
-			removeElementsByClass('no_results')
-			for (i = 0; i < doctorList.length; i++) {
-				doctorList[i].style.display = 'none';
-				if(search == "all"){
-					results.push(doctorList[i])
-				}
-				if (doctorList[i].innerText.indexOf(search) !== -1) {
-					results.push(doctorList[i])
-				}
-			}
-			showPage(results, 1);
-			addPaginationLinks(results);
-			if (results.length == 0) { 
-				removeElementsByClass('no_results') 
-				let parent = document.getElementsByClassName('page')[0]; 
-				let newP = document.createElement('h4');
-				newP.classList.add("no_results")
-				parent.appendChild(newP)
-				newP.innerText = "Không có bác sĩ nào được tìm thấy."
-				newP.style.margin = "25px";
-			}
-		}
 
-		searchName.addEventListener("keyup", function () {
-			findMatches();
-		});
-		searchSpecialty.addEventListener("change", function () {
-			findMatchesSpecialty();
+			const findMatches = () => {
+				let search = searchName.value.toLowerCase();
+				let results = []
+				removeElementsByClass('no_results')
+				for (i = 0; i < doctorList.length; i++) {
+					doctorList[i].style.display = 'none';
+					if (doctorList[i].innerText.toLowerCase().indexOf(search) !== -1) {
+						results.push(doctorList[i])
+					}
+				}
+				showPage(results, 1);
+				addPaginationLinks(results);
+				if (results.length == 0) {
+					removeElementsByClass('no_results')
+					let parent = document.getElementsByClassName('page')[0];
+					let newP = document.createElement('h4');
+					newP.classList.add("no_results")
+					parent.appendChild(newP)
+					newP.innerText = "Không có bác sĩ nào được tìm thấy."
+					newP.style.margin = "25px";
+				}
+			}
+			const findMatchesSpecialty = () => {
+				let search = searchSpecialty.value;
+				let results = []
+				removeElementsByClass('no_results')
+				for (i = 0; i < doctorList.length; i++) {
+					doctorList[i].style.display = 'none';
+					if (search == "all") {
+						results.push(doctorList[i])
+					}
+					if (doctorList[i].innerText.indexOf(search) !== -1) {
+						results.push(doctorList[i])
+					}
+				}
+				showPage(results, 1);
+				addPaginationLinks(results);
+				if (results.length == 0) {
+					removeElementsByClass('no_results')
+					let parent = document.getElementsByClassName('page')[0];
+					let newP = document.createElement('h4');
+					newP.classList.add("no_results")
+					parent.appendChild(newP)
+					newP.innerText = "Không có bác sĩ nào được tìm thấy."
+					newP.style.margin = "25px";
+				}
+			}
+
+			searchName.addEventListener("keyup", function () {
+				findMatches();
+			});
+
+			searchSpecialty.addEventListener("change", function () {
+				findMatchesSpecialty();
+			});
+
 		});
 	</script>
 </body>

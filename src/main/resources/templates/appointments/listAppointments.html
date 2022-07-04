@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
-	th:replace="~{fragments/layout :: layout (~{::body},'appointments','List appointments')}">
+	th:replace="~{fragments/layout :: layout (~{::body},'appointments','Danh sách cuộc hẹn')}">
 
 <body>
 	<style>
@@ -60,7 +60,7 @@
 	<div class="row mt-5 mb-3">
 		<div class="col-md-12 text-center">
 			<h2 style="color: #37a7f1;">
-				<b>Danh sách cuộc hẹn khám bệnh</b>
+				<b>DANH SÁCH CUỘC HẸN KHÁM BỆNH</b>
 			</h2>
 		</div>
 	</div>
@@ -109,13 +109,13 @@
 		<table id="appointments" class="table text-center">
 			<thead class="thead-light">
 				<tr>
-					<th> Packages</th>
-					<th> Status</th>
-					<th> Start</th>
-					<th sec:authorize="!hasRole('ROLE_DOCTOR')"> Doctor</th>
-					<th sec:authorize="!hasRole('ROLE_PATIENT')"> Patient</th>
-					<th> Duration</th>
-					<th> Action</th>
+					<th> Gói khám</th>
+					<th> Trạng thái</th>
+					<th> Bắt đầu</th>
+					<th sec:authorize="!hasRole('ROLE_DOCTOR')"> Bác sĩ</th>
+					<th sec:authorize="!hasRole('ROLE_PATIENT')"> Bệnh nhân</th>
+					<th> Thời lượng</th>
+					<th> Xem</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -135,9 +135,9 @@
 					<td sec:authorize="!hasRole('ROLE_PATIENT')"><span th:text="${appointment.patient.fullname}">
 							Patient </span>
 					</td>
-					<td><span th:text="${appointment.packages.duration + ' min'}"> 60 min </span></td>
-					<td><a class="btn btn-secondary" th:href="@{'/appointments/' + ${appointment.id}}"
-							role="button">Details</a></td>
+					<td><span th:text="${appointment.packages.duration + ' phút'}"> 60 min </span></td>
+					<td><a class="btn btn-info" th:href="@{'/appointments/' + ${appointment.id}}"
+							role="button">Chi tiết</a></td>
 				</tr>
 			</tbody>
 		</table>
