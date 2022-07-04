@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	th:replace="~{fragments/layout :: layout (~{::body},'doctors','Medical Record')}">
+	th:replace="~{fragments/layout :: layout (~{::body},'doctors','Hồ sơ bệnh án')}">
 
 <body>
-	<div class="row" style="margin-top: 50px">
-		<div class="col">
-			<h3 class="textShadowSm m-3 text-center">Bệnh nhân: [[${patient.fullname}]]</h3>
+	<div class="row mt-5 mb-3">
+		<div class="col-md-12 text-center">
+			<h2 style="color: #37a7f1;">
+				<b>BỆNH NHÂN: [[${patient.fullname}]]</b>
+			</h2>
 		</div>
 	</div>
 
 	<div class="row">
 		<div class="col">
 			<ul class="list-group shadow">
-				<li class="list-group-item bg-dark text-light">Thông tin bệnh nhân:</li>
+				<li class="list-group-item bg-info text-light"><i class="fas fa-solid fa-book-open"></i> Thông tin bệnh nhân:</li>
 				<li class="list-group-item"><strong>Email: </strong>[[${patient.email}]]</li>
 				<li class="list-group-item"><strong>Tuổi: </strong>[[${patient.age}]]</li>
 				<li class="list-group-item"><strong>Giới tính: </strong>[[${patient.gender}]]</li>
@@ -22,7 +24,7 @@
 
 		<div class="col">
 			<ul class="list-group mb-5 shadow" th:if="${patient.declaration != null}">
-				<li class="list-group-item bg-dark text-light">Khai báo:</li>
+				<li class="list-group-item bg-info text-light"><i class="fas fa-solid fa-briefcase-medical"></i> Khai báo:</li>
 				<li class="list-group-item"><strong>Nhóm máu: [[${patient.declaration.blood}]]</strong></li>
 				<li class="list-group-item"><strong>Bệnh nền: [[${patient.declaration.background}]]</strong></li>
 				<li class="list-group-item"><strong>Thuốc: [[${patient.declaration.medicine}]]</strong></li>
@@ -37,7 +39,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<h5 class="textShadowSm m-3 text-center">Lịch sử khám bệnh</h5>
+		<h3 class="textShadowSm m-3 text-center"><i class="fas fa-solid fa-stethoscope"></i> Lịch sử khám bệnh</h3>
 	</div>
 
 	<div class="row">
@@ -47,17 +49,17 @@
 			</span>
 		</div>
 		<div id="accordion" th:each="history : ${listHistory}">
-			<div class="card">
+			<div class="card border-success">
 				<div class="card-header" id="{'heading' + ${history.id}}">
 					<h5 class="mb-0">
-						<button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
-							aria-expanded="true" aria-controls="collapseOne">
+						<a class="collapsed card-link" data-toggle="collapse" 
+							th:href="'#collapseTwo'+${history.id}">
 							[[${#temporals.format(history.appointment.start, 'dd-MM-yyyy')}]]
-						</button>
+						</a>
 					</h5>
 				</div>
 
-				<div id="collapseOne" class="collapse" aria-labelledby="'heading' + ${history.id}"
+				<div th:id="'collapseTwo'+ ${history.id}" class="collapse" 
 					data-parent="#accordion">
 					<div class="card-body">
 						<h5 class="card-title">[[${history.diagnose}]]</h5>
@@ -65,7 +67,6 @@
 						<p class="card-text">Thuốc: [[${history.medicine}]]</p>
 						<p class="card-text">Bác sĩ: [[${history.doctor}]]</p>
 						<p class="card-text">[[${history.advice}]]</p>
-						
 						<p class="card-text">[[${history.type}]]: </p>
 						<span th:each="file : ${history.fileModels}">
 							<a th:href="@{'/file/' + ${file.id}}" target="_blank" style="margin: 5px;" ><i class="fas fa-solid fa-file-import fa-2x"></i></a>
@@ -75,12 +76,10 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
 
 	<div class="row m-3">
 		<button onclick="history.back()" class="btn btn-danger btn-rounded mx-0">Quay lại</button>
 	</div>
-
 </body>
 </html>

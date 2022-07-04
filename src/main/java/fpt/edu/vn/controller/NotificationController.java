@@ -32,11 +32,6 @@ public class NotificationController {
 	@GetMapping()
 	public String showUserNotificationList(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
 		List<Notification> list = userService.getUserById(currentUser.getId()).getNotifications();
-//    	Collections.sort(list, Collections.reverseOrder());
-//		Comparator<Notification> reverseComparator = (c1, c2) -> {
-//			return c2.getCreatedAt().compareTo(c1.getCreatedAt());
-//		};
-//		Collections.sort(list, reverseComparator);
 		model.addAttribute("notifications", list);
 		return "notifications/listNotifications";
 	}
@@ -49,7 +44,7 @@ public class NotificationController {
 		return "redirect:" + notification.getUrl();
 	}
 
-	@PostMapping("/markAllAsRead")
+	@GetMapping("/markAllAsRead")
 	public String processMarkAllAsRead(@AuthenticationPrincipal CustomUserDetails currentUser) {
 		notificationService.markAllAsRead(currentUser.getId());
 		return "redirect:/notifications";
