@@ -7,7 +7,7 @@
 	<div class="row mt-5">
 		<div class="col-md-12 text-center">
 			<h2 style="color: #37a7f1;">
-				<b>Tóm Tắt Đặt Lịch Khám</b>
+				<b>TÓM TẮT ĐẶT LỊCH KHÁM BỆNH</b>
 			</h2>
 		</div>
 	</div>
@@ -41,37 +41,37 @@
 		<div class="col-md-6 mt-3">
 			<table class="table">
 				<tr>
-					<td><b>Date</b></td>
+					<td><b>Ngày</b></td>
 					<td><span th:text="${#temporals.format(start, 'dd-MM-yyyy')}">10-01-2022</span></td>
 				</tr>
 				<tr>
-					<td><b>Time</b></td>
+					<td><b>Thời gian</b></td>
 					<td><span
 							th:text="${#temporals.format(start, 'HH:mm')+' - '+ #temporals.format(end, 'HH:mm')}">14:00
 							- 15:00</span>
 					</td>
 				</tr>
 				<tr>
-					<td><b>Doctor</b></td>
+					<td><b>Bác sĩ</b></td>
 					<td><span th:text="${doctor}">Huyhue</span></td>
 				</tr>
 
 				<tr>
-					<td><b>Packages</b></td>
+					<td><b>Gói khám</b></td>
 					<td><span th:text="${packages.name}"> english </span></td>
 				</tr>
 				<tr>
-					<td><b>Description</b></td>
+					<td><b>Mô tả</b></td>
 					<td><span th:text="${packages.description}">description</span></td>
 				</tr>
 
 				<tr>
-					<td><b>Price</b></td>
+					<td><b>Giá</b></td>
 					<td><span th:text="${packages.price}"> 50 </span> VND</td>
 				</tr>
 
 				<tr>
-					<td><b>Cancellable by patient?</b></td>
+					<td><b>Có thể hủy bởi bệnh nhân?</b></td>
 					<td>
 						<p th:text="${packages.editable ? 'Yes':'No, only by doctor'}">Yes</p>
 					</td>
@@ -157,7 +157,7 @@
 				window.location.href = "/";
 				alert("Hết giờ. Vui lòng đặt lịch khám lại!");
 			} else {
-				elem.innerHTML = timeLeft + ' seconds remaining';
+				elem.innerHTML = timeLeft + ' giây còn lại';
 				timeLeft--;
 			}
 		}
@@ -177,10 +177,25 @@
 					timeout: 600000,
 					success: function (response) {
 						if (response == "SUCCESS") {
-							window.location.href = "/appointments/all";
-							alert("Chúc mừng bạn đặt lịch thành công");
+							$.confirm({
+								type: 'blue',
+								title: '<i class="fa fa-check-circle" aria-hidden="true" style="color:blue;"></i> ' + 'Xác nhận!!',
+								content: 'Chúc mừng bạn đặt lịch thành công',
+								buttons: {
+									OK: function () {
+										window.location.href = "/appointments/all";
+									}
+								}
+							});
 						} else {
-							alert("OTP không phù hợp. Vui lòng nhập lại!");
+							$.confirm({
+								type: 'red',
+								title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red;"></i> ' + 'Xác nhận!!',
+								content: 'OTP không phù hợp. Vui lòng nhập lại!',
+								buttons: {
+									OK: function () {}
+								}
+							});
 						}
 					},
 					error: function (xhr, status, error) {

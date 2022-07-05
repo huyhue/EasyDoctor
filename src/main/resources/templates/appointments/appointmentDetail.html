@@ -18,7 +18,7 @@
 			<table id="appointments" class="table">
 				<input type="hidden" th:value="${appointment.id}" id="appointment_id">
 				<tr>
-					<td><b>Status</b></td>
+					<td><b>Trạng thái</b></td>
 					<td><span th:text="${appointment.status}" id="status">trạng thái </span>
 					</td>
 				</tr>
@@ -31,7 +31,7 @@
 					</td>
 				</tr>
 				<tr th:if="${appointment.status.name()=='CANCELED'}">
-					<td><b>Canceled by</b></td>
+					<td><b>Hủy bởi</b></td>
 					<td><span th:text="${appointment.canceler.fullname}">cancel</span></td>
 				</tr>
 				<tr>
@@ -203,7 +203,7 @@
 			var appointmentId = $('#appointment_id').val();
 			$.confirm({
 				type: 'red',
-				title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red;"></i> ' + 'Confirm!!',
+				title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red;"></i> ' + 'Xác nhận!!',
 				content: 'Bạn có chắc chắn muốn xóa cuộc hẹn không?',
 				autoClose: 'No|8000',
 				buttons: {
@@ -217,7 +217,7 @@
 								location.reload();
 							},
 							error: function (xhr, status, error) {
-								console.log("Something Wrong!");
+								console.log("Lỗi đã xảy ra!");
 								location.reload();
 							}
 						});

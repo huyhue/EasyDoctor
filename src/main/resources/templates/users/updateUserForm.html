@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'account','My account')}"
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'account','Tài khoản của tôi')}"
 	xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <body>
@@ -12,7 +12,7 @@
 					<input id="profileImage" name="profileImage" type="file" accept="image/png, image/jpeg" />
 				</form>
 				<p class="text-center">
-				<div id="successImage">File is too large</div>
+				<div id="successImage">File quá lớn.</div>
 				<img src="/img/loader.gif" alt="loader" style="width: 150px;height: 120px;" id="loader">
 				</p>
 			</div>
@@ -20,16 +20,16 @@
 
 			<div class="card text-center">
 				<div class="card-header">
-					Appointments
+					Cuộc hẹn khám bệnh
 				</div>
 				<div class="card-body p-0">
 					<ul class="list-group">
 						<li class="list-group-item d-flex justify-content-between align-items-center">
-							Scheduled
+							Đã lên lịch
 							<span class="badge badge-primary badge-pill" th:text="${numberScheduled}">2</span>
 						</li>
 						<li class="list-group-item d-flex justify-content-between align-items-center">
-							Canceled this month
+							Hủy trong tháng
 							<span class="badge badge-danger badge-pill" th:text="${numberCanceled}">1</span>
 						</li>
 					</ul>
@@ -87,7 +87,7 @@
 						</div>
 						<div class="form-row">
 							<div class="form-group col-md-6">
-								<label for="startPracticeDate">Fullname</label>
+								<label for="startPracticeDate">Tên đầy đủ</label>
 								<input type="text" class="form-control"
 									th:classappend="${#fields.hasErrors('fullname') ? 'is-invalid' :''}"
 									th:field="*{fullname}">
@@ -96,23 +96,23 @@
 								</div>
 							</div>
 							<div class="form-group col-md-6">
-								<label for="gender">Gender</label><br>
+								<label for="gender">Giới tính</label><br>
 								<div class="form-check form-check-inline">
 									<input name="gender" type="radio" th:value="MALE" class="form-check-input"
 										id="radio1" th:field="*{gender}" />
-									<label class="form-chek-label" for="radio1">Male</label>
+									<label class="form-chek-label" for="radio1">Nam</label>
 								</div>
 								<div class="form-check form-check-inline">
 									<input name="gender" type="radio" th:value="FEMALE" class="form-check-input"
 										id="radio2" th:field="*{gender}" /> <label class="form-chek-label"
-										for="radio2">Female</label>
+										for="radio2">Nữ</label>
 								</div>
 							</div>
 						</div>
 
 						<div class="form-row">
 							<div class="form-group col-md-6">
-								<label for="mobile">Mobile</label>
+								<label for="mobile">Điện thoại</label>
 								<input type="text" class="form-control"
 									th:classappend="${#fields.hasErrors('mobile') ? 'is-invalid' :''}"
 									th:field="*{mobile}">
@@ -121,8 +121,8 @@
 								</div>
 							</div>
 							<div class="form-group col-md-6">
-								<label for="age">Age</label>
-								<input type="text" class="form-control"
+								<label for="age">Tuổi</label>
+								<input type="number" class="form-control"
 									th:classappend="${#fields.hasErrors('age') ? 'is-invalid' :''}" th:field="*{age}">
 								<div th:if="${#fields.hasErrors('age')}" class="invalid-feedback">
 									<p th:errors="*{age}"></p>
@@ -133,7 +133,7 @@
 						<th:block th:if="${account_type =='doctors'}">
 							<div class="form-row">
 								<div class="form-group col-md-6">
-									<label for="specialty">Specialty</label>
+									<label for="specialty">Chuyên khoa</label>
 									<input type="text" class="form-control"
 										th:classappend="${#fields.hasErrors('specialty.name') ? 'is-invalid' :''}"
 										th:field="*{specialty.name}" readonly>
@@ -153,7 +153,7 @@
 							</div>
 							<div class="form-row">
 								<div class="form-group col-md-6">
-									<label for="clinic.name">Clinic</label>
+									<label for="clinic.name">Phòng khám</label>
 									<input type="text" class="form-control"
 										th:classappend="${#fields.hasErrors('clinic.name') ? 'is-invalid' :''}"
 										th:field="*{clinic.name}" readonly>
@@ -162,7 +162,7 @@
 									</div>
 								</div>
 								<div class="form-group col-md-6">
-									<label for="startPracticeDate">Description</label>
+									<label for="startPracticeDate">Mô tả</label>
 									<input type="text" class="form-control"
 										th:classappend="${#fields.hasErrors('description') ? 'is-invalid' :''}"
 										th:field="*{description}">
@@ -173,7 +173,7 @@
 							</div>
 							<div class="form-row">
 								<div class="form-group col-md-6">
-									<label for="certification">Certification</label>
+									<label for="certification">Chứng chỉ</label>
 									<form id="certificationForm" method="post" enctpye="multipart/form-data">
 
 										<a th:if="${certification}" th:href="@{'/file/' + ${certification.id}}"
@@ -186,7 +186,7 @@
 									</form>
 								</div>
 								<div class="form-group col-md-6">
-									<label>Packages</label><br>
+									<label>Gói khám</label><br>
 									<ul>
 										<li th:each="packages : ${allPackages}">
 											<input type="checkbox" th:field="*{packages}" th:value="${packages.id}" />
@@ -210,7 +210,7 @@
 									</div>
 								</div>-->
 								<div class="form-group col-md-6">
-									<label for="address">Address</label>
+									<label for="address">Địa chỉ</label>
 									<input type="text" class="form-control"
 										th:classappend="${#fields.hasErrors('address') ? 'is-invalid' :''}"
 										th:field="*{address}">
@@ -221,7 +221,7 @@
 							</div>
 						</th:block>
 
-						<button type="submit" class="btn btn-primary">Save</button>
+						<button type="submit" class="btn btn-info">Lưu thay đổi</button>
 					</form>
 				</div>
 
@@ -230,7 +230,7 @@
 						<input type="hidden" th:field="*{id}">
 						<div class="form-row">
 							<div class="form-group col-md-6">
-								<label for="currentPassword">Current password</label>
+								<label for="currentPassword">Password hiện tại</label>
 								<input type="password" class="form-control"
 									th:classappend="${#fields.hasErrors('currentPassword') ? 'is-invalid' :''}"
 									th:value="*{currentPassword}" readonly>
@@ -242,7 +242,7 @@
 
 						<div class="form-row">
 							<div class="form-group col-md-6">
-								<label for="password">New password</label>
+								<label for="password">Password mới</label>
 								<input type="password" class="form-control"
 									th:classappend="${#fields.hasErrors('password') ? 'is-invalid' :''}"
 									th:field="*{password}">
@@ -253,7 +253,7 @@
 						</div>
 						<div class="form-row">
 							<div class="form-group col-md-6">
-								<label for="matchingPassword">Repeat new password</label>
+								<label for="matchingPassword">Password mới nhập lại</label>
 								<input type="password" class="form-control"
 									th:classappend="${#fields.hasErrors('matchingPassword') ? 'is-invalid' :''}"
 									th:field="*{matchingPassword}">
@@ -262,7 +262,7 @@
 								</div>
 							</div>
 						</div>
-						<button type="submit" class="btn btn-primary">Save</button>
+						<button type="submit" class="btn btn-primary">Thay đổi</button>
 					</form>
 				</div>
 

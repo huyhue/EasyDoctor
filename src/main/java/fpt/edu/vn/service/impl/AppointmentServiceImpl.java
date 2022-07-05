@@ -445,12 +445,12 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 	@Override
 	public int getNumberScheduledAppointmentByUserId(int userId) {
-		return appointmentRepository.findCanceledByUserId(userId).size();
+		return appointmentRepository.findScheduledByUserId(userId).size();
 	}
 
 	@Override
 	public int getNumberCanceledAppointmentByUserId(int userId) {
-		return appointmentRepository.findScheduledByUserId(userId).size();
+		return appointmentRepository.findCanceledByUserId(userId).size();
 	}
 
 	@Override
