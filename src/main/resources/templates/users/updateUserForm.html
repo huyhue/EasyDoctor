@@ -46,11 +46,11 @@
 				</li>
 				<li sec:authorize="hasRole('ROLE_DOCTOR') or hasRole('ROLE_PATIENT')" class="nav-item">
 					<a class="nav-link" id="newPassword-tab" data-toggle="tab" href="#newPassword" role="tab"
-						aria-controls="newPassword" aria-selected="false">Password</a>
+						aria-controls="newPassword" aria-selected="false">Mật khẩu</a>
 				</li>
 				<li sec:authorize="hasRole('ROLE_PATIENT')" class="nav-item">
 					<a class="nav-link" id="declaration-tab" data-toggle="tab" href="#declaration" role="tab"
-						aria-controls="declaration" aria-selected="false">Khai báo</a>
+						aria-controls="declaration" aria-selected="false">Thông tin khai báo</a>
 				</li>
 				<li sec:authorize="hasRole('ROLE_PATIENT') or hasRole('ROLE_DOCTOR')" class="nav-item">
 					<a class="nav-link" id="payment-tab" data-toggle="tab" href="#payment" role="tab"
@@ -226,44 +226,33 @@
 				</div>
 
 				<div class="tab-pane fade pt-3" id="newPassword" role="tabpanel" aria-labelledby="newPassword-tab">
-					<form th:action="@{${formActionPassword}}" th:object="${passwordChange}" method="POST">
+					<form th:object="${passwordChange}">
+						<input type="hidden" th:value="${formActionPassword}" id="formPassword">
 						<input type="hidden" th:field="*{id}">
 						<div class="form-row">
 							<div class="form-group col-md-6">
-								<label for="currentPassword">Password hiện tại</label>
-								<input type="password" class="form-control"
-									th:classappend="${#fields.hasErrors('currentPassword') ? 'is-invalid' :''}"
-									th:value="*{currentPassword}" readonly>
-								<div th:if="${#fields.hasErrors('currentPassword')}" class="invalid-feedback">
-									<p th:errors="*{currentPassword}"></p>
-								</div>
+								<label for="currentPassword">Mật khẩu hiện tại</label>
+								<input type="password" class="form-control" th:field="*{currentPassword}">
+								<span class="errorMsg" id="errorMsgCurrentPassword"></span>
 							</div>
 						</div>
 
 						<div class="form-row">
 							<div class="form-group col-md-6">
-								<label for="password">Password mới</label>
-								<input type="password" class="form-control"
-									th:classappend="${#fields.hasErrors('password') ? 'is-invalid' :''}"
-									th:field="*{password}">
-								<div th:if="${#fields.hasErrors('password')}" class="invalid-feedback">
-									<p th:errors="*{password}"></p>
-								</div>
+								<label for="password">Mật khẩu mới</label>
+								<input type="password" class="form-control" th:field="*{password}">
+								<span class="errorMsg" id="errorMsgPassword"></span>
 							</div>
 						</div>
 						<div class="form-row">
 							<div class="form-group col-md-6">
-								<label for="matchingPassword">Password mới nhập lại</label>
-								<input type="password" class="form-control"
-									th:classappend="${#fields.hasErrors('matchingPassword') ? 'is-invalid' :''}"
-									th:field="*{matchingPassword}">
-								<div th:if="${#fields.hasErrors('matchingPassword')}" class="invalid-feedback">
-									<p th:errors="*{matchingPassword}"></p>
-								</div>
+								<label for="matchingPassword">Nhập lại mật khẩu </label>
+								<input type="password" class="form-control" id="matchingPassword">
+								<span class="errorMsg" id="errorMsgMatchingPassword"></span>
 							</div>
 						</div>
-						<button type="submit" class="btn btn-primary">Thay đổi</button>
 					</form>
+					<button id="btn-change-password" class="btn btn-info">Thay đổi</button>
 				</div>
 
 				<th:block th:if="${account_type == 'patients'}">

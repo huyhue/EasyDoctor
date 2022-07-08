@@ -10,10 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import fpt.edu.vn.component.ChangePasswordForm;
+import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.model.Declaration;
+import fpt.edu.vn.model.Packages;
 import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.AppointmentService;
@@ -69,11 +73,11 @@ public class PatientController {
 		userService.updatePatient(user);
 		return "redirect:/patients/" + user.getId();
 	}
-
+	
 	@PostMapping("/update/password")
-	public String processPatientPasswordUpdate(@ModelAttribute("passwordChange") ChangePasswordForm passwordChange) {
-		userService.updateUserPassword(passwordChange);
-		return "redirect:/patients/" + passwordChange.getId();
+	@ResponseBody
+	public CommonMsg processPatientPasswordUpdate(@RequestBody ChangePasswordForm passwordChange) {
+		return userService.updateUserPassword(passwordChange);
 	}
 
 	@PostMapping("/declaration/{doctorId}")

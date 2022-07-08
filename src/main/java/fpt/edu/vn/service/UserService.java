@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import fpt.edu.vn.component.ChangePasswordForm;
+import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.model.Declaration;
 import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.FileModel;
@@ -27,7 +28,7 @@ public interface UserService {
 	Doctor getDoctorById(int userId);
 	Patient getPatientById(int userId);
 	
-	void updateUserPassword(ChangePasswordForm passwordChangeForm);
+	CommonMsg updateUserPassword(ChangePasswordForm passwordChangeForm);
 	void updatePatient(Patient patient);
 	void updateDoctor(Doctor doctor);
 	void updateUserActiveState(int id, boolean active);

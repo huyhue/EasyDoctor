@@ -14,6 +14,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import fpt.edu.vn.component.ChangePasswordForm;
+import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.model.Declaration;
 import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.FileModel;
@@ -154,10 +155,17 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@PreAuthorize("#passwordChangeForm.id == principal.id")
-	public void updateUserPassword(ChangePasswordForm passwordChangeForm) {
+	public CommonMsg updateUserPassword(ChangePasswordForm passwordChangeForm) {
+		CommonMsg commonMsg = new CommonMsg();
 		User user = userRepository.findById(passwordChangeForm.getId()).get();
-		user.setPassword(passwordEncoder.encode(passwordChangeForm.getPassword()));
-		userRepository.save(user);
+		if (passwordEncoder.matches(passwordChangeForm.getCurrentPassword(), user.getPassword()) == false) {
+			commonMsg.setMsgCode("205");
+		}else {
+			user.setPassword(passwordEncoder.encode(passwordChangeForm.getPassword()));
+			userRepository.save(user);
+			commonMsg.setMsgCode("200");
+		}
+		return commonMsg;
 	}
 
 	// capitalize First Letter String

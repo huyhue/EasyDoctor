@@ -13,12 +13,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import fpt.edu.vn.component.ChangePasswordForm;
+import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.component.TimePeroid;
 import fpt.edu.vn.model.Appointment;
 import fpt.edu.vn.model.Doctor;
@@ -107,10 +110,9 @@ public class DoctorController {
 	}
 
 	@PostMapping("/update/password")
-	public String processProviderPasswordUpate(@ModelAttribute("passwordChange") ChangePasswordForm passwordChange,
-			BindingResult bindingResult) {
-		userService.updateUserPassword(passwordChange);
-		return "redirect:/doctors/" + passwordChange.getId();
+	@ResponseBody
+	public CommonMsg processDoctorPasswordUpdate(@RequestBody ChangePasswordForm passwordChange) {
+		return userService.updateUserPassword(passwordChange);
 	}
 
 	@GetMapping("/availability")

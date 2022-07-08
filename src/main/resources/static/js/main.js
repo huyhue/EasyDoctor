@@ -83,6 +83,94 @@ $(document).ready(function() {
 		});
 	});
 
+	$("#btn-change-password").click(function() {
+		var formPassword = $("#formPassword").val();
+		if (dataValidation()) {
+			var uniList = {};
+			uniList.id = $("#id").val();
+			uniList.currentPassword = $("#currentPassword").val();
+			uniList.password = $("#password").val();
+			$.ajax({
+				type: "POST",
+				contentType: "application/json",
+				url: formPassword,
+				data: JSON.stringify(uniList),
+				timeout: 100000,
+				async: true,
+				dataType: 'json',
+				success: function(data) {
+					if (data.msgCode == '200') {
+						$.confirm({
+							type: 'green',
+							title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
+							content: 'Thay đổi mật khẩu thành công.',
+							buttons: {
+								ok: function() {
+									resetText();
+								}
+							}
+						});
+					} else if (data.msgCode == "205") {
+						$("#errorMsgCurrentPassword").text("Mật khẩu cũ không đúng!!");
+						$("#currentPassword").css('border', '1px solid red');
+						$("#currentPassword").focus();
+					}
+				},
+				error: function(xhr, status, error) {
+					console.log("Sorry,Something wrong.Please contact with IT Team");
+				}
+			});
+		}
+	});
+
+	function dataValidation() {
+		var status = true;
+
+		if ($("#currentPassword").val() == "") {
+			status = false;
+			$("#errorMsgCurrentPassword").text("Không được để trống.");
+			$("#currentPassword").css('border', '1px solid red');
+			$("#currentPassword").focus();
+			return status;
+		}
+		if ($("#password").val() == "") {
+			status = false;
+			$("#errorMsgPassword").text("Không được để trống.");
+			$("#password").css('border', '1px solid red');
+			$("#password").focus();
+			return status;
+		}
+		if ($("#matchingPassword").val() == "") {
+			status = false;
+			$("#errorMsgMatchingPassword").text("Không được để trống.");
+			$("#matchingPassword").css('border', '1px solid red');
+			$("#matchingPassword").focus();
+			return status;
+		}
+		if ($("#password").val() != $("#matchingPassword").val()) {
+			status = false;
+			$("#errorMsgMatchingPassword").text("Mật khẩu không trùng nhau.");
+			$("#matchingPassword").css('border', '1px solid red');
+			$("#matchingPassword").focus();
+			return status;
+		}
+		return status;
+	}
+
+	function resetText() {
+		$("#currentPassword").val('');
+		$("#errorMsgCurrentPassword").text("");
+		$("#currentPassword").css('border', '1px solid #CED4DA');
+
+		$("#password").val('');
+		$("#errorMsgPassword").text("");
+		$("#password").css('border', '1px solid #CED4DA');
+		
+		$("#matchingPassword").val('');
+		$("#errorMsgMatchingPassword").text("");
+		$("#matchingPassword").css('border', '1px solid #CED4DA');
+	}
+
 });
 
 
