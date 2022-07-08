@@ -28,9 +28,17 @@ $(document).ready(function() {
 			cache: false,
 			success: function(data, statusText, xhr) {
 				console.log(xhr.status);
-				alert("Upload thành công");
 				if (xhr.status == "200") {
-					$('#loader').hide();
+					$.confirm({
+						type: 'blue',
+						title: '<i class="fa fa-check-circle" aria-hidden="true" style="color:blue;"></i> ' + 'Xác nhận!!',
+						content: 'Upload hình ảnh thành công',
+						buttons: {
+							OK: function() {
+								$('#loader').hide();
+							}
+						}
+					});
 				}
 				if (xhr.status == "400") {
 
@@ -72,7 +80,7 @@ $(document).ready(function() {
 				$.confirm({
 					type: 'red',
 					title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red;"></i> ' + 'Xác nhận!!',
-					content: 'OTP không phù hợp. Vui lòng nhập lại!',
+					content: 'Upload chứng chỉ thất bại!',
 					buttons: {
 						OK: function() {
 							location.reload();
@@ -165,7 +173,7 @@ $(document).ready(function() {
 		$("#password").val('');
 		$("#errorMsgPassword").text("");
 		$("#password").css('border', '1px solid #CED4DA');
-		
+
 		$("#matchingPassword").val('');
 		$("#errorMsgMatchingPassword").text("");
 		$("#matchingPassword").css('border', '1px solid #CED4DA');

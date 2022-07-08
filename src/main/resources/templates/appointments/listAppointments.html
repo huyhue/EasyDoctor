@@ -135,7 +135,7 @@
 					<td sec:authorize="!hasRole('ROLE_PATIENT')"><span th:text="${appointment.patient.fullname}">
 							Patient </span>
 					</td>
-					<td><span th:text="${appointment.packages.duration + ' phút'}"> 60 min </span></td>
+					<td><span th:text="${appointment.packages.duration + ' phút'}"> 60 phút </span></td>
 					<td><a class="btn btn-info" th:href="@{'/appointments/' + ${appointment.id}}"
 							role="button">Chi tiết</a></td>
 				</tr>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'account','Tài khoản của tôi')}"
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{fragments/layout :: layout (~{::body},'account','Tài khoản của tôi')}"
 	xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <body>
@@ -260,29 +261,33 @@
 						<div th:if="${user.declaration == null}">
 							<h3>Bạn chưa khai báo. Vui lòng khai báo đặt lịch để cập nhật.</h3>
 						</div>
-						<div class="form-row" th:if="${user.declaration != null}">
-							<div class="form-group col-md-6">
-								<strong>Nhóm máu: [[${user.declaration.blood}]]</strong>
-							</div>
-							<div class="form-group col-md-6">
-								<strong>Bệnh nền: [[${user.declaration.background}]]</strong>
-							</div>
-							<div class="form-group col-md-6">
-								<strong>Thuốc: [[${user.declaration.medicine}]]</strong>
-							</div>
-							<div class="form-group col-md-6">
-								<strong>Triệu chứng: [[${user.declaration.symptom}]]</strong>
-							</div>
-							<div class="form-group col-md-6">
-								<strong>Khác: [[${user.declaration.notes}]]</strong>
-							</div>
-						</div>
+						<ul class="list-group" th:if="${user.declaration != null}">
+							<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
+									<strong><i class="fas fa-solid fa-briefcase-medical"></i> Nhóm máu: </strong>
+								<h1 class="badge badge-danger badge-pill">[[${user.declaration.blood}]]</h1>
+							</li>
+							<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
+								<strong><i class="fas fa-solid fa-lungs-virus"></i> Bệnh nền:</strong>
+								<span class="badge badge-warning badge-pill">[[${user.declaration.background}]]</span>
+							</li>
+							<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
+								<strong><i class="fas fa-solid fa-prescription-bottle-medical"></i> Thuốc: </strong>
+								<span class="badge badge-success badge-pill">[[${user.declaration.medicine}]]</span>
+							</li>
+							<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
+								<strong><i class="fas fa-solid fa-head-side-cough"></i> Triệu chứng: </strong>
+								<span class="badge badge-primary badge-pill">[[${user.declaration.symptom}]]</span>
+							</li>
+							<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
+								<strong><i class="fas fa-solid fa-truck-medical"></i> Thông tin khác: </strong>
+								<span class="badge badge-dark badge-pill">[[${user.declaration.notes}]]</span>
+							</li>
+						</ul>
 					</div>
 				</th:block>
 
 				<div class="tab-pane fade pt-3" id="payment" role="tabpanel" aria-labelledby="payment-tab">
 					<form method="POST">
-
 						<div class="form-row">
 							<div class="form-group col-md-6">
 								<label for="currentPassword">Payment banking</label>

@@ -30,9 +30,10 @@
 			<table id="notifications" class="table table-striped text-center mt-2">
 				<thead class="thead-light">
 					<tr>
-						<th> Thời gian</th>
-						<th> Tiêu đề</th>
-						<th> Nội dung</th>
+						<th style="display: none;">ID</th>
+						<th>Thời gian</th>
+						<th>Tiêu đề</th>
+						<th>Nội dung</th>
 						<th style="display: none;"> Đọc</th>
 						<th> Xem</th>
 					</tr>
@@ -42,6 +43,7 @@
 						<td colspan="5"> Không có thông báo nào</td>
 					</tr>
 					<tr th:each="notification : ${notifications}">
+						<td style="display: none;"><span th:text="${notification.id}">id</span></td>
 						<td><span th:text="${#dates.format(notification.createdAt, 'dd-MM-yyyy')}"> thoi gian </span>
 						</td>
 						<td><span th:text="${notification.title}"> Noi dung</span></td>
@@ -66,7 +68,7 @@
 		$(document).ready(function () {
 			$('#notifications').DataTable({
 				"order": [
-					[0, "asc"]
+					[0, "desc"]
 				],
 			});
 
@@ -77,10 +79,10 @@
 					"bFilter": true,
 					"bLengthChange": true,
 					"order": [
-						[0, "asc"]
+						[0, "desc"]
 					],
 					"initComplete": function () {
-						this.api().columns([3]).every(function () {
+						this.api().columns([4]).every(function () {
 							var column = this;
 							var searchString = $("#reads").val();
 							if (searchString == 'all') {
@@ -96,8 +98,6 @@
 					}
 				});
 			});
-
-
 
 		});
 	</script>

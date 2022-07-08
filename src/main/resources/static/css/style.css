@@ -6,6 +6,9 @@
     color: red;
     font-size: 13px;
 }
+.badge {
+	font-size: 95% !important;
+}
 .doctors {
   background: #fff;
 }
