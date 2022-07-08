@@ -9,6 +9,9 @@
 .badge {
 	font-size: 95% !important;
 }
+.badge-pill{
+	padding: 7px !important;
+}
 .doctors {
   background: #fff;
 }

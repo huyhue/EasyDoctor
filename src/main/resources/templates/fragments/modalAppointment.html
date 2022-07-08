@@ -50,7 +50,8 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<h5>Bạn có <span class="font-weight-bold bg-danger text-light" th:text="${remainingTime}">3h 45m</span> để từ chối cuộc hẹn
+				<h5>Bạn có <span class="font-weight-bold bg-danger text-light" th:text="${remainingTime}">3h 45m</span>
+					để từ chối cuộc hẹn
 					diễn ra do có việc nên không tới khám bệnh.</h5>
 				<strong>Sau thời gian này hóa đơn sẽ tự động được in. Nếu bạn không Click chọn.</strong>
 				<form th:action="@{/appointments/reject}" method='POST'>
@@ -115,7 +116,7 @@
 					<input type="hidden" name="appointment" th:value="${appointment.id}"
 						sth:field="*{appointment.id}" />
 					<div class="form-group">
-						<label for="diagnose" class="col-form-label">Chẩn đoán bệnh:</label>
+						<strong for="diagnose" class="col-form-label">Chẩn đoán bệnh:</strong>
 						<input type="text" class="form-control" th:field="*{diagnose}">
 					</div>
 					<div class="form-group">
@@ -125,11 +126,28 @@
 						<textarea class="form-control" placeholder="Lời khuyên" th:field="*{advice}"></textarea>
 					</div>
 					<div class="form-group">
-						<label for="medicine" class="col-form-label">Thuốc:</label>
+						<strong for="medicine" class="col-form-label">Thuốc:</strong>
 						<textarea class="form-control" th:field="*{medicine}"></textarea>
 					</div>
+					<div>
+						<strong for="status" class="col-form-label">Phí khám bệnh: </strong> <br>
+						<div class="form-inline">
+							<div class="form-group mr-3">
+								<input class="form-check-input" type="checkbox" id="gridCheck" th:value="paid">
+								<label class="form-check-label" for="gridCheck">
+									Đã thanh toán
+								</label>
+							</div>
+							<div class="form-group">
+								<input type="number" placeholder="Phí phát sinh" class="form-control">
+								<div class="input-group-append">
+									<span class="input-group-text">VND</span>
+								</div>
+							</div>
+						</div>
+					</div>
 					<div class="form-group">
-						<label for="type" class="col-form-label">Loại kết quả:</label>
+						<strong for="type" class="col-form-label">Loại kết quả:</strong>
 						<select class="custom-select" th:field="*{type}">
 							<option value="Toa thuốc" selected>Toa thuốc</option>
 							<option value="Toa thuốc">Chuẩn đoán hình ảnh</option>

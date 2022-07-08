@@ -45,7 +45,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         List<Invoice> invoices = invoiceRepository.findAllIssuedInCurrentMonth(LocalDate.now().with(TemporalAdjusters.firstDayOfMonth()).atStartOfDay());
         int nextInvoiceNumber = invoices.size() + 1;
         LocalDateTime today = LocalDateTime.now();
-        return "HD"+ today.getYear() + "/" + today.getMonthValue() + "/" + nextInvoiceNumber;
+        return "HD: "+ today.getYear() + "/" + today.getMonthValue() + " - Number: " + nextInvoiceNumber;
     }
 
     @Override
