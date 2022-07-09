@@ -117,6 +117,7 @@
 					<div class="panel-heading top-bar">
 						<div class="row">
 							<div class="col-md-6 col-xs-6">
+							<i class="fas fa-solid fa-comment-medical"></i>
 								<span sec:authorize="hasRole('ROLE_DOCTOR')"
 									th:text="${appointment.patient.fullname}"></span>
 								<span sec:authorize="hasRole('ROLE_PATIENT')"

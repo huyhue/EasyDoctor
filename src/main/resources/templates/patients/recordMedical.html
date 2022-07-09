@@ -14,62 +14,89 @@
 	<div class="row">
 		<div class="col">
 			<ul class="list-group shadow">
-				<li class="list-group-item bg-info text-light"><i class="fas fa-solid fa-book-open"></i> Thông tin bệnh nhân:</li>
-				<li class="list-group-item"><strong>Email: </strong>[[${patient.email}]]</li>
-				<li class="list-group-item"><strong>Tuổi: </strong>[[${patient.age}]]</li>
-				<li class="list-group-item"><strong>Giới tính: </strong>[[${patient.gender}]]</li>
-				<li class="list-group-item"><strong>Số điện thoại: </strong>[[${patient.mobile}]]</li>
+				<li class="list-group-item bg-info text-light"><h4><i class="fas fa-solid fa-book-open"></i> Thông tin bệnh
+					nhân:</h4></li>
+				<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
+					<strong><i class="fas fa-solid fa-envelope"></i> Email: </strong>
+					<span class="badge badge-primary badge-pill">[[${patient.email}]]</span>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
+					<strong><i class="fas fa-solid fa-user"></i> Tuổi: </strong>
+					<span class="badge badge-primary badge-pill">[[${patient.age}]]</span>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
+					<strong><i class="fas fa-solid fa-venus-mars"></i> Giới tính: </strong>
+					<span class="badge badge-primary badge-pill">[[${patient.gender}]]</span>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
+					<strong><i class="fas fa-solid fa-mobile-screen"></i> Số điện thoại: </strong>
+					<span class="badge badge-primary badge-pill">[[${patient.mobile}]]</span>
+				</li>
 			</ul>
 		</div>
 
 		<div class="col">
 			<ul class="list-group mb-5 shadow" th:if="${patient.declaration != null}">
-				<li class="list-group-item bg-info text-light"><i class="fas fa-solid fa-briefcase-medical"></i> Khai báo:</li>
-				<li class="list-group-item"><strong>Nhóm máu: [[${patient.declaration.blood}]]</strong></li>
-				<li class="list-group-item"><strong>Bệnh nền: [[${patient.declaration.background}]]</strong></li>
-				<li class="list-group-item"><strong>Thuốc: [[${patient.declaration.medicine}]]</strong></li>
-				<li class="list-group-item"><strong>Triệu chứng: [[${patient.declaration.symptom}]]</strong></li>
-				<li class="list-group-item"><strong>Khác: [[${patient.declaration.notes}]]</strong></li>
+				<li class="list-group-item bg-info text-light"><h4><i class="fas fa-solid fa-briefcase-medical"></i> Khai
+					báo:</h4></li>
+				<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
+					<strong><i class="fas fa-solid fa-briefcase-medical"></i> Nhóm máu: </strong>
+					<span class="badge badge-danger badge-pill">[[${patient.declaration.blood}]]</span>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
+					<strong><i class="fas fa-solid fa-lungs-virus"></i> Bệnh nền:</strong>
+					<span class="badge badge-warning badge-pill">[[${patient.declaration.background}]]</span>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
+					<strong><i class="fas fa-solid fa-prescription-bottle-medical"></i> Thuốc: </strong>
+					<span class="badge badge-success badge-pill">[[${patient.declaration.medicine}]]</span>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
+					<strong><i class="fas fa-solid fa-head-side-cough"></i> Triệu chứng: </strong>
+					<span class="badge badge-primary badge-pill">[[${patient.declaration.symptom}]]</span>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
+					<strong><i class="fas fa-solid fa-truck-medical"></i> Thông tin khác: </strong>
+					<span class="badge badge-dark badge-pill">[[${patient.declaration.notes}]]</span>
+				</li>
 			</ul>
 			<ul class="list-group mb-5 shadow" th:if="${patient.declaration == null}">
-				<li class="list-group-item bg-dark text-light">Khai báo:</li>
-				<li class="list-group-item"><strong>Bệnh nhân chưa khai báo</strong></li>
-				
+				<li class="list-group-item bg-dark text-light"><i class="fas fa-solid fa-briefcase-medical"></i> Khai báo:</li>
+				<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark"><strong>Bệnh nhân chưa khai báo</strong></li>
 			</ul>
 		</div>
 	</div>
 	<div class="row">
-		<h3 class="textShadowSm m-3 text-center"><i class="fas fa-solid fa-stethoscope"></i> Lịch sử khám bệnh</h3>
+		<h3 class="textShadowSm m-3 text-center"><i class="fas fa-solid fa-stethoscope"></i> LỊCH SỬ KHÁM BỆNH</h3>
 	</div>
 
 	<div class="row">
 		<div th:if="${#lists.isEmpty(listHistory)}">
 			<span>
-				<p>Bệnh nhân chưa có lịch sử khám bệnh nào.</p>
+				<h4>Bệnh nhân chưa có lịch sử khám bệnh nào.</h4>
 			</span>
 		</div>
 		<div id="accordion" th:each="history : ${listHistory}">
 			<div class="card border-success">
 				<div class="card-header" id="{'heading' + ${history.id}}">
 					<h5 class="mb-0">
-						<a class="collapsed card-link" data-toggle="collapse" 
-							th:href="'#collapseTwo'+${history.id}">
-							[[${#temporals.format(history.appointment.start, 'dd-MM-yyyy')}]]
+						<a class="collapsed card-link" data-toggle="collapse" th:href="'#collapseTwo'+${history.id}">
+							<i class="fas fa-solid fa-clock"></i> [[${#temporals.format(history.appointment.start, 'dd-MM-yyyy')}]]
 						</a>
 					</h5>
 				</div>
 
-				<div th:id="'collapseTwo'+ ${history.id}" class="collapse" 
-					data-parent="#accordion">
+				<div th:id="'collapseTwo'+ ${history.id}" class="collapse" data-parent="#accordion">
 					<div class="card-body">
-						<h5 class="card-title">[[${history.diagnose}]]</h5>
+						<h5 class="card-title badge badge-success badge-pill">[[${history.diagnose}]]</h5>
 						<p class="card-text"> [[${history.notes}]]</p>
 						<p class="card-text">Thuốc: [[${history.medicine}]]</p>
 						<p class="card-text">Bác sĩ: [[${history.doctor}]]</p>
 						<p class="card-text">[[${history.advice}]]</p>
 						<p class="card-text">[[${history.type}]]: </p>
 						<span th:each="file : ${history.fileModels}">
-							<a th:href="@{'/file/' + ${file.id}}" target="_blank" style="margin: 5px;" ><i class="fas fa-solid fa-file-import fa-2x"></i></a>
+							<a th:href="@{'/file/' + ${file.id}}" target="_blank" style="margin: 5px;"><i
+									class="fas fa-solid fa-file-import fa-2x"></i></a>
 						</span><br>
 						<small class="text-muted">[[${#temporals.format(history.updatedAt, 'dd-MM-yyyy')}]]</small>
 					</div>
@@ -79,7 +106,8 @@
 	</div>
 
 	<div class="row m-3">
-		<button onclick="history.back()" class="btn btn-danger btn-rounded mx-0">Quay lại</button>
+		<button onclick="history.back()" class="btn btn-danger btn-rounded mx-0"><i class="fas fa-solid fa-circle-left"></i> Quay lại</button>
 	</div>
 </body>
+
 </html>

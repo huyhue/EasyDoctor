@@ -104,7 +104,7 @@
 		<form th:object="${history}" method="POST" enctype="multipart/form-data">
 			<div class="modal-content">
 				<div class="modal-header bg-info">
-					<h5 class="modal-title" id="exampleModalLabel">Kết quả khám bệnh</h5>
+					<h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-solid fa-hand-holding-medical"></i> Kết quả khám bệnh</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -141,6 +141,7 @@
 							<div class="form-group">
 								<input type="number" placeholder="Phí phát sinh" class="form-control">
 								<div class="input-group-append">
+								 	<span class="input-group-text">0.0</span>
 									<span class="input-group-text">VND</span>
 								</div>
 							</div>
