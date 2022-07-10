@@ -20,6 +20,9 @@ public class Appointment extends BaseEntity implements Comparable<Appointment> {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "end")
     private LocalDateTime end;
+    
+    @Column(name = "incurred")
+    private Double incurred;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "canceled_at")
@@ -87,7 +90,15 @@ public class Appointment extends BaseEntity implements Comparable<Appointment> {
         this.end = end;
     }
 
-    public Patient getPatient() {
+    public Double getIncurred() {
+		return incurred;
+	}
+
+	public void setIncurred(Double incurred) {
+		this.incurred = incurred;
+	}
+
+	public Patient getPatient() {
 		return patient;
 	}
 

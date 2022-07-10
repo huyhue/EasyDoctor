@@ -1,6 +1,5 @@
 package fpt.edu.vn.model;
 
-import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 
@@ -12,7 +11,7 @@ import fpt.edu.vn.component.UserForm;
 public class Doctor extends User {
 	private String description;
 	
-	private Date startPracticeDate;
+	private Integer startPracticeDate;
 	
 	@OneToOne
     @JoinColumn(name = "id_specialty")
@@ -52,14 +51,13 @@ public class Doctor extends User {
 		this.description = description;
 	}
 
-	public Date getStartPracticeDate() {
+	public Integer getStartPracticeDate() {
 		return startPracticeDate;
 	}
 
-	public void setStartPracticeDate(Date startPracticeDate) {
+	public void setStartPracticeDate(Integer startPracticeDate) {
 		this.startPracticeDate = startPracticeDate;
 	}
-
 
 	public Clinic getClinic() {
 		return clinic;

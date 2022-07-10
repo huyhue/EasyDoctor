@@ -38,6 +38,9 @@ public class History extends BaseEntity  {
 	@Column(name = "pulished", columnDefinition = "boolean default false")
 	private boolean pulished;
 	
+	@Column(name = "paid", columnDefinition = "boolean default false")
+	private boolean paid;
+	
 	@ManyToOne
 	@JoinColumn(name = "id_patient")
 	private Patient patient;
@@ -130,6 +133,14 @@ public class History extends BaseEntity  {
 
 	public void setPulished(boolean pulished) {
 		this.pulished = pulished;
+	}
+
+	public boolean isPaid() {
+		return paid;
+	}
+
+	public void setPaid(boolean paid) {
+		this.paid = paid;
 	}
 
 	public Appointment getAppointment() {

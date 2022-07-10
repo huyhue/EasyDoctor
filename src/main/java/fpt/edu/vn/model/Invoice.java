@@ -43,8 +43,17 @@ public class Invoice extends BaseEntity {
         for (Appointment a : appointments2) {
             this.appointments.add(a);
             a.setInvoice(this);
-            totalAmount += a.getPackages().getPrice();
+            totalAmount += a.getPackages().getPrice() + a.getIncurred();
         }
+    }
+    
+    public Invoice(List<Appointment> appointments2) {
+    	this.appointments = new ArrayList<>();
+    	for (Appointment a : appointments2) {
+    		this.appointments.add(a);
+    		a.setInvoice(this);
+    		totalAmount += a.getPackages().getPrice();
+    	}
     }
 
     public String getStatus() {

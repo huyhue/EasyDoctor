@@ -50,7 +50,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public void createNewInvoice(Invoice invoice) {
+    	invoice.setStatus("paid");
+    	invoice.setNumber(generateInvoiceNumber());
+    	invoice.setIssued(LocalDateTime.now());
         invoiceRepository.save(invoice);
+        notificationService.newInvoice(invoice, true);
     }
 
     @Override

@@ -53,14 +53,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/**").hasAnyRole("PATIENT", "DOCTOR", "ADMIN")
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .loginProcessingUrl("/perform_login")
-                .successHandler(customAuthenticationSuccessHandler)
-                .permitAll()
+	                .loginPage("/login")
+	                .loginProcessingUrl("/perform_login")
+	                .successHandler(customAuthenticationSuccessHandler)
+	                .permitAll()
                 .and()
-                .logout().logoutUrl("/perform_logout")
+                	.logout().logoutUrl("/perform_logout")
                 .and()
-                .exceptionHandling().accessDeniedPage("/access-denied");
+                	.exceptionHandling().accessDeniedPage("/access-denied");
     }
 
     @Override

@@ -101,10 +101,7 @@ public class DoctorController {
 	}
 
 	@PostMapping("/update/profile")
-	public String processDoctorUpdate(@ModelAttribute("user") Doctor user, BindingResult bindingResult) {
-//    	if (bindingResult.hasErrors()) {
-//			return "redirect:/doctors/" + user.getId();
-//		}
+	public String processDoctorUpdate(@ModelAttribute("user") Doctor user) {
 		userService.updateDoctor(user);
 		return "redirect:/doctors/" + user.getId();
 	}
@@ -133,7 +130,6 @@ public class DoctorController {
 	@PostMapping("/availability/breakes/add")
 	public String processAddBreak(@ModelAttribute("breakModel") TimePeroid breakToAdd,
 			@RequestParam("planId") int planId, @RequestParam("dayOfWeek") String dayOfWeek) {
-//        System.out.print("Test: "+breakToAdd+planId+dayOfWeek);
 		workingPlanService.addBreakToWorkingPlan(breakToAdd, planId, dayOfWeek);
 		return "redirect:/doctors/availability";
 	}
@@ -161,8 +157,12 @@ public class DoctorController {
 			@AuthenticationPrincipal CustomUserDetails currentUser) {
 		history.setDoctor(userService.getUserById(currentUser.getId()).getFullname());
 		history.setUpdatedAt(LocalDateTime.now());
-		userService.saveResultByDoctor(history, files);
-		return "redirect:/recordMedical/" + history.getPatient().getId();
+//		history.setAppointment(null);
+		if (history.isPaid()) {
+			//gui mail thong bao in hoa don
+		}
+//		userService.saveResultByDoctor(history, files);
+		return "redirect:/appointments/" + history.getAppointment().getId();
 	}
 
 }

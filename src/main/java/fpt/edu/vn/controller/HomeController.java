@@ -47,8 +47,7 @@ public class HomeController {
 	}
 
 	@GetMapping("/")
-	public String showHome(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
-		model.addAttribute("user", userService.getUserById(currentUser.getId()));
+	public String showLandingPage(Model model) {
 		return "home";
 	}
 

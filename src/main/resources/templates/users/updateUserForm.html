@@ -134,55 +134,32 @@
 							<div class="form-row">
 								<div class="form-group col-md-6">
 									<label for="specialty">Chuyên khoa</label>
-									<input type="text" class="form-control"
-										th:classappend="${#fields.hasErrors('specialty.name') ? 'is-invalid' :''}"
-										th:field="*{specialty.name}" readonly>
-									<div th:if="${#fields.hasErrors('specialty.name')}" class="invalid-feedback">
-										<p th:errors="*{specialty.name}"></p>
-									</div>
+									<input type="text" class="form-control" th:field="*{specialty.name}" readonly>
 								</div>
 								<div class="form-group col-md-6">
-									<label for="startPracticeDate">Start Practice Date</label>
-									<input type="date" class="form-control"
-										th:classappend="${#fields.hasErrors('startPracticeDate') ? 'is-invalid' :''}"
-										th:field="*{startPracticeDate}">
-									<div th:if="${#fields.hasErrors('startPracticeDate')}" class="invalid-feedback">
-										<p th:errors="*{startPracticeDate}"></p>
-									</div>
+									<label for="startPracticeDate">Năm kinh nghiệm</label>
+									<input type="number" class="form-control" th:field="*{startPracticeDate}">
 								</div>
 							</div>
 							<div class="form-row">
 								<div class="form-group col-md-6">
 									<label for="clinic.name">Phòng khám</label>
-									<input type="text" class="form-control"
-										th:classappend="${#fields.hasErrors('clinic.name') ? 'is-invalid' :''}"
-										th:field="*{clinic.name}" readonly>
-									<div th:if="${#fields.hasErrors('clinic.name')}" class="invalid-feedback">
-										<p th:errors="*{clinic.name}"></p>
-									</div>
+									<input type="text" class="form-control" th:field="*{clinic.name}" readonly>
 								</div>
 								<div class="form-group col-md-6">
-									<label for="startPracticeDate">Mô tả</label>
-									<input type="text" class="form-control"
-										th:classappend="${#fields.hasErrors('description') ? 'is-invalid' :''}"
-										th:field="*{description}">
-									<div th:if="${#fields.hasErrors('description')}" class="invalid-feedback">
-										<p th:errors="*{description}"></p>
-									</div>
+									<label for="description">Mô tả</label>
+									<input type="text" class="form-control" th:field="*{description}">
 								</div>
 							</div>
 							<div class="form-row">
 								<div class="form-group col-md-6">
 									<label for="certification">Chứng chỉ</label>
-									<form id="certificationForm" method="post" enctpye="multipart/form-data">
-										<a th:if="${certification}" th:href="@{'/file/' + ${certification.id}}"
-											target="_blank" style="margin: 5px;"><i
-												class="fas fa-solid fa-file-import"></i>
-											[[${certification.name}]]
-										</a>
-										<input class="form-control" id="certification" name="file" type="file"
-											accept="application/pdf" />
-									</form>
+									<a th:href="@{'/file/' + ${certification.id}}" target="_blank"
+										style="margin: 5px;"><i class="fas fa-solid fa-file-import"></i>
+										[[${certification.name}]]
+									</a>
+									<input class="form-control" id="certification" name="file" type="file"
+										accept="application/pdf" />
 								</div>
 								<div class="form-group col-md-6">
 									<label>Gói khám</label><br>
@@ -190,7 +167,7 @@
 										<li th:each="packages : ${allPackages}">
 											<input type="checkbox" th:field="*{packages}" th:value="${packages.id}" />
 											<label th:for="${#ids.prev('packages')}"
-												th:text="${packages.name}">name</label>
+												th:text="${packages.name}">Name</label>
 										</li>
 									</ul>
 								</div>
@@ -260,23 +237,28 @@
 							<h3>Bạn chưa khai báo. Vui lòng khai báo đặt lịch để cập nhật.</h3>
 						</div>
 						<ul class="list-group" th:if="${user.declaration != null}">
-							<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
-									<strong><i class="fas fa-solid fa-briefcase-medical"></i> Nhóm máu: </strong>
+							<li
+								class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
+								<strong><i class="fas fa-solid fa-briefcase-medical"></i> Nhóm máu: </strong>
 								<h1 class="badge badge-danger badge-pill">[[${user.declaration.blood}]]</h1>
 							</li>
-							<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
+							<li
+								class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
 								<strong><i class="fas fa-solid fa-lungs-virus"></i> Bệnh nền:</strong>
 								<span class="badge badge-warning badge-pill">[[${user.declaration.background}]]</span>
 							</li>
-							<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
+							<li
+								class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
 								<strong><i class="fas fa-solid fa-prescription-bottle-medical"></i> Thuốc: </strong>
 								<span class="badge badge-success badge-pill">[[${user.declaration.medicine}]]</span>
 							</li>
-							<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
+							<li
+								class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
 								<strong><i class="fas fa-solid fa-head-side-cough"></i> Triệu chứng: </strong>
 								<span class="badge badge-primary badge-pill">[[${user.declaration.symptom}]]</span>
 							</li>
-							<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
+							<li
+								class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
 								<strong><i class="fas fa-solid fa-truck-medical"></i> Thông tin khác: </strong>
 								<span class="badge badge-dark badge-pill">[[${user.declaration.notes}]]</span>
 							</li>
