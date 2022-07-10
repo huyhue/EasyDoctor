@@ -115,8 +115,14 @@
 
 							<td>
 								<span th:text="${invoice.number}" id="number">HD/2022/05/16</span><br />
-								Issued: <span th:text="${#temporals.format(invoice.issued, 'dd-MM-yyyy')}">Issued:
-									16-05-2022</span><br/>
+								Ngày: <span th:text="${#temporals.format(invoice.issued, 'dd-MM-yyyy')}">16-05-2022</span><br />
+								
+								<h5 th:if="${invoice.status eq 'issued'}" style="color:red"> 
+									CHƯA THANH TOÁN
+								</h5>
+								<h5 th:if="${invoice.status eq 'paid'}" style="color:green"> 
+									ĐÃ THANH TOÁN
+								</h5>
 							</td>
 						</tr>
 					</table>
@@ -163,7 +169,8 @@
 					<span th:text="${appointment.packages.name}"></span>
 				</td>
 				<td>
-					<span th:text="${appointment.packages.price}">50 VND</span> VND
+					<span th:text="${appointment.packages.price}">50 VND</span> VND<br />
+					Phí phát sinh: <span th:text="${appointment.incurred}">50 VND</span> VND
 				</td>
 			</tr>
 

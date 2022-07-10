@@ -26,10 +26,12 @@ import fpt.edu.vn.component.TimePeroid;
 import fpt.edu.vn.model.Appointment;
 import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.History;
+import fpt.edu.vn.model.Invoice;
 import fpt.edu.vn.model.WorkingPlan;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.AppointmentService;
 import fpt.edu.vn.service.EmailService;
+import fpt.edu.vn.service.InvoiceService;
 import fpt.edu.vn.service.PackagesService;
 import fpt.edu.vn.service.UserService;
 import fpt.edu.vn.service.WorkingPlanService;
@@ -41,15 +43,18 @@ public class DoctorController {
 	private final UserService userService;
 	private final EmailService emailService;
 	private final PackagesService packagesService;
+	private final InvoiceService invoiceService;
 	private final WorkingPlanService workingPlanService;
 	private final AppointmentService appointmentService;
 
 	public DoctorController(UserService userService, EmailService emailService, PackagesService packagesService,
-			WorkingPlanService workingPlanService, AppointmentService appointmentService) {
+			InvoiceService invoiceService, WorkingPlanService workingPlanService,
+			AppointmentService appointmentService) {
 		super();
 		this.userService = userService;
 		this.emailService = emailService;
 		this.packagesService = packagesService;
+		this.invoiceService = invoiceService;
 		this.workingPlanService = workingPlanService;
 		this.appointmentService = appointmentService;
 	}
@@ -149,6 +154,9 @@ public class DoctorController {
 		history.setDoctor(userService.getUserById(currentUser.getId()).getFullname());
 		history.setUpdatedAt(LocalDateTime.now());
 		userService.saveResultByDoctor(history, files);
+		if (history.isPaid()) {
+			invoiceService.createNewInvoice(history.getAppointment());
+		}
 		return "redirect:/recordMedical/" + history.getPatient().getId();
 	}
 
@@ -157,11 +165,7 @@ public class DoctorController {
 			@AuthenticationPrincipal CustomUserDetails currentUser) {
 		history.setDoctor(userService.getUserById(currentUser.getId()).getFullname());
 		history.setUpdatedAt(LocalDateTime.now());
-//		history.setAppointment(null);
-		if (history.isPaid()) {
-			//gui mail thong bao in hoa don
-		}
-//		userService.saveResultByDoctor(history, files);
+		userService.saveResultByDoctor(history, files);
 		return "redirect:/appointments/" + history.getAppointment().getId();
 	}
 

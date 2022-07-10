@@ -21,6 +21,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -45,14 +46,17 @@ public class InvoiceServiceImpl implements InvoiceService {
         List<Invoice> invoices = invoiceRepository.findAllIssuedInCurrentMonth(LocalDate.now().with(TemporalAdjusters.firstDayOfMonth()).atStartOfDay());
         int nextInvoiceNumber = invoices.size() + 1;
         LocalDateTime today = LocalDateTime.now();
-        return "HD: "+ today.getYear() + "/" + today.getMonthValue() + " - Number: " + nextInvoiceNumber;
+        return "HD: "+ today.getYear() + "/" + today.getMonthValue() + "-ID: " + nextInvoiceNumber;
     }
 
     @Override
-    public void createNewInvoice(Invoice invoice) {
-    	invoice.setStatus("paid");
-    	invoice.setNumber(generateInvoiceNumber());
-    	invoice.setIssued(LocalDateTime.now());
+    public void createNewInvoice(Appointment appointment) {
+    	appointment.setStatus(AppointmentStatus.INVOICED);
+    	appointmentService.updateAppointment(appointment);
+    	List<Appointment> appointments = new ArrayList<>();
+    	appointments.add(appointment);
+    	
+    	Invoice invoice = new Invoice(generateInvoiceNumber(), "paid", LocalDateTime.now(), appointments);
         invoiceRepository.save(invoice);
         notificationService.newInvoice(invoice, true);
     }

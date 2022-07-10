@@ -21,17 +21,23 @@
 					<td><b>Trạng thái</b></td>
 					<td>
 						<div th:switch="${#strings.toString(appointment.status)}">
-							<span th:case="'SCHEDULED'" class="badge badge-info badge-pill" id="status">ĐÃ LÊN LỊCH</span>
-							<span th:case="'FINISHED'" class="badge badge-primary badge-pill" id="status">ĐÃ KẾT THÚC</span>
+							<span th:case="'SCHEDULED'" class="badge badge-info badge-pill" id="status">ĐÃ LÊN
+								LỊCH</span>
+							<span th:case="'FINISHED'" class="badge badge-primary badge-pill" id="status">ĐÃ KẾT
+								THÚC</span>
 							<span th:case="'CANCELED'" class="badge badge-danger badge-pill" id="status">ĐÃ HỦY</span>
-							<span th:case="'CONFIRMED'" class="badge badge-dark badge-pill" id="status">ĐÃ XÁC NHÂN</span>
-							<span th:case="'INVOICED'" class="badge badge-success badge-pill" id="status">IN HÓA ĐƠN</span>
-							<span th:case="'REJECTION_REQUESTED'" class="badge badge-warning badge-pill" id="status">YÊU CẦU TỪ CHỐI</span>
-							<span th:case="'REJECTED'" class="badge badge-warning badge-pill" id="status">ĐÃ TỪ CHỐI</span>
+							<span th:case="'CONFIRMED'" class="badge badge-dark badge-pill" id="status">ĐÃ XÁC
+								NHÂN</span>
+							<span th:case="'INVOICED'" class="badge badge-success badge-pill" id="status">IN HÓA
+								ĐƠN</span>
+							<span th:case="'REJECTION_REQUESTED'" class="badge badge-warning badge-pill" id="status">YÊU
+								CẦU TỪ CHỐI</span>
+							<span th:case="'REJECTED'" class="badge badge-warning badge-pill" id="status">ĐÃ TỪ
+								CHỐI</span>
 						</div>
 					</td>
 				</tr>
-				<tr th:if="${history.pulished == false} and ${appointment.status.name()!='CANCELED'}"
+				<tr th:if="${history.pulished == false} and ${appointment.status.name()!='CANCELED'} and ${appointment.status.name()!='REJECTED'}"
 					sec:authorize="hasRole('ROLE_DOCTOR')">
 					<td><b>Kết quả</b></td>
 					<td>
@@ -117,7 +123,7 @@
 					<div class="panel-heading top-bar">
 						<div class="row">
 							<div class="col-md-6 col-xs-6">
-							<i class="fas fa-solid fa-comment-medical"></i>
+								<i class="fas fa-solid fa-comment-medical"></i>
 								<span sec:authorize="hasRole('ROLE_DOCTOR')"
 									th:text="${appointment.patient.fullname}"></span>
 								<span sec:authorize="hasRole('ROLE_PATIENT')"
