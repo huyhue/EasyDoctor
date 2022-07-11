@@ -56,9 +56,9 @@
 
 	<!-- Navigation -->
 	<div sec:authorize="isAuthenticated()">
-		<nav class="navbar navbar-expand-lg navbar-light static-top d-block" style="background-color: #b2dded;">
+		<nav class="navbar navbar-expand-lg navbar-light static-top" style="background-color: #b2dded; padding: 0px !important;">
 			<div class="container">
-				<a class="navbar-brand" href="/"><img src="/img/gallery/logo.png" width="118" alt="logo" /></a>
+				<a class="navbar-brand-cus" href="/"><img src="/img/gallery/logo.png" width="118" alt="logo" /></a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
 					aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -97,10 +97,7 @@
 							</p>
 						</li>
 						<li>
-							<form th:action="@{/perform_logout}" id="logout" method="POST">
-								<a class="nav-link" href="#"
-									onclick="document.getElementById('logout').submit(); return false;">Log out</a>
-							</form>
+							<a class="nav-link"  th:href="@{/perform_logout}">Đăng xuất</a>
 						</li>
 					</ul>
 				</div>
@@ -111,10 +108,9 @@
 	<!-- Page Content -->
 	<div class="container">
 		<th:block th:include="${content}" />
-
 	</div>
 
-	<div style="background-color: #b2dded;">
+	<div style="background-color: #b2dded; margin-top: 50px;">
 		<div class="container">
 			<div class="row py-8">
 				<div class="col-12 col-sm-12 col-lg-6 mb-4 order-0 order-sm-0"><a class="text-decoration-none"

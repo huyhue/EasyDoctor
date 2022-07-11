@@ -2,6 +2,13 @@
 
 # Doctors
 --------------------------------------------------------------*/
+.navbar-brand-cus {
+    display: inline-block;
+    margin-right: 4rem;
+    font-size: 1.25rem; 
+    line-height: inherit;
+    white-space: nowrap;
+}
 .errorMsg {
     color: red;
     font-size: 13px;

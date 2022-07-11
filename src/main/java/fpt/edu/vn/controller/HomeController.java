@@ -47,7 +47,21 @@ public class HomeController {
 	}
 
 	@GetMapping("/")
-	public String showLandingPage(Model model) {
+	public String showLandingPage(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
+		try {
+			if (currentUser == null) {
+				return "home";
+			}
+			if (currentUser.hasRole("ROLE_PATIENT")) {
+				return "redirect:/doctors/all";
+			} else if (currentUser.hasRole("ROLE_DOCTOR")) {
+				return "redirect:/doctors/home";
+			} else if (currentUser.hasRole("ROLE_ADMIN")) {
+				return "redirect:/admin/home";
+			}
+		} catch (Exception ex) {
+			return "home";
+		}
 		return "home";
 	}
 
@@ -145,7 +159,7 @@ public class HomeController {
 		modelMap.put("reviewList", reviewList);
 		return "doctors/doctorDetail";
 	}
-	
+
 	@GetMapping("/recordMedical/{id}")
 	public String recordMedical(@PathVariable("id") int patientId, Model model,
 			@AuthenticationPrincipal CustomUserDetails currentUser) {
@@ -155,29 +169,29 @@ public class HomeController {
 		model.addAttribute("listHistory", listHistory);
 		return "patients/recordMedical";
 	}
-	
+
 	@GetMapping("/file/{fileId}")
-    public ResponseEntity<Resource> accessFile(@PathVariable Integer fileId) {
-        // Load file from database
+	public ResponseEntity<Resource> accessFile(@PathVariable Integer fileId) {
+		// Load file from database
 		FileModel file = userService.getFileByFileId(fileId);
 
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(file.getContentType()))
-                .header("attachment; filename=\"" + file.getName() + "\"")
-                .body(new ByteArrayResource(file.getData()));
-    }
-	
+		return ResponseEntity.ok().contentType(MediaType.parseMediaType(file.getContentType()))
+				.header("attachment; filename=\"" + file.getName() + "\"").body(new ByteArrayResource(file.getData()));
+	}
+
 	@PostMapping("/file/saveCertification")
-	public @ResponseBody ResponseEntity<?> saveCertification(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal CustomUserDetails currentUser) throws IOException {
+	public @ResponseBody ResponseEntity<?> saveCertification(@RequestParam("file") MultipartFile file,
+			@AuthenticationPrincipal CustomUserDetails currentUser) throws IOException {
 		if (file.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		userService.saveCertificationByDoctor(file, currentUser.getId());
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/file/saveImageProfile")
-	public @ResponseBody ResponseEntity<?> saveImageProfileUser(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal CustomUserDetails currentUser) throws IOException {
+	public @ResponseBody ResponseEntity<?> saveImageProfileUser(@RequestParam("file") MultipartFile file,
+			@AuthenticationPrincipal CustomUserDetails currentUser) throws IOException {
 		if (file.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}

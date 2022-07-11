@@ -1,17 +1,17 @@
 <th:block th:fragment="navlinks(activeLink)">
 	<div class="collapse navbar-collapse" id="navbarResponsive">
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item " th:classappend="${activeLink} == 'doctors' ? 'active':''">
-				<a class="nav-link" th:href="@{/doctors/all}">Doctors</a>
+			<li class="nav-item" th:classappend="${activeLink} == 'doctors' ? 'active':''">
+				<a class="nav-link" th:href="@{/doctors/all}">Trang chủ</a>
 			</li>
 			<li class="nav-item" th:classappend="${activeLink} == 'appointments' ? 'active':''">
-				<a class="nav-link" th:href="@{/appointments/all}">Appointments</a>
+				<a class="nav-link" th:href="@{/appointments/all}">Cuộc hẹn</a>
 			</li>
 			<li class="nav-item" th:classappend="${activeLink} == 'forum' ? 'active':''">
-				<a class="nav-link" th:href="@{/forum/list}">Forum</a>
+				<a class="nav-link" th:href="@{/forum/list}">Diễn đàn</a>
 			</li>
 			<li class="nav-item" th:classappend="${activeLink} == 'account' ? 'active':''">
-				<a class="nav-link" th:href="@{'/patients/' + ${#authentication.getPrincipal().getId()}}">My account</a>
+				<a class="nav-link" th:href="@{'/patients/' + ${#authentication.getPrincipal().getId()}}">Tài khoản của tôi</a>
 			</li>
 		</ul>
 	</div>

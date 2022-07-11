@@ -1,23 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-US" dir="ltr" xmlns:th="http://www.w3.org/1999/html">
-
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--    Document Title-->
-    <!-- ===============================================-->
     <title>Easy Doctor</title>
-
+    <link href="/img/iconlogo.jpg" rel="icon">
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" th:href="@{/css/vendor/theme.css}" />
   </head>
   <body>
-    <!-- ===============================================-->
-    <!--    Main Content-->
-    <!-- ===============================================-->
     <main class="main" id="top">
-      <nav class="navbar navbar-expand-lg navbar-light fixed-top d-block" data-navbar-on-scroll="data-navbar-on-scroll">
+      <nav class="navbar navbar-expand-lg navbar-light fixed-top" data-navbar-on-scroll="data-navbar-on-scroll">
         <div class="container">
         <a class="navbar-brand" href="/"><img src="/img/gallery/logo.png" width="118" alt="logo" /></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"> </span></button>
@@ -29,7 +23,13 @@
               <li class="nav-item px-2"><a class="nav-link" href="#ask">Tư vấn</a></li>
               <li class="nav-item px-2"><a class="nav-link" href="#news">Tin tức</a></li>
             </ul>
-            <a class="btn btn-sm btn-outline-primary rounded-pill order-1 order-lg-0 ms-lg-4" th:href="@{/login}">Đăng nhập</a>
+            <div sec:authorize="!isAuthenticated()">
+            	<a class="btn btn-sm btn-outline-primary rounded-pill order-1 order-lg-0 ms-lg-4" th:href="@{/login}">Đăng nhập</a>
+          	</div>
+            <div sec:authorize="isAuthenticated()">
+            	<a class="btn btn-sm btn-outline-danger rounded-pill order-1 order-lg-0 ms-lg-4" th:href="@{/perform_logout}">Đăng xuất</a>
+          	</div>
+          	
           </div>
         </div>
       </nav>
