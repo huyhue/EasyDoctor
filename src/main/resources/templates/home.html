@@ -18,7 +18,8 @@
     <!-- ===============================================-->
     <main class="main" id="top">
       <nav class="navbar navbar-expand-lg navbar-light fixed-top d-block" data-navbar-on-scroll="data-navbar-on-scroll">
-        <div class="container"><a class="navbar-brand" href="index.html"><img src="/img/gallery/logo.png" width="118" alt="logo" /></a>
+        <div class="container">
+        <a class="navbar-brand" href="/"><img src="/img/gallery/logo.png" width="118" alt="logo" /></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"> </span></button>
           <div class="collapse navbar-collapse border-top border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto pt-2 pt-lg-0 font-base">
@@ -27,7 +28,8 @@
               <li class="nav-item px-2"><a class="nav-link" href="#doctor">Bác sĩ nổi bật</a></li>
               <li class="nav-item px-2"><a class="nav-link" href="#ask">Tư vấn</a></li>
               <li class="nav-item px-2"><a class="nav-link" href="#news">Tin tức</a></li>
-            </ul><a class="btn btn-sm btn-outline-primary rounded-pill order-1 order-lg-0 ms-lg-4" th:href="@{/login}">Đăng nhập</a>
+            </ul>
+            <a class="btn btn-sm btn-outline-primary rounded-pill order-1 order-lg-0 ms-lg-4" th:href="@{/login}">Đăng nhập</a>
           </div>
         </div>
       </nav>
@@ -41,7 +43,7 @@
             <div class="col-md-5 col-xl-6 col-xxl-7 order-0 order-md-1 text-end"><img class="pt-7 pt-md-0 w-100" src="/img/gallery/bacsi1.png" alt="hero-header" /></div>
             <div class="col-md-75 col-xl-6 col-xxl-5 text-md-start text-center py-6">
               <h1 class="fw-light font-base fs-6 fs-xxl-7">Vì <strong>một sức khỏe tốt </strong><br />Hãy đến với chúng tôi</h1>
-              <p class="fs-1 mb-5">Dịch vụ của chúng tôi hoạt động 24/7 nhằm phục vụ trải nghiệm tốt nhất đến quý khách hàng.<br />Hãy đặt lịch ngay để có thể nhận được sự điều trị tận tình của các bác sĩ của chúng tôi</p><a class="btn btn-lg btn-primary rounded-pill" href="#!" role="button">Đặt lịch khám ngay</a>
+              <p class="fs-1 mb-5">Dịch vụ của chúng tôi hoạt động 24/7 nhằm phục vụ trải nghiệm tốt nhất đến quý khách hàng.<br />Hãy đặt lịch ngay để có thể nhận được sự điều trị tận tình của các bác sĩ của chúng tôi</p><a class="btn btn-lg btn-primary rounded-pill" th:href="@{/login}" role="button">Đặt lịch khám ngay</a>
             </div>
           </div>
         </div>

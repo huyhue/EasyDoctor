@@ -19,7 +19,7 @@
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 
 	<link rel="stylesheet" th:href="@{/css/vendor/bootstrap-notifications.css}" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.css">
 
 	<!--font awesome-->
 	<script src="https://kit.fontawesome.com/56438f342e.js"></script>
@@ -56,8 +56,9 @@
 
 	<!-- Navigation -->
 	<div sec:authorize="isAuthenticated()">
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+		<nav class="navbar navbar-expand-lg navbar-light static-top d-block" style="background-color: #b2dded;">
 			<div class="container">
+				<a class="navbar-brand" href="/"><img src="/img/gallery/logo.png" width="118" alt="logo" /></a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
 					aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -89,7 +90,7 @@
 							</a>
 						</li>
 						<li>
-							<p class="navbar-nav ml-auto navbar-text"> Logged as:
+							<p class="navbar-nav ml-auto navbar-text"> Xin chào:
 								<span th:text="${#authentication.getPrincipal().getUsername()}"
 									id="user_name">username</span> |
 								<input type="hidden" th:value="${#authentication.getPrincipal().getId()}" id="user_id">
@@ -110,11 +111,55 @@
 	<!-- Page Content -->
 	<div class="container">
 		<th:block th:include="${content}" />
-		<div class="row align-items-center justify-content-center" style="margin-top: 50px">
-			<p>EasyDoctor v<span th:text="${currentVersion}">1.0</span></p>
+
+	</div>
+
+	<div style="background-color: #b2dded;">
+		<div class="container">
+			<div class="row py-8">
+				<div class="col-12 col-sm-12 col-lg-6 mb-4 order-0 order-sm-0"><a class="text-decoration-none"
+						href="#"><img src="/img/gallery/logo.png" height="150" alt=""
+							style="margin-bottom: 45px;" /></a>
+					<p class="text-light my-4"><strong>CÔNG TY TNHH MTV EASYDOCTOR</strong></p>
+					<p class="text-light my-4"><strong>Địa chỉ:</strong> Lô 11 Khuê Mỹ Đông 7, phường Khuê Mỹ, quận Ngũ
+						Hành Sơn, thành phố Đà Nẵng </p>
+					<p class="text-light my-4"><strong>Số điện thoại:</strong> 0334947474</p>
+					<p class="text-light my-4"><strong>Email:</strong> easydoctor01@gmail.com</p>
+				</div>
+				<div class="col-6 col-sm-4 col-lg-2 mb-3 order-2 order-sm-1">
+					<h5 class="lh-lg fw-bold mb-4 text-light font-sans-serif">Các chuyên khoa</h5>
+					<ul class="list-unstyled mb-md-4 mb-lg-0">
+						<li class="lh-lg"><a class="footer-link" href="#!">Khoa Ngoại Thần Kinh</a></li>
+						<li class="lh-lg"><a class="footer-link" href="#!">Khoa Mắt</a></li>
+						<li class="lh-lg"><a class="footer-link" href="#!">Khoa Nội</a></li>
+						<li class="lh-lg"><a class="footer-link" href="#!">Khoa Tim Mạch</a></li>
+						<li class="lh-lg"><a class="footer-link" href="#!">Khoa Xương Khớp</a></li>
+						<li class="lh-lg"><a class="footer-link" href="#!">Khoa Tai Mũi Họng</a></li>
+					</ul>
+				</div>
+				<div class="col-6 col-sm-4 col-lg-2 mb-3 order-3 order-sm-2">
+					<h5 class="lh-lg fw-bold text-light mb-4 font-sans-serif">Tìm hiểu thêm</h5>
+					<ul class="list-unstyled mb-md-4 mb-lg-0">
+						<li class="lh-lg"><a class="footer-link" href="#news">Cẩm nang y tế</a></li>
+						<li class="lh-lg"><a class="footer-link" href="#review">Đánh giá</a></li>
+						<li class="lh-lg"><a class="footer-link" href="#doctor">Bác sĩ nổi bật</a></li>
+					</ul>
+				</div>
+				<div class="col-6 col-sm-4 col-lg-2 mb-3 order-3 order-sm-2" style="padding-left: 0px;">
+					<h5 class="lh-lg fw-bold text-light mb-4 font-sans-serif"> Chăm sóc khách hàng</h5>
+					<ul class="list-unstyled mb-md-4 mb-lg-0">
+						<li class="lh-lg"><a class="footer-link" href="#about">Thông tin của chúng tôi</a></li>
+						<li class="lh-lg"><a class="footer-link" href="#ask">Tư vấn và hỏi đáp</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="row align-items-center justify-content-center" style="margin-top: 10px">
+				<p>EasyDoctor v<span th:text="${currentVersion}">1.0</span></p>
+			</div>
+
 		</div>
 	</div>
-	
 
 	<script th:inline="javascript">
 		function fetchdata() {
