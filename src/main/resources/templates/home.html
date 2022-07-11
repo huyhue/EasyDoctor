@@ -1,19 +1,760 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en-US" dir="ltr" xmlns:th="http://www.w3.org/1999/html">
 
-<body>
-	<div class="row mt-3">
-		<div class="col">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Easy Doctor</title>
 
-		</div>
-		<div class="col-10">
-			<div>Home Page (Trang quảng cáo)</div>
-		</div>
-		<div class="col">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" th:href="@{/css/vendor/theme.css}" />
+  </head>
+  <body>
+    <!-- ===============================================-->
+    <!--    Main Content-->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+      <nav class="navbar navbar-expand-lg navbar-light fixed-top d-block" data-navbar-on-scroll="data-navbar-on-scroll">
+        <div class="container"><a class="navbar-brand" href="index.html"><img src="/img/gallery/logo.png" width="118" alt="logo" /></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"> </span></button>
+          <div class="collapse navbar-collapse border-top border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto pt-2 pt-lg-0 font-base">
+              <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="#about">Thông tin của chúng tôi</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="#service">Dịch vụ nổi bật</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="#doctor">Bác sĩ nổi bật</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="#ask">Tư vấn</a></li>
+              <li class="nav-item px-2"><a class="nav-link" href="#news">Tin tức</a></li>
+            </ul><a class="btn btn-sm btn-outline-primary rounded-pill order-1 order-lg-0 ms-lg-4" th:href="@{/login}">Đăng nhập</a>
+          </div>
+        </div>
+      </nav>
+      <section class="py-xxl-10 pb-0" id="home">
+        <div class="bg-holder bg-size" style="background-image:url(/img/gallery/123.png);background-position:top center;background-size:cover;">
+        </div>
+        <!--/.bg-holder-->
 
-		</div>
-	</div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-5 col-xl-6 col-xxl-7 order-0 order-md-1 text-end"><img class="pt-7 pt-md-0 w-100" src="/img/gallery/bacsi1.png" alt="hero-header" /></div>
+            <div class="col-md-75 col-xl-6 col-xxl-5 text-md-start text-center py-6">
+              <h1 class="fw-light font-base fs-6 fs-xxl-7">Vì <strong>một sức khỏe tốt </strong><br />Hãy đến với chúng tôi</h1>
+              <p class="fs-1 mb-5">Dịch vụ của chúng tôi hoạt động 24/7 nhằm phục vụ trải nghiệm tốt nhất đến quý khách hàng.<br />Hãy đặt lịch ngay để có thể nhận được sự điều trị tận tình của các bác sĩ của chúng tôi</p><a class="btn btn-lg btn-primary rounded-pill" href="#!" role="button">Đặt lịch khám ngay</a>
+            </div>
+          </div>
+        </div>
+      </section>
 
 
-</body>
+      <!-- ============================================-->
+      <!-- <section> begin ============================-->
+      <section class="py-5" id="departments" style="margin-top: 80px;">
+
+        <div class="container">
+          <div class="row">
+            <div class="col-12 py-3">
+        
+              <!--/.bg-holder-->
+
+              <h1 class="text-center">Các chuyên khoa</h1>
+            </div>
+          </div>
+        </div>
+        <!-- end of .container-->
+
+      </section>
+      <!-- <section> close ============================-->
+      <!-- ============================================-->
+
+
+
+
+      <!-- ============================================-->
+      <!-- <section> begin ============================-->
+      <section class="py-0">
+
+        <div class="container">
+          <div class="row py-5 align-items-center justify-content-center justify-content-lg-evenly">
+            <div class="col-auto col-md-4 col-lg-auto text-xl-start">
+              <div class="d-flex flex-column align-items-center">
+                <div class="icon-box text-center"><a class="text-decoration-none" href="#!"><img class="mb-3 deparment-icon" src="/img/icons/neurology.png" alt="..." /><img class="mb-3 deparment-icon-hover" src="/img/icons/neurology.svg" alt="..." />
+                    <p class="fs-1 fs-xxl-2 text-center">Ngoại thần kinh</p>
+                  </a></div>
+              </div>
+            </div>
+            <div class="col-auto col-md-4 col-lg-auto text-xl-start">
+              <div class="d-flex flex-column align-items-center">
+                <div class="icon-box text-center"><a class="text-decoration-none" href="#!"><img class="mb-3 deparment-icon" src="/img/icons/eye-care.png" alt="..." /><img class="mb-3 deparment-icon-hover" src="/img/icons/eye-care.svg" alt="..." />
+                    <p class="fs-1 fs-xxl-2 text-center">Khoa mắt</p>
+                  </a></div>
+              </div>
+            </div>
+            <div class="col-auto col-md-4 col-lg-auto text-xl-start">
+              <div class="d-flex flex-column align-items-center">
+                <div class="icon-box text-center"><a class="text-decoration-none" href="#!"><img class="mb-3 deparment-icon" src="/img/icons/cardiac.png" alt="..." /><img class="mb-3 deparment-icon-hover" src="/img/icons/cardiac.svg" alt="..." />
+                    <p class="fs-1 fs-xxl-2 text-center">Khoa nội</p>
+                  </a></div>
+              </div>
+            </div>
+            <div class="col-auto col-md-4 col-lg-auto text-xl-start">
+              <div class="d-flex flex-column align-items-center">
+                <div class="icon-box text-center"><a class="text-decoration-none" href="#!"><img class="mb-3 deparment-icon" src="/img/icons/heart.png" alt="..." /><img class="mb-3 deparment-icon-hover" src="/img/icons/heart.svg" alt="..." />
+                    <p class="fs-1 fs-xxl-2 text-center">Khoa Tim</p>
+                  </a></div>
+              </div>
+            </div>
+            <div class="col-auto col-md-4 col-lg-auto text-xl-start">
+              <div class="d-flex flex-column align-items-center">
+                <div class="icon-box text-center"><a class="text-decoration-none" href="#!"><img class="mb-3 deparment-icon" src="/img/icons/osteoporosis.png" alt="..." /><img class="mb-3 deparment-icon-hover" src="/img/icons/osteoporosis.svg" alt="..." />
+                    <p class="fs-1 fs-xxl-2 text-center">Xương Khớp</p>
+                  </a></div>
+              </div>
+            </div>
+            <div class="col-auto col-md-4 col-lg-auto text-xl-start">
+              <div class="d-flex flex-column align-items-center">
+                <div class="icon-box text-center"><a class="text-decoration-none" href="#!"><img class="mb-3 deparment-icon" src="/img/icons/ent.png" alt="..." /><img class="mb-3 deparment-icon-hover" src="/img/icons/ent.svg" alt="..." />
+                    <p class="fs-1 fs-xxl-2 text-center">Tai Mũi Họng</p>
+                  </a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end of .container-->
+
+      </section>
+      <!-- <section> close ============================-->
+      <!-- ============================================-->
+
+
+      <section class="bg-secondary" id="service">
+        <div class="bg-holder" >
+        </div>
+        <!--/.bg-holder-->
+        <h1 class="text-center" style="margin-top: -80px;">Dịch vụ nổi bật</h1>
+        <div class="container">
+          <div class="row flex-center">
+            <div class="col-xl-10 px-0">
+              <div class="carousel slide" id="carouselExampleDark" data-bs-ride="carousel"><a class="carousel-control-prev carousel-icon z-index-2" href="#carouselExampleDark" role="button" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></a><a class="carousel-control-next carousel-icon z-index-2" href="#carouselExampleDark" role="button" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></a>
+                <div class="carousel-inner">
+                  <div class="carousel-item active" data-bs-interval="10000" style="margin-bottom: -55px;">
+                    <div class="row h-100 m-lg-7 mx-3 mt-6 mx-md-4 my-md-7">
+                      <div class="col-md-4 mb-8 mb-md-0">
+                        <div class="card card-span h-100 shadow">
+                          <div class="card-body d-flex flex-column flex-center py-5"><img src="/img/gallery/dohuyetap.jpg" width="200" alt="..." />
+                            <h5 class="mt-3">Gói cơ bản</h5>
+                            <p class="text-600 mb-0">Gói khám gồm có đo huyết áp, kiểm tra tai mũi họng, rửa vết thương...</p>
+                            <p class="text-600 mb-4"></p>
+                            <div class="text-center">
+                              <h5>100.000đ</h5>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-8 mb-md-0">
+                        <div class="card card-span h-100 shadow">
+                          <div class="card-body d-flex flex-column flex-center py-5"><img src="/img/gallery/sieuam.png" width="200" alt="..." />
+                            <h5 class="mt-3">Gói nâng cao</h5>
+                            <p class="text-600 mb-0">Gói khám gồm có siêu âm, chụp x-quang, nội soi trực tràng...</p>
+                            <p class="text-600 mb-4"></p>
+                            <div class="text-center">
+                              <h5>500.000đ</h5>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-8 mb-md-0">
+                        <div class="card card-span h-100 shadow">
+                          <div class="card-body d-flex flex-column flex-center py-5"><img src="/img/gallery/tongquat.png" width="200" alt="..." />
+                            <h5 class="mt-3">Gói toàn diện</h5>
+                            <p class="text-600 mb-0">Gói khám toàn bộ mọi cơ quan mà bệnh nhân muốn khám</p>
+                            <p class="text-600 mb-4"></p>
+                            <div class="text-center">
+                              <h5>1.000.000đ</h5>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="carousel-item" data-bs-interval="2000">
+                    <div class="row h-100 m-lg-7 mx-3 mt-6 mx-md-4 my-md-7">
+                      <div class="col-md-4 mb-8 mb-md-0">
+                        <div class="card card-span h-100 shadow">
+                          <div class="card-body d-flex flex-column flex-center py-5"><img src="/img/gallery/dohuyetap.jpg" width="200" alt="..." />
+                            <h5 class="mt-3">Gói cơ bản</h5>
+                            <p class="text-600 mb-0">Gói khám gồm có đo huyết áp, kiểm tra tai mũi họng, rửa vết thương...</p>
+                            <p class="text-600 mb-4"></p>
+                            <div class="text-center">
+                              <h5>100.000đ</h5>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-8 mb-md-0">
+                        <div class="card card-span h-100 shadow">
+                          <div class="card-body d-flex flex-column flex-center py-5"><img src="/img/gallery/sieuam.png" width="200" alt="..." />
+                            <h5 class="mt-3">Gói nâng cao</h5>
+                            <p class="text-600 mb-0">Gói khám gồm có siêu âm, chụp x-quang, nội soi trực tràng...</p>
+                            <p class="text-600 mb-4"></p>
+                            <div class="text-center">
+                              <h5>500.000đ</h5>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-8 mb-md-0">
+                        <div class="card card-span h-100 shadow">
+                          <div class="card-body d-flex flex-column flex-center py-5"><img src="/img/gallery/tongquat.png" width="200" alt="..." />
+                            <h5 class="mt-3">Gói toàn diện</h5>
+                            <p class="text-600 mb-0">Gói khám toàn bộ mọi cơ quan mà bệnh nhân muốn khám</p>
+                            <p class="text-600 mb-4"></p>
+                            <div class="text-center">
+                              <h5>1.000.000đ</h5>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="carousel-item">
+                    <div class="row h-100 m-lg-7 mx-3 mt-6 mx-md-4 my-md-7">
+                      <div class="col-md-4 mb-8 mb-md-0">
+                        <div class="card card-span h-100 shadow">
+                          <div class="card-body d-flex flex-column flex-center py-5"><img src="/img/gallery/dohuyetap.jpg" width="200" alt="..." />
+                            <h5 class="mt-3">Gói cơ bản</h5>
+                            <p class="text-600 mb-0">Gói khám gồm có đo huyết áp, kiểm tra tai mũi họng, rửa vết thương...</p>
+                            <p class="text-600 mb-4"></p>
+                            <div class="text-center">
+                              <h5>100.000đ</h5>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-8 mb-md-0">
+                        <div class="card card-span h-100 shadow">
+                          <div class="card-body d-flex flex-column flex-center py-5"><img src="/img/gallery/sieuam.png" width="200" alt="..." />
+                            <h5 class="mt-3">Gói toàn diện</h5>
+                            <p class="text-600 mb-0">Gói khám toàn bộ mọi cơ quan mà bệnh nhân muốn khám</p>
+                            <p class="text-600 mb-4"></p>
+                            <div class="text-center">
+                              <h5>500.000đ</h5>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-8 mb-md-0">
+                        <div class="card card-span h-100 shadow">
+                          <div class="card-body d-flex flex-column flex-center py-5"><img src="/img/gallery/tongquat.png" width="200" alt="..." />
+                            <h5 class="mt-3">Gói toàn diện</h5>
+                            <p class="text-600 mb-0">Gói khám toàn bộ mọi cơ quan mà bệnh nhân muốn khám</p>
+                            <p class="text-600 mb-4"></p>
+                            <div class="text-center">
+                              <h5>1.000.000đ</h5>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ============================================-->
+      <!-- <section> begin ============================-->
+      <section class="pb-0" id="about" >
+
+        <div class="container">
+          <div class="row">
+            <div class="col-12 py-3">
+              <!--/.bg-holder-->
+
+              <h1 class="text-center">Thông tin của chúng tôi</h1>
+            </div>
+          </div>
+        </div>
+        <!-- end of .container-->
+
+      </section>
+      <!-- <section> close ============================-->
+      <!-- ============================================-->
+
+
+      <section class="py-5">
+        <div class="bg-holder bg-size" style="background-image:url(/img/gallery/about-bg.png);background-position:top center;background-size:contain;">
+        </div>
+        <!--/.bg-holder-->
+
+        <div class="container">
+          <div class="row align-items-center" style="margin-top: -110px;">
+            <div class="col-md-6 order-lg-1 mb-5 mb-lg-0"><img class="fit-cover rounded-circle w-100" src="/img/gallery/thongtin.png" alt="..." /></div>
+            <div class="col-md-6 text-center text-md-start">
+              <h2 class="fw-bold mb-4"> EasyDoctor <br class="d-none d-sm-block" />Nền tảng kết nối bệnh nhân & bác sĩ</h2>
+              <p>Chúng tôi nghĩ với thời đại 4.0 này thì nếu có một nền tảng kết nối bệnh nhân với bác sĩ thông qua hình thức trực tuyến là một điều rất cần thiết. Vì vậy chúng tôi đã phát triển hệ thống với mục tiêu mang lại trải nghiệm tuyệt với nhất đối với khách hàng. Bệnh nhân sẽ dễ dàng liên hệ với bác sĩ thông qua hình thức chat để tư vấn về tình trạng sức khỏe của mình. Bạn có thể đặt lịch khám với khung giờ mà bạn mong muốn mà không cần phải đến tận phòng khám để ngồi chờ. </p>
+              <div class="py-3">
+                <button class="btn btn-lg btn-outline-primary rounded-pill" type="submit">Learn more </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ============================================-->
+      <!-- <section> begin ============================-->
+      <section class="pb-0" id="doctor" style="margin-top: -250px;">
+
+        <div class="container">
+          <div class="row">
+            <div class="col-12 py-3">
+              <!--/.bg-holder-->
+
+              <h1 class="text-center">Bác sĩ nổi bật</h1>
+            </div>
+          </div>
+        </div>
+        <!-- end of .container-->
+
+      </section>
+      <!-- <section> close ============================-->
+      <!-- ============================================-->
+
+
+      <section class="py-5">
+        <div class="bg-holder bg-size" style="background-image:url(/img/gallery/doctors-bg.png);background-position:top center;background-size:contain;">
+        </div>
+        <!--/.bg-holder-->
+
+        <div class="container">
+          <div class="row flex-center">
+            <div class="col-xl-10 px-0">
+              <div class="carousel slide" id="carouselExampleDark" data-bs-ride="carousel"><a class="carousel-control-prev carousel-icon z-index-2" href="#carouselExampleDark" role="button" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></a><a class="carousel-control-next carousel-icon z-index-2" href="#carouselExampleDark" role="button" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></a>
+                <div class="carousel-inner">
+                  <div class="carousel-item active" data-bs-interval="10000">
+                    <div class="row h-100 m-lg-7 mx-3 mt-6 mx-md-4 my-md-7">
+                      <div class="col-md-4 mb-8 mb-md-0">
+                        <div class="card card-span h-100 shadow">
+                          <div class="card-body d-flex flex-column flex-center py-5"><img src="/img/gallery/huy.png" width="128" alt="..." />
+                            <h5 class="mt-3">BS. Trương Văn Huy</h5>
+                            <p class="mb-0 fs-xxl-1">Trưởng khoa nội</p>
+                            <p class="text-600 mb-0">Lao Bảo, Quảng Trị</p>
+                            <p class="text-600 mb-4">20 năm kinh nghiệm</p>
+                            <div class="text-center">
+                              <button class="btn btn-outline-secondary rounded-pill" type="submit">View Profile</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-8 mb-md-0">
+                        <div class="card card-span h-100 shadow">
+                          <div class="card-body d-flex flex-column flex-center py-5"><img src="/img/gallery/thang.png" width="128" alt="..." />
+                            <h5 class="mt-3">BS. Thắng Sữa</h5>
+                            <p class="mb-0 fs-xxl-1">Trưởng khoa tai mũi họng</p>
+                            <p class="text-600 mb-0">Điện Bàn, Quảng Nam</p>
+                            <p class="text-600 mb-4">15 năm kinh nghiệm</p>
+                            <div class="text-center">
+                              <button class="btn btn-outline-secondary rounded-pill" type="submit">View Profile</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-8 mb-md-0">
+                        <div class="card card-span h-100 shadow">
+                          <div class="card-body d-flex flex-column flex-center py-5"><img src="/img/gallery/long.png" width="128" alt="..." />
+                            <h5 class="mt-3">BS. Lê Quang Long</h5>
+                            <p class="mb-0 fs-xxl-1">Trưởng khoa tim mạch</p>
+                            <p class="text-600 mb-0">Hải Châu, Đà Nẵng</p>
+                            <p class="text-600 mb-4">25 năm kinh nghiệm</p>
+                            <div class="text-center">
+                              <button class="btn btn-secondary hover-top rounded-pill border-0" type="submit">View Profile</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="carousel-item" data-bs-interval="2000">
+                    <div class="row h-100 m-lg-7 mx-3 mt-6 mx-md-4 my-md-7">
+                      <div class="col-md-4 mb-8 mb-md-0">
+                        <div class="card card-span h-100 shadow">
+                          <div class="card-body d-flex flex-column flex-center py-5"><img src="/img/gallery/huy.png" width="128" alt="..." />
+                            <h5 class="mt-3">BS. Trương Văn Huy</h5>
+                            <p class="mb-0 fs-xxl-1">Trưởng khoa nội</p>
+                            <p class="text-600 mb-0">Lao Bảo, Quảng Trị</p>
+                            <p class="text-600 mb-4">20 năm kinh nghiệm</p>
+                            <div class="text-center">
+                              <button class="btn btn-outline-secondary rounded-pill" type="submit">View Profile</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-8 mb-md-0">
+                        <div class="card card-span h-100 shadow">
+                          <div class="card-body d-flex flex-column flex-center py-5"><img src="/img/gallery/thang.png" width="128" alt="..." />
+                            <h5 class="mt-3">BS. Thắng Sữa</h5>
+                            <p class="mb-0 fs-xxl-1">Trưởng khoa tai mũi họng</p>
+                            <p class="text-600 mb-0">Điện Bàn, Quảng Nam</p>
+                            <p class="text-600 mb-4">15 năm kinh nghiệm</p>
+                            <div class="text-center">
+                              <button class="btn btn-outline-secondary rounded-pill" type="submit">View Profile</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-8 mb-md-0">
+                        <div class="card card-span h-100 shadow">
+                          <div class="card-body d-flex flex-column flex-center py-5"><img src="/img/gallery/long.png" width="128" alt="..." />
+                            <h5 class="mt-3">BS. Lê Quang Long</h5>
+                            <p class="mb-0 fs-xxl-1">Trưởng khoa tim mạch</p>
+                            <p class="text-600 mb-0">Hải Châu, Đà Nẵng</p>
+                            <p class="text-600 mb-4">25 năm kinh nghiệm</p>
+                            <div class="text-center">
+                              <button class="btn btn-secondary hover-top rounded-pill border-0" type="submit">View Profile</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="carousel-item">
+                    <div class="row h-100 m-lg-7 mx-3 mt-6 mx-md-4 my-md-7">
+                      <div class="col-md-4 mb-8 mb-md-0">
+                        <div class="card card-span h-100 shadow">
+                          <div class="card-body d-flex flex-column flex-center py-5"><img src="/img/gallery/huy.png" width="128" alt="..." />
+                            <h5 class="mt-3">BS. Trương Văn Huy</h5>
+                            <p class="mb-0 fs-xxl-1">Trưởng khoa nội</p>
+                            <p class="text-600 mb-0">Lao Bảo, Quảng Trị</p>
+                            <p class="text-600 mb-4">20 năm kinh nghiệm</p>
+                            <div class="text-center">
+                              <button class="btn btn-outline-secondary rounded-pill" type="submit">View Profile</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-8 mb-md-0">
+                        <div class="card card-span h-100 shadow">
+                          <div class="card-body d-flex flex-column flex-center py-5"><img src="/img/gallery/thang.png" width="128" alt="..." />
+                            <h5 class="mt-3">BS. Thắng Sữa</h5>
+                            <p class="mb-0 fs-xxl-1">Trưởng khoa tai mũi họng</p>
+                            <p class="text-600 mb-0">Điện Bàn, Quảng Nam</p>
+                            <p class="text-600 mb-4">15 năm kinh nghiệm</p>
+                            <div class="text-center">
+                              <button class="btn btn-outline-secondary rounded-pill" type="submit">View Profile</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-8 mb-md-0">
+                        <div class="card card-span h-100 shadow">
+                          <div class="card-body d-flex flex-column flex-center py-5"><img src="/img/gallery/long.png" width="128" alt="..." />
+                            <h5 class="mt-3">BS. Lê Quang Long</h5>
+                            <p class="mb-0 fs-xxl-1">Trưởng khoa tim mạch</p>
+                            <p class="text-600 mb-0">Hải Châu, Đà Nẵng</p>
+                            <p class="text-600 mb-4">25 năm kinh nghiệm</p>
+                            <div class="text-center">
+                              <button class="btn btn-secondary hover-top rounded-pill border-0" type="submit">View Profile</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ============================================-->
+      <!-- <section> begin ============================-->
+      <section class="py-5" id="review">
+
+        <div class="container">
+          <div class="row">
+            <div class="col-12 py-3">
+              
+              <!--/.bg-holder-->
+
+              <h1 class="text-center">Đánh giá của khách hàng</h1>
+            </div>
+          </div>
+        </div>
+        <!-- end of .container-->
+
+      </section>
+      <!-- <section> close ============================-->
+      <!-- ============================================-->
+
+
+      <section class="py-8">
+        <div class="bg-holder bg-size" style="background-image:url(/img/gallery/people-bg-1.png);background-position:center;background-size:cover;">
+        </div>
+        <!--/.bg-holder-->
+
+        <div class="container">
+          <div class="row align-items-center offset-sm-1">
+            <div class="carousel slide" id="carouselPeople" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="10000">
+                  <div class="row h-100">
+                    <div class="col-sm-3 text-center" style="margin-top: -17px;"><img src="/img/gallery/son.png" width="100" alt="" />
+                      <h5 class="mt-3 fw-medium text-secondary">Châu Thái Sơn</h5>
+                      <p class="fw-normal mb-0">Student</p>
+                    </div>
+                    <div class="col-sm-9 text-center text-sm-start pt-3 pt-sm-0">
+                      <h2>Quá tuyệt vời!</h2>
+                      <div class="my-2"><i class="fas fa-star me-2"></i><i class="fas fa-star me-2"></i><i class="fas fa-star me-2"></i><i class="fas fa-star-half-alt me-2"></i><i class="far fa-star"></i></div>
+                      <p>Tôi đã sử dụng website này không dưới 3 lần để đặt lịch khám bệnh. Và tôi thực sự rất hài lòng với website này. Tôi không còn phải chờ lâu khi đi khám bệnh. Và tôi có thể chọn được bác sĩ uy tín khám bệnh cho mình</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="carousel-item" data-bs-interval="2000">
+                  <div class="row h-100">
+                    <div class="col-sm-3 text-center" style="margin-top: -17px;"><img src="/img/gallery/the.png" width="100" alt="" />
+                      <h5 class="mt-3 fw-medium text-secondary">Nguyễn Thanh Thế</h5>
+                      <p class="fw-normal mb-0">CEO THECHO group</p>
+                    </div>
+                    <div class="col-sm-9 text-center text-sm-start pt-3 pt-sm-0">
+                      <h2>10 điểm về chất lượng!</h2>
+                      <div class="my-2"><i class="fas fa-star me-2"></i><i class="fas fa-star me-2"></i><i class="fas fa-star me-2"></i><i class="fas fa-star me-2"></i><i class="fas fa-star me-2"></i></div>
+                      <p>Tôi thực sự đã có trải nghiệm tuyệt vời với website này. Website này đã giúp tôi đặt lịch khám bệnh với bác sĩ rất có tiếng tăm. Từ nay tôi không còn phải lo sợ việc phải chờ đợi mỗi khi khám bệnh hoặc là đến phòng khám không uy tín nữa.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="carousel-item">
+                  <div class="row h-100">
+                    <div class="col-sm-3 text-center" style="margin-top: -17px;"><img src="/img/gallery/longbe.png" width="100" alt="" />
+                      <h5 class="mt-3 fw-medium text-secondary">Nguyễn Thành Long</h5>
+                      <p class="fw-normal mb-0">Nhân viên IT</p>
+                    </div>
+                    <div class="col-sm-9 text-center text-sm-start pt-3 pt-sm-0">
+                      <h2>Rất tốt</h2>
+                      <div class="my-2"><i class="fas fa-star me-2"></i><i class="fas fa-star me-2"></i><i class="fas fa-star me-2"></i><i class="fas fa-star me-2"></i><i class="fas fa-star-half-alt me-2"></i></div>
+                      <p>Một website rất có lợi trong thời đại 4.0 này. Tôi có thể kết nối với bác sĩ mong muốn để nhận được sự tư vấn về tình trạng sức khỏe của mình. Tôi đã không cần phải đến tận phòng khám để lấy số thự tự từ khi sử dụng đến website này. Thật là thuận lợi.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="position-relative z-index-2 mt-5">
+                  <ol class="carousel-indicators">
+                    <li class="active" data-bs-target="#carouselPeople" data-bs-slide-to="0"></li>
+                    <li data-bs-target="#carouselPeople" data-bs-slide-to="1"></li>
+                    <li data-bs-target="#carouselPeople" data-bs-slide-to="2"> </li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ============================================-->
+      <!-- <section> begin ============================-->
+      <section class="py-5" id="ask">
+
+        <div class="container">
+          <div class="row">
+            <div class="col-12 py-3">
+              <div class="bg-holder bg-size" style="background-image:url(/img/gallery/);background-position:top center;background-size:contain;">
+              </div>
+              <!--/.bg-holder-->
+
+              <h1 class="text-center">Tư vấn và hỏi đáp</h1>
+            </div>
+          </div>
+        </div>
+        <!-- end of .container-->
+
+      </section>
+      <!-- <section> close ============================-->
+      <!-- ============================================-->
+
+
+      <section class="py-8" style="margin-top: -75px;">
+        <div class="container">
+          <div class="row">
+            <div class="bg-holder bg-size" style="background-image:url(/img/gallery/dot-bg.png);background-position:bottom right;background-size:auto;">
+            </div>
+            <!--/.bg-holder-->
+
+            <div class="col-lg-6 z-index-2 mb-5"><img class="w-100" src="/img/gallery/ask.png" alt="..." /></div>
+            <div class="col-lg-6 z-index-2">
+              <form class="row g-3">
+                <div class="col-md-6">
+                  <label class="visually-hidden" for="inputName">Name</label>
+                  <input class="form-control form-livedoc-control" id="inputName" type="text" placeholder="Họ Và Tên" />
+                </div>
+                <div class="col-md-6">
+                  <label class="visually-hidden" for="inputPhone">Phone</label>
+                  <input class="form-control form-livedoc-control" id="inputPhone" type="text" placeholder="Số điện thoại" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label visually-hidden" for="inputCategory">Category</label>
+                  <select class="form-select" id="inputCategory">
+                    <option selected="selected">Vấn đề gặp phải</option>
+                    <option> Không đặt lịch được</option>
+                    <option> Không đăng kí được tài khoản</option>
+                    <option> Không liên hệ được với bác sĩ</option>
+                    <option> Khác</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label visually-hidden" for="inputEmail">Email</label>
+                  <input class="form-control form-livedoc-control" id="inputEmail" type="email" placeholder="Email" />
+                </div>
+                <div class="col-md-12">
+                  <label class="form-label visually-hidden" for="validationTextarea">Message</label>
+                  <textarea class="form-control form-livedoc-control" id="validationTextarea" placeholder="Mô tả" style="height: 250px;" required="required"></textarea>
+                </div>
+                <div class="col-12">
+                  <div class="d-grid">
+                    <button class="btn btn-primary rounded-pill" type="submit">Gửi</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ============================================-->
+      <!-- <section> begin ============================-->
+      <section class="py-5" id="news">
+
+        <div class="container">
+          <div class="row">
+            <div class="col-12 py-3">
+              <div class="bg-holder bg-size" style="background-image:url(/img/gallery/);background-position:top center;background-size:contain;">
+              </div>
+              <!--/.bg-holder-->
+
+              <h1 class="text-center">Cẩm nang y tế</h1>
+            </div>
+          </div>
+        </div>
+        <!-- end of .container-->
+
+      </section>
+      <!-- <section> close ============================-->
+      <!-- ============================================-->
+
+
+      <section>
+        <div class="bg-holder bg-size" style="background-image:url(/img/gallery/dot-bg.png);background-position:top left;background-size:auto;">
+        </div>
+        <!--/.bg-holder-->
+
+        <div class="container">
+          <div class="row" style="margin-top: -100px;">
+            <div class="col-sm-6 col-lg-3 mb-4">
+              <div class="card h-100 shadow card-span rounded-3"><img class="card-img-top rounded-top-3" src="/img/gallery/ba5.png" alt="news" />
+                <div class="card-body"><span class="fs--1 text-primary me-3">Sức khỏe</span>
+                  <svg class="bi bi-calendar2 me-2" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"></path>
+                    <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z"> </path>
+                  </svg><span class="fs--1 text-900">Jul 9, 2022</span><span class="fs--1"></span>
+                  <h5 class="font-base fs-lg-0 fs-xl-1 my-3">Biến thể BA.5 tại cộng đồng Hà Nội có nguy hiểm không?</h5><a class="stretched-link" href="#!">Đọc thêm</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 mb-4">
+              <div class="card h-100 shadow card-span rounded-3"><img class="card-img-top rounded-top-3" src="/img/gallery/dha.png" alt="news" />
+                <div class="card-body"><span class="fs--1 text-primary me-3">Cuộc sống</span>
+                  <svg class="bi bi-calendar2 me-2" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"></path>
+                    <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z"> </path>
+                  </svg><span class="fs--1 text-900">Jul 8, 2022</span><span class="fs--1"></span>
+                  <h5 class="font-base fs-lg-0 fs-xl-1 my-3">Chia sẻ cách bổ sung DHA đúng cách trong thai kì</h5><a class="stretched-link" href="#!">Đọc thêm</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 mb-4">
+              <div class="card h-100 shadow card-span rounded-3"><img class="card-img-top rounded-top-3" src="/img/gallery/xetnghiem.png" alt="news" />
+                <div class="card-body"><span class="fs--1 text-primary me-3">Sức khỏe</span>
+                  <svg class="bi bi-calendar2 me-2" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"></path>
+                    <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z"> </path>
+                  </svg><span class="fs--1 text-900">Jul 7, 2022</span><span class="fs--1"></span>
+                  <h5 class="font-base fs-lg-0 fs-xl-1 my-3">Phương pháp sàng lọc & chẩn đoán trước sinh hội chứng down</h5><a class="stretched-link" href="#!">Đọc thêm</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 mb-4">
+              <div class="card h-100 shadow card-span rounded-3"><img class="card-img-top rounded-top-3" src="/img/gallery/down.png" alt="news" />
+                <div class="card-body"><span class="fs--1 text-primary me-3">Sức khỏe</span>
+                  <svg class="bi bi-calendar2 me-2" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"></path>
+                    <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z"> </path>
+                  </svg><span class="fs--1 text-900">Jul 6, 2022</span><span class="fs--1"></span>
+                  <h5 class="font-base fs-lg-0 fs-xl-1 my-3">Hội chứng down có phải do di truyền từ ba mẹ hay không?</h5><a class="stretched-link" href="#!">Đọc thêm</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <section class="py-0 bg-secondary">
+        <div class="bg-holder opacity-25" style="background-image:url(/img/gallery/dot-bg.png);background-position:top left;margin-top:-3.125rem;background-size:auto;">
+        </div>
+        <!--/.bg-holder-->
+
+        <div class="container">
+          <div class="row py-8">
+            <div class="col-12 col-sm-12 col-lg-6 mb-4 order-0 order-sm-0"><a class="text-decoration-none" href="#"><img src="/img/gallery/logo.png" height="150" alt="" style="margin-bottom: 45px;"/></a>
+              <p class="text-light my-4"><strong>CÔNG TY TNHH MTV EASYDOCTOR</strong></p>
+              <p class="text-light my-4"><strong>Địa chỉ:</strong> Lô 11 Khuê Mỹ Đông 7, phường Khuê Mỹ, quận Ngũ Hành Sơn, thành phố Đà Nẵng </p>
+              <p class="text-light my-4"><strong>Số điện thoại:</strong> 0334947474</p>
+              <p class="text-light my-4"><strong>Email:</strong> easydoctor01@gmail.com</p>
+            </div>
+            <div class="col-6 col-sm-4 col-lg-2 mb-3 order-2 order-sm-1">
+              <h5 class="lh-lg fw-bold mb-4 text-light font-sans-serif">Các chuyên khoa</h5>
+              <ul class="list-unstyled mb-md-4 mb-lg-0">
+                <li class="lh-lg"><a class="footer-link" href="#!">Khoa Ngoại Thần Kinh</a></li>
+                <li class="lh-lg"><a class="footer-link" href="#!">Khoa Mắt</a></li>
+                <li class="lh-lg"><a class="footer-link" href="#!">Khoa Nội</a></li>
+                <li class="lh-lg"><a class="footer-link" href="#!">Khoa Tim Mạch</a></li>
+                <li class="lh-lg"><a class="footer-link" href="#!">Khoa Xương Khớp</a></li>
+                <li class="lh-lg"><a class="footer-link" href="#!">Khoa Tai Mũi Họng</a></li>
+              </ul>
+            </div>
+            <div class="col-6 col-sm-4 col-lg-2 mb-3 order-3 order-sm-2">
+              <h5 class="lh-lg fw-bold text-light mb-4 font-sans-serif">Tìm hiểu thêm</h5>
+              <ul class="list-unstyled mb-md-4 mb-lg-0">
+                <li class="lh-lg"><a class="footer-link" href="#news">Cẩm nang y tế</a></li>
+                <li class="lh-lg"><a class="footer-link" href="#review">Đánh giá</a></li>
+                <li class="lh-lg"><a class="footer-link" href="#doctor">Bác sĩ nổi bật</a></li>
+              </ul>
+            </div>
+            <div class="col-6 col-sm-4 col-lg-2 mb-3 order-3 order-sm-2" style="padding-left: 0px;">
+              <h5 class="lh-lg fw-bold text-light mb-4 font-sans-serif"> Chăm sóc khách hàng</h5>
+              <ul class="list-unstyled mb-md-4 mb-lg-0">
+                <li class="lh-lg"><a class="footer-link" href="#about">Thông tin của chúng tôi</a></li>
+                <li class="lh-lg"><a class="footer-link" href="#ask">Tư vấn và hỏi đáp</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    <script type="text/javascript" th:src="@{/js/vendor/theme.js}"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&amp;family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100&amp;display=swap" rel="stylesheet">
+  </body>
+
 </html>
