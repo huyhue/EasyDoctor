@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{fragments/layout :: layout (~{::body},'appointments','New appointment confirmation')}"
+	th:replace="~{fragments/layout :: layout (~{::body},'appointments','Xác nhận cuộc hẹn')}"
 	xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <body>
 	<div class="row mt-5">
 		<div class="col-md-12 text-center">
 			<h2 style="color: #37a7f1;">
-				<b>TÓM TẮT ĐẶT LỊCH KHÁM BỆNH</b>
+				<b>3. TÓM TẮT ĐẶT LỊCH KHÁM BỆNH</b>
 			</h2>
 		</div>
 	</div>
@@ -86,7 +86,7 @@
 							<input type="hidden" name="start" id="start" th:value="${start}">
 							<input type="text" name="OTPSEND" id="OTPSEND" class=" input-lg" required="true"
 								autofocus="true" />
-							<button type="submit" class="btn btn-primary">Xác nhận đặt</button>
+							<button type="submit" class="btn btn-info">Xác nhận đặt</button>
 						</form>
 					</td>
 				</tr>

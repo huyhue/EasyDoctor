@@ -82,9 +82,6 @@ public class EmailServiceImpl implements EmailService {
     	Context context = new Context();
     	context.setVariable("user", user);
     	context.setVariable("url", baseUrl + "/register/confirm?token=" + user.getConfirmationToken());
-    	
-//        String content = "<h1>To confirm your e-mail address, please click the link below:</h1> \n"
-//				+ baseUrl + "/register/confirm?token=" + user.getConfirmationToken();
     	sendEmail(user.getEmail(), "Xác nhận quên mật khẩu", "confirmForgotPassword", context, null);
     }
     

@@ -14186,7 +14186,7 @@ var ListView = /** @class */ (function (_super) {
         this.contentEl.html('<div class="fc-list-empty-wrap2">' + // TODO: try less wraps
             '<div class="fc-list-empty-wrap1">' +
             '<div class="fc-list-empty">' +
-            util_1.htmlEscape(this.opt('noEventsMessage')) +
+            "Bác sĩ đã hết lịch, vui lòng chọn ngày khác" +
             '</div>' +
             '</div>' +
             '</div>');
