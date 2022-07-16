@@ -43,7 +43,11 @@ public class Invoice extends BaseEntity {
         for (Appointment a : appointments2) {
             this.appointments.add(a);
             a.setInvoice(this);
-            totalAmount += a.getPackages().getPrice() + a.getIncurred();
+            if (a.getIncurred() == null) {
+            	 totalAmount += a.getPackages().getPrice();
+			}else {
+				 totalAmount += a.getPackages().getPrice() + a.getIncurred();
+			}
         }
     }
 

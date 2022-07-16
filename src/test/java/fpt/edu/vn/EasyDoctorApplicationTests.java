@@ -33,7 +33,7 @@ class EasyDoctorApplicationTests {
 		// null, null);
 		//
 		// //stub the data Định nghĩa hành vi
-		// Mockito.when(userRepository.getOne(3)).thenReturn(returned);
+//		 Mockito.when(userRepository.getOne(3)).thenReturn(returned);
 
 		// Gọi method
 		User result = userService.findById(3);
