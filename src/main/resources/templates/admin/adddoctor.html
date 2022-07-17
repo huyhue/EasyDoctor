@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	th:replace="~{fragments/base :: base (~{::body},'Packages')}">
-
+	th:replace="~{fragments/base :: base (~{::body},'Doctor')}">
 <body>
 	<div class="content-header" id="scroll">
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h4 class="m-0">Thông tin gói khám</h4>
+					<h4 class="m-0">Thêm bác sĩ</h4>
 				</div>
 				<!-- /.col -->
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Home</a></li>
-						<li class="breadcrumb-item active">Gói khám</li>
+						<li class="breadcrumb-item active">Bác sĩ</li>
 					</ol>
 				</div>
 				<!-- /.col -->
@@ -35,60 +34,58 @@
 					</button>
 				</div>
 			</div>
-			<!-- /.card-header -->
+				<!-- /.card-header -->
 			<div class="card-body" style="display: block;">
 				<div class="row">
 					<div class="col-md-6">
+					
 						<div class="form-group">
 							<label>Họ và tên<span class="errorMsg">*</span></label>
 							<input type="hidden" id="updateId" />
-							<input class="form-control filter" type="text" id="name" placeholder="Nhập họ và tên">
-							<span class="errorMsg" id="errorMsgName"></span>
+							<input class="form-control filter" type="text" id="fullname" 
+							       placeholder="Nhập họ và tên">
+							<span  class="errorMsg" id="errorMsgName"></span>
 						</div>
-
+						
 						<div class="form-group">
-							<label>Giá<span class="errorMsg">*</span></label>
-							<input class="form-control filter" type="number" id="price" placeholder="Nhập giá"> <span
-								class="errorMsg" id="errorMsgPrice"></span>
+							<label>Email<span class="errorMsg">*</span></label>
+							<input
+								   class="form-control filter" type="text" id="email"
+								   placeholder="Nhập email"> 
+							<span  class="errorMsg" id="errorMsgEmail"></span>
 						</div>
+						
 						<div class="form-group">
-							<label>Khoảng thời gian<span class="errorMsg">*</span></label>
-							<input class="form-control filter" type="number" id="duration" placeholder="Nhập khoảng thời gian">
-							<span class="errorMsg" id="errorMsgDuration"></span>
+							<label>Mật khẩu<span class="errorMsg">*</span></label> 
+							<input
+								class="form-control filter" type="password" id="password"
+								placeholder="Nhập mật khẩu"> 
+							<span	class="errorMsg" id="errorMsgPassword"></span>
 						</div>
-					</div>
-
-					<div class="col-md-6">
-						<div class="form-group">
-							<label>Mô tả<span class="errorMsg">*</span></label>
-							<input class="form-control filter" type="text" id="description"
-								placeholder="Nhập mô tả"> <span class="errorMsg" id="errorMsgDescription"></span>
+					 </div>
+					 
+					 	  <div class="col-md-6">
+					 	  
+					 	<div class="form-group">
+							<label>Tên đăng nhập<span class="errorMsg">*</span></label> 
+				            <input
+								class="form-control filter" type="text" id="userName"
+								placeholder="Nhập tên đăng nhập"> 
+							<span	class="errorMsg" id="errorMsgUsername"></span>
 						</div>
-						<div class="form-group">
-							<label>Có thể huỷ bởi bệnh nhân ?<span class="errorMsg">*</span></label><br>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" id="option1" name="editable" value="True">
-								<label class="form-check-label" for="option1">Yes</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" id="option2" name="editable" value="False">
-								<label class="form-check-label" for="option2">No</label>
-							</div>
-							<span class="errorMsg" id="errorMsgEditable"></span>
-						</div>
-					</div>
-				</div>
-
-				<div class="margin">
+					 </div>
+					 
+					 <div class="margin">
 					<div class="btn-group">
-						<button style="color: #ffffff;" type="button" class="btn btn-block bg-gradient-info btn-sm"
-							id="btn-save">
+						<button style="color: #ffffff;" type="button"
+							class="btn btn-block bg-gradient-info btn-sm" id="btn-save">
 							<i class="far fa-save"></i> Lưu
 						</button>
 					</div>
 
 					<div class="btn-group">
-						<button style="color: #ffffff;" type="button" class="btn btn-block bg-gradient-warning btn-sm"
+						<button style="color: #ffffff;" type="button"
+							class="btn btn-block bg-gradient-warning btn-sm"
 							id="btn-reset">
 							<i class="fas fa-sync"></i> Reset
 						</button>
@@ -96,50 +93,50 @@
 				</div>
 			</div>
 		</div>
-
-
+		
 		<div class="card card-default">
 			<div class="card-header">
 				<h3 class="card-title"></h3>
 				<div class="card-tools">
-					<button type="button" class="btn btn-tool" data-card-widget="collapse">
+					<button type="button" class="btn btn-tool"
+						data-card-widget="collapse">
 						<i class="fas fa-minus"></i>
 					</button>
-					<button type="button" class="btn btn-tool" data-card-widget="remove">
+					<button type="button" class="btn btn-tool"
+						data-card-widget="remove">
 						<i class="fas fa-times"></i>
 					</button>
 				</div>
 			</div>
 			<!-- /.card-header -->
 			<div class="card-body" style="display: block;">
-				<table class="table table-bordered" id="tbl-packages">
+				<table class="table table-bordered" id="tbl-adddoctor">
 					<thead>
 						<tr style="text-align:center;">
 							<th style="width: 10px">#</th>
-							<th>Họ và tên</th>
-							<th>Giá</th>
-							<th>Khoảng thời gian</th>
-							<th>Có thể huỷ bỏ</th>
-							<th>Mô tả</th>
+							<th>Tên đăng nhập</th>
+							<th>Email</th>
+					        <th>Họ và tên</th>
 							<th style="width: 100px">Hành động</th>
 						</tr>
-					</thead>
+					</thead >
 					<tbody style="text-align:center;">
-
+				
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
-
-	<script type="text/javascript">
+</div>
+<div layout:fragment="script">
+<script type="text/javascript">
 		$(document).ready(function () {
-			$("#nav-packages").addClass("active");
-			$("#nav-clinicId").addClass("active menu-is-opening menu-open");
+			$("#nav-addDoctor").addClass("active");
+			$("#nav-doctorId").addClass("active menu-is-opening menu-open");
 
 			var i = 0;
-			var table = $('#tbl-packages').DataTable({
-				"sAjaxSource": "/admin/getListPackages",
+			var table = $('#tbl-adddoctor').DataTable({
+				"sAjaxSource": "/admin/getListDoctor",
 				"sAjaxDataProp": "",
 				"aoColumns": [
 					{
@@ -147,17 +144,13 @@
 						"render": function (data, type, row) {
 							i += 1;
 							return i;
-						}
+					}
 					}, {
-						"mData": "name"
+						"mData": "userName"
+					},{
+						"mData": "email"
 					}, {
-						"mData": "price"
-					}, {
-						"mData": "duration"
-					}, {
-						"mData": "editable"
-					}, {
-						"mData": "description"
+						"mData": "fullname"
 					}, {
 						"className": "dt-btn",
 						"render": function () {
@@ -168,20 +161,20 @@
 					$('td:eq(1)', nRow).attr("data-id", aData.id);
 				}
 			});
-
+			
 			$("#btn-save").click(function () {
 				if (dataValidation()) {
 					var uniList = {};
-					uniList.name = $("#name").val();
-					uniList.price = $("#price").val();
-					uniList.duration = $("#duration").val();
-					uniList.editable = $("input[name='editable']:checked").val();
-					uniList.description = $("#description").val();
+					uniList.fullname = $("#fullname").val();
+					uniList.email = $("#email").val();
+					uniList.password = $("#password").val();
+					uniList.userName = $("#userName").val();
 					uniList.id = $("#updateId").val();
+
 					$.ajax({
 						type: "POST",
 						contentType: "application/json",
-						url: "/admin/savePackages",
+						url: "/admin/saveDoctor",
 						data: JSON.stringify(uniList),
 						timeout: 100000,
 						async: true,
@@ -213,9 +206,13 @@
 								resetText();
 							} else if (data.msgCode == "exitName") {
 								$("#errorMsgName").text("Name already exit!!");
-								$("#name").css('border', '1px solid red');
-								$("#name").focus();
-							}
+								$("#fullname").css('border', '1px solid red');
+								$("#fullname").focus();
+							} else if (data.msgCode == "exitEmail"){
+								 $("#errorMsgEmail").text("Email already exit!!");
+								 $("#email").css('border','1px solid red');
+							     $("#email").focus();
+					}
 						},
 						error: function (
 							xhr,
@@ -226,54 +223,115 @@
 					});
 				}
 			});
-
-			function dataValidation() {
+			
+				function dataValidation() {
 				var status = true;
 				var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
 
 				if ($("#name").val() == "") {
 					status = false;
 					$("#errorMsgName").text("Required Field!!");
-					$("#name").css('border', '1px solid red');
-					$("#name").focus();
+					$("#fullname").css('border', '1px solid red');
+					$("#fullname").focus();
+					return status;
+				}else if ($("#fullname").val().length < 2) {
+					status = false;
+					$("#errorMsgName").text(
+						"Length must be greater than 2 characters!!");
+					$("#fullname").css('border',
+					 	'1px solid red');
+					$("#fullname").focus();
+					return status;					
+				}
+				
+				if ($("#userName").val() == "") {
+						status = false;
+					$("#errorMsgUsername").text(
+						"Required Field!!");
+					$("#userName").css('border',
+						'1px solid red');
+					$("#userName").focus();
+					return status;
+			    } else if ($("#userName").val()< 2) {
+					status = false;
+					$("#errorMsgUsername").text(
+						"Length must be greater than 2 characters!!");
+					$("#userName").css('border',
+						'1px solid red');
+					$("#userName").focus();
+					return status;
+				}
+				
+				if ($("#email").val() == "") {
+					status = false;
+					$("#errorMsgEmail").text(
+						"Required Field!!");
+					$("#email").css('border',
+						'1px solid red');
+					$("#email").focus();
+					return status;				
+				}else if(!pattern.test($("#email").val())){
+					status = false;
+					$("#errorMsgEmail").text(
+						"Invalid Email Address!!");
+					$("#email").css('border',
+						'1px solid red');
+					$("#email").focus();
+					return status;
+				}
+				
+		
+				
+				if ($("#password").val() == "") {
+					status = false;
+					$("#errorMsgPassword").text(
+						"Required Field!!");
+					$("#password").css('border',
+						'1px solid red');
+					$("#password").focus();
+					return status;
+										
+				}else if($("#password").val().length<8){
+					status = false;
+					$("#errorMsgPassword").text(
+						"Password must be 8 characters long!!");
+					$("#password").css('border',
+						'1px solid red');
+					$("#password").focus();
 					return status;
 				}
 				return status;
 			}
-
+			
 			function resetText() {
-				$("#name").val('');
+				$("#fullname").val('');
 				$("#errorMsgName").text("");
-				$("#name").css('border', '1px solid #CED4DA');
+				$("#fullname").css('border', '1px solid #CED4DA');
 
-				$("#price").val('');
-				$("#errorMsgPrice").text("");
-				$("#price").css('border', '1px solid #CED4DA');
+				$("#email").val('');
+				$("#errorMsgEmail").text("");
+				$("#email").css('border', '1px solid #CED4DA');
 
-				$("#duration").val('');
-				$("#errorMsgDuration").text("");
-				$("#duration").css('border', '1px solid #CED4DA');
+				$("#password").val('');
+				$("#errorMsgPassword").text("");
+				$("#password").css('border', '1px solid #CED4DA');
 
-				$("#option1").prop('checked', false);
-				$("#option2").prop('checked', false);
-				$("#errorMsgEditable").text("");
-
-				$("#description").val('');
-				$("#errorMsgDescription").text("");
-				$("#description").css('border', '1px solid #CED4DA');
+				$("#userName").val('');
+				$("#errorMsgUsername").text("");
+				$("#userName").css('border', '1px solid #CED4DA');
 
 				$("#updateId").val('');
 			}
-
+			
 			$("#btn-reset").click(function () {
 				resetText();
 			});
-
-			$('#tbl-packages tbody').on('click', '#deleteUnID', function () {
+			
+			$('#tbl-adddoctor tbody').on('click', '#deleteUnID', function () {
 				var curRow = $(this).closest('tr');
 				var uniId = curRow.find('td:eq(1)').attr("data-id");
 				
-				if (uniId != '') {
+			if (uniId != '') {
 					$.confirm({
 						type: 'orange',
 						title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:orange;"></i> ' + 'Confirm!!',
@@ -281,7 +339,7 @@
 						buttons: {
 							Yes: function () {
 								$.ajax({
-									url: "/admin/deletePackages?id=" + uniId,
+									url: "/admin/deleteDoctor?id=" + uniId,
 									type: 'GET',
 									dataType: 'json',
 									success: function (data) {
@@ -309,37 +367,35 @@
 				}
 			});
 			
-			$('#tbl-packages tbody').on('click', '#editUnID', function () {
+			$('#tbl-adddoctor tbody').on('click', '#editUnID', function () {
 				var curRow = $(this).closest('tr');
 				var id = curRow.find('td:eq(1)').attr("data-id");
-				var name = curRow.find('td:eq(1)').text();
-				var price = curRow.find('td:eq(2)').text();
-				var duration = curRow.find('td:eq(3)').text();
-				var editable = curRow.find('td:eq(4)').text();
-				var description = curRow.find('td:eq(5)').text();
-    
-				$("#updateId").val(id);
-				$("#name").val(name);
-				$("#price").val(price);
-				$("#duration").val(duration);
-				$("#description").val(description);
+				var fullname = curRow.find('td:eq(1)').text();
+				var email = curRow.find('td:eq(2)').text();
+				var password = curRow.find('td:eq(3)').text();
+				var userName = curRow.find('td:eq(4)').text();
 				
-				console.log("Test 1: " + editable);
-				if(editable == 'true'){
-					console.log("Test editable: " + editable);
-					 $("#option1").prop('checked', true);
-				}
-				else{
-					$("#option2").prop('checked', true);
-				}
-				
-				$('html, body').animate({
-					scrollTop: $('#scroll').offset().top
-				}, 500);
-			});
+	
+	        	$("#updateId").val(id);
+				$("#fullname").val(fullname);
+				$("#email").val(email);
+				$("#password").val(password);
+				$("#userName").val(userName);
 
-		});
+				
+						  
+							       $('html, body').animate({
+							            scrollTop: $('#scroll').offset().top
+							        }, 500);
+							    });
+							
+							
+							
+							
+
+						});
 	</script>
+</div>
 
 	<div layout:fragment="css">
 		<style>
@@ -358,6 +414,9 @@
 			}
 		</style>
 	</div>
-</body>
-
+	
+</body>	
 </html>
+		
+		
+			

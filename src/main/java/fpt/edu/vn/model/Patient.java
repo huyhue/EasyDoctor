@@ -22,6 +22,9 @@ public class Patient extends User {
     @JoinColumn(name = "id_declaration")
     private Declaration declaration;
 	
+	@Column(name = "name")
+    private String name;
+	
 	@OneToMany(mappedBy = "patient")
     private List<Appointment> appointments;
 	
@@ -78,5 +81,12 @@ public class Patient extends User {
 	public void setHistories(List<History> histories) {
 		this.histories = histories;
 	}
+	public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
 }

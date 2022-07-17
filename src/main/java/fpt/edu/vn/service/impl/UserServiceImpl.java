@@ -1,24 +1,28 @@
 package fpt.edu.vn.service.impl;
 
 import java.util.ArrayList;
+
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-
 import fpt.edu.vn.component.ChangePasswordForm;
+import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.model.Declaration;
 import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.FileModel;
 import fpt.edu.vn.model.History;
 import fpt.edu.vn.model.Patient;
+import fpt.edu.vn.model.Profile;
 import fpt.edu.vn.model.Review;
 import fpt.edu.vn.model.Role;
 import fpt.edu.vn.model.Specialty;
@@ -79,6 +83,20 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findByEmail(String email) {
 		return userRepository.findByEmail(email);
+	}
+	
+	@Override
+	public CommonMsg updateProfileInfo(Profile profile) {
+		CommonMsg commonMsg = new CommonMsg();
+		User user = userRepository.findById(profile.getId()).get();
+		user.setFullname(profile.getName());
+		user.setEmail(profile.getEmail());
+		if (!profile.getPassword().isEmpty()) {
+			user.setPassword(passwordEncoder.encode(profile.getPassword()));
+		}
+		userRepository.save(user);
+		commonMsg.setMsgCode("200");
+		return commonMsg;
 	}
 
 	@Override
@@ -165,6 +183,8 @@ public class UserServiceImpl implements UserService {
 		return StringUtils.capitalize(name.toLowerCase());
 	}
 
+
+	
 	@Override
 	public Doctor getDoctorById(int userId) {
 		return doctorRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("User not found"));
@@ -338,4 +358,11 @@ public class UserServiceImpl implements UserService {
 	public List<Specialty> getAllSpecialty() {
 		return specialtyRepository.findAll();
 	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

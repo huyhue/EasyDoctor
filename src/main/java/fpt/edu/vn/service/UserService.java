@@ -1,22 +1,25 @@
 package fpt.edu.vn.service;
 
 import java.util.Collection;
+
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.multipart.MultipartFile;
-
 import fpt.edu.vn.component.ChangePasswordForm;
+import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.model.Declaration;
 import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.FileModel;
 import fpt.edu.vn.model.History;
 import fpt.edu.vn.model.Patient;
+import fpt.edu.vn.model.Profile;
 import fpt.edu.vn.model.Review;
 import fpt.edu.vn.model.Role;
 import fpt.edu.vn.model.Specialty;
 import fpt.edu.vn.model.User;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 	List<Patient> getAllPatients();
 	User findByEmail(String email);
 	User findByUserName(String username);
@@ -34,11 +37,15 @@ public interface UserService {
 	
 	void savePasswordByUser(User user);
 	void savePatientRegister(Patient userRE);
+	
+//profile
+	
+	CommonMsg updateProfileInfo(Profile profile);
 
 //	Doctor
 	List<Doctor> getAllDoctors();
 	List<Doctor> getAllDoctorsByPatient();
-	List<Doctor> getAllDoctorsBySpecialty(int specialtyId);
+	List<Doctor> getAllDoctorsBySpecialty(int specialId);
 	
 	Collection<Role> getRolesForDoctor();
 	Collection<Role> getRolesForPatient();

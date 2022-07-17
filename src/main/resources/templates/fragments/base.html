@@ -53,13 +53,13 @@
 
 						<span sec:authorize="isAuthenticated()">
 							<a th:href="@{/admin/profile}" class="dropdown-item"> <i class="fas fa-solid fa-address-card mr-2"></i>
-								Profile
+								Thông tin
 							</a>
 						</span>
 						<div class="dropdown-divider"></div>
 						<span sec:authorize="isAuthenticated()">
 							<a th:href="@{/perform_logout}" class="dropdown-item"> <i class="fas fa-outdent mr-2"></i>
-								Log out
+								Đăng xuất
 							</a>
 						</span>
 					</div>
@@ -111,18 +111,18 @@
 						<li class="nav-item" id="nav-clinicId"><a href="javascript:void(0);" class="nav-link"> <i
 									class="nav-icon fa fa fa-suitcase"></i>
 								<p>
-									Clinic <i class="fas fa-angle-left right"></i>
+									Phòng khám <i class="fas fa-angle-left right"></i>
 								</p>
 							</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item"><a th:href="@{/admin/clinics}" class="nav-link" id="nav-clinics">
+								<li class="nav-item"><a th:href="@{/admin/clinic}" class="nav-link" id="nav-clinic">
 										<i class="far fa-circle nav-icon"></i>
-										<p>Add Clinic</p>
+										<p>Thêm phòng khám</p>
 									</a>
 								</li>
 								<li class="nav-item"><a th:href="@{/admin/packages}" class="nav-link" id="nav-packages">
 										<i class="far fa-circle nav-icon"></i>
-										<p>Add Package</p>
+										<p>Thêm gói khám</p>
 									</a>
 								</li>
 							</ul>
@@ -130,36 +130,32 @@
 						<li class="nav-item" id="doctorId"><a href="javascript:void(0);" class="nav-link"> <i
 									class="nav-icon fa fa-user-md"></i>
 								<p>
-									Doctor <i class="fas fa-angle-left right"></i>
+									Bác sĩ <i class="fas fa-angle-left right"></i>
 								</p>
 							</a>
 							<ul class="nav nav-treeview">
 								<li class="nav-item"><a th:href="@{/admin/doctor}" class="nav-link" id="nav-addDoctor">
 										<i class="far fa-circle nav-icon"></i>
-										<p>Add Doctor</p>
+										<p>Thêm bác sĩ</p>
 									</a></li>
-								<li class="nav-item"><a th:href="@{/admin/doctor-details}" class="nav-link"
-										id="nav-doctorDetails"> <i class="far fa-circle nav-icon"></i>
-										<p>Doctor Details</p>
-									</a></li>
+								
 							</ul>
 						</li>
 
 
-						<li class="nav-item" id="bookingId"><a href="javascript:void(0);" class="nav-link"> <i
+						<li class="nav-item" id="patientId"><a href="javascript:void(0);" class="nav-link"> <i
 									class="nav-icon fa fa-users"></i>
 								<p>
-									Patient <i class="fas fa-angle-left right"></i>
+									Bệnh nhân <i class="fas fa-angle-left right"></i>
 								</p>
 							</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item"><a th:href="@{/admin/viewAmbBooking}" class="nav-link"
-										id="nav-viewAmbBooking"> <i
-											class="far fa-prescription-bottle-medical nav-icon"></i>
-										<p>View Patient</p>
+								<li class="nav-item"><a th:href="@{/admin/viewPatient}" class="nav-link"
+										id="nav-viewPatient"> <i class="far fa-circle nav-icon"></i>
+										<p>Xem bệnh nhân</p>
 									</a></li>
-								<li class="nav-item"><a th:href="@{/admin/viewBloodBooking}" class="nav-link"
-										id="nav-viewBloodBooking"> <i class="far fa-file-invoice nav-icon"></i>
+								<li class="nav-item"><a th:href="@{/admin/viewInvoice}" class="nav-link"
+										id="nav-viewInvoice"> <i class="far fa-circle nav-icon"></i>
 										<p>Invoice</p>
 									</a></li>
 							</ul>
@@ -168,13 +164,13 @@
 						<li class="nav-item" id="nav-doctAppoint"><a href="javascript:void(0);" class="nav-link"> <i
 									class="nav-icon fa fa-calendar"></i>
 								<p>
-									Appoinment <i class="fas fa-angle-left right"></i>
+									Đặt lịch khám<i class="fas fa-angle-left right"></i>
 								</p>
 							</a>
 							<ul class="nav nav-treeview">
 								<li class="nav-item"><a th:href="@{/admin/viewApp}" class="nav-link"
 										id="nav-viewAppoinment"> <i class="far fa-circle nav-icon"></i>
-										<p>View Appoinment</p>
+										<p>Xem đặt lịch khám</p>
 									</a></li>
 
 							</ul>
@@ -188,7 +184,7 @@
 							<ul class="nav nav-treeview">
 								<li class="nav-item"><a id="nav-linkAddPost" th:href="@{/admin/blog-post}"
 										class="nav-link"> <i class="far fa-circle nav-icon"></i>
-										<p>Add Post</p>
+										<p>Thêm bài</p>
 									</a></li>
 							</ul>
 						</li>
@@ -196,69 +192,28 @@
 						<li class="nav-item" id="messageId"><a href="javascript:void(0);" class="nav-link"> <i
 									class="nav-icon fa fa-comments"></i>
 								<p>
-									Review <i class="fas fa-angle-left right"></i>
+									Đánh giá <i class="fas fa-angle-left right"></i>
 								</p>
 							</a>
 							<ul class="nav nav-treeview">
 								<li class="nav-item"><a th:href="@{/admin/pMsg}" class="nav-link" id="nav-viewMessage">
 										<i class="far fa-circle nav-icon"></i>
-										<p>View Review</p>
+										<p>Xem đánh giá</p>
 									</a></li>
 
 							</ul>
 						</li>
-
-						<li class="nav-item" id="nav-itemContact"><a href="javascript:void(0);" class="nav-link"> <i
-									class="nav-icon fa fa-credit-card"></i>
-								<p>
-									Payment <i class="fas fa-angle-left right"></i>
-								</p>
-							</a>
-							<ul class="nav nav-treeview">
-								<li class="nav-item"><a th:href="@{/admin/contact}" class="nav-link"
-										id="nav-linkViewContact"> <i class="far fa-circle nav-icon"></i>
-										<p>History</p>
-									</a></li>
-							</ul>
-						</li>
-						<li class="nav-item" id="sager"><a href="javascript:void(0);" class="nav-link"> <i
-									class="nav-icon far fa-plus-square"></i>
-								<p>
-									GENERIC <i class="fas fa-angle-left right"></i>
-								</p>
-							</a>
-							<ul class="nav nav-treeview">
-								<li class="nav-item"><a th:href="@{/admin/amb-setup}" class="nav-link"
-										id="nav-linkUniId"> <i class="far fa-circle nav-icon"></i>
-										<p>Ambulance Setup</p>
-									</a></li>
-								<li class="nav-item"><a th:href="@{/admin/blood-setup}" class="nav-link" id="nav-blood">
-										<i class="far fa-circle nav-icon"></i>
-										<p>Blood Setup</p>
-									</a></li>
-								<li class="nav-item"><a th:href="@{/admin/disease-setup}" class="nav-link"
-										id="nav-disease"> <i class="far fa-circle nav-icon"></i>
-										<p>Disease Setup</p>
-									</a></li>
-
-								<li class="nav-item"><a th:href="@{/admin/diagnostic-setup}" class="nav-link"
-										id="nav-diagnostic"> <i class="far fa-circle nav-icon"></i>
-										<p>Diagnostic Center</p>
-									</a></li>
-							</ul>
-						</li>
-
 
 						<li class="nav-item" id="nav-AccountId"><a href="javascript:void(0);" class="nav-link"> <i
 									class="nav-icon fa fa fa-suitcase"></i>
 								<p>
-									Account Details <i class="fas fa-angle-left right"></i>
+									Chi tiết tài khoản <i class="fas fa-angle-left right"></i>
 								</p>
 							</a>
 							<ul class="nav nav-treeview">
 								<li class="nav-item"><a th:href="@{/admin/accDetails}" class="nav-link"
 										id="nav-viewAccountDetails"> <i class="far fa-circle nav-icon"></i>
-										<p>View Account</p>
+										<p>Xem tài khoản</p>
 									</a></li>
 							</ul>
 						</li>
