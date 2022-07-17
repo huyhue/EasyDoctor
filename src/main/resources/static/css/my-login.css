@@ -12,6 +12,9 @@ label.error {
     display: block;
     margin-top: 5px;
 }
+input.error, textarea.error {
+	border: 1px solid red;
+}
 .my-login-page .brand {
 	width: 200px;
 	height: 200px;
