@@ -133,7 +133,7 @@ public class AdminController {
 		return userService.getAllPatient();
 	}
 	
-	@GetMapping(value = "/savePatient")
+	@PostMapping(value = "/savePatient")
 	@ResponseBody
 	public CommonMsg savePatient(@RequestBody PatientDto patientdto) {
 		return userService.savePatient(patientdto);

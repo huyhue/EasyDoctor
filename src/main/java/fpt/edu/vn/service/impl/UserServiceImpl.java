@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -83,7 +84,7 @@ public class UserServiceImpl implements UserService {
 		List<PatientDto> listDTO = new ArrayList<>();
 		List<Patient> list = patientRepository.findAll();
 		for (Patient p : list) {
-			listDTO.add(new PatientDto(p.getId(), p.getUserName(), p.getEmail(), p.getFullname(), p.getMobile()));
+			listDTO.add(new PatientDto(p.getId().toString(), p.getUserName(), p.getEmail(), p.getFullname(), p.getMobile(), p.getAddress()));
 		}
 		return listDTO;
 	}
@@ -91,24 +92,32 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public CommonMsg savePatient(PatientDto patientDto) {
 		CommonMsg commonMsg = new CommonMsg();
-		if (patientDto.getId() < 0) {
-			Patient checkName = patientRepository.findByUserName(patientDto.getUserName()).get();
-			if (checkName != null) {
-				commonMsg.setMsgCode("exitName");
+		if (patientDto.getId().isEmpty()) {
+			Optional<Patient> checkUserName = patientRepository.findByUserName(patientDto.getUserName());
+			Patient checkEmail = patientRepository.findByEmail(patientDto.getEmail());
+			if (checkUserName.isPresent()) {
+				commonMsg.setMsgCode("exitUserName");
+				return commonMsg;
+			}
+			if (checkEmail != null) {
+				commonMsg.setMsgCode("exitEmail");
 				return commonMsg;
 			}
 			// add new
 			Patient patient = new Patient();
 			patient.setEmail(patientDto.getEmail());
+			patient.setFullname(patientDto.getFullname());
+			patient.setUserName(patientDto.getUserName());
+			patient.setMobile(patientDto.getMobile());
+			patient.setAddress(patientDto.getAddress());
 			patientRepository.save(patient);
 			commonMsg.setMsgCode("200");
 		} else {
 			// update
-			Patient patientView = getPatientById(patientDto.getId());
+			Patient patientView = getPatientById(Integer.parseInt(patientDto.getId()));
 			patientView.setFullname(patientDto.getFullname());
-			patientView.setUserName(patientDto.getUserName());
-			patientView.setEmail(patientDto.getEmail());
 			patientView.setMobile(patientDto.getMobile());
+			patientView.setAddress(patientDto.getAddress());
 			patientRepository.save(patientView);
 			commonMsg.setMsgCode("205");
 		}
@@ -445,7 +454,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public CommonMsg saveClinic(Clinic clinic) {
 		CommonMsg commonMsg = new CommonMsg();
-		if (clinic.getId() < 0) {
+		if (clinic.getId()==null) {
 			Clinic checkName = clinicRepository.findByName(clinic.getName());
 			if (checkName != null) {
 				commonMsg.setMsgCode("exitName");
