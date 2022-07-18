@@ -7,6 +7,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import fpt.edu.vn.component.ChangePasswordForm;
 import fpt.edu.vn.component.CommonMsg;
+import fpt.edu.vn.component.DoctorDto;
+import fpt.edu.vn.component.PatientDto;
+import fpt.edu.vn.model.Clinic;
 import fpt.edu.vn.model.Declaration;
 import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.FileModel;
@@ -18,7 +21,12 @@ import fpt.edu.vn.model.Specialty;
 import fpt.edu.vn.model.User;
 
 public interface UserService {
+//	Patient
 	List<Patient> getAllPatients();
+	List<PatientDto> getAllPatient();
+	CommonMsg savePatient(PatientDto patientDto);
+	CommonMsg deletePatient(int patientId);
+	
 	User findByEmail(String email);
 	User findByUserName(String username);
 	User findByConfirmationToken(String token);
@@ -37,7 +45,9 @@ public interface UserService {
 	void savePatientRegister(Patient userRE);
 
 //	Doctor
-	List<Doctor> getAllDoctors();
+	List<DoctorDto> getAllDoctors();
+	CommonMsg saveDoctor(DoctorDto doctordto);
+	CommonMsg deleteDoctor(int doctorId);
 	List<Doctor> getAllDoctorsByPatient();
 	List<Doctor> getAllDoctorsBySpecialty(int specialtyId);
 	
@@ -67,4 +77,9 @@ public interface UserService {
 	
 //	Specialty
 	List<Specialty> getAllSpecialty();
+	
+//	Clinic
+	List<Clinic> getAllClinic();
+	CommonMsg saveClinic(Clinic clinic);
+	CommonMsg deleteClinic(int clinicId);
 }
