@@ -29,7 +29,19 @@ public class Clinic{
 
     public Clinic() {}
 
-    public Integer getId() {
+    public Clinic(Integer id, String name, String address, String telephone, String website, String description,
+			List<Doctor> doctors) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.address = address;
+		this.telephone = telephone;
+		this.website = website;
+		this.description = description;
+		this.doctors = doctors;
+	}
+
+	public Integer getId() {
         return id;
     }
 

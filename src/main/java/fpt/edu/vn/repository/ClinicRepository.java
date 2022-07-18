@@ -6,5 +6,4 @@ import fpt.edu.vn.model.Clinic;
 
 public interface ClinicRepository extends JpaRepository<Clinic, Integer> {
 	Clinic findByName(String name);
-	
 }

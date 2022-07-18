@@ -18,7 +18,15 @@ public class Specialty{
 
     public Specialty() {}
 
-    public String getName() {
+    public Specialty(int id, String name, String description, Doctor doctor) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.doctor = doctor;
+	}
+
+	public String getName() {
         return name;
     }
 

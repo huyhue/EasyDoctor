@@ -76,6 +76,8 @@ public class AdminController {
 	// Doctor
 	@GetMapping("/doctor")
 	public String viewDoctor(Model model) {
+		model.addAttribute("specialties", userService.getAllSpecialty());
+		model.addAttribute("clinics", userService.getAllClinic());
 		return "admin/doctors";
 	}
 

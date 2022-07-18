@@ -14,4 +14,5 @@ public interface DoctorRepository extends CommonUserRepository<Doctor> {
     List<Doctor> findBySpecialtyId(@Param("specialtyId") int specialtyId);
 	
 	Optional<Doctor> findByUserName(String userName);
+	Doctor findByEmail(String email);
 }

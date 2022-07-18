@@ -191,7 +191,7 @@ public class UserServiceImpl implements UserService {
 		List<DoctorDto> listDTO = new ArrayList<>();
 		List<Doctor> list = doctorRepository.findAll();
 		for (Doctor d : list) {
-			listDTO.add(new DoctorDto(d.getId(), d.getUserName(), d.getEmail(), d.getFullname(), null, null));
+			listDTO.add(new DoctorDto(d.getId().toString(), d.getUserName(), d.getEmail(), d.getFullname(), d.getSpecialty().getName(), d.getClinic().getName()));
 		}
 		return listDTO;
 	}
@@ -199,24 +199,41 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public CommonMsg saveDoctor(DoctorDto doctordto) {
 		CommonMsg commonMsg = new CommonMsg();
-		if (doctordto.getId() < 0) {
-			Doctor checkName = doctorRepository.findByUserName(doctordto.getUserName()).get();
-			if (checkName != null) {
-				commonMsg.setMsgCode("exitName");
+		if (doctordto.getNameSpecialty() == null) {
+			commonMsg.setMsgCode("exitUserName");
+			return commonMsg;
+		}
+		if (doctordto.getNameClinic() == null) {
+			commonMsg.setMsgCode("exitUserName");
+			return commonMsg;
+		}
+		if (doctordto.getId().isEmpty()) {
+			Optional<Doctor> checkUserName = doctorRepository.findByUserName(doctordto.getUserName());
+			Doctor checkEmail = doctorRepository.findByEmail(doctordto.getEmail());
+			if (checkUserName.isPresent()) {
+				commonMsg.setMsgCode("exitUserName");
+				return commonMsg;
+			}
+			if (checkEmail != null) {
+				commonMsg.setMsgCode("exitEmail");
 				return commonMsg;
 			}
 			// add new
 			Doctor doctor = new Doctor();
+			doctor.setUserName(doctordto.getEmail());
 			doctor.setEmail(doctordto.getEmail());
+			doctor.setFullname(doctordto.getFullname());
+			doctor.setSpecialty(specialtyRepository.findByName(doctordto.getNameSpecialty()));
+			doctor.setClinic(clinicRepository.findByName(doctordto.getNameClinic()));
 			doctorRepository.save(doctor);
 			commonMsg.setMsgCode("200");
 		} else {
 			// update
-			Doctor doctorAdd = getDoctorById(doctordto.getId());
-			doctorAdd.setFullname(doctordto.getFullname());
-			doctorAdd.setUserName(doctordto.getUserName());
-			doctorAdd.setEmail(doctordto.getEmail());
-			doctorRepository.save(doctorAdd);
+			Doctor doctorUpdate = getDoctorById(Integer.parseInt(doctordto.getId()));
+			doctorUpdate.setFullname(doctordto.getFullname());
+			doctorUpdate.setSpecialty(specialtyRepository.findByName(doctordto.getNameSpecialty()));
+			doctorUpdate.setClinic(clinicRepository.findByName(doctordto.getNameClinic()));
+			doctorRepository.save(doctorUpdate);
 			commonMsg.setMsgCode("205");
 		}
 		return commonMsg;
@@ -228,7 +245,6 @@ public class UserServiceImpl implements UserService {
 		doctorRepository.deleteById(doctorId);
 		commonMsg.setMsgCode("200");
 		return commonMsg;
-
 	}
 
 	@Override

@@ -53,6 +53,12 @@
 						</div>
 						<div class="form-group">
 							<label>Phòng khám<span class="errorMsg">*</span></label>
+							<select id="clinic" class="form-control filter">
+								<option value="-1">--Chọn--</option>
+								<option th:each="resultMap : ${clinics}" th:value="${resultMap.name}"
+									th:text="${resultMap.name}"></option>
+							</select>
+							<span class="errorMsg" id="errorMsgClinic"></span>
 						</div>
 					</div>
 
@@ -64,6 +70,12 @@
 						</div>
 						<div class="form-group">
 							<label>Chuyên khoa<span class="errorMsg">*</span></label>
+							<select id="specialty" class="form-control filter">
+								<option value="-1">--Chọn--</option>
+								<option th:each="resultMap : ${specialties}" th:value="${resultMap.name}"
+									th:text="${resultMap.name}"></option>
+							</select>
+							<span class="errorMsg" id="errorMsgSpecialty"></span>
 						</div>
 					</div>
 
@@ -106,6 +118,8 @@
 								<th>Tên đăng nhập</th>
 								<th>Email</th>
 								<th>Họ và tên</th>
+								<th>Chuyên khoa</th>
+								<th>Phòng khám</th>
 								<th style="width: 100px">Hành động</th>
 							</tr>
 						</thead>
@@ -141,6 +155,10 @@
 						}, {
 							"mData": "fullname"
 						}, {
+							"mData": "nameSpecialty"
+						}, {
+							"mData": "nameClinic"
+						}, {
 							"className": "dt-btn",
 							"render": function () {
 								return '<div class="btn-group btn-group-sm"> <a href="#" class="btn btn-info" id="editUnID"><i class="fas fa-user-edit"></i></a><a href="#" class="btn btn-danger" id="deleteUnID"><i class="fas fa-trash"></i></a></div>';
@@ -154,10 +172,11 @@
 				$("#btn-save").click(function () {
 					if (dataValidation()) {
 						var uniList = {};
-						uniList.fullname = $("#fullname").val();
-						uniList.email = $("#email").val();
-						uniList.password = $("#password").val();
 						uniList.userName = $("#userName").val();
+						uniList.email = $("#email").val();
+						uniList.fullname = $("#fullname").val();
+						uniList.specialty = $("#specialty option:selected").val();
+						uniList.clinic = $("#clinic option:selected").val();
 						uniList.id = $("#updateId").val();
 
 						$.ajax({
@@ -217,9 +236,25 @@
 					var status = true;
 					var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
 
-					if ($("#name").val() == "") {
+					if ($("#clinic").val() == -1) {
 						status = false;
-						$("#errorMsgName").text("Required Field!!");
+						$("#errorMsgClinic").text("Required Field!!");
+						$("#clinic").css('border', '1px solid red');
+						$("#clinic").focus();
+						return status;
+					}
+					
+					if ($("#specialty").val() == -1) {
+						status = false;
+						$("#errorMsgSpecialty").text("Required Field!!");
+						$("#specialty").css('border', '1px solid red');
+						$("#specialty").focus();
+						return status;
+					}
+
+					if ($("#fullname").val() == "") {
+						status = false;
+						$("#errorMsgFullname").text("Required Field!!");
 						$("#fullname").css('border', '1px solid red');
 						$("#fullname").focus();
 						return status;
@@ -269,26 +304,6 @@
 						return status;
 					}
 
-
-
-					if ($("#password").val() == "") {
-						status = false;
-						$("#errorMsgPassword").text(
-							"Required Field!!");
-						$("#password").css('border',
-							'1px solid red');
-						$("#password").focus();
-						return status;
-
-					} else if ($("#password").val().length < 8) {
-						status = false;
-						$("#errorMsgPassword").text(
-							"Password must be 8 characters long!!");
-						$("#password").css('border',
-							'1px solid red');
-						$("#password").focus();
-						return status;
-					}
 					return status;
 				}
 
@@ -359,29 +374,26 @@
 				$('#tbl-adddoctor tbody').on('click', '#editUnID', function () {
 					var curRow = $(this).closest('tr');
 					var id = curRow.find('td:eq(1)').attr("data-id");
-					var fullname = curRow.find('td:eq(1)').text();
+					var userName = curRow.find('td:eq(1)').text();
 					var email = curRow.find('td:eq(2)').text();
-					var password = curRow.find('td:eq(3)').text();
-					var userName = curRow.find('td:eq(4)').text();
-
+					var fullname = curRow.find('td:eq(3)').text();
+					var specialty = curRow.find('td:eq(4)').text();
+					var clinic = curRow.find('td:eq(5)').text();
 
 					$("#updateId").val(id);
-					$("#fullname").val(fullname);
-					$("#email").val(email);
-					$("#password").val(password);
 					$("#userName").val(userName);
-
-
+					$("#email").val(email);
+					$("#fullname").val(fullname);
+					$("#userName").val(userName);
+					$("#clinic option:selected").text(clinic);
+					$("#clinic option:selected").val(clinic);
+					$("#specialty option:selected").text(specialty);
+					$("#specialty option:selected").val(specialty);
 
 					$('html, body').animate({
 						scrollTop: $('#scroll').offset().top
 					}, 500);
 				});
-
-
-
-
-
 			});
 		</script>
 	</div>

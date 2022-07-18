@@ -1,14 +1,14 @@
 package fpt.edu.vn.component;
 
 public class DoctorDto {
-	private Integer id;
+	private String id;
 	private String userName;
 	private String email;
 	private String fullname;
 	private String nameSpecialty;
 	private String nameClinic;
 
-	public DoctorDto(Integer id, String userName, String email, String fullname, String nameSpecialty,
+	public DoctorDto(String id, String userName, String email, String fullname, String nameSpecialty,
 			String nameClinic) {
 		super();
 		this.id = id;
@@ -19,11 +19,11 @@ public class DoctorDto {
 		this.nameClinic = nameClinic;
 	}
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
