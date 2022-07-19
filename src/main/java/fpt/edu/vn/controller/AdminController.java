@@ -90,7 +90,12 @@ public class AdminController {
 	@PostMapping("saveDoctor")
 	@ResponseBody
 	public CommonMsg saveDoctor(@RequestBody DoctorDto doctordto) {
-		return userService.saveDoctor(doctordto);
+		CommonMsg commonMsg = userService.saveDoctor(doctordto);
+		//email add new doctor
+		if (commonMsg.getMsgCode() == "200") {
+			emailService.sendInfoNewDoctor(doctordto);
+		}
+		return commonMsg;
 	}
 
 	@GetMapping(value = "/deleteDoctor")

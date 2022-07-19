@@ -161,12 +161,19 @@
 						}, {
 							"className": "dt-btn",
 							"render": function () {
-								return '<div class="btn-group btn-group-sm"> <a href="#" class="btn btn-info" id="editUnID"><i class="fas fa-user-edit"></i></a><a href="#" class="btn btn-danger" id="deleteUnID"><i class="fas fa-trash"></i></a></div>';
+								return '<div class="btn-group btn-group-sm"> <a id="redirectUnID" class="btn btn-warning"><i class="fas fa-eye"></i></a><a href="#" class="btn btn-info" id="editUnID"><i class="fas fa-user-edit"></i></a><a href="#" class="btn btn-danger" id="deleteUnID"><i class="fas fa-trash"></i></a></div>';
 							}
 						}],
 					"fnCreatedRow": function (nRow, aData, iDataIndex) {
 						$('td:eq(1)', nRow).attr("data-id", aData.id);
 					}
+				});
+
+				$('#tbl-adddoctor tbody').on('click', '#redirectUnID', function () {
+					var curRow = $(this).closest('tr');
+					var id = curRow.find('td:eq(1)').attr("data-id");
+					var url = '/detail/' + id;
+					window.open(url, '_blank');
 				});
 
 				$("#btn-save").click(function () {
@@ -175,8 +182,8 @@
 						uniList.userName = $("#userName").val();
 						uniList.email = $("#email").val();
 						uniList.fullname = $("#fullname").val();
-						uniList.specialty = $("#specialty option:selected").val();
-						uniList.clinic = $("#clinic option:selected").val();
+						uniList.nameSpecialty = $("#specialty option:selected").val();
+						uniList.nameClinic = $("#clinic option:selected").val();
 						uniList.id = $("#updateId").val();
 
 						$.ajax({
@@ -243,7 +250,7 @@
 						$("#clinic").focus();
 						return status;
 					}
-					
+
 					if ($("#specialty").val() == -1) {
 						status = false;
 						$("#errorMsgSpecialty").text("Required Field!!");
@@ -313,16 +320,24 @@
 					$("#fullname").css('border', '1px solid #CED4DA');
 
 					$("#email").val('');
+					$('#email').prop('readonly', false);
 					$("#errorMsgEmail").text("");
 					$("#email").css('border', '1px solid #CED4DA');
 
-					$("#password").val('');
-					$("#errorMsgPassword").text("");
-					$("#password").css('border', '1px solid #CED4DA');
-
 					$("#userName").val('');
-					$("#errorMsgUsername").text("");
+					$('#userName').prop('readonly', false);
+					$("#errorMsgUserName").text("");
 					$("#userName").css('border', '1px solid #CED4DA');
+
+					$("#clinic option:selected").text("--Chọn--");
+					$("#clinic option:selected").val(-1);
+					$("#errorMsgClinic").text("");
+					$("#clinic").css('border', '1px solid #CED4DA');
+
+					$("#specialty option:selected").text("--Chọn--");
+					$("#specialty option:selected").val(-1);
+					$("#errorMsgSpecialty").text("");
+					$("#specialty").css('border', '1px solid #CED4DA');
 
 					$("#updateId").val('');
 				}
@@ -382,9 +397,12 @@
 
 					$("#updateId").val(id);
 					$("#userName").val(userName);
+					$('#userName').prop('readonly', true);
 					$("#email").val(email);
+					$('#email').prop('readonly', true);
 					$("#fullname").val(fullname);
 					$("#userName").val(userName);
+
 					$("#clinic option:selected").text(clinic);
 					$("#clinic option:selected").val(clinic);
 					$("#specialty option:selected").text(specialty);

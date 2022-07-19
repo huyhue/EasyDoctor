@@ -52,7 +52,8 @@
 						<div class="dropdown-divider"></div>
 
 						<span sec:authorize="isAuthenticated()">
-							<a th:href="@{/admin/profile}" class="dropdown-item"> <i class="fas fa-solid fa-address-card mr-2"></i>
+							<a th:href="@{/admin/profile}" class="dropdown-item"> <i
+									class="fas fa-solid fa-address-card mr-2"></i>
 								Thông tin
 							</a>
 						</span>
@@ -107,7 +108,19 @@
 							</ul>
 						</li>
 
-
+						<li class="nav-item" id="nav-AccountId"><a href="javascript:void(0);" class="nav-link"> <i
+									class="nav-icon fa fa fa-question"></i>
+								<p>
+									Tư vấn khách hàng <i class="fas fa-angle-left right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item"><a th:href="@{/admin/accDetails}" class="nav-link"
+										id="nav-viewAccountDetails"> <i class="far fa-circle nav-icon"></i>
+										<p>Hỏi đáp</p>
+									</a></li>
+							</ul>
+						</li>
 						<li class="nav-item" id="nav-clinicId"><a href="javascript:void(0);" class="nav-link"> <i
 									class="nav-icon fa fa fa-suitcase"></i>
 								<p>
@@ -138,7 +151,7 @@
 										<i class="far fa-circle nav-icon"></i>
 										<p>Thêm bác sĩ</p>
 									</a></li>
-								
+
 							</ul>
 						</li>
 
@@ -204,37 +217,25 @@
 							</ul>
 						</li>
 
-						<li class="nav-item" id="nav-AccountId"><a href="javascript:void(0);" class="nav-link"> <i
-									class="nav-icon fa fa fa-suitcase"></i>
-								<p>
-									Chi tiết tài khoản <i class="fas fa-angle-left right"></i>
-								</p>
-							</a>
-							<ul class="nav nav-treeview">
-								<li class="nav-item"><a th:href="@{/admin/accDetails}" class="nav-link"
-										id="nav-viewAccountDetails"> <i class="far fa-circle nav-icon"></i>
-										<p>Xem tài khoản</p>
-									</a></li>
-							</ul>
-						</li>
-
-
-
 						<li class="nav-item" id="nav-GenReport"><a href="javascript:void(0);" class="nav-link"> <i
 									class="nav-icon fa fa-file-pdf"></i>
 								<p>
-									Generate Report <i class="fas fa-angle-left right"></i>
+									Tạo báo cáo <i class="fas fa-angle-left right"></i>
 								</p>
 							</a>
 							<ul class="nav nav-treeview">
 								<li class="nav-item"><a th:href="@{/admin/empReport}" class="nav-link" id="nav-Report">
 										<i class="far fa-circle nav-icon"></i>
-										<p>Report</p>
+										<p>Báo cáo cuộc hẹn</p>
 									</a></li>
 
 								<li class="nav-item"><a th:href="@{/admin/accountReport}" class="nav-link"
 										id="nav-account"> <i class="far fa-circle nav-icon"></i>
-										<p>Account Report</p>
+										<p>Báo cáo bác sĩ</p>
+									</a></li>
+								<li class="nav-item"><a th:href="@{/admin/accountReport}" class="nav-link"
+										id="nav-account"> <i class="far fa-circle nav-icon"></i>
+										<p>Báo cáo bệnh nhân</p>
 									</a></li>
 							</ul>
 						</li>

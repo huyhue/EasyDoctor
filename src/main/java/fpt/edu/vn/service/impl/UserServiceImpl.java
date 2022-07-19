@@ -200,11 +200,11 @@ public class UserServiceImpl implements UserService {
 	public CommonMsg saveDoctor(DoctorDto doctordto) {
 		CommonMsg commonMsg = new CommonMsg();
 		if (doctordto.getNameSpecialty() == null) {
-			commonMsg.setMsgCode("exitUserName");
+			commonMsg.setMsgCode("notSpecialty");
 			return commonMsg;
 		}
 		if (doctordto.getNameClinic() == null) {
-			commonMsg.setMsgCode("exitUserName");
+			commonMsg.setMsgCode("notClinic");
 			return commonMsg;
 		}
 		if (doctordto.getId().isEmpty()) {
@@ -220,7 +220,8 @@ public class UserServiceImpl implements UserService {
 			}
 			// add new
 			Doctor doctor = new Doctor();
-			doctor.setUserName(doctordto.getEmail());
+			doctor.setUserName(doctordto.getUserName());
+			doctor.setPassword(passwordEncoder.encode("123456"));
 			doctor.setEmail(doctordto.getEmail());
 			doctor.setFullname(doctordto.getFullname());
 			doctor.setSpecialty(specialtyRepository.findByName(doctordto.getNameSpecialty()));
