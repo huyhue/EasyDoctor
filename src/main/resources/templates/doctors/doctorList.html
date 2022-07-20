@@ -6,15 +6,21 @@
 	<section id="doctors" class="doctors">
 		<div class="container">
 			<div class="section-title text-center">
-				<h2 style="margin: 30px; color: #37a7f1;">DANH SÁCH CÁC BÁC SĨ</h2>
+				<h2 style="margin: 30px; color: #37a7f1;">ĐẶT LỊCH HẸN VỚI CÁC BÁC SĨ</h2>
 
 				<div class="row m-3">
 					<div class="col-md-11 d-flex justify-content-center">
 						<div class="form-row">
-							<label for="specialty" class="col-form-label "><b>Tìm kiếm bác sĩ</b></label>
 							<div class="col">
 								<input type="text" class="form-control" id="searchName"
 									placeholder="Tìm kiếm thông tin bác sĩ">
+							</div>
+							<div class="col">
+								<select id="" class="form-control filter">
+									<option value="all">Vị trí của bạn</option>
+									<option value="">Quận Ngũ Hành Sơn</option>
+									<option value="">Quận Sơn Trà</option>
+								</select>
 							</div>
 							<div class="col">
 								<select id="specialty" class="form-control filter">
@@ -143,7 +149,7 @@
 					elements[0].parentNode.removeChild(elements[0]);
 				}
 			}
-			
+
 			function removeVietnameseTones(str) {
 				str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
 				str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
@@ -179,7 +185,7 @@
 				removeElementsByClass('no_results')
 				for (i = 0; i < doctorList.length; i++) {
 					doctorList[i].style.display = 'none';
-					console.log("test:"+doctorList[i].innerText.toLowerCase());
+					console.log("test:" + doctorList[i].innerText.toLowerCase());
 					if (removeVietnameseTones(doctorList[i].innerText.toLowerCase()).indexOf(search) !== -1) {
 						results.push(doctorList[i])
 					}
@@ -230,6 +236,34 @@
 				findMatchesSpecialty();
 			});
 
+		});
+
+
+		$(document).ready(function () {
+			$("#declaration-form").validate({
+				rules: {
+					medicine: {
+						required: true
+					},
+					symptom: {
+						required: true
+					},
+					notes: {
+						required: true
+					}
+				},
+				messages: {
+					medicine: {
+						required: "Không được để trống"
+					},
+					symptom: {
+						required: "Không được để trống"
+					},
+					notes: {
+						required: "Không được để trống"
+					}
+				}
+			});
 		});
 	</script>
 </body>

@@ -5,6 +5,15 @@
 .fc-today-button{
 	display: none;
 }
+label.error {
+    color: red;
+    font-size: 1rem;
+    display: block;
+    margin-top: 5px;
+}
+input.error, textarea.error {
+	border: 1px solid red;
+}
 .navbar-brand-cus {
     display: inline-block;
     margin-right: 4rem;
