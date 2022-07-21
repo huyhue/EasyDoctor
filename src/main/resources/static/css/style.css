@@ -21,6 +21,34 @@ input.error, textarea.error {
     line-height: inherit;
     white-space: nowrap;
 }
+.btn.btn-sm.btn-outline.rounded-pill.order-1.order-lg-0.ms-lg-4:hover{
+	background-color:#283779;
+	color: #fff !important;
+}
+.btn.btn-sm.btn-outline{
+	color: #283779;
+    border-color: #283779;
+    margin-left: 35px;
+    margin-top: 5px;
+    margin-right: -125px;
+    font-weight:600;
+}
+.fa-bell:before{
+	color:#283779 !important;
+}
+h5.lh-lg.fw-bold.text-light.mb-4.font-sans-serif {
+    margin-top: 41px;
+}
+.footer-link{
+	color: #283779 !important;
+}
+.lh-lg{
+	color: #283779 !important;
+	margin-top: 12px;
+}
+p.text-light.my-4 {
+    color: #283779 !important;
+}
 .errorMsg {
     color: red;
     font-size: 13px;

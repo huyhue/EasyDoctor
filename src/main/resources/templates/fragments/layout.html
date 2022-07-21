@@ -91,14 +91,14 @@
 							</a>
 						</li>
 						<li>
-							<p class="navbar-nav ml-auto navbar-text"> Xin chào:
+							<p class="navbar-nav ml-auto navbar-text" style="color: #283779 !important;font-weight: 600;"> Xin chào:
 								<span th:text="${#authentication.getPrincipal().getUsername()}"
-									id="user_name">username</span> |
+									id="user_name">username</span> 
 								<input type="hidden" th:value="${#authentication.getPrincipal().getId()}" id="user_id">
 							</p>
 						</li>
 						<li>
-							<a class="nav-link"  th:href="@{/perform_logout}">Đăng xuất</a>
+							<a class="btn btn-sm btn-outline rounded-pill order-1 order-lg-0 ms-lg-4"  th:href="@{/perform_logout}">Đăng xuất</a>
 						</li>
 					</ul>
 				</div>
@@ -116,7 +116,7 @@
 			<div class="row py-8">
 				<div class="col-12 col-sm-12 col-lg-6 mb-4 order-0 order-sm-0"><a class="text-decoration-none"
 						href="#"><img src="/img/gallery/logo.png" height="150" alt=""
-							style="margin-bottom: 45px;" /></a>
+							style="margin-bottom: 10px;" /></a>
 					<p class="text-light my-4"><strong>CÔNG TY TNHH MTV EASYDOCTOR</strong></p>
 					<p class="text-light my-4"><strong>Địa chỉ:</strong> Lô 11 Khuê Mỹ Đông 7, phường Khuê Mỹ, quận Ngũ
 						Hành Sơn, thành phố Đà Nẵng </p>
@@ -143,7 +143,7 @@
 					</ul>
 				</div>
 				<div class="col-6 col-sm-4 col-lg-2 mb-3 order-3 order-sm-2" style="padding-left: 0px;">
-					<h5 class="lh-lg fw-bold text-light mb-4 font-sans-serif"> Chăm sóc khách hàng</h5>
+					<h5 class="lh-lg fw-bold text-light mb-4 font-sans-serif"> Dịch Vụ</h5>
 					<ul class="list-unstyled mb-md-4 mb-lg-0">
 						<li class="lh-lg"><a class="footer-link" href="#about">Thông tin của chúng tôi</a></li>
 						<li class="lh-lg"><a class="footer-link" href="#ask">Tư vấn và hỏi đáp</a></li>

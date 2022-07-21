@@ -1,17 +1,25 @@
 <th:block th:fragment="navlinks(activeLink)">
+<style>
+.navlinkcss{
+	color: #283779 !important;
+    font-weight: 600;
+    margin-right: 22px;
+}
+
+</style>
 	<div class="collapse navbar-collapse" id="navbarResponsive">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item" th:classappend="${activeLink} == 'doctors' ? 'active':''">
-				<a class="nav-link" th:href="@{/doctors/all}">Trang chủ</a>
+				<a class="nav-link navlinkcss" th:href="@{/doctors/all}">Trang chủ</a>
 			</li>
 			<li class="nav-item" th:classappend="${activeLink} == 'appointments' ? 'active':''">
-				<a class="nav-link" th:href="@{/appointments/all}">Cuộc hẹn</a>
+				<a class="nav-link navlinkcss" th:href="@{/appointments/all}">Cuộc hẹn</a>
 			</li>
 			<li class="nav-item" th:classappend="${activeLink} == 'forum' ? 'active':''">
-				<a class="nav-link" th:href="@{/forum/list}">Diễn đàn</a>
+				<a class="nav-link navlinkcss" th:href="@{/forum/list}">Diễn đàn</a>
 			</li>
 			<li class="nav-item" th:classappend="${activeLink} == 'account' ? 'active':''">
-				<a class="nav-link" th:href="@{'/patients/' + ${#authentication.getPrincipal().getId()}}">Tài khoản của tôi</a>
+				<a class="nav-link navlinkcss" th:href="@{'/patients/' + ${#authentication.getPrincipal().getId()}}">Tài khoản của tôi</a>
 			</li>
 		</ul>
 	</div>
