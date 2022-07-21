@@ -46,7 +46,7 @@
 							</a>
 							<span>[[${doctor.getClinic().getName()}]]</span>
 							<p>[[${doctor.getSpecialty().getName()}]]</p>
-							<span>[[${doctor.description}]]</span>
+							<span>[[${doctor.getClinic().getAddress()}]]</span>
 							<!--<small class="text-muted"
                                th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(doctor.startPracticeDate) + 1} years|"></small>-->
 							<div class="social">
