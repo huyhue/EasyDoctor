@@ -16,10 +16,16 @@
 									placeholder="Tìm kiếm thông tin bác sĩ">
 							</div>
 							<div class="col">
-								<select id="" class="form-control filter">
+								<select id="local" class="form-control filter">
 									<option value="all">Vị trí của bạn</option>
-									<option value="">Quận Ngũ Hành Sơn</option>
-									<option value="">Quận Sơn Trà</option>
+									<option value="Quận Ngũ Hành Sơn">Quận Ngũ Hành Sơn</option>
+									<option value="Quận Hải Châu">Quận Hải Châu</option>
+									<option value="Quận Cẩm Lệ">Quận Cẩm Lệ</option>
+									<option value="Quận Thanh Khê">Quận Thanh Khê</option>
+									<option value="Quận Liên Chiểu">Quận Liên Chiểu</option>
+									<option value="Quận Sơn Trà">Quận Sơn Trà</option>
+									<option value="Huyện Hòa Vang">Huyện Hòa Vang</option>
+									<option value="Huyện Hoàng Sa">Huyện Hoàng Sa</option>
 								</select>
 							</div>
 							<div class="col">
@@ -95,6 +101,8 @@
 			const doctorList = document.querySelectorAll('#item-doctor');
 			const searchName = document.querySelector("#searchName");
 			const searchSpecialty = document.querySelector("#specialty");
+			const searchLocal = document.querySelector("#local");
+			
 			let itemsPerPage = 6;
 
 			const showPage = (list, page) => {
@@ -227,6 +235,32 @@
 					newP.style.margin = "25px";
 				}
 			}
+			
+			const findLocal= () => {
+				let search = searchLocal.value;
+				let results = []
+				removeElementsByClass('no_results')
+				for (i = 0; i < doctorList.length; i++) {
+					doctorList[i].style.display = 'none';
+					if (search == "all") {
+						results.push(doctorList[i])
+					}
+					if (doctorList[i].innerText.indexOf(search) !== -1) {
+						results.push(doctorList[i])
+					}
+				}
+				showPage(results, 1);
+				addPaginationLinks(results);
+				if (results.length == 0) {
+					removeElementsByClass('no_results')
+					let parent = document.getElementsByClassName('page')[0];
+					let newP = document.createElement('h4');
+					newP.classList.add("no_results")
+					parent.appendChild(newP)
+					newP.innerText = "Không có bác sĩ nào được tìm thấy."
+					newP.style.margin = "25px";
+				}
+			}
 
 			searchName.addEventListener("keyup", function () {
 				findMatches();
@@ -235,7 +269,10 @@
 			searchSpecialty.addEventListener("change", function () {
 				findMatchesSpecialty();
 			});
-
+			
+			searchLocal.addEventListener("change", function () {
+				findLocal();
+			});
 		});
 
 
