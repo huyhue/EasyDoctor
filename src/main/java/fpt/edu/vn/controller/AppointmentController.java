@@ -77,7 +77,7 @@ public class AppointmentController {
     @PostMapping("/review")
     public String addReviewPatient(@ModelAttribute("reviewForm") ReviewForm reviewForm, @AuthenticationPrincipal CustomUserDetails currentUser) {
     	Review reviewUO = new Review(reviewForm.getFeedback(), reviewForm.getRating(),reviewForm.getDoctor(), 
-    			userService.getPatientById(currentUser.getId()));
+    			userService.getPatientById(currentUser.getId()), null);
     	
     	appointmentService.saveReviewByAppointment(reviewUO, reviewForm.getAppointmentId());
         return "redirect:/detail/" + reviewForm.getDoctor().getId();

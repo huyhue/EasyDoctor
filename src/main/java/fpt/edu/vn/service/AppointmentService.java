@@ -1,15 +1,20 @@
 package fpt.edu.vn.service;
 
 import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
+import fpt.edu.vn.component.AppoinmentDto;
 import fpt.edu.vn.component.ChatMessage;
+import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.component.TimePeroid;
 import fpt.edu.vn.model.Appointment;
+import fpt.edu.vn.model.Clinic;
 import fpt.edu.vn.model.Message;
 import fpt.edu.vn.model.Packages;
 import fpt.edu.vn.model.Review;
+
 
 public interface AppointmentService {
 	
@@ -69,4 +74,8 @@ public interface AppointmentService {
 	
 	//Statitics
 	long[] getCountAppointmentByStatus(int doctorId, String dateTime);
+	
+	
+	List<AppoinmentDto> getAllAppointment();
+	CommonMsg deleteAppoinment(int appointmentId);
 }

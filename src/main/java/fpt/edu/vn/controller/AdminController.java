@@ -1,7 +1,6 @@
 package fpt.edu.vn.controller;
 
 import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,14 +10,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
+
 import fpt.edu.vn.component.CommonMsg;
+import fpt.edu.vn.component.AppoinmentDto;
 import fpt.edu.vn.component.DoctorDto;
 import fpt.edu.vn.component.PatientDto;
+import fpt.edu.vn.component.ReviewDto;
 import fpt.edu.vn.model.Clinic;
 import fpt.edu.vn.model.Packages;
+import fpt.edu.vn.model.Review;
 import fpt.edu.vn.service.EmailService;
 import fpt.edu.vn.service.PackagesService;
 import fpt.edu.vn.service.AppointmentService;
+
 import fpt.edu.vn.service.UserService;
 
 @Controller
@@ -146,5 +151,42 @@ public class AdminController {
 	public CommonMsg deletePatient(@RequestParam("id") int id) {
 		return userService.deletePatient(id);
 	}
+	
+	//Appointment
+	@GetMapping("/viewApp")
+	public String viewAppoinmentList(Model model) {
+		return "admin/viewApp";
+	}
+	
+	@GetMapping(value = "/getviewAppList")
+	@ResponseBody
+	public List<AppoinmentDto> viewAppointmentList(){
+		return appointmentService.getAllAppointment();
+	}
+	
+	@GetMapping(value = "/deleteviewApp")
+	@ResponseBody
+	public CommonMsg deleteAppoinment(@RequestParam("id") int id) {
+		return appointmentService.deleteAppoinment(id);
+	}
+	
+//	//Review
+	@GetMapping("/viewReview")
+	public String viewReviewList(Model model) {
+		return "admin/viewReview";
+	}
+	
+	@GetMapping(value = "/getviewReviewList")
+	@ResponseBody
+	public List<ReviewDto> viewReviewList(){
+		return userService.getAllReview();
+	}
+	@GetMapping(value = "/deleteviewReview")
+	@ResponseBody
+	public CommonMsg deleteReview(@RequestParam("id") int id) {
+		return userService.deleteReview(id);
+	}
+	
+	
 	
 }

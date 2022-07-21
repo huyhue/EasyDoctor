@@ -111,7 +111,7 @@
 				</div>
 				<!-- /.card-header -->
 				<div class="card-body" style="display: block;">
-					<table class="table table-bordered" id="tbl-adddoctor">
+					<table class="table table-bordered" id="tbl-doctors">
 						<thead>
 							<tr style="text-align:center;">
 								<th style="width: 10px">#</th>
@@ -134,11 +134,11 @@
 	<div layout:fragment="script">
 		<script type="text/javascript">
 			$(document).ready(function () {
-				$("#nav-addDoctor").addClass("active");
+				$("#nav-doctors").addClass("active");
 				$("#nav-doctorId").addClass("active menu-is-opening menu-open");
 
 				var i = 0;
-				var table = $('#tbl-adddoctor').DataTable({
+				var table = $('#tbl-doctors').DataTable({
 					"sAjaxSource": "/admin/getListDoctor",
 					"sAjaxDataProp": "",
 					"aoColumns": [
@@ -331,7 +331,7 @@
 					resetText();
 				});
 
-				$('#tbl-adddoctor tbody').on('click', '#deleteUnID', function () {
+				$('#tbl-doctors tbody').on('click', '#deleteUnID', function () {
 					var curRow = $(this).closest('tr');
 					var uniId = curRow.find('td:eq(1)').attr("data-id");
 
@@ -371,7 +371,7 @@
 					}
 				});
 
-				$('#tbl-adddoctor tbody').on('click', '#editUnID', function () {
+				$('#tbl-doctors tbody').on('click', '#editUnID', function () {
 					var curRow = $(this).closest('tr');
 					var id = curRow.find('td:eq(1)').attr("data-id");
 					var userName = curRow.find('td:eq(1)').text();

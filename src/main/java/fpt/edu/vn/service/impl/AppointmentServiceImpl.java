@@ -4,7 +4,9 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import fpt.edu.vn.component.AppoinmentDto;
 import fpt.edu.vn.component.ChatMessage;
+import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.component.DayPlan;
 import fpt.edu.vn.component.TimePeroid;
 import fpt.edu.vn.exception.AppointmentNotFoundException;
@@ -13,6 +15,7 @@ import fpt.edu.vn.model.AppointmentStatus;
 import fpt.edu.vn.model.Message;
 import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.Packages;
+import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.Review;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.model.WorkingPlan;
@@ -65,6 +68,25 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@PreAuthorize("hasRole('ADMIN')")
 	public List<Appointment> getAllAppointments() {
 		return appointmentRepository.findAll();
+	}
+	
+	@Override
+	@PreAuthorize("hasRole('ADMIN')")
+	public List<AppoinmentDto> getAllAppointment() {
+		List<AppoinmentDto> listDTO = new ArrayList<>();
+		List<Appointment> list = appointmentRepository.findAll();
+		for (Appointment a : list) {
+			listDTO.add(new AppoinmentDto(a.getId(), a.getStart(), a.getEnd(), a.getDate(), a.getStatus().toString(), a.getPatient().getFullname(), a.getDoctor().getFullname(), a.getPackages().getName()));
+		}
+		return listDTO;
+	}
+	
+	@Override
+	public CommonMsg deleteAppoinment(int appointmentId) {
+		CommonMsg commonMsg = new CommonMsg();
+		appointmentRepository.deleteById(appointmentId);
+		commonMsg.setMsgCode("200");
+		return commonMsg;
 	}
 
 	@Override

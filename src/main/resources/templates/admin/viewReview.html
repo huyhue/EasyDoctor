@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	th:replace="~{fragments/base :: base (~{::body},'viewReview')}">
+
+<body>
+	<div class="content-header" id="scroll">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h4 class="m-0">DashBoard</h4>
+				</div>
+				<!-- /.col -->
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Home</a></li>
+						<li class="breadcrumb-item active">Dashboard</li>
+					</ol>
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+				<div class="card-body" style="display: block;">
+				<table class="table table-bordered" id="tbl-user-doctor">
+					<thead>
+						<tr style="text-align:center;">
+							<th>#</th>
+							<th style="width: 150px">Bác sĩ</th>
+							<th style="width: 150px">Bệnh nhân</th>
+							<th style="width: 150px">Ngày</th>
+							<th style="width: 200px">Đánh giá</th>
+							<th style="width: 100px">Xếp hạng</th>
+					        <th style="width: 100px">Hành động</th>
+						</tr>
+					</thead >
+					<tbody style="text-align:center;">
+				
+					</tbody>
+				</table>
+			</div>
+		   </div>
+			</div>
+		</div>
+	</div>
+</div>
+<div layout:fragment="script">
+
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							 
+	                        $("#nav-messageId").addClass("active menu-is-opening menu-open");
+							$("#nav-viewMessage").addClass("active");
+						
+							var k=0;
+							var table = $('#tbl-user-doctor')
+							.DataTable(
+									{
+										"sAjaxSource" : "/admin/getviewReviewList",
+										"sAjaxDataProp" : "",
+										"order" : [ [ 0, "asc" ] ],
+										"aoColumns" : [
+												{
+													"mData" : "id",
+													"render" : function(data, type, row) {
+														k+=1;
+														return k;
+													}
+												},{
+													"mData" : "doctor"
+												},{
+													"mData" : "patient"
+												},{
+													"mData" : "date",
+													"render" : function(data, type, row) {
+														return getDate(data);
+													}
+												},{
+													"mData" : "feedback"
+												},{
+													"mData" : "rating"
+												},{
+													"className": "dt-btn",
+													"render" : function(data, type, row) {
+														return '<div class="btn-group btn-group-sm"><a href="#" class="btn btn-danger" id="deleteUnID"><i class="fa fa-trash"></i></a></div>';
+						                              }
+												}],
+												"fnCreatedRow": function (nRow, aData, iDataIndex) {
+												$('td:eq(1)', nRow).attr("data-id", aData.id);
+												}
+											 });
+											 
+											 
+											
+								 $('#tbl-user-doctor tbody').on('click', '#deleteUnID', function () {
+								   
+								   var curRow = $(this).closest('tr');
+							        var uniId = curRow.find('td:eq(1)').attr("data-id");
+							        
+							        if (uniId != '') {
+							        	
+							            $.confirm({
+							            	type: 'orange',
+							            	title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:orange;"></i> '+'Confirm!!',
+							                content: 'Do you want to delete?',
+							                buttons: {
+							                    Yes: function () {
+							                    	
+							                        $.ajax({
+							                            url: "/admin/deleteviewReview?id=" + uniId,
+							                            type: 'GET',
+							                            dataType: 'json',
+							                            success: function (data) {
+							                            	
+							                            	if(data.msgCode=='200'){
+							                            		i=0;
+																 $.confirm({
+							                     		         	type: 'green',
+							                     		         	title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> '+'Success!!',
+							                     		             content: 'Delete successfully!!',
+							                                             buttons: {
+							                     		                 ok: function () {
+							                     		                   
+							                     		                 }
+							                     		             }
+							                     		         });
+							                            		table.ajax.reload();
+														}
+							                              
+							                            },
+							                            error: function (xhr, status, error) {
+							                                showAlertByType('Something Wrong!', "F");
+							                            }
+							                        });
+							                    },
+							                    No: function () {
+
+							                    }
+							                }
+							            });
+							        }
+							    });
+							
+							
+						
+						
+						});
+		
+		</script>
+						
+
+</div>
+
+<div layout:fragment="css"></div>

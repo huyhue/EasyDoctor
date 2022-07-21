@@ -5,6 +5,7 @@ import javax.persistence.*;
 import fpt.edu.vn.component.UserForm;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,6 +31,9 @@ public class User extends BaseEntity {
 
 	@Column(name = "age")
 	private Integer age;
+	
+	@Column(name = "date")
+	private Date date;
 	
 	@Column(name = "profile_img")
 	private String profileImage;
@@ -58,7 +62,7 @@ public class User extends BaseEntity {
 	}
 
 	public User(String userName, String password, String email, String mobile, String fullname, Integer age,
-			Gender gender, boolean enabled, String confirmationToken, Collection<Role> roles) {
+			Gender gender, Date date, boolean enabled, String confirmationToken, Collection<Role> roles) {
 		super();
 		this.userName = userName;
 		this.password = password;
@@ -70,6 +74,7 @@ public class User extends BaseEntity {
 		this.enabled = enabled;
 		this.confirmationToken = confirmationToken;
 		this.roles = roles;
+		this.date = date;
 	}
 
 	public User(String userName, String password, String confirmationToken, Collection<Role> roles) {
@@ -102,6 +107,15 @@ public class User extends BaseEntity {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 
 	public String getPassword() {
 		return password;

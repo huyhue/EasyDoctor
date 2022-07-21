@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -20,6 +21,10 @@ public class Appointment extends BaseEntity implements Comparable<Appointment> {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "end")
     private LocalDateTime end;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @Column(name = "date")
+    private Date date;
     
     @Column(name = "incurred")
     private Double incurred;
@@ -67,6 +72,7 @@ public class Appointment extends BaseEntity implements Comparable<Appointment> {
         this.patient = patient;
         this.doctor = doctor;
         this.packages = packages;
+        this.date = date;
     }
 
     @Override
@@ -169,6 +175,13 @@ public class Appointment extends BaseEntity implements Comparable<Appointment> {
 
 	public void setReviewed(boolean reviewed) {
 		this.reviewed = reviewed;
+	}
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 }

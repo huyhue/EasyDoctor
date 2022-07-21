@@ -14,10 +14,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import fpt.edu.vn.component.AppoinmentDto;
 import fpt.edu.vn.component.ChangePasswordForm;
 import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.component.DoctorDto;
 import fpt.edu.vn.component.PatientDto;
+import fpt.edu.vn.component.ReviewDto;
+import fpt.edu.vn.model.Appointment;
 import fpt.edu.vn.model.Clinic;
 import fpt.edu.vn.model.Declaration;
 import fpt.edu.vn.model.Doctor;
@@ -73,7 +76,7 @@ public class UserServiceImpl implements UserService {
 		this.clinicRepository = clinicRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
-
+	//Patient
 	@Override
 	public List<Patient> getAllPatients() {
 		return patientRepository.findAll();
@@ -184,7 +187,7 @@ public class UserServiceImpl implements UserService {
 		}
 		return userRepository.findByUserName(username).get();
 	}
-
+	//Doctor
 	@Override
 	@PreAuthorize("hasRole('ADMIN')")
 	public List<DoctorDto> getAllDoctors() {
@@ -334,16 +337,6 @@ public class UserServiceImpl implements UserService {
 		return roles;
 	}
 
-	@Override
-	public double getRatingByDoctorId(int doctorId) {
-		Double rating = reviewRepository.getRatingByDoctorId(doctorId);
-		return (rating == null) ? 0.0 : rating;
-	}
-
-	@Override
-	public List<Review> getAllReviewByDoctorId(int doctorId) {
-		return reviewRepository.getAllReviewByDoctorId(doctorId);
-	}
 
 	@Override
 	public List<History> getHistoryByPatientId(int patientId) {
@@ -461,7 +454,21 @@ public class UserServiceImpl implements UserService {
 	public List<Specialty> getAllSpecialty() {
 		return specialtyRepository.findAll();
 	}
+	//Review
+	@Override
+	public double getRatingByDoctorId(int doctorId) {
+		Double rating = reviewRepository.getRatingByDoctorId(doctorId);
+		return (rating == null) ? 0.0 : rating;
+	}
 
+	@Override
+	public List<Review> getAllReviewByDoctorId(int doctorId) {
+		return reviewRepository.getAllReviewByDoctorId(doctorId);
+	}
+	
+	
+	
+	//Clinic
 	@Override
 	public List<Clinic> getAllClinic() {
 		return clinicRepository.findAll();
@@ -492,11 +499,26 @@ public class UserServiceImpl implements UserService {
 		}
 		return commonMsg;
 	}
-
 	@Override
 	public CommonMsg deleteClinic(int clinicId) {
 		CommonMsg commonMsg = new CommonMsg();
 		clinicRepository.deleteById(clinicId);
+		commonMsg.setMsgCode("200");
+		return commonMsg;
+	}
+	@Override
+	public List<ReviewDto> getAllReview() {
+		List<ReviewDto> listDTO = new ArrayList<>();
+		List<Review> list = reviewRepository.findAll();
+		for (Review r : list) {
+			listDTO.add(new ReviewDto(r.getFeedback().toString(), r.getRating(), r.getPatient().getFullname(), r.getDoctor().getFullname(), r.getDate()));
+		}
+		return listDTO;
+	}
+	@Override
+	public CommonMsg deleteReview(int reviewId) {
+		CommonMsg commonMsg = new CommonMsg();
+		reviewRepository.deleteById(reviewId);
 		commonMsg.setMsgCode("200");
 		return commonMsg;
 	}
