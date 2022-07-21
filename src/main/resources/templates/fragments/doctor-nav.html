@@ -1,24 +1,31 @@
 <th:block th:fragment="navlinks(activeLink)">
+<style>
+.navlinkcss{
+	color: #283779 !important;
+    font-weight: 600;
+    margin-right: 22px;
+}
+</style>
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/doctors/home}" th:classappend="${activeLink} == 'patients' ? 'active':''">Trang chủ
+                <a class="nav-link navlinkcss" th:href="@{/doctors/home}" th:classappend="${activeLink} == 'patients' ? 'active':''">Trang chủ
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/appointments/all}"
+                <a class="nav-link navlinkcss" th:href="@{/appointments/all}"
                    th:classappend="${activeLink} == 'appointments' ? 'active':''">Cuộc hẹn</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/doctors/availability}"
+                <a class="nav-link navlinkcss" th:href="@{/doctors/availability}"
                    th:classappend="${activeLink} == 'availability' ? 'active':''">Thay đổi lịch trình</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/forum/list}"
+                <a class="nav-link navlinkcss" th:href="@{/forum/list}"
                    th:classappend="${activeLink} == 'forum' ? 'active':''">Diễn dàn</a>
             </li>
             <li class="nav-item" th:classappend="${activeLink} == 'account' ? 'active':''">
-                <a class="nav-link" th:href="@{'/doctors/' + ${#authentication.getPrincipal().getId()}}" 
+                <a class="nav-link navlinkcss" th:href="@{'/doctors/' + ${#authentication.getPrincipal().getId()}}" 
                    >Tài khoản của tôi</a>
             </li>
         </ul>
