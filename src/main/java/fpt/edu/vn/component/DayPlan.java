@@ -17,11 +17,7 @@ public class DayPlan {
         this.workingHours = workingHours;
         this.breaks = new ArrayList();
     }
-//  DB  {
-//    	"workingHours":{"start":[6,0],"end":[18,0]},
-//    	"breaks":[],
-//    	"timePeroidsWithBreaksExcluded":[{"start":[6,0],"end":[18,0]}]
-//    	}
+
     public List<TimePeroid> getTimePeroidsWithBreaksExcluded() {
         ArrayList<TimePeroid> timePeroidsWithBreaksExcluded = new ArrayList<>();
         timePeroidsWithBreaksExcluded.add(getWorkingHours());

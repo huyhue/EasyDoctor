@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head></head>
+
+<body>
+<p>Xin chào bác sĩ, <span th:text="${doctor.fullname}"></span></p>
+<p>Chúc mừng bác sĩ đã có tài khoản trong EasyDoctor:</p>
+<p>Bác sĩ vui lòng đăng nhập vào hệ thống với: </p>
+<p>UserName: <span th:text="${doctor.userName}"></span></p>
+<p>Mật khẩu: 123456</p>
+<p>Email: <span th:text="${doctor.email}"></span></p>
+<p>Chuyên khoa: <span th:text="${doctor.nameSpecialty}"></span></p>
+<p>Phòng khám: <span th:text="${doctor.nameClinic}"></span></p>
+<p>Vui lòng đổi lại mật khẩu để bảo mật hơn!</a></p>
+<p>Cảm ơn bác sĩ.</p>
+
+</body>
+
+</html>

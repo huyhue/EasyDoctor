@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	th:replace="~{fragments/base :: base (~{::body},'Patient')}">
+
+<body>
+	<div class="content-header" id="scroll">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h4 class="m-0">Thêm bệnh nhân</h4>
+				</div>
+				<!-- /.col -->
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Home</a></li>
+						<li class="breadcrumb-item active">Bệnh nhân</li>
+					</ol>
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="card card-outline card-primary">
+			<div class="card-header">
+				<h3 class="card-title"></h3>
+				<div class="card-tools">
+					<button type="button" class="btn btn-tool" data-card-widget="collapse">
+						<i class="fas fa-minus"></i>
+					</button>
+					<button type="button" class="btn btn-tool" data-card-widget="remove">
+						<i class="fas fa-times"></i>
+					</button>
+				</div>
+			</div>
+			<!-- /.card-header -->
+			<div class="card-body" style="display: block;">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>UserName<span class="errorMsg">*</span></label>
+							<input type="hidden" id="updateId" />
+							<input class="form-control filter" type="text" id="userName" placeholder="Nhập userName">
+							<span class="errorMsg" id="errorMsgUserName"></span>
+						</div>
+						<div class="form-group">
+							<label>Email<span class="errorMsg">*</span></label>
+							<input class="form-control filter" type="text" id="email" placeholder="Nhập email">
+							<span class="errorMsg" id="errorMsgEmail"></span>
+						</div>
+						<div class="form-group">
+							<label>Họ và tên<span class="errorMsg">*</span></label>
+							<input class="form-control filter" type="text" id="fullname" placeholder="Nhập họ và tên">
+							<span class="errorMsg" id="errorMsgName"></span>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Số di động<span class="errorMsg">*</span></label>
+							<input class="form-control filter" type="text" id="mobile" placeholder="Nhập số di động">
+							<span class="errorMsg" id="errorMsgMobile"></span>
+						</div>
+
+						<div class="form-group">
+							<label>Địa chỉ<span class="errorMsg">*</span></label>
+							<input class="form-control filter" type="text" id="address" placeholder="Nhập địa chỉ">
+							<span class="errorMsg" id="errorMsgAddress"></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="margin">
+					<div class="btn-group">
+						<button style="color: #ffffff;" type="button" class="btn btn-block bg-gradient-info btn-sm"
+							id="btn-save">
+							<i class="far fa-save"></i> Lưu
+						</button>
+					</div>
+
+					<div class="btn-group">
+						<button style="color: #ffffff;" type="button" class="btn btn-block bg-gradient-warning btn-sm"
+							id="btn-reset">
+							<i class="fas fa-sync"></i> Reset
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card card-default">
+			<div class="card-header">
+				<h3 class="card-title"></h3>
+				<div class="card-tools">
+					<button type="button" class="btn btn-tool" data-card-widget="collapse">
+						<i class="fas fa-minus"></i>
+					</button>
+					<button type="button" class="btn btn-tool" data-card-widget="remove">
+						<i class="fas fa-times"></i>
+					</button>
+				</div>
+			</div>
+			<!-- /.card-header -->
+			<div class="card-body" style="display: block;">
+				<table class="table table-bordered" id="tbl-patient">
+					<thead>
+						<tr style="text-align:center;">
+							<th style="width: 10px">#</th>
+							<th>Tên đăng nhập</th>
+							<th>Email</th>
+							<th>Họ và tên</th>
+							<th>Số di động</th>
+							<th>Địa chỉ</th>
+							<th style="width: 100px">Hành động</th>
+						</tr>
+					</thead>
+					<tbody style="text-align:center;">
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	</div>
+	<div layout:fragment="script">
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$("#nav-patient").addClass("active");
+				$("#nav-patientId").addClass("active menu-is-opening menu-open");
+
+				var i = 0;
+				var table = $('#tbl-patient').DataTable({
+					"sAjaxSource": "/admin/getListPatient",
+					"sAjaxDataProp": "",
+					"aoColumns": [
+						{
+							"mData": "id",
+							"render": function (data, type, row) {
+								i += 1;
+								return i;
+							}
+						}, {
+							"mData": "userName"
+						}, {
+							"mData": "email"
+						}, {
+							"mData": "fullname"
+						}, {
+							"mData": "mobile"
+						}, {
+							"mData": "address"
+						}, {
+							"className": "dt-btn",
+							"render": function () {
+								return '<div class="btn-group btn-group-sm"> <a href="#" class="btn btn-info" id="editUnID"><i class="fas fa-user-edit"></i></a><a href="#" class="btn btn-danger" id="deleteUnID"><i class="fas fa-trash"></i></a></div>';
+							}
+						}],
+					"fnCreatedRow": function (nRow, aData, iDataIndex) {
+						$('td:eq(1)', nRow).attr("data-id", aData.id);
+					}
+				});
+
+				$("#btn-save").click(function () {
+					if (dataValidation()) {
+						var uniList = {};
+						uniList.userName = $("#userName").val();
+						uniList.email = $("#email").val();
+						uniList.fullname = $("#fullname").val();
+						uniList.mobile = $("#mobile").val();
+						uniList.address = $("#address").val();
+						uniList.id = $("#updateId").val();
+
+						$.ajax({
+							type: "POST",
+							contentType: "application/json",
+							url: "/admin/savePatient",
+							data: JSON.stringify(uniList),
+							timeout: 100000,
+							async: true,
+							dataType: 'json',
+							success: function (data) {
+								if (data.msgCode == '200') {
+									$.confirm({
+										type: 'green',
+										title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
+										content: 'Save successfully.',
+										buttons: {
+											ok: function () { }
+										}
+									});
+									i = 0;
+									table.ajax.reload();
+									resetText();
+								} else if (data.msgCode == '205') {
+									$.confirm({
+										type: 'green',
+										title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
+										content: 'Update successfully.',
+										buttons: {
+											ok: function () { }
+										}
+									});
+									i = 0;
+									table.ajax.reload();
+									resetText();
+								} else if (data.msgCode == "exitUserName") {
+									$("#errorMsgUserName").text("UserName already exit!!");
+									$("#userName").css('border', '1px solid red');
+									$("#userName").focus();
+								} else if (data.msgCode == "exitEmail") {
+									$("#errorMsgEmail").text("Email already exit!!");
+									$("#email").css('border', '1px solid red');
+									$("#email").focus();
+								}
+							},
+							error: function (
+								xhr,
+								status,
+								error) {
+								showCustomAlert('D', "Sorry,Something wrong.Please contact with IT Team!!");
+							}
+						});
+					}
+				});
+
+				function dataValidation() {
+					var status = true;
+					var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+
+					if ($("#fullname").val() == "") {
+						status = false;
+						$("#errorMsgFullname").text("Required Field!!");
+						$("#fullname").css('border', '1px solid red');
+						$("#fullname").focus();
+						return status;
+					} else if ($("#fullname").val().length < 2) {
+						status = false;
+						$("#errorMsgName").text(
+							"Length must be greater than 2 characters!!");
+						$("#fullname").css('border',
+							'1px solid red');
+						$("#fullname").focus();
+						return status;
+					}
+
+					if ($("#userName").val() == "") {
+						status = false;
+						$("#errorMsgUsername").text(
+							"Required Field!!");
+						$("#userName").css('border',
+							'1px solid red');
+						$("#userName").focus();
+						return status;
+					} else if ($("#userName").val() < 2) {
+						status = false;
+						$("#errorMsgUsername").text(
+							"Length must be greater than 2 characters!!");
+						$("#userName").css('border',
+							'1px solid red');
+						$("#userName").focus();
+						return status;
+					}
+
+					if ($("#email").val() == "") {
+						status = false;
+						$("#errorMsgEmail").text(
+							"Required Field!!");
+						$("#email").css('border',
+							'1px solid red');
+						$("#email").focus();
+						return status;
+					} else if (!pattern.test($("#email").val())) {
+						status = false;
+						$("#errorMsgEmail").text(
+							"Invalid Email Address!!");
+						$("#email").css('border',
+							'1px solid red');
+						$("#email").focus();
+						return status;
+					}
+
+					return status;
+				}
+
+				function resetText() {
+					$("#userName").val('');
+					$("#errorMsgUsername").text("");
+					$("#userName").css('border', '1px solid #CED4DA');
+
+					$("#email").val('');
+					$("#errorMsgEmail").text("");
+					$("#email").css('border', '1px solid #CED4DA');
+					
+					$("#fullname").val('');
+					$("#errorMsgFullname").text("");
+					$("#fullname").css('border', '1px solid #CED4DA');
+
+					$("#mobile").val('');
+					$("#errorMsgMobile").text("");
+					$("#mobile").css('border', '1px solid #CED4DA');
+
+					$("#address").val('');
+					$("#errorMsgAddress").text("");
+					$("#address").css('border', '1px solid #CED4DA');
+
+					$("#updateId").val('');
+				}
+
+				$("#btn-reset").click(function () {
+					resetText();
+				});
+
+				$('#tbl-patient tbody').on('click', '#deleteUnID', function () {
+					var curRow = $(this).closest('tr');
+					var uniId = curRow.find('td:eq(1)').attr("data-id");
+
+					if (uniId != '') {
+						$.confirm({
+							type: 'orange',
+							title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:orange;"></i> ' + 'Confirm!!',
+							content: 'Do you want to delete?',
+							buttons: {
+								Yes: function () {
+									$.ajax({
+										url: "/admin/deletePatient?id=" + uniId,
+										type: 'GET',
+										dataType: 'json',
+										success: function (data) {
+											if (data.msgCode == '200') {
+												i = 0;
+												$.confirm({
+													type: 'green',
+													title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
+													content: 'Delete successfully.',
+													buttons: {
+														ok: function () { }
+													}
+												});
+												table.ajax.reload();
+											}
+										},
+										error: function (xhr, status, error) {
+											showAlertByType('Something Wrong!', "F");
+										}
+									});
+								},
+								No: function () { }
+							}
+						});
+					}
+				});
+
+				$('#tbl-patient tbody').on('click', '#editUnID', function () {
+					var curRow = $(this).closest('tr');
+					var id = curRow.find('td:eq(1)').attr("data-id");
+					var userName = curRow.find('td:eq(1)').text();
+					var email = curRow.find('td:eq(2)').text();
+					var fullname = curRow.find('td:eq(3)').text();
+					var mobile = curRow.find('td:eq(4)').text();
+					var address = curRow.find('td:eq(5)').text();
+
+					$("#updateId").val(id);
+					$("#userName").val(userName);
+					$("#email").val(email);
+					$("#fullname").val(fullname);
+					$("#mobile").val(mobile);
+					$("#address").val(address);
+					
+					$('html, body').animate({
+						scrollTop: $('#scroll').offset().top
+					}, 500);
+				});
+			});
+		</script>
+	</div>
+
+	<div layout:fragment="css">
+		<style>
+			.errorMsg {
+				color: red;
+				font-size: 13px;
+			}
+			table.dataTable thead th,
+			table.dataTable thead td {
+				border-bottom: 1px solid #DEE2E6;
+			}
+
+			table.dataTable.no-footer {
+				border-bottom: 1px solid #DEE2E6;
+			}
+		</style>
+	</div>
+</body>
+
+</html>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{fragments/layout :: layout (~{::body},'appointments','Appointment detail')}"
+	th:replace="~{fragments/layout :: layout (~{::body},'appointments','Chi tiết cuộc hẹn')}"
 	xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <body>
@@ -219,7 +219,7 @@
 			$.confirm({
 				type: 'red',
 				title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red;"></i> ' + 'Xác nhận!!',
-				content: 'Bạn có chắc chắn muốn xóa cuộc hẹn không?',
+				content: 'Bạn có chắc chắn muốn hủy cuộc hẹn không?',
 				autoClose: 'No|8000',
 				buttons: {
 					Yes: function () {
@@ -238,6 +238,52 @@
 						});
 					},
 					No: function () {
+					}
+				}
+			});
+		});
+		
+		$(document).ready(function () {
+			$("#review-form").validate({
+				rules: {
+					feedback: {
+						required: true
+					}
+				},
+				messages: {
+					feedback: {
+						required: "Không được để trống"
+					}
+				}
+			});
+			
+			$("#history-form").validate({
+				rules: {
+					diagnose: {
+						required: true
+					},
+					notes: {
+						required: true
+					},
+					advice: {
+						required: true
+					},
+					medicine: {
+						required: true
+					}
+				},
+				messages: {
+					diagnose: {
+						required: "Không được để trống"
+					},
+					notes: {
+						required: "Không được để trống"
+					},
+					advice: {
+						required: "Không được để trống"
+					},
+					medicine: {
+						required: "Không được để trống"
 					}
 				}
 			});

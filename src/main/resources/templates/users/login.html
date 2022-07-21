@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Login EasyDoctor</title>
+	<title>Đăng nhập EasyDoctor</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="/css/my-login.css">
@@ -19,16 +19,16 @@
 					</div>
 					<div class="card fat">
 						<div class="card-body">
-							<h4 class="card-title text-center">Sign in</h4>
-							<form th:action="@{/perform_login}" method="POST" class="my-login-validation" novalidate="">
+							<h4 class="card-title text-center">Đăng nhập</h4>
+							<form th:action="@{/perform_login}" method="POST" class="my-login-validation" id="basic-form">
 								<div th:if="${param.error != null}" class="alert alert-danger">
-									Invalid username or password.
+									Tên đăng nhập hoặc mật khẩu không đúng
 								</div>
 								<div th:if="${createdUserName != null}" class="alert alert-success">
-									<p>User <span th:text="${createdUserName}"></span> added!</p>
+									<p>Đăng ký <span th:text="${createdUserName}"></span> thành công!</p>
 								</div>
 								<div th:if="${param.logout != null}" class="alert alert-success">
-									<p>Logged out successfully</p>
+									<p>Đăng xuất thành công</p>
 								</div>
 								<div th:if="${successMessage != null}" class="alert alert-success" role="alert"
 									th:text=${successMessage}></div>
@@ -37,27 +37,17 @@
 									th:text=${errorMessage}></div>
 
 								<div class="form-group">
-									<label for="username">Username</label>
-									<input id="username" type="text" class="form-control" name="username" value=""
-										required autofocus>
-									<div class="invalid-feedback">
-										Username is invalid
-									</div>
+									<label for="username">Tên đăng nhập</label>
+									<input id="username" type="text" class="form-control" name="username">
 								</div>
 
 								<div class="form-group">
-									<label for="password">Password
-									</label>
-									<input id="password" type="password" class="form-control" name="password" required
-										data-eye>
+									<label for="password">Mật khẩu</label>
+									<input id="password" type="password" class="form-control" name="password">
 									<a th:href="@{/forgot}" class="float-right">
-										Forgot Password?
+										Quên mật khẩu?
 									</a>
-									<div class="invalid-feedback">
-										Password is required
-									</div>
 								</div>
-
 
 								<div class="form-group">
 									<div class="custom-checkbox custom-control">
@@ -68,12 +58,10 @@
 								</div>
 
 								<div class="form-group m-0">
-									<button type="submit" class="btn btn-primary btn-block">
-										Login
-									</button>
+									<input type="submit" value="Đăng nhập" class="btn btn-primary btn-block">
 								</div>
 								<div class="mt-4 text-center">
-									Don't have an account? <a th:href="@{/register}">Create One</a>
+									Bạn đã có tài khoản chưa? <a th:href="@{/register}">Tạo mới</a>
 								</div>
 							</form>
 						</div>
@@ -85,7 +73,47 @@
 			</div>
 		</div>
 	</section>
-
+	
+	<!--preloader-->
+	<div id="spinner-wrapper">
+		<div class="spinner"></div>
+	</div>
 </body>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script>
+	$(document).ready(function () {
+		$("#basic-form").validate({
+			rules: {
+				username: {
+					required: true
+				},
+				password: {
+					required: true,
+					minlength: 6
+				}
+			},
+			messages: {
+				username: {
+					required: "Không được để trống"
+				},
+				password: {
+					required: "Không được để trống",
+					minlength: "Mật khẩu phải chứa ít nhất 6 ký tự"
+				}
+			}
+		});
+	});
+	var preloader = $('#spinner-wrapper');
+	$(window).on('load', function () {
+		var preloaderFadeOutTime = 500;
+
+		function hidePreloader() {
+			preloader.fadeOut(preloaderFadeOutTime);
+		}
+		hidePreloader();
+	});
+
+</script>
 </html>

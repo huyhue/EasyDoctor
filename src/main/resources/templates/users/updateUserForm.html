@@ -53,47 +53,28 @@
 					<a class="nav-link" id="declaration-tab" data-toggle="tab" href="#declaration" role="tab"
 						aria-controls="declaration" aria-selected="false">Thông tin khai báo</a>
 				</li>
-				<li sec:authorize="hasRole('ROLE_PATIENT') or hasRole('ROLE_DOCTOR')" class="nav-item">
-					<a class="nav-link" id="payment-tab" data-toggle="tab" href="#payment" role="tab"
-						aria-controls="payment" aria-selected="false">Payment</a>
-				</li>
 			</ul>
 
 
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade show active pt-3" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-					<form th:action="@{${formActionProfile}}" th:object="${user}" method="POST">
+					<form th:action="@{${formActionProfile}}" th:object="${user}" method="POST" id="basic-form">
 						<input type="hidden" class="form-control" th:field="*{id}">
 
 						<div class="form-row">
 							<div class="form-group col-md-6">
-								<label for="userName">Username</label>
-								<input type="text" class="form-control"
-									th:classappend="${#fields.hasErrors('userName') ? 'is-invalid' :''}"
-									th:field="*{userName}" readonly>
-								<div th:if="${#fields.hasErrors('userName')}" class="invalid-feedback">
-									<p th:errors="*{userName}"></p>
-								</div>
+								<label for="userName">Tên đăng nhập</label>
+								<input type="text" class="form-control" th:field="*{userName}" readonly>
 							</div>
 							<div class="form-group col-md-6">
 								<label for="email">Email</label>
-								<input type="text" class="form-control"
-									th:classappend="${#fields.hasErrors('email') ? 'is-invalid' :''}"
-									th:field="*{email}" readonly>
-								<div th:if="${#fields.hasErrors('email')}" class="invalid-feedback">
-									<p th:errors="*{email}"></p>
-								</div>
+								<input type="text" class="form-control" th:field="*{email}" readonly> 
 							</div>
 						</div>
 						<div class="form-row">
 							<div class="form-group col-md-6">
 								<label for="startPracticeDate">Tên đầy đủ</label>
-								<input type="text" class="form-control"
-									th:classappend="${#fields.hasErrors('fullname') ? 'is-invalid' :''}"
-									th:field="*{fullname}">
-								<div th:if="${#fields.hasErrors('fullname')}" class="invalid-feedback">
-									<p th:errors="*{fullname}"></p>
-								</div>
+								<input type="text" class="form-control" th:field="*{fullname}"> 
 							</div>
 							<div class="form-group col-md-6">
 								<label for="gender">Giới tính</label><br>
@@ -113,20 +94,11 @@
 						<div class="form-row">
 							<div class="form-group col-md-6">
 								<label for="mobile">Điện thoại</label>
-								<input type="text" class="form-control"
-									th:classappend="${#fields.hasErrors('mobile') ? 'is-invalid' :''}"
-									th:field="*{mobile}">
-								<div th:if="${#fields.hasErrors('mobile')}" class="invalid-feedback">
-									<p th:errors="*{mobile}"></p>
-								</div>
+								<input type="text" class="form-control" th:field="*{mobile}">
 							</div>
 							<div class="form-group col-md-6">
 								<label for="age">Tuổi</label>
-								<input type="number" class="form-control"
-									th:classappend="${#fields.hasErrors('age') ? 'is-invalid' :''}" th:field="*{age}">
-								<div th:if="${#fields.hasErrors('age')}" class="invalid-feedback">
-									<p th:errors="*{age}"></p>
-								</div>
+								<input type="number" class="form-control" th:field="*{age}">
 							</div>
 						</div>
 
@@ -176,20 +148,9 @@
 
 						<th:block th:if="${account_type =='patients'}">
 							<div class="form-row">
-								<!--<div class="form-group col-md-6">
-									<label for="mobile">Other</label>
-									<input type="text" class="form-control"
-										th:classappend="${#fields.hasErrors('mobile') ? 'is-invalid' :''}"
-										th:field="*{mobile}">
-									<div th:if="${#fields.hasErrors('mobile')}" class="invalid-feedback">
-										<p th:errors="*{mobile}"></p>
-									</div>
-								</div>-->
 								<div class="form-group col-md-6">
 									<label for="address">Địa chỉ</label>
-									<input type="text" class="form-control"
-										th:classappend="${#fields.hasErrors('address') ? 'is-invalid' :''}"
-										th:field="*{address}">
+									<input type="text" class="form-control" th:field="*{address}">
 									<div th:if="${#fields.hasErrors('address')}" class="invalid-feedback">
 										<p th:errors="*{address}"></p>
 									</div>
@@ -266,31 +227,59 @@
 					</div>
 				</th:block>
 
-				<div class="tab-pane fade pt-3" id="payment" role="tabpanel" aria-labelledby="payment-tab">
-					<form method="POST">
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								<label for="currentPassword">Payment banking</label>
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								<label for="currentPassword">VNPay Online</label>
-							</div>
-						</div>
-						<button type="submit" class="btn btn-primary">Set</button>
-					</form>
-				</div>
-
 			</div>
 		</div>
 
 	</div>
 	<script>
-		$(document).ready(function () {
+		$(document).ready(function () {   
+			$("#basic-form").validate({
+			rules: {
+				fullname: {
+					required: true
+				},
+				age: {
+					required: true
+				},
+				mobile: {
+					required: true
+				},
+				description: {
+					required: true
+				},
+				address: {
+					required: true
+				},
+				startPracticeDate: {
+					required: true
+				}
+			},
+			messages: {
+				fullname: {
+					required: "Không được để trống"
+				},
+				age: {
+					required: "Không được để trống"
+				},
+				mobile: {
+					required: "Không được để trống"
+				},
+				description: {
+					required: "Không được để trống"
+				},
+				address: {
+					required: "Không được để trống"
+				},
+				startPracticeDate: {
+					required: "Không được để trống"
+				}
+			}
+		});
+		
 			$('#profileImage').change(function () {
 				showImageThumbnail(this);
 			});
+			
 			function showImageThumbnail(fileInput) {
 				file = fileInput.files[0];
 				var reader = new FileReader();
@@ -299,6 +288,7 @@
 				};
 				reader.readAsDataURL(file);
 			}
+			
 		});
 	</script>
 </body>

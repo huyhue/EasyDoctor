@@ -88,13 +88,13 @@ public class HomeController {
 		User userExists = userService.findByUserName(user.getUserName());
 
 		if (userExists != null) {
-			model.addAttribute("alreadyRegisteredMessage", "Oops!  There is already a user registered.");
+			model.addAttribute("alreadyRegisteredMessage", "Oops!  Đã có người dùng đăng ký.");
 			return "users/registerPatient";
 		} else {
 			user.setConfirmationToken(UUID.randomUUID().toString());
 			userService.savePatientRegister(user);
 			emailService.sendRegisterSuccess(user);
-			model.addAttribute("successMessage", "You registered successful.");
+			model.addAttribute("successMessage", "Bạn đã đăng ký thành công.");
 		}
 		return "users/login";
 	}
@@ -109,9 +109,9 @@ public class HomeController {
 		User existUser = userService.findByEmail(user.getEmail());
 		if (existUser != null) {
 			emailService.sendConfirmForgotPassword(existUser);
-			model.addAttribute("confirmationMessage", "A confirmation e-mail has been sent to " + user.getEmail());
+			model.addAttribute("confirmationMessage", "Email xác nhận đã được gửi đến " + user.getEmail());
 		} else {
-			model.addAttribute("alreadyRegisteredMessage", "A confirmation e-mail not exists.");
+			model.addAttribute("alreadyRegisteredMessage", "Email xác nhận không tồn tại.");
 		}
 		return "users/forgotPassword";
 	}
@@ -123,7 +123,7 @@ public class HomeController {
 
 		if (user == null) {
 			// No token found in DB
-			model.addAttribute("invalidToken", "Oops!  This is an invalid confirmation link.");
+			model.addAttribute("invalidToken", "Oops!  Link xác nhận không hợp lệ.");
 		} else {
 			// Token found
 			model.addAttribute("user", user);
@@ -138,9 +138,9 @@ public class HomeController {
 		User userDR = userService.findByConfirmationToken(user.getConfirmationToken());
 		if (userDR != null) {
 			userService.savePasswordByUser(user);
-			model.addAttribute("successMessage", "Your password has been set!");
+			model.addAttribute("successMessage", "Mật khẩu của bạn đã được thay đổi!");
 		} else {
-			model.addAttribute("errorMessage", "Your password hasn't been set. Please again!");
+			model.addAttribute("errorMessage", "Mật khẩu của bạn không được thay đổi. Vui lòng thử lại!");
 		}
 		return "users/login";
 	}

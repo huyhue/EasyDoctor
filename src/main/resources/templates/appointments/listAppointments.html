@@ -88,19 +88,19 @@
 	<div class="tabs">
 		<button class="tablinks active" value="ALL" data-electronic="allAppointment">Tất Cả (<span
 				th:text="${appointments.size()}"> 60 </span>)</button>
-		<button class="tablinks" value="SCHEDULED" data-electronic="scheduled">Đã Lên Lịch (<span
+		<button class="tablinks" value="ĐÃ LÊN LỊCH" data-electronic="scheduled">Đã Lên Lịch (<span
 				class="count1"></span>)</button>
-		<button class="tablinks" value="FINISHED" data-electronic="finished">Đã Kết Thúc (<span
+		<button class="tablinks" value="ĐÃ KẾT THÚC" data-electronic="finished">Đã Kết Thúc (<span
 				class="count2"></span>)</button>
-		<button class="tablinks" value="CONFIRMED" data-electronic="confirmed">Đã Xác Nhận (<span
+		<button class="tablinks" value="ĐÃ XÁC NHẬN" data-electronic="confirmed">Đã Xác Nhận (<span
 				class="count3"></span>)</button>
-		<button class="tablinks" value="CANCELED" data-electronic="canceled">Đã Hủy (<span
+		<button class="tablinks" value="ĐÃ HỦY" data-electronic="canceled">Đã Hủy (<span
 				class="count4"></span>)</button>
-		<button class="tablinks" value="INVOICED" data-electronic="invoiced">In Hóa Đơn (<span
+		<button class="tablinks" value="IN HÓA ĐƠN" data-electronic="invoiced">In Hóa Đơn (<span
 				class="count5"></span>)</button>
-		<button class="tablinks" value="REJECTION_REQUESTED" data-electronic="rejection_requested">Yêu cầu từ chối
+		<button class="tablinks" value="YÊU CẦU TỪ CHỐI" data-electronic="rejection_requested">Yêu cầu từ chối
 			(<span class="count6"></span>)</button>
-		<button class="tablinks" value="REJECTED" data-electronic="rejected">Đã từ chối (<span
+		<button class="tablinks" value="ĐÃ TỪ CHỐI" data-electronic="rejected">Đã từ chối (<span
 				class="count7"></span>)</button>
 	</div>
 
@@ -124,8 +124,18 @@
 				</tr>
 				<tr th:each="appointment : ${appointments}"
 					th:classappend="${appointment.status.name() == 'CANCELED' || appointment.status.name()  == 'FINISHED' || appointment.status.name()  == 'INVOICED' || appointment.status.name()  == 'REJECTION_REQUESTED' || appointment.status.name()  == 'REJECTED'} ? table-secondary : table-success">
-					<td><span th:text="${appointment.packages.name}"> Packages </span></td>
-					<td><span th:text="${appointment.status}" class="statusTable"> Scheduled </span></td>
+					<td><span th:text="${appointment.packages.name}"> goi </span></td>
+					<td th:switch="${#strings.toString(appointment.status)}">
+		
+							<span th:case="'SCHEDULED'" class="badge badge-info badge-pill" id="status">ĐÃ LÊN LỊCH</span>
+							<span th:case="'FINISHED'" class="badge badge-primary badge-pill" id="status">ĐÃ KẾT THÚC</span>
+							<span th:case="'CANCELED'" class="badge badge-danger badge-pill" id="status">ĐÃ HỦY</span>
+							<span th:case="'CONFIRMED'" class="badge badge-dark badge-pill" id="status">ĐÃ XÁC NHẬN</span>
+							<span th:case="'INVOICED'" class="badge badge-success badge-pill" id="status">IN HÓA ĐƠN</span>
+							<span th:case="'REJECTION_REQUESTED'" class="badge badge-warning badge-pill" id="status">YÊU CẦU TỪ CHỐI</span>
+							<span th:case="'REJECTED'" class="badge badge-warning badge-pill" id="status">ĐÃ TỪ CHỐI</span>
+						
+					</td>
 					<td><span th:text="${#temporals.format(appointment.start, 'yyyy-MM-dd HH:mm')}"> 21-01-2019
 							15:00</span>
 					</td>
@@ -186,28 +196,28 @@
 		});
 
 		function showCount() {
-			var statusTable = document.querySelectorAll(".statusTable");
+			var statusTable = document.querySelectorAll("#status");
 			var count1 = 0, count2 = 0, count3 = 0, count4 = 0, count5 = 0, count6 = 0, count7 = 0;
 			for (var i = 0; i < statusTable.length; i++) {
-				if (statusTable[i].innerText == "SCHEDULED") {
+				if (statusTable[i].innerText == "ĐÃ LÊN LỊCH") {
 					count1++;
 				}
-				if (statusTable[i].innerText == "FINISHED") {
+				if (statusTable[i].innerText == "ĐÃ KẾT THÚC") {
 					count2++;
 				}
-				if (statusTable[i].innerText == "CONFIRMED") {
+				if (statusTable[i].innerText == "ĐÃ XÁC NHẬN") {
 					count3++;
 				}
-				if (statusTable[i].innerText == "CANCELED") {
+				if (statusTable[i].innerText == "ĐÃ HỦY") {
 					count4++;
 				}
-				if (statusTable[i].innerText == "INVOICED") {
+				if (statusTable[i].innerText == "IN HÓA ĐƠN") {
 					count5++;
 				}
-				if (statusTable[i].innerText == "REJECTION_REQUESTED") {
+				if (statusTable[i].innerText == "YÊU CẦU TỪ CHỐI") {
 					count6++;
 				}
-				if (statusTable[i].innerText == "REJECTED") {
+				if (statusTable[i].innerText == "ĐÃ TỪ CHỐI") {
 					count7++;
 				}
 			}

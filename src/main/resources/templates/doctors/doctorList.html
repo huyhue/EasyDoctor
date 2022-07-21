@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	th:replace="~{fragments/layout :: layout (~{::body},'patients','Doctor List')}">
+	th:replace="~{fragments/layout :: layout (~{::body},'patients','Danh sách bác sĩ')}">
 
 <body>
 	<section id="doctors" class="doctors">
@@ -14,7 +14,20 @@
 							<label for="specialty" class="col-form-label "><b style="color: #283779;">Tìm kiếm bác sĩ</b></label>
 							<div class="col">
 								<input type="text" class="form-control" id="searchName"
-									placeholder="Tìm kiếm tên bác sĩ">
+									placeholder="Tìm kiếm thông tin bác sĩ">
+							</div>
+							<div class="col">
+								<select id="local" class="form-control filter">
+									<option value="all">Vị trí của bạn</option>
+									<option value="Quận Ngũ Hành Sơn">Quận Ngũ Hành Sơn</option>
+									<option value="Quận Hải Châu">Quận Hải Châu</option>
+									<option value="Quận Cẩm Lệ">Quận Cẩm Lệ</option>
+									<option value="Quận Thanh Khê">Quận Thanh Khê</option>
+									<option value="Quận Liên Chiểu">Quận Liên Chiểu</option>
+									<option value="Quận Sơn Trà">Quận Sơn Trà</option>
+									<option value="Huyện Hòa Vang">Huyện Hòa Vang</option>
+									<option value="Huyện Hoàng Sa">Huyện Hoàng Sa</option>
+								</select>
 							</div>
 							<div class="col">
 								<select id="specialty" class="form-control filter">
@@ -40,7 +53,7 @@
 							</a>
 							<span>[[${doctor.getClinic().getName()}]]</span>
 							<p>[[${doctor.getSpecialty().getName()}]]</p>
-							<span>[[${doctor.description}]]</span>
+							<span>[[${doctor.getClinic().getAddress()}]]</span>
 							<!--<small class="text-muted"
                                th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(doctor.startPracticeDate) + 1} years|"></small>-->
 							<div class="social">
@@ -89,6 +102,8 @@
 			const doctorList = document.querySelectorAll('#item-doctor');
 			const searchName = document.querySelector("#searchName");
 			const searchSpecialty = document.querySelector("#specialty");
+			const searchLocal = document.querySelector("#local");
+			
 			let itemsPerPage = 6;
 
 			const showPage = (list, page) => {
@@ -144,13 +159,43 @@
 				}
 			}
 
+			function removeVietnameseTones(str) {
+				str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+				str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+				str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+				str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+				str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+				str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+				str = str.replace(/đ/g, "d");
+				str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
+				str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
+				str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
+				str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
+				str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
+				str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
+				str = str.replace(/Đ/g, "D");
+				// Some system encode vietnamese combining accent as individual utf-8 characters
+				// Một vài bộ encode coi các dấu mũ, dấu chữ như một kí tự riêng biệt nên thêm hai dòng này
+				str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // ̀ ́ ̃ ̉ ̣  huyền, sắc, ngã, hỏi, nặng
+				str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // ˆ ̆ ̛  Â, Ê, Ă, Ơ, Ư
+				// Remove extra spaces
+				// Bỏ các khoảng trắng liền nhau
+				str = str.replace(/ + /g, " ");
+				str = str.trim();
+				// Remove punctuations
+				// Bỏ dấu câu, kí tự đặc biệt
+				str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g, " ");
+				return str;
+			}
+
 			const findMatches = () => {
-				let search = searchName.value.toLowerCase();
+				let search = removeVietnameseTones(searchName.value.toLowerCase());
 				let results = []
 				removeElementsByClass('no_results')
 				for (i = 0; i < doctorList.length; i++) {
 					doctorList[i].style.display = 'none';
-					if (doctorList[i].innerText.toLowerCase().indexOf(search) !== -1) {
+					console.log("test:" + doctorList[i].innerText.toLowerCase());
+					if (removeVietnameseTones(doctorList[i].innerText.toLowerCase()).indexOf(search) !== -1) {
 						results.push(doctorList[i])
 					}
 				}
@@ -191,6 +236,32 @@
 					newP.style.margin = "25px";
 				}
 			}
+			
+			const findLocal= () => {
+				let search = searchLocal.value;
+				let results = []
+				removeElementsByClass('no_results')
+				for (i = 0; i < doctorList.length; i++) {
+					doctorList[i].style.display = 'none';
+					if (search == "all") {
+						results.push(doctorList[i])
+					}
+					if (doctorList[i].innerText.indexOf(search) !== -1) {
+						results.push(doctorList[i])
+					}
+				}
+				showPage(results, 1);
+				addPaginationLinks(results);
+				if (results.length == 0) {
+					removeElementsByClass('no_results')
+					let parent = document.getElementsByClassName('page')[0];
+					let newP = document.createElement('h4');
+					newP.classList.add("no_results")
+					parent.appendChild(newP)
+					newP.innerText = "Không có bác sĩ nào được tìm thấy."
+					newP.style.margin = "25px";
+				}
+			}
 
 			searchName.addEventListener("keyup", function () {
 				findMatches();
@@ -199,7 +270,38 @@
 			searchSpecialty.addEventListener("change", function () {
 				findMatchesSpecialty();
 			});
+			
+			searchLocal.addEventListener("change", function () {
+				findLocal();
+			});
+		});
 
+
+		$(document).ready(function () {
+			$("#declaration-form").validate({
+				rules: {
+					medicine: {
+						required: true
+					},
+					symptom: {
+						required: true
+					},
+					notes: {
+						required: true
+					}
+				},
+				messages: {
+					medicine: {
+						required: "Không được để trống"
+					},
+					symptom: {
+						required: "Không được để trống"
+					},
+					notes: {
+						required: "Không được để trống"
+					}
+				}
+			});
 		});
 	</script>
 </body>

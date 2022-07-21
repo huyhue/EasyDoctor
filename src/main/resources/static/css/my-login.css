@@ -6,7 +6,15 @@ body.my-login-page {
 	background-color: #f7f9fb;
 	font-size: 14px;
 }
-
+label.error {
+    color: red;
+    font-size: 1rem;
+    display: block;
+    margin-top: 5px;
+}
+input.error, textarea.error {
+	border: 1px solid red;
+}
 .my-login-page .brand {
 	width: 200px;
 	height: 200px;

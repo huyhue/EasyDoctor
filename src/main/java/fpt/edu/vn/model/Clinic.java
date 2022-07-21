@@ -4,12 +4,14 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "clinics")
 public class Clinic{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Integer id;
 
     private String name;
 
@@ -21,16 +23,29 @@ public class Clinic{
 
     private String description;
     
+    @JsonIgnore
 	@OneToMany(mappedBy = "clinic")
 	private List<Doctor> doctors;
 
     public Clinic() {}
 
-    public long getId() {
+    public Clinic(Integer id, String name, String address, String telephone, String website, String description,
+			List<Doctor> doctors) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.address = address;
+		this.telephone = telephone;
+		this.website = website;
+		this.description = description;
+		this.doctors = doctors;
+	}
+
+	public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

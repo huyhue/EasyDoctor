@@ -2,6 +2,18 @@
 
 # Doctors
 --------------------------------------------------------------*/
+.fc-today-button{
+	display: none;
+}
+label.error {
+    color: red;
+    font-size: 1rem;
+    display: block;
+    margin-top: 5px;
+}
+input.error, textarea.error {
+	border: 1px solid red;
+}
 .navbar-brand-cus {
     display: inline-block;
     margin-right: 4rem;
@@ -219,7 +231,9 @@ p.text-light.my-4 {
         top: 38%;
         z-index: -1;
     }
-
+.wizard .nav-tabs {
+    border-bottom: 1px solid #ffffff;
+}
     .wizard .nav-tabs .nav-item .nav-link {
         width: 70px;
         height: 70px;

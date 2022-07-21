@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
+import fpt.edu.vn.component.DoctorDto;
 import fpt.edu.vn.model.Appointment;
+import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.Invoice;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.service.EmailService;
@@ -82,9 +84,6 @@ public class EmailServiceImpl implements EmailService {
     	Context context = new Context();
     	context.setVariable("user", user);
     	context.setVariable("url", baseUrl + "/register/confirm?token=" + user.getConfirmationToken());
-    	
-//        String content = "<h1>To confirm your e-mail address, please click the link below:</h1> \n"
-//				+ baseUrl + "/register/confirm?token=" + user.getConfirmationToken();
     	sendEmail(user.getEmail(), "Xác nhận quên mật khẩu", "confirmForgotPassword", context, null);
     }
     
@@ -161,5 +160,13 @@ public class EmailServiceImpl implements EmailService {
         Context context = new Context();
         context.setVariable("OTPSEND", String.valueOf(otp));
         sendEmail(email, "Xác nhận đặt lịch hẹn", "appointmentConfirmOTP", context, null);
+    }
+    
+    @Async
+    @Override
+    public void sendInfoNewDoctor(DoctorDto doctordto) {
+    	Context context = new Context();
+    	context.setVariable("doctor", doctordto);
+    	sendEmail(doctordto.getEmail(), "Đăng ký bác sĩ thành công", "infoNewDoctor", context, null);
     }
 }

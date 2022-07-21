@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	th:replace="~{fragments/base :: base (~{::body},'Clinic')}">
+
+<body>
+	<div class="content-header" id="scroll">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h4 class="m-0">Thông tin phòng khám</h4>
+				</div>
+				<!-- /.col -->
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Home</a></li>
+						<li class="breadcrumb-item active">Phòng khám</li>
+					</ol>
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="card card-outline card-primary">
+			<div class="card-header">
+				<h3 class="card-title"></h3>
+				<div class="card-tools">
+					<button type="button" class="btn btn-tool" data-card-widget="collapse">
+						<i class="fas fa-minus"></i>
+					</button>
+					<button type="button" class="btn btn-tool" data-card-widget="remove">
+						<i class="fas fa-times"></i>
+					</button>
+				</div>
+			</div>
+			<!-- /.card-header -->
+			<div class="card-body" style="display: block;">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Tên phòng khám<span class="errorMsg">*</span></label>
+							<input type="hidden" id="updateId" />
+							<input class="form-control filter" type="text" id="name" placeholder="Nhập họ và tên">
+							<span class="errorMsg" id="errorMsgName"></span>
+						</div>
+
+						<div class="form-group">
+							<label>Địa chỉ<span class="errorMsg">*</span></label>
+							<input class="form-control filter" type="text" id="address" placeholder="Nhập địa chỉ">
+							<span class="errorMsg" id="errorMsgAddress"></span>
+						</div>
+
+						<div class="form-group">
+							<label>Số điện thoại<span class="errorMsg">*</span></label>
+							<input class="form-control filter" type="number" id="telephone"
+								placeholder="Nhập số điện thoại">
+							<span class="errorMsg" id="errorMsgTelephone"></span>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Trang Web<span class="errorMsg"></span></label>
+							<input class="form-control filter" type="text" id="website" placeholder="Nhập trang web">
+							<span class="errorMsg" id="errorMsgWebsite"></span>
+						</div>
+
+						<div class="form-group">
+							<label>Mô tả<span class="errorMsg">*</span></label>
+							<input class="form-control filter" type="text" id="description" placeholder="Nhập mô tả">
+							<span class="errorMsg" id="errorMsgDescription"></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="margin">
+					<div class="btn-group">
+						<button style="color: #ffffff;" type="button" class="btn btn-block bg-gradient-info btn-sm"
+							id="btn-save">
+							<i class="far fa-save"></i> Lưu
+						</button>
+					</div>
+
+					<div class="btn-group">
+						<button style="color: #ffffff;" type="button" class="btn btn-block bg-gradient-warning btn-sm"
+							id="btn-reset">
+							<i class="fas fa-sync"></i> Reset
+						</button>
+					</div>
+				</div>
+				</div>
+		</div>
+				
+
+				<div class="card card-default">
+					<div class="card-header">
+						<h3 class="card-title"></h3>
+						<div class="card-tools">
+							<button type="button" class="btn btn-tool" data-card-widget="collapse">
+								<i class="fas fa-minus"></i>
+							</button>
+							<button type="button" class="btn btn-tool" data-card-widget="remove">
+								<i class="fas fa-times"></i>
+							</button>
+						</div>
+					</div>
+					<!-- /.card-header -->
+					<div class="card-body" style="display: block;">
+						<table class="table table-bordered" id="tbl-clinic">
+							<thead>
+								<tr style="text-align:center;">
+									<th style="width: 10px">#</th>
+									<th>Tên phòng khám</th>
+									<th>Địa chỉ</th>
+									<th>Số điện thoại</th>
+									<th>Trang Web</th>
+									<th>Mô tả</th>
+									<th style="width: 100px">Hành động</th>
+								</tr>
+							</thead>
+							<tbody style="text-align:center;">
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<script type="text/javascript">
+				$(document).ready(function () {
+					$("#nav-clinic").addClass("active");
+					$("#nav-clinicId").addClass("active menu-is-opening menu-open");
+
+					var i = 0;
+					var table = $('#tbl-clinic').DataTable({
+						"sAjaxSource": "/admin/getListClinic",
+						"sAjaxDataProp": "",
+						"aoColumns": [
+							{
+								"mData": "id",
+								"render": function (data, type, row) {
+									i += 1;
+									return i;
+								}
+							}, {
+								"mData": "name"
+							}, {
+								"mData": "address"
+							}, {
+								"mData": "telephone"
+							}, {
+								"mData": "website"
+							}, {
+								"mData": "description"
+							}, {
+								"className": "dt-btn",
+								"render": function () {
+									return '<div class="btn-group btn-group-sm"> <a href="#" class="btn btn-info" id="editUnID"><i class="fas fa-user-edit"></i></a><a href="#" class="btn btn-danger" id="deleteUnID"><i class="fas fa-trash"></i></a></div>';
+								}
+							}],
+						"fnCreatedRow": function (nRow, aData, iDataIndex) {
+							$('td:eq(1)', nRow).attr("data-id", aData.id);
+						}
+					});
+
+					$("#btn-save").click(function () {
+						if (dataValidation()) {
+							var uniList = {};
+							uniList.name = $("#name").val();
+							uniList.address = $("#address").val();
+							uniList.telephone = $("#telephone").val();
+							uniList.website = $("#website").val();
+							uniList.description = $("#description").val();
+							uniList.id = $("#updateId").val();
+							$.ajax({
+								type: "POST",
+								contentType: "application/json",
+								url: "/admin/saveClinic",
+								data: JSON.stringify(uniList),
+								timeout: 100000,
+								async: true,
+								dataType: 'json',
+								success: function (data) {
+									if (data.msgCode == '200') {
+										$.confirm({
+											type: 'green',
+											title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
+											content: 'Save successfully.',
+											buttons: {
+												ok: function () { }
+											}
+										});
+										i = 0;
+										table.ajax.reload();
+										resetText();
+									} else if (data.msgCode == '205') {
+										$.confirm({
+											type: 'green',
+											title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
+											content: 'Update successfully.',
+											buttons: {
+												ok: function () { }
+											}
+										});
+										i = 0;
+										table.ajax.reload();
+										resetText();
+									} else if (data.msgCode == "exitName") {
+										$("#errorMsgName").text("Name already exit!!");
+										$("#name").css('border', '1px solid red');
+										$("#name").focus();
+									} 
+								},
+								error: function (
+									xhr,
+									status,
+									error) {
+									showCustomAlert('D', "Sorry,Something wrong.Please contact with IT Team!!");
+								}
+							});
+						}
+					});
+
+					function dataValidation() {
+						var status = true;
+						var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+
+						if ($("#name").val() == "") {
+							status = false;
+							$("#errorMsgName").text("Required Field!!");
+							$("#name").css('border', '1px solid red');
+							$("#name").focus();
+							return status;
+						} else if ($("#phone").val() == "") {
+							status = false;
+							$("#errorMsgPhone").text("Required Field!!");
+							$("#phone").css('border', '1px solid red');
+							$("#phone").focus();
+							return status;
+						} else if ($("#address").val() == "") {
+							status = false;
+							$("#errorMsgAddress").text("Required Field!!");
+							$("#address").css('border', '1px solid red');
+							$("#address").focus();
+							return status;
+						} if ($("#description").val() == "") {
+							status = false;
+							$("#errorMsgDescription").text("Required Field!!");
+							$("#description").css('border', '1px solid red');
+							$("#desription").focus();
+							return status;
+						}
+						return status;
+					}
+
+					function resetText() {
+						$("#name").val('');
+						$("#errorMsgName").text("");
+						$("#name").css('border', '1px solid #CED4DA');
+
+						$("#address").val('');
+						$("#errorMsgAddress").text("");
+						$("#address").css('border', '1px solid #CED4DA');
+
+						$("#telephone").val('');
+						$("#errorMsgTelephone").text("");
+						$("#telephone").css('border', '1px solid #CED4DA');
+
+						$("#website").val('');
+						$("#errorMsgWebsite").text("");
+						$("#website").css('border', '1px solid #CED4DA');
+
+						$("#description").val('');
+						$("#errorMsgDescription").text("");
+						$("#description").css('border', '1px solid #CED4DA');
+
+						$("#updateId").val('');
+					}
+
+					$("#btn-reset").click(function () {
+						resetText();
+					});
+
+					$('#tbl-clinic tbody').on('click', '#deleteUnID', function () {
+						var curRow = $(this).closest('tr');
+						var uniId = curRow.find('td:eq(1)').attr("data-id");
+						if (uniId != '') {
+							$.confirm({
+								type: 'orange',
+								title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:orange;"></i> ' + 'Confirm!!',
+								content: 'Do you want to delete?',
+								buttons: {
+									Yes: function () {
+										$.ajax({
+											url: "/admin/deleteClinic?id=" + uniId,
+											type: 'GET',
+											dataType: 'json',
+											success: function (data) {
+												if (data.msgCode == '200') {
+													i = 0;
+													$.confirm({
+														type: 'green',
+														title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
+														content: 'Delete successfully.',
+														buttons: {
+															ok: function () { }
+														}
+													});
+													table.ajax.reload();
+												}
+											},
+											error: function (xhr, status, error) {
+												showAlertByType('Something Wrong!', "F");
+											}
+										});
+									},
+									No: function () { }
+								}
+							});
+						}
+					});
+
+					$('#tbl-clinic tbody').on('click', '#editUnID', function () {
+						var curRow = $(this).closest('tr');
+						var id = curRow.find('td:eq(1)').attr("data-id");
+						var name = curRow.find('td:eq(1)').text();
+						var address = curRow.find('td:eq(2)').text();
+						var phone = curRow.find('td:eq(3)').text();
+						var website = curRow.find('td:eq(4)').text();
+						var description = curRow.find('td:eq(5)').text();
+
+						$("#updateId").val(id);
+						$("#name").val(name);
+						$("#address").val(address);
+						$("#phone").val(phone);
+						$("#website").val(website);
+						$("#description").val(description);
+					});
+				});
+			</script>
+
+			<div layout:fragment="css">
+				<style>
+					.errorMsg {
+						color: red;
+						font-size: 13px;
+					}
+
+					table.dataTable thead th,
+					table.dataTable thead td {
+						border-bottom: 1px solid #DEE2E6;
+					}
+
+					table.dataTable.no-footer {
+						border-bottom: 1px solid #DEE2E6;
+					}
+				</style>
+			</div>
+</body>
+
+</html>
