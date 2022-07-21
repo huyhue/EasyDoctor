@@ -7,11 +7,9 @@
 		<div class="container">
 			<div class="section-title text-center">
 				<h2 style="margin: 30px; color: #283779; font-family: cursive; font-weight:600">DANH SÁCH CÁC BÁC SĨ</h2>
-				<!--<p>Develop future google map, filter combo box, recommend doctor,...</p>-->
 				<div class="row m-3">
 					<div class="col-md-11 d-flex justify-content-center">
 						<div class="form-row">
-							<label for="specialty" class="col-form-label "><b style="color: #283779;">Tìm kiếm bác sĩ</b></label>
 							<div class="col">
 								<input type="text" class="form-control" id="searchName"
 									placeholder="Tìm kiếm thông tin bác sĩ">
@@ -53,9 +51,8 @@
 							</a>
 							<span>[[${doctor.getClinic().getName()}]]</span>
 							<p>[[${doctor.getSpecialty().getName()}]]</p>
-							<span>[[${doctor.getClinic().getAddress()}]]</span>
-							<!--<small class="text-muted"
-                               th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(doctor.startPracticeDate) + 1} years|"></small>-->
+							<span>[[${doctor.description}]]</span>
+							<span style="display: none;">[[${doctor.getClinic().getAddress()}]]</span>
 							<div class="social">
 								<button type="button" class="btn btn-info"
 									th:onclick="javascript: showDeclarationModal([[${declaration.id}]], [[${doctor.id}]])"><i
