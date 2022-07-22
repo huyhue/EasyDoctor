@@ -36,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         
         http.authorizeRequests()
-                .antMatchers("/","/forum/**").permitAll()
+                .antMatchers("/").permitAll()
                 .antMatchers("/detail/**").hasAnyRole("PATIENT", "DOCTOR", "ADMIN")
                 .antMatchers("/file/**").hasAnyRole("PATIENT", "DOCTOR", "ADMIN")
                 .antMatchers("/doctors/all").hasRole("PATIENT")
@@ -49,6 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/appointments/new/**").hasRole("PATIENT")
                 .antMatchers("/appointments/**").hasAnyRole("PATIENT", "DOCTOR", "ADMIN")
                 .antMatchers("/recordMedical/**").hasAnyRole("PATIENT", "DOCTOR", "ADMIN")
+                .antMatchers("/forum/**").hasAnyRole("PATIENT", "DOCTOR", "ADMIN")
                 .antMatchers("/invoices/**").hasAnyRole("PATIENT", "DOCTOR", "ADMIN")
                 .antMatchers("/api/**").hasAnyRole("PATIENT", "DOCTOR", "ADMIN")
                 .and()

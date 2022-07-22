@@ -7,8 +7,8 @@ import javax.persistence.*;
 
 import lombok.Data;
 
-//@Entity
 //@Data
+@Entity
 @Table(name = "comments")
 public class Comment {
     @Id

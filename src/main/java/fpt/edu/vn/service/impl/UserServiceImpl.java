@@ -352,7 +352,7 @@ public class UserServiceImpl implements UserService {
 		List<ReviewDto> listDTO = new ArrayList<>();
 		List<Review> list = reviewRepository.findAll();
 		for (Review r : list) {
-			listDTO.add(new ReviewDto(r.getFeedback(), r.getRating(), r.getPatient().getFullname(), r.getDoctor().getFullname()));
+			listDTO.add(new ReviewDto(r.getId().toString(), r.getFeedback(), r.getRating(), r.getPatient().getFullname(), r.getDoctor().getFullname()));
 		}
 		return listDTO;
 	}

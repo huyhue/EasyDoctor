@@ -1,20 +1,27 @@
 package fpt.edu.vn.component;
 
 public class ReviewDto {
-	 private String feedback;
-	 
-	 private int rating;
-	 
-	 private String patient;
-	 
-	 private String doctor;
+	private String id;
+	private String feedback;
+	private int rating;
+	private String patient;
+	private String doctor;
 
-	public ReviewDto(String feedback, int rating, String patient, String doctor) {
+	public ReviewDto(String id, String feedback, int rating, String patient, String doctor) {
 		super();
+		this.id = id;
 		this.feedback = feedback;
 		this.rating = rating;
 		this.patient = patient;
 		this.doctor = doctor;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getFeedback() {
@@ -48,5 +55,5 @@ public class ReviewDto {
 	public void setDoctor(String doctor) {
 		this.doctor = doctor;
 	}
-	 
+
 }

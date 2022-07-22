@@ -4,8 +4,9 @@ import javax.persistence.*;
 
 import lombok.Data;
 
-//@Entity
+
 //@Data
+@Entity
 @Table(name = "posts")
 public class Post {
     @Id
@@ -19,6 +20,9 @@ public class Post {
     private Long total_like;
     private Long create_at;
     private Long update_at;
+    
+    public Post() {
+	}
     
 	public Post(Long id, Long user_id, Long special_id, String message, String img, String likes, Long total_like,
 			Long create_at, Long update_at) {
