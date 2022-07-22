@@ -200,37 +200,50 @@
 					</div>
 					<div class="bg-light p-2">
 						<div class="d-flex flex-row align-items-start"><img class="rounded-circle"
-								src="https://i.imgur.com/RpzrMR2.jpg" width="40"><textarea
+								th:src="@{/img/{name}(name=${currentImg})}" width="40"><textarea id="cmessage"
 								class="form-control ml-1 shadow-none textarea"></textarea></div>
-						<div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none"
-								type="button">Post comment</button><button
-								class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Cancel</button>
+						<div class="mt-2 text-right">
+							<button class="btn btn-primary btn-sm shadow-none" th:onclick="handleComment([[${p.id}]])"
+								type="button">Post comment</button>
+							<button class="btn btn-outline-primary btn-sm ml-1 shadow-none"
+								type="button">Cancel</button>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-7" th:each="c : ${p.comments}">
-				<a class="media-left" href="#"><img style="width: 50px;" class="img-circle img-sm" alt="Profile Picture"
-						th:src="@{/img/{name}(name=${c.img})}"></a>
-				<div class="media-body">
-					<div class="mar-btm">
-						<a href="#" th:text="${c.username}" class="btn-link text-semibold media-heading box-inline"></a>
-						<p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i>
-							<span th:text="${c.time}"></span>
-						</p>
-					</div>
-					<p th:text="${c.message}"></p>
-					<div class="pad-ver">
-						<div class="btn-group">
-							<a class="btn btn-sm btn-default btn-hover-success active" href="#"><i
-									class="fa fa-thumbs-up"></i> You Like it</a>
-							<a class="btn btn-sm btn-default btn-hover-danger" href="#"><i
-									class="fa fa-thumbs-down"></i></a>
+
+			<div th:id="'commentls'+${p.id}" class="col-md-7">
+				<th:block th:each="c : ${p.comments}">
+					<div th:id="'cm'+${c.id}" class="col-md-7">
+						<div>
+							<a class="media-left" href="#"><img style="width: 50px;" class="img-circle img-sm"
+									alt="Profile Picture" th:src="@{/img/{name}(name=${c.img})}"></a>
+							<div class="media-body">
+								<div class="mar-btm">
+									<a href="#" th:text="${c.username}"
+										class="btn-link text-semibold media-heading box-inline"></a>
+									<p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i>
+										<span th:text="${c.time}"></span>
+									</p>
+								</div>
+								<p th:text="${c.message}"></p>
+								<div class="pad-ver">
+									<div class="btn-group">
+										<a class="btn btn-sm btn-default btn-hover-success active" href="#"><i
+												class="fa fa-thumbs-up"></i> You Like it</a>
+										<a class="btn btn-sm btn-default btn-hover-danger" href="#"><i
+												class="fa fa-thumbs-down"></i></a>
+									</div>
+									<a class="btn btn-sm btn-default btn-hover-primary" href="#">Comment</a>
+								</div>
+								<div th:if="${currentId==c.userid}"><a
+										th:onclick="event.preventDefault(); handleDelete([[${c.id}]])" href="#">delete
+										comment</a></div>
+								<hr>
+							</div>
 						</div>
-						<a class="btn btn-sm btn-default btn-hover-primary" href="#">Comment</a>
 					</div>
-					<hr>
-				</div>
+				</th:block>
 			</div>
 		</div>
 	</div>
@@ -254,7 +267,44 @@
 	<!---              --->
 
 	<script th:inline="javascript">
+		console.log("script");
+		const handleComment = (postid) => {
+			const message = document.getElementById("cmessage").value
+			fetch("/forum/comment?postid=" + postid + "&message=" + message).then(res => res.json()).then(res => {
+				$("#commentls" + postid).prepend(`<div id="cm${res.id}" class="col-md-7">
+				<a class="media-left" href="#"><img style="width: 50px;" class="img-circle img-sm" alt="Profile Picture"
+						src="/img/${res.img}"></a>
+				<div class="media-body">
+					<div class="mar-btm">
+						<a href="#" class="btn-link text-semibold media-heading box-inline">${res.username}</a>
+						<p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i>
+							<span>${res.time}</span>
+						</p>
+					</div>
+					<p >${res.message}</p>
+					<div class="pad-ver">
+						<div class="btn-group">
+							<a class="btn btn-sm btn-default btn-hover-success active" href="#"><i
+									class="fa fa-thumbs-up"></i> You Like it</a>
+							<a class="btn btn-sm btn-default btn-hover-danger" href="#"><i
+									class="fa fa-thumbs-down"></i></a>
+						</div>
+						<a class="btn btn-sm btn-default btn-hover-primary" href="#">Comment</a>
+					</div>
+					<div ><a onclick="event.preventDefault();handleDelete(${res.id})" href="#">delete comment</a></div>
+					<hr>
+				</div>
+			</div>`)
+			})
+		}
 
+		const handleDelete = (id) => {
+
+			fetch('/forum/comment/delete?cid=' + id).then(res => res.json()).then(res => {
+				console.log(res);
+				$('#cm' + id).remove()
+			})
+		}
 	</script>
 
 

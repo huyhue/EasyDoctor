@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import fpt.edu.vn.component.CommentDTO;
 import fpt.edu.vn.component.PostDTO;
+import fpt.edu.vn.model.Post;
 import fpt.edu.vn.repository.PostRepository;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.util.Utils;
@@ -62,15 +63,43 @@ public class PostService {
     }
 
     private List<CommentDTO> getComment(long id) {
-        String sql = "SELECT c.id,message,fullname,update_at,u.profile_img FROM easydoctor.comments c join users u on u.id=c.user_id where post_id="
-                + id;
+        String sql = "SELECT c.id,message,fullname,update_at,u.profile_img,c.user_id FROM easydoctor.comments c join users u on u.id=c.user_id where post_id="
+                + id+" order by update_at desc";
         List<Object[]> ls = entityManager.createNativeQuery(sql).getResultList();
         List<CommentDTO> lsCom = ls.stream().map(obj -> {
             CommentDTO c = new CommentDTO(Utils.objToLong(obj[0]), Utils.objToString(obj[1]), Utils.objToString(obj[2]),
-                    Utils.objToString(obj[3]), Utils.objToString(obj[4]));
+                    Utils.objToString(obj[3]), Utils.objToString(obj[4]), Utils.objToLong(obj[5]));
             return c;
         }).collect(Collectors.toList());
         return lsCom;
+    }
+
+    public boolean handleLike(long postId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+        try {
+            Post p = postRepository.getById(postId);
+            String lsLike = p.getLikes();
+            String newLs = "";
+            if (lsLike.contains(user.getId().toString())) {
+                if (lsLike.length() > 1) {
+                    newLs = lsLike.replace("," + user.getId(), "");
+                }
+                p.setLikes(newLs);
+                postRepository.save(p);
+                return true;
+            }
+            if (lsLike.length() > 1) {
+                newLs = lsLike + "," + user.getId();
+            } else {
+                newLs = user.getId() + "";
+            }
+            p.setLikes(newLs);
+            postRepository.save(p);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     public boolean isLike(String likes, int id) {
