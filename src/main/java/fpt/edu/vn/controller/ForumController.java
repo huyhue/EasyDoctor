@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fpt.edu.vn.security.CustomUserDetails;
@@ -18,13 +17,13 @@ import fpt.edu.vn.service.impl.PostService;
 public class ForumController {
 
 	private final UserService userService;
+	
 	@Autowired
 	private PostService postService;
 
 	public ForumController(UserService userService) {
 		super();
 		this.userService = userService;
-
 	}
 
 	@GetMapping("/list")
