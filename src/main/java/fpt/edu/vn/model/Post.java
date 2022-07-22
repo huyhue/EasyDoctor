@@ -2,22 +2,22 @@ package fpt.edu.vn.model;
 
 import javax.persistence.*;
 
+import lombok.Data;
+
 @Entity
 @Table(name = "posts")
-public class Post{
+@Data
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-
-    public Post() {}
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+    private Long id;
+    private Long user_id;
+    private Long special_id;
+    private String message;
+    private String img;
+    private String likes;
+    private Long total_like;
+    private Long create_at;
+    private Long update_at;
 
 }
