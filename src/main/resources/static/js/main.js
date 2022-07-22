@@ -141,6 +141,13 @@ $(document).ready(function() {
 			$("#currentPassword").focus();
 			return status;
 		}
+		if ($("#currentPassword").val().length<6) {
+			status = false;
+			$("#errorMsgCurrentPassword").text("Mật khẩu phải hơn 6 ký tự.");
+			$("#currentPassword").css('border', '1px solid red');
+			$("#currentPassword").focus();
+			return status;
+		}
 		if ($("#password").val() == "") {
 			status = false;
 			$("#errorMsgPassword").text("Không được để trống.");
@@ -148,9 +155,23 @@ $(document).ready(function() {
 			$("#password").focus();
 			return status;
 		}
+		if ($("#password").val().length<6) {
+			status = false;
+			$("#errorMsgPassword").text("Mật khẩu phải hơn 6 ký tự.");
+			$("#password").css('border', '1px solid red');
+			$("#password").focus();
+			return status;
+		}
 		if ($("#matchingPassword").val() == "") {
 			status = false;
 			$("#errorMsgMatchingPassword").text("Không được để trống.");
+			$("#matchingPassword").css('border', '1px solid red');
+			$("#matchingPassword").focus();
+			return status;
+		}
+		if ($("#matchingPassword").val().length<6) {
+			status = false;
+			$("#errorMsgMatchingPassword").text("Mật khẩu phải hơn 6 ký tự.");
 			$("#matchingPassword").css('border', '1px solid red');
 			$("#matchingPassword").focus();
 			return status;

@@ -48,7 +48,17 @@
 
 						<div class="form-group">
 							<label>Địa chỉ<span class="errorMsg">*</span></label>
-							<input class="form-control filter" type="text" id="address" placeholder="Nhập địa chỉ">
+							<select id="address" class="form-control filter">
+									<option value="-1">Nhập địa chỉ</option>
+									<option value="Quận Ngũ Hành Sơn">Quận Ngũ Hành Sơn</option>
+									<option value="Quận Hải Châu">Quận Hải Châu</option>
+									<option value="Quận Cẩm Lệ">Quận Cẩm Lệ</option>
+									<option value="Quận Thanh Khê">Quận Thanh Khê</option>
+									<option value="Quận Liên Chiểu">Quận Liên Chiểu</option>
+									<option value="Quận Sơn Trà">Quận Sơn Trà</option>
+									<option value="Huyện Hòa Vang">Huyện Hòa Vang</option>
+									<option value="Huyện Hoàng Sa">Huyện Hoàng Sa</option>
+								</select>
 							<span class="errorMsg" id="errorMsgAddress"></span>
 						</div>
 
@@ -288,8 +298,8 @@
 						var uniId = curRow.find('td:eq(1)').attr("data-id");
 						if (uniId != '') {
 							$.confirm({
-								type: 'orange',
-								title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:orange;"></i> ' + 'Confirm!!',
+								type: 'red',
+								title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red;"></i> ' + 'Confirm!!',
 								content: 'Do you want to delete?',
 								buttons: {
 									Yes: function () {

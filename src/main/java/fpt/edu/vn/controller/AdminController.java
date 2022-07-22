@@ -159,13 +159,13 @@ public class AdminController {
 		return "admin/appointments";
 	}
 
-	@GetMapping(value = "/getviewAppList")
+	@GetMapping(value = "/getAppointmentList")
 	@ResponseBody
 	public List<AppoinmentDto> viewAppointmentList() {
 		return appointmentService.getAllAppointment();
 	}
 
-	@GetMapping(value = "/deleteviewApp")
+	@GetMapping(value = "/deleteAppoinment")
 	@ResponseBody
 	public CommonMsg deleteAppoinment(@RequestParam("id") int id) {
 		return appointmentService.deleteAppoinment(id);

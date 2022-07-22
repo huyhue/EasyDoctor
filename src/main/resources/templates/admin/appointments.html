@@ -63,7 +63,7 @@
 						var table = $('#tbl-user-doctor')
 							.DataTable(
 								{
-									"sAjaxSource": "/admin/getviewAppList",
+									"sAjaxSource": "/admin/getAppointmentList",
 									"sAjaxDataProp": "",
 									"aoColumns": [
 										{
@@ -84,11 +84,6 @@
 											"mData": "packages"
 										}, {
 											"mData": "status"
-										}, {
-											"className": "dt-btn",
-											"render": function (data, type, row) {
-												return '<div class="btn-group btn-group-sm"><a href="#" class="btn btn-danger" id="deleteUnID"><i class="fa fa-trash"></i></a></div>';
-											}
 										}],
 									"fnCreatedRow": function (nRow, aData, iDataIndex) {
 										$('td:eq(1)', nRow).attr("data-id", aData.id);
@@ -101,13 +96,13 @@
 
 							if (uniId != '') {
 								$.confirm({
-									type: 'orange',
-									title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:orange;"></i> ' + 'Confirm!!',
+									type: 'red',
+									title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red;"></i> ' + 'Confirm!!',
 									content: 'Do you want to delete?',
 									buttons: {
 										Yes: function () {
 											$.ajax({
-												url: "/admin/deleteviewApp?id=" + uniId,
+												url: "/admin/deleteAppoinment?id=" + uniId,
 												type: 'GET',
 												dataType: 'json',
 												success: function (data) {
