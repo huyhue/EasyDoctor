@@ -2,6 +2,12 @@ package fpt.edu.vn.model;
 
 import javax.persistence.*;
 
+<<<<<<< HEAD
+=======
+
+import org.springframework.beans.factory.annotation.Value;
+
+>>>>>>> 26e60583d669cde20019c63deb29f1b25015c4bc
 import fpt.edu.vn.component.UserForm;
 
 import java.util.Collection;

@@ -11,7 +11,20 @@ import fpt.edu.vn.component.UserForm;
 public class Doctor extends User {
 	private String description;
 	
+<<<<<<< HEAD
 	private Integer startPracticeDate;
+=======
+	@Column(name = "name")
+	    private String name;
+	
+	@Column(name = "phone")
+	    private String phone;
+	
+	@Column(name = "editable", columnDefinition = "boolean default false")
+    private boolean editable;
+	
+	private Date startPracticeDate;
+>>>>>>> 26e60583d669cde20019c63deb29f1b25015c4bc
 	
 	@OneToOne
     @JoinColumn(name = "id_specialty")
@@ -37,7 +50,7 @@ public class Doctor extends User {
 	
     public Doctor() {
     }
-
+    
 	@Override
 	public void update(UserForm updateData) {
 		super.update(updateData);
@@ -66,6 +79,30 @@ public class Doctor extends User {
 	public void setClinic(Clinic clinic) {
 		this.clinic = clinic;
 	}
+	
+	public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+    
+    public boolean getEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
 
 	public Specialty getSpecialty() {
 		return specialty;

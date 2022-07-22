@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	th:replace="~{fragments/base :: base (~{::body},'Profile')}">
+
+<body>
+	<div class="content-header" id="scroll">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h4 class="m-0">Thông tin hồ sơ</h4>
+				</div>
+				<!-- /.col -->
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Home</a></li>
+						<li class="breadcrumb-item active">Hồ sơ</li>
+					</ol>
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="card card-outline card-primary">
+			<div class="card-header">
+				<h3 class="card-title"></h3>
+				<div class="card-tools">
+					<button type="button" class="btn btn-tool" data-card-widget="collapse">
+						<i class="fas fa-minus"></i>
+					</button>
+					<button type="button" class="btn btn-tool" data-card-widget="remove">
+						<i class="fas fa-times"></i>
+					</button>
+				</div>
+			</div>
+			<!-- /.card-header -->
+			<div class="card-body" style="display: block;">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Tên đăng nhập<span class="errorMsg">*</span></label> 
+				            <input
+								class="form-control filter" type="text" id="username"
+								placeholder="Nhập tên đăng nhập"> 
+							<span	class="errorMsg" id="errorMsgUsername"></span>
+						</div>
+
+						<div class="form-group">
+							<label>Họ và tên<span class="errorMsg">*</span></label>
+							<input type="hidden" id="updateId" />
+							<input class="form-control filter" type="text" id="name" 
+							       placeholder="Nhập họ và tên">
+							<span  class="errorMsg" id="errorMsgName"></span>
+						</div>
+						
+						<div class="form-group">
+							<label>Email<span class="errorMsg">*</span></label>
+							<input
+								   class="form-control filter" type="text" id="email"
+								   placeholder="Nhập email"> 
+							<span  class="errorMsg" id="errorMsgEmail"></span>
+						</div>
+
+						<div class="form-group">
+							<label>Password mới<span class="errorMsg">*</span></label> 
+							<input
+								class="form-control filter" type="password" id="password"
+								placeholder="Nhập password"> 
+							<span	class="errorMsg" id="errorMsgPassword"></span>
+						</div>
+							
+						<div class="margin">
+					<div class="btn-group">
+						<button style="color: #ffffff;" type="button" class="btn btn-block bg-gradient-info btn-sm"
+							id="btnProfileUpdate">
+							<i class="far fa-save"></i> Save
+						</button>
+					</div>
+					</div>
+						
+						
+
+				
+			</div>
+		</div>
+		
+		<div class="card card-default">
+			<div class="card-header">
+				<h3 class="card-title"></h3>
+				<div class="card-tools">
+					<button type="button" class="btn btn-tool" data-card-widget="collapse">
+						<i class="fas fa-minus"></i>
+					</button>
+					<button type="button" class="btn btn-tool" data-card-widget="remove">
+						<i class="fas fa-times"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<div layout:fragment="script">
+<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							
+							
+							$("#btnProfileUpdate")
+							.click(
+									function() {
+										
+										if (dataValidation()) {
+											
+											var uniList = {};
+											uniList.name = $("#name").val();
+											uniList.username = $("#username").val();
+											uniList.email = $("#email").val();
+											uniList.password = $("#password").val();
+											
+											$
+													.ajax({
+														type : "POST",
+														contentType : "application/json",
+														url : "/admin/updateProfile",
+														data : JSON
+																.stringify(uniList),
+														timeout : 100000,
+														async : true,
+														dataType : 'json',
+														success : function(data) {
+															if(data.msgCode=='200'){
+																
+															   $.confirm({
+								                     		         	type: 'green',
+								                     		         	title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> '+'Success!!',
+								                     		             content: 'profile update successfully.',
+								                     		   
+								                     		             buttons: {
+								                     		                 ok: function () {
+								                     		                   
+								                     		                 }
+								                     		                 
+								                     		             }
+								                     		         });
+															
+															}
+														
+														},
+														error : function(
+																xhr,
+																status,
+																error) {
+															showCustomAlert(
+																	'D',
+																	"Sorry,Something wrong.Please contact with IT Team!!");
+														}
+													});	
+										}
+										
+										
+									});
+									
+			function dataValidation() {
+								var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
+								var status = true;
+
+								if ($("#name").val() == "") {
+									status = false;
+									$("#errorMsgName").text(
+											"Required Field!!");
+									$("#name").css('border',
+											'1px solid red');
+									$("#name").focus();
+									return status;
+								}
+								if($("#email").val()==''){
+									  status=false;
+									  $("#errorMsgEmail").text('Required Field!!');
+										$("#email").css('border',
+										'1px solid red');
+								$("#email").focus();
+									  return status;
+								  }
+							 }
+						 });
+						
+	</script>
+</div>
+
+<div layout:fragment="css">
+<style>
+.errorMsg{color:red;}
+</style>
+
+</div>						
+	
+</body>	
+</html>						
