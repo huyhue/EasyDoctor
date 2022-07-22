@@ -4,10 +4,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import fpt.edu.vn.component.AppoinmentDto;
 import fpt.edu.vn.component.ChatMessage;
+import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.component.TimePeroid;
 import fpt.edu.vn.model.Appointment;
-import fpt.edu.vn.model.Message;
 import fpt.edu.vn.model.Packages;
 import fpt.edu.vn.model.Review;
 
@@ -31,6 +32,8 @@ public interface AppointmentService {
 	boolean isAvailable(int packagesId, int doctorId, int patientId, LocalDateTime start);
 	
 	List<Appointment> getAllAppointments();
+	List<AppoinmentDto> getAllAppointment();
+	CommonMsg deleteAppoinment(int appointmentId);
 	List<Appointment> getAppointmentByPatientId(int patientId);
 	List<Appointment> getAppointmentByDoctorId(int doctorId);
 	

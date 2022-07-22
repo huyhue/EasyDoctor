@@ -349,7 +349,7 @@
 				$('#tbl-adddoctor tbody').on('click', '#deleteUnID', function () {
 					var curRow = $(this).closest('tr');
 					var uniId = curRow.find('td:eq(1)').attr("data-id");
-
+console.log("OK: " +uniId);
 					if (uniId != '') {
 						$.confirm({
 							type: 'orange',

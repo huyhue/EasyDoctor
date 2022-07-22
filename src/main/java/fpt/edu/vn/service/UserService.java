@@ -9,6 +9,7 @@ import fpt.edu.vn.component.ChangePasswordForm;
 import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.component.DoctorDto;
 import fpt.edu.vn.component.PatientDto;
+import fpt.edu.vn.component.ReviewDto;
 import fpt.edu.vn.model.Clinic;
 import fpt.edu.vn.model.Declaration;
 import fpt.edu.vn.model.Doctor;
@@ -57,6 +58,8 @@ public interface UserService {
 //	Review
 	double getRatingByDoctorId(int doctorId);
 	List<Review> getAllReviewByDoctorId(int doctorId);
+	List<ReviewDto> getAllReview();
+	CommonMsg deleteReview(int reviewId);
 	
 //	History
 	List<History> getHistoryByPatientId(int patientId);

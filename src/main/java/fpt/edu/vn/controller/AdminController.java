@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import fpt.edu.vn.component.AppoinmentDto;
 import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.component.DoctorDto;
 import fpt.edu.vn.component.PatientDto;
+import fpt.edu.vn.component.ReviewDto;
 import fpt.edu.vn.model.Clinic;
 import fpt.edu.vn.model.Packages;
 import fpt.edu.vn.service.EmailService;
@@ -39,7 +41,6 @@ public class AdminController {
 		this.emailService = emailService;
 	}
 
-//	Redirect Page
 	@GetMapping("/home")
 	public String showHome(Model model) {
 		model.addAttribute("totalPatient", userService.getAllPatients().size());
@@ -49,12 +50,12 @@ public class AdminController {
 		return "admin/home";
 	}
 
+	// Packages
 	@GetMapping("/packages")
 	public String viewPackage(Model model) {
 		return "admin/packages";
 	}
 
-//	Handle Ajax
 	@GetMapping(value = "/getListPackages")
 	@ResponseBody
 	public List<Packages> viewPackagesList() {
@@ -91,7 +92,7 @@ public class AdminController {
 	@ResponseBody
 	public CommonMsg saveDoctor(@RequestBody DoctorDto doctordto) {
 		CommonMsg commonMsg = userService.saveDoctor(doctordto);
-		//email add new doctor
+		// email add new doctor
 		if (commonMsg.getMsgCode() == "200") {
 			emailService.sendInfoNewDoctor(doctordto);
 		}
@@ -127,29 +128,65 @@ public class AdminController {
 	public CommonMsg deleteClinic(@RequestParam("id") int id) {
 		return userService.deleteClinic(id);
 	}
-	
+
 //	Patient
 	@GetMapping("/viewPatient")
 	public String viewPatient(Model model) {
 		return "admin/patients";
 	}
-	
+
 	@GetMapping(value = "/getListPatient")
 	@ResponseBody
 	public List<PatientDto> viewPatientList() {
 		return userService.getAllPatient();
 	}
-	
+
 	@PostMapping(value = "/savePatient")
 	@ResponseBody
 	public CommonMsg savePatient(@RequestBody PatientDto patientdto) {
 		return userService.savePatient(patientdto);
 	}
-	
+
 	@GetMapping(value = "/deletePatient")
 	@ResponseBody
 	public CommonMsg deletePatient(@RequestParam("id") int id) {
 		return userService.deletePatient(id);
+	}
+
+	// Appointment
+	@GetMapping("/viewAppointment")
+	public String viewAppoinmentList(Model model) {
+		return "admin/appointments";
+	}
+
+	@GetMapping(value = "/getviewAppList")
+	@ResponseBody
+	public List<AppoinmentDto> viewAppointmentList() {
+		return appointmentService.getAllAppointment();
+	}
+
+	@GetMapping(value = "/deleteviewApp")
+	@ResponseBody
+	public CommonMsg deleteAppoinment(@RequestParam("id") int id) {
+		return appointmentService.deleteAppoinment(id);
+	}
+
+	// Review
+	@GetMapping("/viewReview")
+	public String viewReviewList(Model model) {
+		return "admin/reviews";
+	}
+
+	@GetMapping(value = "/getReviewList")
+	@ResponseBody
+	public List<ReviewDto> viewReviewList() {
+		return userService.getAllReview();
+	}
+
+	@GetMapping(value = "/deleteReview")
+	@ResponseBody
+	public CommonMsg deleteReview(@RequestParam("id") int id) {
+		return userService.deleteReview(id);
 	}
 	
 }

@@ -18,6 +18,7 @@ import fpt.edu.vn.component.ChangePasswordForm;
 import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.component.DoctorDto;
 import fpt.edu.vn.component.PatientDto;
+import fpt.edu.vn.component.ReviewDto;
 import fpt.edu.vn.model.Clinic;
 import fpt.edu.vn.model.Declaration;
 import fpt.edu.vn.model.Doctor;
@@ -344,6 +345,24 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<Review> getAllReviewByDoctorId(int doctorId) {
 		return reviewRepository.getAllReviewByDoctorId(doctorId);
+	}
+	
+	@Override
+	public List<ReviewDto> getAllReview() {
+		List<ReviewDto> listDTO = new ArrayList<>();
+		List<Review> list = reviewRepository.findAll();
+		for (Review r : list) {
+			listDTO.add(new ReviewDto(r.getFeedback(), r.getRating(), r.getPatient().getFullname(), r.getDoctor().getFullname()));
+		}
+		return listDTO;
+	}
+	
+	@Override
+	public CommonMsg deleteReview(int reviewId) {
+		CommonMsg commonMsg = new CommonMsg();
+		reviewRepository.deleteById(reviewId);
+		commonMsg.setMsgCode("200");
+		return commonMsg;
 	}
 
 	@Override
