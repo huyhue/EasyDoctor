@@ -5,8 +5,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.*;
 
-import lombok.Data;
-
 //@Data
 @Entity
 @Table(name = "comments")
@@ -20,6 +18,9 @@ public class Comment {
     private String update_at;
     private Long parent_id;
     private Long user_id;
+    
+    public Comment() {
+	}
     
 	public Comment(Long id, Long post_id, String message, String create_at, String update_at, Long parent_id,
 			Long user_id) {

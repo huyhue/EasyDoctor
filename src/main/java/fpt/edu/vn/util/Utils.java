@@ -1,6 +1,11 @@
 package fpt.edu.vn.util;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Utils {
+    public static String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
     public static String objToString(Object obj) {
         if (obj == null)
             return "";
@@ -33,4 +38,8 @@ public class Utils {
         return Boolean.parseBoolean(obj.toString());
     }
 
+    public static String formatDate(Date date, String format) {
+        SimpleDateFormat formatter = new SimpleDateFormat(format);
+        return formatter.format(date);
+    }
 }

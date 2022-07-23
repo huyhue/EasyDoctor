@@ -21,11 +21,10 @@ public class Doctor extends User {
     @JoinColumn(name = "id_clinic")
     private Clinic clinic;
 	
-//	Booking doctor
-	@OneToMany(mappedBy = "doctor")
+	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
     private List<Appointment> appointments;
 	
-	@OneToMany(mappedBy = "doctor")
+	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
     private List<Review> reviews;
 
     @ManyToMany

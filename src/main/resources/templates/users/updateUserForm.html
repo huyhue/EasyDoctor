@@ -123,13 +123,16 @@
 									<input type="text" class="form-control" th:field="*{description}">
 								</div>
 							</div>
-							<div class="form-row">
+							<div class="form-row">  
 								<div class="form-group col-md-6">
 									<label for="certification">Chứng chỉ</label>
+									
+									<div th:if="${certification != null}">
 									<a th:href="@{'/file/' + ${certification.id}}" target="_blank"
 										style="margin: 5px;"><i class="fas fa-solid fa-file-import"></i>
 										[[${certification.name}]]
 									</a>
+									</div>
 									<input class="form-control" id="certification" name="file" type="file"
 										accept="application/pdf" />
 								</div>
@@ -251,7 +254,7 @@
 					required: true
 				},
 				startPracticeDate: {
-					required: true
+					required: false
 				}
 			},
 			messages: {
@@ -268,9 +271,6 @@
 					required: "Không được để trống"
 				},
 				address: {
-					required: "Không được để trống"
-				},
-				startPracticeDate: {
 					required: "Không được để trống"
 				}
 			}

@@ -51,7 +51,7 @@
 				</tr>
 				<tr>
 					<td><b>Ngày</b></td>
-					<td><span th:text="${#temporals.format(appointment.start, 'dd-MM-yyyy')}">10-01-2019</span>
+					<td><span th:text="${#temporals.format(appointment.start, 'dd-MM-yyyy')}" id="dateBooking">10-01-2019</span>
 					</td>
 				</tr>
 				<tr>
@@ -99,7 +99,7 @@
 						<p th:text="${cancelNotAllowedReason}">Lý do hủy.</p>
 					</td>
 				</tr>
-				<tr>
+				<tr sec:authorize="hasRole('ROLE_PATIENT')">
 					<td>
 						<a id="download" download="easyQR-code.png">
 							<button class="btn btn-primary" id="button-download-qr-code" type="button"
@@ -198,8 +198,9 @@
 			var patient = document.getElementById('patient').innerText;
 			var status = document.getElementById('status').innerText;
 			var startTime = document.getElementById('startTime').innerText;
+			var dateBooking = document.getElementById('dateBooking').innerText;
 
-			qrContent = "Easydoctor appointment: " + doctor + " " + patient + " ,status " + status + " ,startTime " + startTime;
+			qrContent = "Easydoctor appointment: " + doctor + ", patient: " + patient + " , status " + status + " ,date " + dateBooking+ " ,startTime " + startTime;
 			qr.set({
 				foreground: 'black',
 				size: 200,

@@ -2,9 +2,6 @@ package fpt.edu.vn.model;
 
 import javax.persistence.*;
 
-import lombok.Data;
-
-
 //@Data
 @Entity
 @Table(name = "posts")

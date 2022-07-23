@@ -1,26 +1,25 @@
 package fpt.edu.vn.component;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-//@Data
-//@AllArgsConstructor
 public class CommentDTO {
-    private Long id;
+	private Long id;
     private String message;
     private String username;
     private String time;
     private String img;
+    private Long userid;
     
-	public CommentDTO(Long id, String message, String username, String time, String img) {
+	public CommentDTO() {
+	}
+	
+	public CommentDTO(Long id, String message, String username, String time, String img, Long userid) {
 		super();
 		this.id = id;
 		this.message = message;
 		this.username = username;
 		this.time = time;
 		this.img = img;
+		this.userid = userid;
 	}
-	
 	public Long getId() {
 		return id;
 	}
@@ -50,6 +49,14 @@ public class CommentDTO {
 	}
 	public void setImg(String img) {
 		this.img = img;
+	}
+
+	public Long getUserid() {
+		return userid;
+	}
+
+	public void setUserid(Long userid) {
+		this.userid = userid;
 	}
 
 }

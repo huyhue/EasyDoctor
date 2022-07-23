@@ -3,6 +3,7 @@ package fpt.edu.vn.model;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -15,20 +16,21 @@ import javax.persistence.Table;
 @Table(name = "patients")
 @PrimaryKeyJoinColumn(name = "id_patient")
 public class Patient extends User {
+	
 	@Column(name = "address")
     private String address;
 	
-	@OneToOne
-    @JoinColumn(name = "id_declaration")
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_declaration", referencedColumnName = "id")
     private Declaration declaration;
 	
-	@OneToMany(mappedBy = "patient")
+	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     private List<Appointment> appointments;
 	
-	@OneToMany(mappedBy = "patient")
+	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
 	private List<History> histories;
 	
-	@OneToMany(mappedBy = "patient")
+	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     private List<Review> reviews;
 	
 	public Patient() {

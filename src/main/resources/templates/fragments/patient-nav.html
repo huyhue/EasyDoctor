@@ -16,7 +16,7 @@
 				<a class="nav-link navlinkcss" th:href="@{/appointments/all}">Cuộc hẹn</a>
 			</li>
 			<li class="nav-item" th:classappend="${activeLink} == 'forum' ? 'active':''">
-				<a class="nav-link navlinkcss" th:href="@{/forum/list}">Diễn đàn</a>
+				<a class="nav-link navlinkcss" th:href="@{/forums/list}">Diễn đàn</a>
 			</li>
 			<li class="nav-item" th:classappend="${activeLink} == 'account' ? 'active':''">
 				<a class="nav-link navlinkcss" th:href="@{'/patients/' + ${#authentication.getPrincipal().getId()}}">Tài khoản của tôi</a>

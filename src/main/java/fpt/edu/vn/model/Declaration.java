@@ -32,7 +32,7 @@ public class Declaration {
 	@Column(name = "notes")
 	private String notes;
     
-    @OneToOne(mappedBy = "declaration", cascade = {CascadeType.ALL})
+    @OneToOne(mappedBy = "declaration", orphanRemoval = true)
     private Patient patient;
     
 	public Declaration() {
