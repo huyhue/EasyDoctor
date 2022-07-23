@@ -13,5 +13,5 @@ public class EasyDoctorApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EasyDoctorApplication.class, args);
 	}
-
+	
 }

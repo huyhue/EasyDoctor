@@ -18,56 +18,56 @@ import fpt.edu.vn.util.Utils;
 
 @Service
 public class CommentService {
-//    @Autowired
-//    CommentRepository commentRepo;
-//    @PersistenceContext
-//    EntityManager em;
-//
-//    public CommentDTO getComment(long id) {
-//        String sql = "SELECT c.id,message,fullname,update_at,u.profile_img,c.user_id FROM easydoctor.comments c join users u on u.id=c.user_id where  c.id="
-//                + id;
-//        Object[] obj = (Object[]) em.createNativeQuery(sql).getSingleResult();
-//        CommentDTO c = new CommentDTO(Utils.objToLong(obj[0]), Utils.objToString(obj[1]), Utils.objToString(obj[2]),
-//                Utils.objToString(obj[3]), Utils.objToString(obj[4]), Utils.objToLong(obj[5]));
-//        return c;
-//
-//    }
+    @Autowired
+    CommentRepository commentRepo;
+    @PersistenceContext
+    EntityManager em;
 
-//    public CommentDTO addComment(Long postid, String message) {
-//        try {
-//            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//            CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
-//            Comment c = new Comment();
-//            c.setPost_id(postid);
-//            c.setUser_id(Long.parseLong(user.getId().toString()));
-//            c.setMessage(message);
-//            c.setCreate_at(Utils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
-//            c.setUpdate_at(Utils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
-//            commentRepo.save(c);
-//            return getComment(c.getId());
-//        } catch (Exception e) {
-//            return null;
-//        }
-//    }
+    public CommentDTO getComment(long id) {
+        String sql = "SELECT c.id,message,fullname,update_at,u.profile_img,c.user_id FROM easydoctor.comments c join users u on u.id=c.user_id where  c.id="
+                + id;
+        Object[] obj = (Object[]) em.createNativeQuery(sql).getSingleResult();
+        CommentDTO c = new CommentDTO(Utils.objToLong(obj[0]), Utils.objToString(obj[1]), Utils.objToString(obj[2]),
+                Utils.objToString(obj[3]), Utils.objToString(obj[4]), Utils.objToLong(obj[5]));
+        return c;
 
-//    public boolean deleteComment(Long id) {
-//        try {
-//            commentRepo.deleteById(id);
-//        } catch (Exception e) {
-//            return false;
-//        }
-//        return true;
-//    }
-//
-//    public CommentDTO updateComment(Long id, String message) {
-//        try {
-//            Comment c = commentRepo.getById(id);
-//            c.setMessage(message);
-//            c.setUpdate_at(Utils.formatDate(new Date(), Utils.DATETIME_FORMAT));
-//            commentRepo.save(c);
-//            return getComment(c.getId());
-//        } catch (Exception e) {
-//            return null;
-//        }
-//    }
+    }
+
+    public CommentDTO addComment(Long postid, String message) {
+        try {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+            Comment c = new Comment();
+            c.setPostId(postid);
+            c.setUserId(Long.parseLong(user.getId().toString()));
+            c.setMessage(message);
+            c.setCreateAt(Utils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
+            c.setUpdateAt(Utils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
+            commentRepo.save(c);
+            return getComment(c.getId());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public boolean deleteComment(Long id) {
+        try {
+            commentRepo.deleteById(id);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    public CommentDTO updateComment(Long id, String message) {
+        try {
+            Comment c = commentRepo.getById(id);
+            c.setMessage(message);
+            c.setUpdateAt(Utils.formatDate(new Date(), Utils.DATETIME_FORMAT));
+            commentRepo.save(c);
+            return getComment(c.getId());
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

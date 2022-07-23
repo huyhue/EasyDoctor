@@ -126,20 +126,16 @@
 	<div class="row mt-5">
 		<div class="col-md-12 text-center">
 			<h2 style="color: #37a7f1;">
-				<b>Forum cho bệnh nhân và bác sĩ</b>
+				<b>DIỄN ĐÀN CHO BỆNH NHÂN VÀ BÁC SĨ</b>
 			</h2>
 		</div>
 	</div>
 	<!-- Button trigger modal -->
 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
-		How are you today?
+		Đăng bài viết
 	</button>
 
-
-
-
 	<div class="container-fluid mt-5">
-
 		<div class="row m-3">
 			<div class="col-md-12 d-flex justify-content-center">
 				<form th:action="@{/forum/list}" method="get">
@@ -161,7 +157,6 @@
 								<i class="fas fa-search"></i>
 							</button>
 						</div>
-
 					</div>
 				</form>
 
@@ -200,9 +195,7 @@
 								<span th:id="'like'+${p.id}" th:text="${p.totalLike}" class="ml-1"></span>
 							</div>
 							<div class="like p-2 cursor"><i class="fa fa-commenting-o"></i><span
-									class="ml-1">Comment</span></div>
-							<div class="like p-2 cursor"><i class="fa fa-share"></i><span class="ml-1">Share</span>
-							</div>
+									class="ml-1">Bình luận</span></div>
 						</div>
 					</div>
 					<div class="bg-light p-2">
@@ -212,9 +205,9 @@
 						</div>
 						<div class="mt-2 text-right">
 							<button class="btn btn-primary btn-sm shadow-none" th:onclick="handleComment([[${p.id}]])"
-								type="button">Post comment</button>
+								type="button">Bình luận</button>
 							<button class="btn btn-outline-primary btn-sm ml-1 shadow-none"
-								type="button">Cancel</button>
+								type="button">Reset</button>
 						</div>
 					</div>
 				</div>
@@ -235,15 +228,6 @@
 									</p>
 								</div>
 								<p th:text="${c.message}"></p>
-								<div class="pad-ver">
-									<div class="btn-group">
-										<a class="btn btn-sm btn-default btn-hover-success active" href="#"><i
-												class="fa fa-thumbs-up"></i> You Like it</a>
-										<a class="btn btn-sm btn-default btn-hover-danger" href="#"><i
-												class="fa fa-thumbs-down"></i></a>
-									</div>
-									<a class="btn btn-sm btn-default btn-hover-primary" href="#">Comment</a>
-								</div>
 								<div th:if="${currentId==c.userid}"><a
 										th:onclick="event.preventDefault(); handleDelete([[${c.id}]])" href="#">delete
 										comment</a></div>
