@@ -121,13 +121,7 @@
 		}
 	</style>
 	<script src="https://kit.fontawesome.com/e36f939b0f.js" crossorigin="anonymous"></script>
-	<!-- <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/message.css}" />
 
-	<link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/style.css}" /> -->
-
-	<!-- <script type="text/javascript" th:src="@{/static/js/actions.js}"></script> -->
-	<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
-	<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 
 	<div class="row mt-5">
 		<div class="col-md-12 text-center">
@@ -136,6 +130,11 @@
 			</h2>
 		</div>
 	</div>
+	<!-- Button trigger modal -->
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+		How are you today?
+	</button>
+
 
 
 
@@ -168,65 +167,74 @@
 
 			</div>
 		</div>
-		<div class="d-flex justify-content-center row" th:each="post : ${listPost}">
+		<div class="d-flex justify-content-center row" th:each="p : ${ls}">
 			<div class="col-md-8">
 				<div class="d-flex flex-column comment-section">
 					<div class="bg-white p-2">
 						<div class="d-flex flex-row user-info"><img class="rounded-circle"
-								th:src="@{/img/{name}(name=${post.userImg})}" width="40">
+								th:src="@{/img/{name}(name=${p.userImg})}" width="40">
 							<div class="d-flex flex-column justify-content-start ml-2">
-								<span th:text="${post.username}" class="d-block font-weight-bold name"></span>
-								<span th:text="${post.time}" class="date text-black-50"></span>
+								<span th:text="${p.username}" class="d-block font-weight-bold name"></span>
+								<span th:text="${p.time}" class="date text-black-50"></span>
 							</div>
 						</div>
 						<div class="mt-2">
-							<p th:text="${post.message}" class="comment-text"></p>
+							<p th:text="${p.message}" class="comment-text"></p>
 						</div>
 					</div>
-					
-					<div class="bg-white ">
-						<img th:src="@{/img/forum/{name}(name=${post.img})}" width="auto" />
+					<div th:if="${currentId==p.userid}">
+						<a th:href="@{'/forum/post/delete?pid='+${p.id}}">delete post</a>
+						<button th:onclick="handleUpdate([[${p.id}]],[[${p.message}]],[[${p.specialId}]])" type="button"
+							class="btn btn-primary" data-toggle="modal" data-target="#updateModal">
+							update
+						</button>
 					</div>
-					
+					<div class="bg-white ">
+						<img th:src="@{/img/forum/{name}(name=${p.img})}" width="auto" />
+					</div>
 					<div class="bg-white">
 						<div class="d-flex flex-row fs-12">
 							<div class="like p-2 cursor">
-								<i class="fa " th:classappend="${post.isLiked}?fa-thumbs-up:fa-thumbs-o-up"></i>
-								<span th:text="${post.totalLike}" class="ml-1"></span>
+								<i th:id="'icon'+${p.id}" th:onclick="handleLike([[${p.id}]])" class="fa "
+									th:classappend="${p.isLiked}?fa-thumbs-up:fa-thumbs-o-up"></i>
+								<span th:id="'like'+${p.id}" th:text="${p.totalLike}" class="ml-1"></span>
 							</div>
 							<div class="like p-2 cursor"><i class="fa fa-commenting-o"></i><span
-									class="ml-1">Bình luận</span></div>
+									class="ml-1">Comment</span></div>
+							<div class="like p-2 cursor"><i class="fa fa-share"></i><span class="ml-1">Share</span>
+							</div>
 						</div>
 					</div>
-					
 					<div class="bg-light p-2">
 						<div class="d-flex flex-row align-items-start"><img class="rounded-circle"
-								th:src="@{/img/{name}(name=${currentImg})}" width="40"><textarea id="cmessage"
-								class="form-control ml-1 shadow-none textarea"></textarea></div>
+								th:src="@{/img/{name}(name=${currentImg})}" width="40"><textarea
+								th:id="'cmessage'+${p.id}" class="form-control ml-1 shadow-none textarea"></textarea>
+						</div>
 						<div class="mt-2 text-right">
-							<button class="btn btn-primary btn-sm shadow-none"
-								th:onclick="handleComment([[${post.id}]])" type="button">Bình luận</button>
-							<button class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Reset</button>
+							<button class="btn btn-primary btn-sm shadow-none" th:onclick="handleComment([[${p.id}]])"
+								type="button">Post comment</button>
+							<button class="btn btn-outline-primary btn-sm ml-1 shadow-none"
+								type="button">Cancel</button>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div th:id="'commentls'+${post.id}" class="col-md-7">
-				<th:block th:each="comment : ${post.comments}">
-					<div th:id="'cm'+${comment.id}" class="col-md-7">
+			<div th:id="'commentls'+${p.id}" class="col-md-7">
+				<th:block th:each="c : ${p.comments}">
+					<div th:id="'cm'+${c.id}" class="col-md-7">
 						<div>
 							<a class="media-left" href="#"><img style="width: 50px;" class="img-circle img-sm"
-									alt="Profile Picture" th:src="@{/img/{name}(name=${comment.img})}"></a>
+									alt="Profile Picture" th:src="@{/img/{name}(name=${c.img})}"></a>
 							<div class="media-body">
 								<div class="mar-btm">
-									<a href="#" th:text="${comment.username}"
+									<a href="#" th:text="${c.username}"
 										class="btn-link text-semibold media-heading box-inline"></a>
 									<p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i>
-										<span th:text="${comment.time}"></span>
+										<span th:text="${c.time}"></span>
 									</p>
 								</div>
-								<p th:text="${comment.message}"></p>
+								<p th:text="${c.message}"></p>
 								<div class="pad-ver">
 									<div class="btn-group">
 										<a class="btn btn-sm btn-default btn-hover-success active" href="#"><i
@@ -236,8 +244,8 @@
 									</div>
 									<a class="btn btn-sm btn-default btn-hover-primary" href="#">Comment</a>
 								</div>
-								<div th:if="${currentId==comment.userid}"><a
-										th:onclick="event.preventDefault(); handleDelete([[${comment.id}]])" href="#">delete
+								<div th:if="${currentId==c.userid}"><a
+										th:onclick="event.preventDefault(); handleDelete([[${c.id}]])" href="#">delete
 										comment</a></div>
 								<hr>
 							</div>
@@ -264,12 +272,94 @@
 						class="page-link" href="#">Next</a></li>
 			</ul>
 		</nav> -->
+	<!---              --->
+	<!-- Modal -->
+	<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Post to forum</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form th:action="@{/forum/post/add}" method="post" enctype="multipart/form-data">
 
+						<div class="modal-body">
+
+							<div class="mb-3">
+								<label for="exampleFormControlTextarea1" class="form-label">Content</label>
+								<textarea name="message" class="form-control" id="exampleFormControlTextarea1"
+									rows="5"></textarea>
+							</div>
+							<div class="mb-3">
+								<select id="specialty" name="specialId" class="form-control filter">
+									<option th:each="specialty : ${specialties}" th:value="${specialty.id}"
+										th:text="${specialty.name}" th:selected="${specialId==specialty.id}"></option>
+								</select>
+							</div>
+							<div class="mb-3">
+								<input type="file" name="image">
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary">Post</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+	<!-- Modal -->
+	<div class="modal fade" id="updateModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Update post</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form th:action="@{/forum/post/update}" method="post" enctype="multipart/form-data">
+						<input hidden name="pid" id="pid" />
+						<div class="modal-body">
+
+							<div class="mb-3">
+								<label for="exampleFormControlTextarea1" class="form-label">Content</label>
+								<textarea name="message" class="form-control" id="textmessage" rows="5"></textarea>
+							</div>
+							<div class="mb-3">
+								<select id="specialUpdate" name="specialId" class="form-control filter">
+									<option th:each="specialty : ${specialties}" th:value="${specialty.id}"
+										th:text="${specialty.name}"></option>
+								</select>
+							</div>
+							<div class="mb-3">
+								<input type="file" name="image">
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary">Post</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
 
 	<script th:inline="javascript">
-		console.log("script");
 		const handleComment = (postid) => {
-			const message = document.getElementById("cmessage").value
+			const message = document.getElementById("cmessage" + postid).value
 			fetch("/forum/comment?postid=" + postid + "&message=" + message).then(res => res.json()).then(res => {
 				$("#commentls" + postid).prepend(`<div id="cm${res.id}" class="col-md-7">
 				<a class="media-left" href="#"><img style="width: 50px;" class="img-circle img-sm" alt="Profile Picture"
@@ -295,14 +385,33 @@
 					<hr>
 				</div>
 			</div>`)
+				document.getElementById("cmessage" + postid).value = ''
 			})
+
 		}
 
 		const handleDelete = (id) => {
 
 			fetch('/forum/comment/delete?cid=' + id).then(res => res.json()).then(res => {
-				console.log(res);
+
 				$('#cm' + id).remove()
+			})
+		}
+
+		const handleUpdate = (pid, mes, spe) => {
+			$('#pid').val(pid)
+			$('#textmessage').val(mes)
+			$('#specialUpdate').val(spe)
+		}
+		const handleLike = (pid) => {
+			fetch('/forum/post/like?pid=' + pid).then(res => res.json()).then(res => {
+				if (!res.liked) {
+					$('#icon' + pid).attr('class', 'fa fa-thumbs-o-up')
+					$('#like' + pid).text(res.totalLike)
+					return
+				}
+				$('#icon' + pid).attr('class', 'fa fa-thumbs-up')
+				$('#like' + pid).text(res.totalLike)
 			})
 		}
 	</script>
