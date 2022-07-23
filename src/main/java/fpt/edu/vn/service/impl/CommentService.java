@@ -38,11 +38,11 @@ public class CommentService {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
             Comment c = new Comment();
-            c.setPost_id(postid);
-            c.setUser_id(Long.parseLong(user.getId().toString()));
+            c.setPostId(postid);
+            c.setUserId(Long.parseLong(user.getId().toString()));
             c.setMessage(message);
-            c.setCreate_at(Utils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
-            c.setUpdate_at(Utils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
+            c.setCreateAt(Utils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
+            c.setUpdateAt(Utils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
             commentRepo.save(c);
             return getComment(c.getId());
         } catch (Exception e) {
@@ -63,7 +63,7 @@ public class CommentService {
         try {
             Comment c = commentRepo.getById(id);
             c.setMessage(message);
-            c.setUpdate_at(Utils.formatDate(new Date(), Utils.DATETIME_FORMAT));
+            c.setUpdateAt(Utils.formatDate(new Date(), Utils.DATETIME_FORMAT));
             commentRepo.save(c);
             return getComment(c.getId());
         } catch (Exception e) {

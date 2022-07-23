@@ -16,5 +16,8 @@ public class PostDTO {
     private String time;
     private boolean isLiked;
     private List<CommentDTO> comments;
+    private long userid;
+    private long specialId;
+
 
 }
