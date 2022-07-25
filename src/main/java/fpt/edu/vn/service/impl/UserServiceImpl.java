@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
 	private final SpecialtyRepository specialtyRepository;
 	private final ClinicRepository clinicRepository;
 	private final PasswordEncoder passwordEncoder;
-
+	
 	public UserServiceImpl(UserRepository userRepository, DoctorRepository doctorRepository,
 			PatientRepository patientRepository, RoleRepository roleRepository, ReviewRepository reviewRepository,
 			HistoryRepository historyRepository, FileModelRepository fileModelRepository,
@@ -268,7 +268,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findById(int userId) {
-		return userRepository.findById(userId).get();
+		return userRepository.getOne(userId);
 	}
 
 	@Override
