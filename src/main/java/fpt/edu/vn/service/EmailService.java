@@ -3,6 +3,7 @@ package fpt.edu.vn.service;
 import org.thymeleaf.context.Context;
 
 import fpt.edu.vn.component.DoctorDto;
+import fpt.edu.vn.component.PatientDto;
 import fpt.edu.vn.model.Appointment;
 import fpt.edu.vn.model.Invoice;
 import fpt.edu.vn.model.User;
@@ -25,4 +26,5 @@ public interface EmailService {
     void sendInvoice(Invoice invoice);
     void sendAppointmentOTPConfirm(String email);
 	void sendInfoNewDoctor(DoctorDto doctordto);
+	void sendInfoNewPatient(PatientDto patientDto);
 }

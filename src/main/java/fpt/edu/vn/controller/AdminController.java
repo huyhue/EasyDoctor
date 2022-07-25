@@ -144,7 +144,12 @@ public class AdminController {
 	@PostMapping(value = "/savePatient")
 	@ResponseBody
 	public CommonMsg savePatient(@RequestBody PatientDto patientdto) {
-		return userService.savePatient(patientdto);
+		CommonMsg commonMsg = userService.savePatient(patientdto);
+		// email add new patient
+		if (commonMsg.getMsgCode() == "200") {
+			emailService.sendInfoNewPatient(patientdto);
+		}
+		return commonMsg;
 	}
 
 	@GetMapping(value = "/deletePatient")
@@ -188,5 +193,5 @@ public class AdminController {
 	public CommonMsg deleteReview(@RequestParam("id") int id) {
 		return userService.deleteReview(id);
 	}
-	
+
 }

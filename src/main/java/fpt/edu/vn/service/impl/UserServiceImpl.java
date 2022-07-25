@@ -109,6 +109,10 @@ public class UserServiceImpl implements UserService {
 			patient.setEmail(patientDto.getEmail());
 			patient.setFullname(patientDto.getFullname());
 			patient.setUserName(patientDto.getUserName());
+			patient.setPassword(passwordEncoder.encode("123456"));
+			patient.setConfirmationToken(UUID.randomUUID().toString());
+			patient.setProfileImage("/img/avatar.png");
+			patient.setRoles(getRolesForPatient());
 			patient.setMobile(patientDto.getMobile());
 			patient.setAddress(patientDto.getAddress());
 			patientRepository.save(patient);

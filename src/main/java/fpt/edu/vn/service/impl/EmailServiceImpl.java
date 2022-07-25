@@ -10,6 +10,7 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import fpt.edu.vn.component.DoctorDto;
+import fpt.edu.vn.component.PatientDto;
 import fpt.edu.vn.model.Appointment;
 import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.Invoice;
@@ -168,5 +169,13 @@ public class EmailServiceImpl implements EmailService {
     	Context context = new Context();
     	context.setVariable("doctor", doctordto);
     	sendEmail(doctordto.getEmail(), "Đăng ký bác sĩ thành công", "infoNewDoctor", context, null);
+    }
+    
+    @Async
+    @Override
+    public void sendInfoNewPatient(PatientDto patientDto) {
+    	Context context = new Context();
+    	context.setVariable("patient", patientDto);
+    	sendEmail(patientDto.getEmail(), "Đăng ký tài khoản thành công", "infoNewPatient", context, null);
     }
 }

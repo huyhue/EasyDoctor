@@ -170,6 +170,7 @@ public class HomeController {
 		return "patients/recordMedical";
 	}
 
+	//Load file ở đây
 	@GetMapping("/file/{fileId}")
 	public ResponseEntity<Resource> accessFile(@PathVariable Integer fileId) {
 		// Load file from database
