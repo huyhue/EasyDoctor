@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.firewall.RequestRejectedHandler;
+import org.springframework.security.web.firewall.HttpStatusRequestRejectedHandler;
 
 @EnableWebSecurity
 @Configuration
@@ -20,7 +22,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
     private final PasswordEncoder passwordEncoder;
 
-    public WebSecurityConfig(CustomUserDetailsService customUserDetailsService, CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler, PasswordEncoder passwordEncoder) {
+    public WebSecurityConfig(CustomUserDetailsService customUserDetailsService,
+            CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler, PasswordEncoder passwordEncoder) {
         this.customUserDetailsService = customUserDetailsService;
         this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
         this.passwordEncoder = passwordEncoder;
@@ -34,9 +37,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        
+
         http.authorizeRequests()
-                .antMatchers("/","/forum/**").permitAll()
+                .antMatchers("/", "/forum/**").permitAll()
                 .antMatchers("/detail/**").hasAnyRole("PATIENT", "DOCTOR", "ADMIN")
                 .antMatchers("/file/**").hasAnyRole("PATIENT", "DOCTOR", "ADMIN")
                 .antMatchers("/doctors/all").hasRole("PATIENT")
@@ -53,14 +56,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/**").hasAnyRole("PATIENT", "DOCTOR", "ADMIN")
                 .and()
                 .formLogin()
-	                .loginPage("/login")
-	                .loginProcessingUrl("/perform_login")
-	                .successHandler(customAuthenticationSuccessHandler)
-	                .permitAll()
+                .loginPage("/login")
+                .loginProcessingUrl("/perform_login")
+                .successHandler(customAuthenticationSuccessHandler)
+                .permitAll()
                 .and()
-                	.logout().logoutUrl("/perform_logout")
+                .logout().logoutUrl("/perform_logout")
                 .and()
-                	.exceptionHandling().accessDeniedPage("/access-denied");
+                .exceptionHandling().accessDeniedPage("/access-denied");
     }
 
     @Override
@@ -74,5 +77,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.setUserDetailsService(customUserDetailsService);
         auth.setPasswordEncoder(passwordEncoder);
         return auth;
+    }
+
+    @Bean
+    RequestRejectedHandler requestRejectedHandler() {
+        return new HttpStatusRequestRejectedHandler();
     }
 }
