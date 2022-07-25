@@ -30,6 +30,8 @@ public class Doctor extends User {
     @ManyToMany
     @JoinTable(name = "packages_doctors", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_packages"))
     private List<Packages> packages;
+    
+    //FOLLOW
 
     @OneToOne(mappedBy = "doctor", cascade = {CascadeType.ALL})
     private WorkingPlan workingPlan;

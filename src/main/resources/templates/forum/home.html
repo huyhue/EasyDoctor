@@ -109,6 +109,21 @@
 			text-transform: uppercase;
 		}
 
+		.avatarc {
+			width: 42px;
+			height: 42px;
+			overflow: hidden;
+			display: inline-block;
+			vertical-align: middle;
+			font-size: 18px;
+			line-height: 42px;
+			color: #fff;
+			text-align: center;
+			border-radius: 50%;
+			font-style: normal;
+			text-transform: uppercase;
+		}
+
 
 
 		@media (max-width: 575px) {
@@ -145,10 +160,18 @@
 			</h2>
 		</div>
 	</div>
-	<!-- Button trigger modal -->
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
-		Bác sĩ ơi đăng bài nào
-	</button>
+
+	<div class="row" sec:authorize="hasRole('ROLE_DOCTOR')">
+		<div class="col-md-12 text-center">
+			<!-- Button trigger modal -->
+			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#staticBackdrop">
+				<i class="fas fa-solid fa-newspaper"></i>  Bác sĩ ơi đăng bài nào !
+			</button>
+		</div>
+	</div>
+
+
+
 
 	<div class="container-fluid mt-5">
 		<div class="row m-3">
@@ -177,12 +200,12 @@
 
 			</div>
 		</div>
-		<div class="d-flex justify-content-center row" th:each="p : ${ls}">
+		<div class="d-flex justify-content-center row mt-3" th:each="p : ${ls}">
 			<div class="col-md-8">
 				<div class="d-flex flex-column comment-section">
 					<div class="bg-white p-2">
 						<div class="d-flex flex-row user-info">
-							<div class="d-flex flex-row mr-5">
+							<div class="d-flex justify-content-start">
 								<i class="avatar"></i>
 								<div class="d-flex flex-column justify-content-start ml-2">
 									<a th:href="@{'/detail/' + ${p.id}}">
@@ -191,83 +214,79 @@
 									<span th:text="${p.time}" class="date text-black-50"></span>
 								</div>
 							</div>
-
-							<div class="d-flex flex-row-reverse ml-5 f-r">
-							<select id="edit" class="form-control filter">
-									<option value="-1">Chỉnh sửa</option>
-									<a th:href="@{'/detail/2'}"><option value="">Sửa</option></a>
-									<option value="">Xóa</option>
-									<option value="">Ẩn</option>
-								</select>
-							</div>
 						</div>
+
 						<div th:if="${currentId==p.userid}">
-						<a th:href="@{'/forum/post/delete?pid='+${p.id}}">delete post</a>
-						<button th:onclick="handleUpdate([[${p.id}]],[[${p.message}]],[[${p.specialId}]])" type="button"
-							class="btn btn-primary" data-toggle="modal" data-target="#updateModal">
-							update
-						</button>
-					</div>
+							<a th:href="@{'/forum/post/delete?pid='+${p.id}}" class="btn btn-danger float-right">
+								<i class="fas fa-trash-alt"></i>
+							</a>
+							<button th:onclick="handleUpdate([[${p.id}]],[[${p.message}]],[[${p.specialId}]])"
+								type="button" class="btn btn-primary float-right mr-2" data-toggle="modal"
+								data-target="#updateModal">
+								<i class="fas fa-pencil-alt"></i>
+							</button>
+						</div>
 
 						<div class="mt-2">
 							<p th:text="${p.message}" class="comment-text"></p>
 						</div>
 					</div>
 
-
-
 					<div class="bg-white ">
 						<img th:src="@{/img/forum/{name}(name=${p.img})}" width="auto" />
 					</div>
+
 					<div class="bg-white">
 						<div class="d-flex flex-row fs-12">
 							<div class="like p-2 cursor">
-								<i th:id="'icon'+${p.id}" th:onclick="handleLike([[${p.id}]])" class="fa "
+								<i th:id="'icon'+${p.id}" th:onclick="handleLike([[${p.id}]])" class="fa fa-2x"
 									th:classappend="${p.isLiked}?fa-thumbs-up:fa-thumbs-o-up"></i>
-								<span th:id="'like'+${p.id}" th:text="${p.totalLike}" class="ml-1"></span>
+								<strong th:id="'like'+${p.id}" th:text="${p.totalLike}" class="ml-1"></strong>
 							</div>
-							<div class="like p-2 cursor"><i class="fa fa-commenting-o"></i><span class="ml-1">Bình
-									luận</span></div>
+							<div class="like p-2 cursor"><i class="fa fa-commenting-o fa-2x"></i><strong
+									class="ml-1">Bình
+									luận</strong></div>
 						</div>
 					</div>
-					<div class="bg-light p-2">
-						<div class="d-flex flex-row align-items-start"><img class="rounded-circle"
-								th:src="@{/img/{name}(name=${currentImg})}" width="40"><textarea
-								th:id="'cmessage'+${p.id}" class="form-control ml-1 shadow-none textarea"></textarea>
+
+					<div class="bg-white">
+						<div class="d-flex flex-row align-items-start">
+							<textarea th:id="'cmessage'+${p.id}" placeholder="Mời bạn bình luận tại đây"
+								class="form-control ml-1 shadow-none textarea"></textarea>
 						</div>
 						<div class="mt-2 text-right">
-							<button class="btn btn-primary btn-sm shadow-none" th:onclick="handleComment([[${p.id}]])"
-								type="button">Bình luận</button>
-							<button class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Reset</button>
+							<button class="btn btn-success" th:onclick="handleComment([[${p.id}]])"
+								type="button"><i class="fa fa-commenting-o"></i> Bình luận</button>
 						</div>
 					</div>
+
 				</div>
 			</div>
 
-			<div th:id="'commentls'+${p.id}" class="col-md-7">
+			<div th:id="'commentls'+${p.id}" class="col-md-8 mt-2 bg-light">
 				<th:block th:each="c : ${p.comments}">
-					<div th:id="'cm'+${c.id}" class="col-md-7">
-						<div>
-							<a class="media-left" href="#"><img style="width: 50px;" class="img-circle img-sm"
-									alt="Profile Picture" th:src="@{/img/{name}(name=${c.img})}"></a>
-							<div class="media-body">
-								<div class="mar-btm">
-									<a href="#" th:text="${c.username}"
-										class="btn-link text-semibold media-heading box-inline"></a>
-									<p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i>
-										<span th:text="${c.time}"></span>
-									</p>
-								</div>
-								<p th:text="${c.message}"></p>
-								<div th:if="${currentId==c.userid}"><a
-										th:onclick="event.preventDefault(); handleDelete([[${c.id}]])" href="#">delete
-										comment</a></div>
-								<hr>
+
+					<div th:id="'cm'+${c.id}">
+						<div class="d-flex flex-row mr-5">
+							<img src="/img/avatar.png" class="avatarc" />
+							<div class="d-flex flex-row justify-content-start ml-2">
+								<a href="#" th:text="${c.username}"
+									class="btn-link text-semibold media-heading box-inline mr-5"></a>
+								<span th:text="${c.time}" class="date text-black-50"></span>
 							</div>
 						</div>
+						<div class="d-flex flex-row ml-5">
+							<p th:text="${c.message}" class="pr-5"></p>
+							<div th:if="${currentId==c.userid}">
+								<a th:onclick="event.preventDefault(); handleDelete([[${c.id}]])" href="#">Xóa</a>
+							</div>
+							<hr>
+						</div>
 					</div>
+
 				</th:block>
 			</div>
+
 		</div>
 	</div>
 	<div th:replace="fragments/modalForum.html"></div>
@@ -319,42 +338,33 @@
 		});
 	</script>
 	<script th:inline="javascript">
+
 		const handleComment = (postid) => {
 			const message = document.getElementById("cmessage" + postid).value
 			fetch("/forum/comment?postid=" + postid + "&message=" + message).then(res => res.json()).then(res => {
-				$("#commentls" + postid).prepend(`<div id="cm${res.id}" class="col-md-7">
-				<a class="media-left" href="#"><img style="width: 50px;" class="img-circle img-sm" alt="Profile Picture"
-						src="/img/${res.img}"></a>
-				<div class="media-body">
-					<div class="mar-btm">
-						<a href="#" class="btn-link text-semibold media-heading box-inline">${res.username}</a>
-						<p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i>
-							<span>${res.time}</span>
-						</p>
-					</div>
-					<p >${res.message}</p>
-					<div class="pad-ver">
-						<div class="btn-group">
-							<a class="btn btn-sm btn-default btn-hover-success active" href="#"><i
-									class="fa fa-thumbs-up"></i> You Like it</a>
-							<a class="btn btn-sm btn-default btn-hover-danger" href="#"><i
-									class="fa fa-thumbs-down"></i></a>
+				$("#commentls" + postid).prepend(`<div id="cm${res.id}">
+				<div class="d-flex flex-row mr-5">
+							<i class="avatar"></i>
+							<div class="d-flex flex-row justify-content-start ml-2">
+								<a href="#"
+									class="btn-link text-semibold media-heading box-inline mr-5">
+									<span>${res.username}</span>
+									</a>
+								<span class="date text-black-50">${res.time}</span>
+							</div>
 						</div>
-						<a class="btn btn-sm btn-default btn-hover-primary" href="#">Comment</a>
-					</div>
-					<div ><a onclick="event.preventDefault();handleDelete(${res.id})" href="#">delete comment</a></div>
-					<hr>
-				</div>
-			</div>`)
+						<div class="d-flex flex-row ml-5">
+							<p class="pr-5">${res.message}</p>
+							<div ><a onclick="event.preventDefault();handleDelete(${res.id})" href="#">Xóa</a></div>
+							</div>
+			</div><hr>`)
 				document.getElementById("cmessage" + postid).value = ''
 			})
 
 		}
 
 		const handleDelete = (id) => {
-
 			fetch('/forum/comment/delete?cid=' + id).then(res => res.json()).then(res => {
-
 				$('#cm' + id).remove()
 			})
 		}
@@ -364,14 +374,15 @@
 			$('#textmessage').val(mes)
 			$('#specialUpdate').val(spe)
 		}
+
 		const handleLike = (pid) => {
 			fetch('/forum/post/like?pid=' + pid).then(res => res.json()).then(res => {
 				if (!res.liked) {
-					$('#icon' + pid).attr('class', 'fa fa-thumbs-o-up')
+					$('#icon' + pid).attr('class', 'fa fa-2x fa-thumbs-o-up')
 					$('#like' + pid).text(res.totalLike)
 					return
 				}
-				$('#icon' + pid).attr('class', 'fa fa-thumbs-up')
+				$('#icon' + pid).attr('class', 'fa fa-2x fa-thumbs-up')
 				$('#like' + pid).text(res.totalLike)
 			})
 		}

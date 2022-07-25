@@ -401,7 +401,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 		messageRepository.save(message);
 
 		chatMessage.setCreatedAt(LocalDateTime.now().format(formatter));
-		chatMessage.setRole(message.getAuthor().getNameRole());
+		chatMessage.setRole("Đã chat ");
 
 		return chatMessage;
 	}
