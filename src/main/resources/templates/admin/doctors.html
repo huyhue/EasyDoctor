@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	th:replace="~{fragments/base :: base (~{::body},'Doctor')}">
+	th:replace="~{fragments/base :: base (~{::body},'Bác sĩ')}">
 
 <body>
 	<div class="content-header" id="scroll">
@@ -161,7 +161,7 @@
 						}, {
 							"className": "dt-btn",
 							"render": function () {
-								return '<div class="btn-group btn-group-sm"> <a id="redirectUnID" class="btn btn-warning"><i class="fas fa-eye"></i></a><a href="#" class="btn btn-info" id="editUnID"><i class="fas fa-user-edit"></i></a><a href="#" class="btn btn-danger" id="deleteUnID"><i class="fas fa-trash"></i></a></div>';
+								return '<div class="btn-group btn-group-sm"> <a id="redirectUnID" class="btn btn-warning"><i class="fas fa-eye"></i></a><a href="#" class="btn btn-info" id="editUnID"><i class="fas fa-user-edit"></i></a></div>';
 							}
 						}],
 					"fnCreatedRow": function (nRow, aData, iDataIndex) {
@@ -227,6 +227,14 @@
 									$("#errorMsgEmail").text("Email already exit!!");
 									$("#email").css('border', '1px solid red');
 									$("#email").focus();
+								} else if (data.msgCode == "notSpecialty") {
+									$("#errorMsgSpecialty").text("Vui lòng nhập chuyên khoa!!");
+									$("#specialty").css('border', '1px solid red');
+									$("#specialty").focus();
+								} else if (data.msgCode == "notClinic") {
+									$("#errorMsgClinic").text("Vui lòng nhập phòng khám!!");
+									$("#clinic").css('border', '1px solid red');
+									$("#clinic").focus();
 								}
 							},
 							error: function (

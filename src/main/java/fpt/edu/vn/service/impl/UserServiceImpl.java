@@ -225,6 +225,9 @@ public class UserServiceImpl implements UserService {
 			doctor.setPassword(passwordEncoder.encode("123456"));
 			doctor.setEmail(doctordto.getEmail());
 			doctor.setFullname(doctordto.getFullname());
+			doctor.setConfirmationToken(UUID.randomUUID().toString());
+			doctor.setProfileImage("/img/avatar.png");
+			doctor.setRoles(getRolesForDoctor());
 			doctor.setSpecialty(specialtyRepository.findByName(doctordto.getNameSpecialty()));
 			doctor.setClinic(clinicRepository.findByName(doctordto.getNameClinic()));
 			doctorRepository.save(doctor);

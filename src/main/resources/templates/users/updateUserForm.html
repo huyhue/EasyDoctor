@@ -53,6 +53,10 @@
 					<a class="nav-link" id="declaration-tab" data-toggle="tab" href="#declaration" role="tab"
 						aria-controls="declaration" aria-selected="false">Thông tin khai báo</a>
 				</li>
+				<li sec:authorize="hasRole('ROLE_DOCTOR')" class="nav-item">
+					<a class="nav-link" id="follow-tab" data-toggle="tab" href="#follow" role="tab"
+						aria-controls="follow" aria-selected="false">Dách sách theo dõi bác sĩ</a>
+				</li>
 			</ul>
 
 
@@ -225,6 +229,21 @@
 								class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
 								<strong><i class="fas fa-solid fa-truck-medical"></i> Thông tin khác: </strong>
 								<span class="badge badge-dark badge-pill">[[${user.declaration.notes}]]</span>
+							</li>
+						</ul>
+					</div>
+				</th:block>
+				
+				<th:block th:if="${account_type == 'doctors'}">
+					<div class="tab-pane fade pt-3" id="follow" role="tabpanel" aria-labelledby="follow-tab">
+						<div>
+							<h3>Bác sĩ chưa có người theo dõi.</h3>
+						</div>
+						<ul class="list-group">
+						<h3>Số người đang theo dõi.</h3>
+							<li
+								class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
+								<strong><i class="fas fa-solid fa-briefcase-medical"></i> Huy Hue: </strong>
 							</li>
 						</ul>
 					</div>

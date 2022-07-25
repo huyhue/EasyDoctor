@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import fpt.edu.vn.component.ChangePasswordForm;
 import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.model.Declaration;
-import fpt.edu.vn.model.Packages;
 import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.AppointmentService;
@@ -35,12 +34,6 @@ public class PatientController {
 		super();
 		this.userService = userService;
 		this.appointmentService = appointmentService;
-	}
-
-	@GetMapping("/all")
-	public String showHomePatient(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
-//		model.addAttribute("user", userService.getUserById(currentUser.getId()));
-		return "patients/patientList";
 	}
 
 	@GetMapping("/{id}")
