@@ -40,6 +40,9 @@ public class ForumController {
 			@RequestParam(required = false) Integer specialId,
 			@RequestParam(required = false) String keyword,
 			@RequestParam(required = false) Integer page) {
+		if (currentUser == null) {
+			return "users/login";
+		}
 		model.addAttribute("currentId", currentUser.getId());
 		model.addAttribute("currentImg", currentUser.getProfileImage());
 		model.addAttribute("page", page);
