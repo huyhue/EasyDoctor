@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import fpt.edu.vn.component.ChatMessage;
+import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.component.ReviewForm;
 import fpt.edu.vn.model.Appointment;
 import fpt.edu.vn.model.Message;
@@ -31,16 +32,16 @@ import java.util.Map;
 @Controller
 @RequestMapping("/appointments")
 public class AppointmentController {
-	
+
 	private static final String REJECTION_CONFIRMATION_VIEW = "appointments/rejectionConfirmation";
-	
+
 	@Autowired
 	public OTPService otpService;
 	private final PackagesService packagesService;
 	private final UserService userService;
 	private final AppointmentService appointmentService;
 	private final EmailService emailService;
-	
+
 	public AppointmentController(PackagesService packagesService, UserService userService,
 			AppointmentService appointmentService, EmailService emailService) {
 		super();
@@ -51,38 +52,44 @@ public class AppointmentController {
 	}
 
 	@GetMapping("/{id}")
-    public String showAppointmentDetail(@PathVariable("id") int appointmentId, Model model, ModelMap modelMap, @AuthenticationPrincipal CustomUserDetails currentUser) {
-        Appointment appointment = appointmentService.getAppointmentByIdWithAuthorization(appointmentId);
-        model.addAttribute("appointment", appointment);
-        model.addAttribute("chatMessage", new Message());
+	public String showAppointmentDetail(@PathVariable("id") int appointmentId, Model model, ModelMap modelMap,
+			@AuthenticationPrincipal CustomUserDetails currentUser) {
+		Appointment appointment = appointmentService.getAppointmentByIdWithAuthorization(appointmentId);
+		model.addAttribute("appointment", appointment);
+		model.addAttribute("chatMessage", new Message());
 		model.addAttribute("history", userService.getHistoryByAppointmentId(appointmentId));
-        boolean allowedToRequestRejection = appointmentService.isPatientAllowedToRejectAppointment(currentUser.getId(), appointmentId);
-        boolean allowedToAcceptRejection = appointmentService.isDoctorAllowedToAcceptRejection(currentUser.getId(), appointmentId);
-        boolean allowedToReview = appointmentService.isPatientAllowedToReview(currentUser.getId(), appointmentId);
-        model.addAttribute("allowedToRequestRejection", allowedToRequestRejection);
-        model.addAttribute("allowedToAcceptRejection", allowedToAcceptRejection);
-        setUpReferenceData(modelMap);
-        model.addAttribute("allowedToReview", allowedToReview);
-        model.addAttribute("reviewForm", new ReviewForm());
-        if (allowedToRequestRejection) {
-            model.addAttribute("remainingTime", formatDuration(Duration.between(LocalDateTime.now(), appointment.getEnd().plusDays(1))));
-        }
-        
-        String cancelNotAllowedReason = appointmentService.getCancelNotAllowedReason(currentUser.getId(), appointmentId);
-        model.addAttribute("allowedToCancel", cancelNotAllowedReason == null);
-        model.addAttribute("cancelNotAllowedReason", cancelNotAllowedReason);
-        return "appointments/appointmentDetail";
-    }
-	
-    @PostMapping("/review")
-    public String addReviewPatient(@ModelAttribute("reviewForm") ReviewForm reviewForm, @AuthenticationPrincipal CustomUserDetails currentUser) {
-    	Review reviewUO = new Review(reviewForm.getFeedback(), reviewForm.getRating(),reviewForm.getDoctor(), 
-    			userService.getPatientById(currentUser.getId()));
-    	
-    	appointmentService.saveReviewByAppointment(reviewUO, reviewForm.getAppointmentId());
-        return "redirect:/detail/" + reviewForm.getDoctor().getId();
-    }
-	
+		boolean allowedToRequestRejection = appointmentService.isPatientAllowedToRejectAppointment(currentUser.getId(),
+				appointmentId);
+		boolean allowedToAcceptRejection = appointmentService.isDoctorAllowedToAcceptRejection(currentUser.getId(),
+				appointmentId);
+		boolean allowedToReview = appointmentService.isPatientAllowedToReview(currentUser.getId(), appointmentId);
+		model.addAttribute("allowedToRequestRejection", allowedToRequestRejection);
+		model.addAttribute("allowedToAcceptRejection", allowedToAcceptRejection);
+		setUpReferenceData(modelMap);
+		model.addAttribute("allowedToReview", allowedToReview);
+		model.addAttribute("reviewForm", new ReviewForm());
+		if (allowedToRequestRejection) {
+			model.addAttribute("remainingTime",
+					formatDuration(Duration.between(LocalDateTime.now(), appointment.getEnd().plusDays(1))));
+		}
+
+		String cancelNotAllowedReason = appointmentService.getCancelNotAllowedReason(currentUser.getId(),
+				appointmentId);
+		model.addAttribute("allowedToCancel", cancelNotAllowedReason == null);
+		model.addAttribute("cancelNotAllowedReason", cancelNotAllowedReason);
+		return "appointments/appointmentDetail";
+	}
+
+	@PostMapping("/review")
+	public String addReviewPatient(@ModelAttribute("reviewForm") ReviewForm reviewForm,
+			@AuthenticationPrincipal CustomUserDetails currentUser) {
+		Review reviewUO = new Review(reviewForm.getFeedback(), reviewForm.getRating(), reviewForm.getDoctor(),
+				userService.getPatientById(currentUser.getId()));
+
+		appointmentService.saveReviewByAppointment(reviewUO, reviewForm.getAppointmentId());
+		return "redirect:/detail/" + reviewForm.getDoctor().getId();
+	}
+
 	private void setUpReferenceData(ModelMap modelMap) {
 		Map<Integer, String> ratingOptionMap = new LinkedHashMap<>();
 		ratingOptionMap.put(5, "5 Star");
@@ -94,23 +101,25 @@ public class AppointmentController {
 	}
 
 	@GetMapping("/all")
-	public String showAllAppointments(Model model, @RequestParam(required=false) String dateTime, @AuthenticationPrincipal CustomUserDetails currentUser) {
-        if (currentUser.hasRole("ROLE_PATIENT")) {
-            model.addAttribute("appointments", appointmentService.getAppointmentByPatientId(currentUser.getId()));
-        } else if (currentUser.hasRole("ROLE_DOCTOR")) {
-            model.addAttribute("appointments", appointmentService.getAppointmentByDoctorId(currentUser.getId()));
-            model.addAttribute("values", appointmentService.getCountAppointmentByStatus(currentUser.getId(), dateTime));
-        }
+	public String showAllAppointments(Model model, @RequestParam(required = false) String dateTime,
+			@AuthenticationPrincipal CustomUserDetails currentUser) {
+		if (currentUser.hasRole("ROLE_PATIENT")) {
+			model.addAttribute("appointments", appointmentService.getAppointmentByPatientId(currentUser.getId()));
+		} else if (currentUser.hasRole("ROLE_DOCTOR")) {
+			model.addAttribute("appointments", appointmentService.getAppointmentByDoctorId(currentUser.getId()));
+			model.addAttribute("values", appointmentService.getCountAppointmentByStatus(currentUser.getId(), dateTime));
+		}
 		return "appointments/listAppointments";
 	}
 
 	@PostMapping("/statities")
-	public String showStatitiesAppointments(Model model, @RequestParam("dateTime") String dateTime, @AuthenticationPrincipal CustomUserDetails currentUser) {
+	public String showStatitiesAppointments(Model model, @RequestParam("dateTime") String dateTime,
+			@AuthenticationPrincipal CustomUserDetails currentUser) {
 		model.addAttribute("appointments", appointmentService.getAppointmentByDoctorId(currentUser.getId()));
-        model.addAttribute("values", appointmentService.getCountAppointmentByStatus(currentUser.getId(), dateTime));
+		model.addAttribute("values", appointmentService.getCountAppointmentByStatus(currentUser.getId(), dateTime));
 		return "appointments/listAppointments";
 	}
-	
+
 	@GetMapping("/new/{doctorId}")
 	public String selectPackages(@PathVariable("doctorId") int doctorId, Model model,
 			@AuthenticationPrincipal CustomUserDetails currentUser) {
@@ -139,9 +148,9 @@ public class AppointmentController {
 			model.addAttribute("end",
 					LocalDateTime.parse(start).plusMinutes(packagesService.getPackagesById(packagesId).getDuration()));
 //			emailService.sendAppointmentOTPConfirm(currentUser.getEmail());
-			
+
 			int otp = otpService.generateOTP(currentUser.getEmail());
-	        model.addAttribute("OTPSEND", String.valueOf(otp));
+			model.addAttribute("OTPSEND", String.valueOf(otp));
 			return "appointments/newAppointmentSummary";
 		} else {
 			return "redirect:/appointments/new" + doctorId;
@@ -154,9 +163,10 @@ public class AppointmentController {
 		appointmentService.createNewAppointment(packagesId, doctorId, currentUser.getId(), LocalDateTime.parse(start));
 		return "redirect:/appointments/all";
 	}
-	
+
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public @ResponseBody String validateOtp(@RequestParam("OTPSEND") int OTPSEND, @RequestParam("packagesId") int packagesId, @RequestParam("doctorId") int doctorId,
+	public @ResponseBody String validateOtp(@RequestParam("OTPSEND") int OTPSEND,
+			@RequestParam("packagesId") int packagesId, @RequestParam("doctorId") int doctorId,
 			@RequestParam("start") String start, @AuthenticationPrincipal CustomUserDetails currentUser) {
 		final String SUCCESS = "SUCCESS";
 		final String FAIL = "FAIL";
@@ -165,7 +175,8 @@ public class AppointmentController {
 			if (serverOtp > 0) {
 				if (OTPSEND == serverOtp) {
 					otpService.clearOTP(currentUser.getEmail());
-					appointmentService.createNewAppointment(packagesId, doctorId, currentUser.getId(), LocalDateTime.parse(start));
+					appointmentService.createNewAppointment(packagesId, doctorId, currentUser.getId(),
+							LocalDateTime.parse(start));
 					return (SUCCESS);
 				} else {
 					return FAIL;
@@ -186,57 +197,66 @@ public class AppointmentController {
 		return "200";
 	}
 
-    @PostMapping("/reject")
-    public String processAppointmentRejectionRequest(@RequestParam("appointmentId") int appointmentId, @AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
-        boolean result = appointmentService.requestAppointmentRejection(appointmentId, currentUser.getId());
-        model.addAttribute("result", result);
-        model.addAttribute("type", "request");
-        return REJECTION_CONFIRMATION_VIEW;
-    }
-    
-    //Click link by email by doctor
-    @GetMapping("/acceptRejection")
-    public String acceptAppointmentRejectionRequest(@RequestParam("token") String token, Model model) {
-        boolean result = appointmentService.acceptRejection(token);
-        model.addAttribute("result", result);
-        model.addAttribute("type", "accept");
-        return REJECTION_CONFIRMATION_VIEW;
-    }
-    
-    //Click link by email
-    @GetMapping("/reject")
-    public String processAppointmentRejectionRequest(@RequestParam("token") String token, Model model) {
-        boolean result = appointmentService.requestAppointmentRejection(token);
-        model.addAttribute("result", result);
-        model.addAttribute("type", "request");
-        return REJECTION_CONFIRMATION_VIEW;
-    }
+	@GetMapping(value = "/cancelAdmin")
+	@ResponseBody
+	public CommonMsg cancelAppointmentByAdmin(@RequestParam("id") int id) {
+		return appointmentService.cancelAppointmentByAdmin(id);
+	}
 
-    //Click by button by doctor
-    @PostMapping("/acceptRejection")
-    public String acceptAppointmentRejectionRequest(@RequestParam("appointmentId") int appointmentId, @AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
-        boolean result = appointmentService.acceptRejection(appointmentId, currentUser.getId());
-        model.addAttribute("result", result);
-        model.addAttribute("type", "accept");
-        return REJECTION_CONFIRMATION_VIEW;
-    }
-    
-    @RequestMapping(value = "/messages/all", method = RequestMethod.POST)
-    @ResponseBody
-    public String getMessages(@RequestParam("appointmentId") int appointmentId) {
+	@PostMapping("/reject")
+	public String processAppointmentRejectionRequest(@RequestParam("appointmentId") int appointmentId,
+			@AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
+		boolean result = appointmentService.requestAppointmentRejection(appointmentId, currentUser.getId());
+		model.addAttribute("result", result);
+		model.addAttribute("type", "request");
+		return REJECTION_CONFIRMATION_VIEW;
+	}
+
+	// Click link by email by doctor
+	@GetMapping("/acceptRejection")
+	public String acceptAppointmentRejectionRequest(@RequestParam("token") String token, Model model) {
+		boolean result = appointmentService.acceptRejection(token);
+		model.addAttribute("result", result);
+		model.addAttribute("type", "accept");
+		return REJECTION_CONFIRMATION_VIEW;
+	}
+
+	// Click link by email
+	@GetMapping("/reject")
+	public String processAppointmentRejectionRequest(@RequestParam("token") String token, Model model) {
+		boolean result = appointmentService.requestAppointmentRejection(token);
+		model.addAttribute("result", result);
+		model.addAttribute("type", "request");
+		return REJECTION_CONFIRMATION_VIEW;
+	}
+
+	// Click by button by doctor
+	@PostMapping("/acceptRejection")
+	public String acceptAppointmentRejectionRequest(@RequestParam("appointmentId") int appointmentId,
+			@AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
+		boolean result = appointmentService.acceptRejection(appointmentId, currentUser.getId());
+		model.addAttribute("result", result);
+		model.addAttribute("type", "accept");
+		return REJECTION_CONFIRMATION_VIEW;
+	}
+
+	@RequestMapping(value = "/messages/all", method = RequestMethod.POST)
+	@ResponseBody
+	public String getMessages(@RequestParam("appointmentId") int appointmentId) {
 		List<ChatMessage> list = appointmentService.getMessagesByAppointmentId(appointmentId);
-		
+
 		Gson gsonBuilder = new GsonBuilder().create();
-        String messagelistJson = gsonBuilder.toJson(list);
-    	return messagelistJson;
-    }
-    
-    @RequestMapping(value = "/messages/active", method = RequestMethod.POST)
-    @ResponseBody
-    public Boolean getActiveUsers(@RequestParam("appointmentId") int appointmentId, @RequestParam("userId") int userId) {
-    	boolean active = appointmentService.getActiveUserByAppointment(appointmentId, userId);
-    	return active;
-    }
+		String messagelistJson = gsonBuilder.toJson(list);
+		return messagelistJson;
+	}
+
+	@RequestMapping(value = "/messages/active", method = RequestMethod.POST)
+	@ResponseBody
+	public Boolean getActiveUsers(@RequestParam("appointmentId") int appointmentId,
+			@RequestParam("userId") int userId) {
+		boolean active = appointmentService.getActiveUserByAppointment(appointmentId, userId);
+		return active;
+	}
 
 	public static String formatDuration(Duration duration) {
 		long s = duration.getSeconds();

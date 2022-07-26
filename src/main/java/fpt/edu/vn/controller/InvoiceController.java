@@ -45,7 +45,7 @@ public class InvoiceController {
     @GetMapping("/issue")
     public String issueInvoicesManually(Model model) {
         invoiceService.issueInvoicesForConfirmedAppointments();
-        return "redirect:/invoices/all";
+        return "redirect:/admin/invoices";
     }
 
     @GetMapping("/download/{invoiceId}")

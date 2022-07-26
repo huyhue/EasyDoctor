@@ -99,11 +99,11 @@ public class AdminController {
 		return commonMsg;
 	}
 
-	@GetMapping(value = "/deleteDoctor")
-	@ResponseBody
-	public CommonMsg deleteDoctor(@RequestParam("id") int id) {
-		return userService.deleteDoctor(id);
-	}
+//	@GetMapping(value = "/deleteDoctor")
+//	@ResponseBody
+//	public CommonMsg deleteDoctor(@RequestParam("id") int id) {
+//		return userService.deleteDoctor(id);
+//	}
 
 	// Clinic
 	@GetMapping("/clinic")
@@ -152,15 +152,16 @@ public class AdminController {
 		return commonMsg;
 	}
 
-	@GetMapping(value = "/deletePatient")
-	@ResponseBody
-	public CommonMsg deletePatient(@RequestParam("id") int id) {
-		return userService.deletePatient(id);
-	}
+//	@GetMapping(value = "/deletePatient")
+//	@ResponseBody
+//	public CommonMsg deletePatient(@RequestParam("id") int id) {
+//		return userService.deletePatient(id);
+//	}
 
 	// Appointment
 	@GetMapping("/viewAppointment")
 	public String viewAppoinmentList(Model model) {
+		 model.addAttribute("appointmentList", appointmentService.getAllAppointment());
 		return "admin/appointments";
 	}
 
@@ -170,11 +171,11 @@ public class AdminController {
 		return appointmentService.getAllAppointment();
 	}
 
-	@GetMapping(value = "/deleteAppoinment")
-	@ResponseBody
-	public CommonMsg deleteAppoinment(@RequestParam("id") int id) {
-		return appointmentService.deleteAppoinment(id);
-	}
+//	@GetMapping(value = "/deleteAppoinment")
+//	@ResponseBody
+//	public CommonMsg deleteAppoinment(@RequestParam("id") int id) {
+//		return appointmentService.deleteAppoinment(id);
+//	}
 
 	// Review
 	@GetMapping("/viewReview")

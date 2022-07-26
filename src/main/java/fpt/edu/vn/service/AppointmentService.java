@@ -44,6 +44,7 @@ public interface AppointmentService {
 	
 	//Cancel
 	String getCancelNotAllowedReason(int userId, int appointmentId);
+	CommonMsg cancelAppointmentByAdmin(int appointmentId);
 	List<Appointment> getCanceledAppointmentsByPatientIdForCurrentMonth(int patientId);
 	
 	//Reject

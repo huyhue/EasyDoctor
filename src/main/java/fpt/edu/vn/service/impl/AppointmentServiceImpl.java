@@ -237,6 +237,21 @@ public class AppointmentServiceImpl implements AppointmentService {
 			throw new org.springframework.security.access.AccessDeniedException("Unauthorized");
 		}
 	}
+	
+	@Override
+	public CommonMsg cancelAppointmentByAdmin(int appointmentId) {
+		CommonMsg commonMsg = new CommonMsg();
+		Appointment appointment = appointmentRepository.findById(appointmentId).get();
+		appointment.setStatus(AppointmentStatus.CANCELED);
+		User canceler = userService.getUserById(1);
+		appointment.setCanceler(canceler);
+		appointment.setCanceledAt(LocalDateTime.now());
+		appointmentRepository.save(appointment);
+		notificationService.appointmentCanceledByPatient(appointment, true);
+		notificationService.appointmentCanceledByDoctor(appointment, true);
+		commonMsg.setMsgCode("200");
+		return commonMsg;
+	}
 
 	@Override
 	@PostAuthorize("returnObject.doctor.id == principal.id or returnObject.patient.id == principal.id or hasRole('ADMIN') ")
