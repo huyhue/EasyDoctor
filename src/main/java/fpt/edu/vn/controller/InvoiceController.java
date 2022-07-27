@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.InvoiceService;
 
@@ -35,6 +38,12 @@ public class InvoiceController {
         model.addAttribute("invoices", invoiceService.getAllInvoices());
         return "invoices/listInvoices";
     }
+    
+    @GetMapping(value = "/create")
+	@ResponseBody
+	public CommonMsg createInvoiceByAdmin(@RequestParam("id") int id, @RequestParam("status") String status) {
+		return invoiceService.createNewInvoiceByAdmin(id, status);
+	}
 
     @PostMapping("/paid/{invoiceId}")
     public String changeStatusToPaid(@PathVariable("invoiceId") int invoiceId) {
@@ -45,7 +54,7 @@ public class InvoiceController {
     @GetMapping("/issue")
     public String issueInvoicesManually(Model model) {
         invoiceService.issueInvoicesForConfirmedAppointments();
-        return "redirect:/admin/invoices";
+        return "redirect:/admin/viewAppointment";
     }
 
     @GetMapping("/download/{invoiceId}")

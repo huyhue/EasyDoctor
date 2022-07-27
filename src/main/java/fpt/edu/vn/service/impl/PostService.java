@@ -53,7 +53,7 @@ public class PostService {
         }
         if (condition.length() > 0)
             condition = " where " + condition;
-        String sql = "SELECT p.id,u.fullname,u.profile_img,s.name,p.message,p.img,likes,total_like,update_at,p.user_id,p.special_id FROM easydoctor.posts p join specialties s on s.id=p.special_id join users u on p.user_id=u.id "
+        String sql = "SELECT p.id,u.fullname,u.profile_img,s.name,p.message,p.img,likes,total_like,update_at,p.user_id,p.special_id FROM posts p join specialties s on s.id=p.special_id join users u on p.user_id=u.id "
                 + condition + " order by update_at desc";
         List<Object[]> reList = entityManager.createNativeQuery(sql).getResultList();
         ls = reList.stream().map(obj -> {
@@ -135,7 +135,7 @@ public class PostService {
     }
 
     private List<CommentDTO> getComment(long id) {
-        String sql = "SELECT c.id,message,fullname,update_at,u.profile_img,c.user_id FROM easydoctor.comments c join users u on u.id=c.user_id where post_id="
+        String sql = "SELECT c.id,message,fullname,update_at,u.profile_img,c.user_id FROM comments c join users u on u.id=c.user_id where post_id="
                 + id + " order by update_at desc";
         List<Object[]> ls = entityManager.createNativeQuery(sql).getResultList();
         List<CommentDTO> lsCom = ls.stream().map(obj -> {

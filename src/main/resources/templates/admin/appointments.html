@@ -78,7 +78,8 @@
 											th:if="${appointment.status == 'SCHEDULED'}">Hủy
 										</a>
 										<a id="btn-invoice" class="btn btn-outline-success btn-sm"
-											th:if="${appointment.status == 'INVOICED'}">Xuất hóa đơn
+											th:if="${appointment.status == 'FINISHED'} or ${appointment.status == 'CONFIRMED'}">Xuất
+											hóa đơn
 										</a>
 									</td>
 								</tr>
@@ -106,13 +107,12 @@
 				$('#tbl-appointment tbody').on('click', '#btn-cancel', function () {
 					var curRow = $(this).closest('tr');
 					var uniId = curRow.find('td:eq(0)').attr("data-id");
-					console.log("ID: " + uniId);
-
 					if (uniId != '') {
 						$.confirm({
 							type: 'red',
 							title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red;"></i> ' + 'Xác nhận!!',
 							content: 'Bạn có chắc chắn hủy cuộc hẹn không?',
+							autoClose: 'No|8000',
 							buttons: {
 								Yes: function () {
 									$.ajax({
@@ -131,7 +131,8 @@
 														}
 													}
 												});
-												table.ajax.reload();
+												curRow.find('td:eq(7)').css("display", "none");
+												curRow.find('td:eq(6) span').text("CANCELED");
 											}
 										},
 										error: function (xhr, status, error) {
@@ -150,7 +151,6 @@
 				$('#tbl-appointment tbody').on('click', '#btn-invoice', function () {
 					var curRow = $(this).closest('tr');
 					var uniId = curRow.find('td:eq(0)').attr("data-id");
-					console.log("ID: " + uniId);
 
 					if (uniId != '') {
 						$.confirm({
@@ -160,7 +160,7 @@
 							buttons: {
 								PAID: function () {
 									$.ajax({
-										url: "/admin/invoiceAppoinment?id=" + uniId,
+										url: "/invoices/create?id=" + uniId + "&status=paid",
 										type: 'GET',
 										dataType: 'json',
 										success: function (data) {
@@ -169,22 +169,45 @@
 												$.confirm({
 													type: 'green',
 													title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
-													content: 'Hủy cuộc hẹn thành công!!',
+													content: 'Cuộc hẹn đã thanh toán và in hóa đơn thành công!!',
 													buttons: {
 														ok: function () {
 														}
 													}
 												});
-												table.ajax.reload();
+												curRow.find('td:eq(7)').css("display", "none");
+												curRow.find('td:eq(6) span').text("INVOICED");
 											}
 										},
 										error: function (xhr, status, error) {
-											showAlertByType('Something Wrong!', "F");
+											console.log("Error");
 										}
 									});
 								},
 								ISSUED: function () {
-
+									$.ajax({
+										url: "/invoices/create?id=" + uniId + "&status=issued",
+										type: 'GET',
+										dataType: 'json',
+										success: function (data) {
+											if (data.msgCode == '200') {
+												i = 0;
+												$.confirm({
+													type: 'green',
+													title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
+													content: 'Cuộc hẹn chưa thanh toán và in hóa đơn thành công. Thay đổi trạng thái ở mục hóa đơn!!!',
+													buttons: {
+														ok: function () {
+														}
+													}
+												});
+												$('#btn-invoice').css("display", "none");
+											}
+										},
+										error: function (xhr, status, error) {
+											console.log("Error");
+										}
+									});
 								},
 								EXIT: function () {
 
@@ -202,18 +225,7 @@
 						autoClose: 'No|12000',
 						buttons: {
 							Yes: function () {
-								$.ajax({
-									url: "/invoices/issue",
-									type: 'GET',
-									dataType: 'json',
-									success: function (data) {
-										location.reload();
-									},
-									error: function (xhr, status, error) {
-										console.log("Lỗi đã xảy ra!");
-										location.reload();
-									}
-								});
+								location.href = '/invoices/issue';
 							},
 							No: function () {
 							}

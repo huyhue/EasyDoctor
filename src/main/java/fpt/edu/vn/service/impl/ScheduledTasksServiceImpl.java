@@ -10,28 +10,28 @@ import fpt.edu.vn.service.ScheduledTasksService;
 @Component
 public class ScheduledTasksServiceImpl implements ScheduledTasksService {
 
-    private final AppointmentService appointmentService;
-    private final InvoiceService invoiceService;
+	private final AppointmentService appointmentService;
+	private final InvoiceService invoiceService;
 
-    public ScheduledTasksServiceImpl(AppointmentService appointmentService, InvoiceService invoiceService) {
-        this.appointmentService = appointmentService;
-        this.invoiceService = invoiceService;
-    }
+	public ScheduledTasksServiceImpl(AppointmentService appointmentService, InvoiceService invoiceService) {
+		this.appointmentService = appointmentService;
+		this.invoiceService = invoiceService;
+	}
 
-    // Chay sau moi 30 phut
-    @Scheduled(fixedDelay = 30 * 60 * 1000)
-    @Override
-    public void updateAllAppointmentsStatuses() {
-        appointmentService.updateAllAppointmentsStatuses();
-    }
+	// Chay sau moi 30 phut
+	@Scheduled(fixedDelay = 30 * 60 * 1000)
+	@Override
+	public void updateAllAppointmentsStatuses() {
+		appointmentService.updateAllAppointmentsStatuses();
+	}
 
-    // Chay vao ngay dau tien moi thang
-    // @Scheduled(cron = "0 0 0 1 * ?")
-    //Chay sau 10 giay
-    @Scheduled(cron = "*/10 * * * * *")
-    @Override
-    public void issueInvoicesForCurrentMonth() {
-        invoiceService.issueInvoicesForConfirmedAppointments();
-    }
+	// Chay sau 10 giay
+//    @Scheduled(cron = "*/10 * * * * *")
+	// Chay vao ngay dau tien moi thang
+	@Scheduled(cron = "0 0 0 1 * ?")
+	@Override
+	public void issueInvoicesForCurrentMonth() {
+		invoiceService.issueInvoicesForConfirmedAppointments();
+	}
 
 }

@@ -75,15 +75,13 @@ public class ForumController {
 
 	@GetMapping("/post/like")
 	@ResponseBody
-
 	public PostDTO likePost(@RequestParam Long pid) {
-
 		return postService.handleLike(pid);
 	}
 
 	@PostMapping("/post/add")
 	public String addNewPost(@RequestParam String message, @RequestParam(required = false) long specialId,
-			@RequestParam MultipartFile image)
+			@RequestParam(required = false) MultipartFile image)
 			throws IOException {
 		postService.addPost(message, specialId, image);
 		return "redirect:/forum/list";

@@ -5,6 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.model.Appointment;
 import fpt.edu.vn.model.AppointmentStatus;
 import fpt.edu.vn.model.Invoice;
@@ -60,6 +61,28 @@ public class InvoiceServiceImpl implements InvoiceService {
         invoiceRepository.save(invoice);
         notificationService.newInvoice(invoice, true);
     }
+    
+    @Override
+    public CommonMsg createNewInvoiceByAdmin(int appointmentId, String status) {
+    	Appointment appointment = appointmentService.getAppointmentById(appointmentId);
+    	Invoice invoice = null;
+    	CommonMsg commonMsg = new CommonMsg();
+    	
+    	appointment.setStatus(AppointmentStatus.INVOICED);
+    	appointmentService.updateAppointment(appointment);
+    	List<Appointment> appointments = new ArrayList<>();
+    	appointments.add(appointment);
+    	
+    	if (status.equals("paid")) {
+    		invoice = new Invoice(generateInvoiceNumber(), "paid", LocalDateTime.now(), appointments);
+		}else{
+			invoice = new Invoice(generateInvoiceNumber(), "issued", LocalDateTime.now(), appointments);
+		}
+    	invoiceRepository.save(invoice);
+    	notificationService.newInvoice(invoice, true);
+    	commonMsg.setMsgCode("200");
+    	return commonMsg;
+    }
 
     @Override
     public Invoice getInvoiceByAppointmentId(int appointmentId) {
@@ -107,6 +130,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     public void changeInvoiceStatusToPaid(int invoiceId) {
         Invoice invoice = invoiceRepository.findById(invoiceId).get();
         invoice.setStatus("paid");
+        invoice.setIssued(LocalDateTime.now());
         invoiceRepository.save(invoice);
     }
 

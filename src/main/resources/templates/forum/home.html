@@ -344,7 +344,7 @@
 			fetch("/forum/comment?postid=" + postid + "&message=" + message).then(res => res.json()).then(res => {
 				$("#commentls" + postid).prepend(`<div id="cm${res.id}">
 				<div class="d-flex flex-row mr-5">
-							<i class="avatar"></i>
+							<img src="/img/avatar.png" class="avatarc" />
 							<div class="d-flex flex-row justify-content-start ml-2">
 								<a href="#"
 									class="btn-link text-semibold media-heading box-inline mr-5">
@@ -357,7 +357,7 @@
 							<p class="pr-5">${res.message}</p>
 							<div ><a onclick="event.preventDefault();handleDelete(${res.id})" href="#">Xóa</a></div>
 							</div>
-			</div><hr>`)
+			</div>`)
 				document.getElementById("cmessage" + postid).value = ''
 			})
 

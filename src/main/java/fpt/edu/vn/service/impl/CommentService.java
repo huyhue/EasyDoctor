@@ -24,7 +24,7 @@ public class CommentService {
     EntityManager em;
 
     public CommentDTO getComment(long id) {
-        String sql = "SELECT c.id,message,fullname,update_at,u.profile_img,c.user_id FROM easydoctor.comments c join users u on u.id=c.user_id where  c.id="
+        String sql = "SELECT c.id,message,fullname,update_at,u.profile_img,c.user_id FROM comments c join users u on u.id=c.user_id where c.id="
                 + id;
         Object[] obj = (Object[]) em.createNativeQuery(sql).getSingleResult();
         CommentDTO c = new CommentDTO(Utils.objToLong(obj[0]), Utils.objToString(obj[1]), Utils.objToString(obj[2]),
