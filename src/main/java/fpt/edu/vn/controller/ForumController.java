@@ -37,18 +37,23 @@ public class ForumController {
 
 	@GetMapping("/list")
 	public String showListPost(Model model, @AuthenticationPrincipal CustomUserDetails currentUser,
+			@RequestParam(required = false) Integer did,
 			@RequestParam(required = false) Integer specialId,
 			@RequestParam(required = false) String keyword,
 			@RequestParam(required = false) Integer page) {
 		if (currentUser == null) {
 			return "users/login";
 		}
+		if (page == null)
+			page = 1;
 		model.addAttribute("currentId", currentUser.getId());
 		model.addAttribute("currentImg", currentUser.getProfileImage());
 		model.addAttribute("page", page);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("specialId", specialId);
-		model.addAttribute("ls", postService.getListPost(keyword, specialId));
+		model.addAttribute("did", did);
+		model.addAttribute("maxpage", postService.getTotalPage(did, keyword, specialId));
+		model.addAttribute("ls", postService.getListPost(did, keyword, specialId, page));
 		model.addAttribute("specialties", userService.getAllSpecialty());
 		return "forum/home";
 	}

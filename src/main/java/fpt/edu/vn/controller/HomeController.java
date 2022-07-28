@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -33,10 +34,12 @@ import fpt.edu.vn.model.User;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.EmailService;
 import fpt.edu.vn.service.UserService;
+import fpt.edu.vn.service.impl.PostService;
 
 @Controller
 public class HomeController {
-
+	@Autowired
+	PostService postService;
 	private final UserService userService;
 	private final EmailService emailService;
 
@@ -157,6 +160,7 @@ public class HomeController {
 		modelMap.put("certification", userService.getCertificationByUserId(doctorId));
 		List<Review> reviewList = userService.getAllReviewByDoctorId(doctorId);
 		modelMap.put("reviewList", reviewList);
+		modelMap.put("totalPost", postService.getTotalPost(doctorId));
 		return "doctors/doctorDetail";
 	}
 
@@ -170,7 +174,7 @@ public class HomeController {
 		return "patients/recordMedical";
 	}
 
-	//Load file ở đây
+	// Load file ở đây
 	@GetMapping("/file/{fileId}")
 	public ResponseEntity<Resource> accessFile(@PathVariable Integer fileId) {
 		// Load file from database

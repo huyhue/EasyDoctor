@@ -165,7 +165,7 @@
 		<div class="col-md-12 text-center">
 			<!-- Button trigger modal -->
 			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#staticBackdrop">
-				<i class="fas fa-solid fa-newspaper"></i>  Bác sĩ ơi đăng bài nào !
+				<i class="fas fa-solid fa-newspaper"></i> Bác sĩ ơi đăng bài nào !
 			</button>
 		</div>
 	</div>
@@ -176,7 +176,9 @@
 	<div class="container-fluid mt-5">
 		<div class="row m-3">
 			<div class="col-md-12 d-flex justify-content-center">
-				<form th:action="@{/forum/list}" method="get">
+				<form id="formsearch" th:action="@{/forum/list}" method="get">
+					<input id="page" name="page" hidden th:value="${page}" />
+					<input  name="did" hidden th:value="${did}" />
 					<div class="form-row">
 						<label for="specialty" class="col-form-label "><b>Tìm kiếm từ khóa</b></label>
 						<div class="col">
@@ -255,8 +257,8 @@
 								class="form-control ml-1 shadow-none textarea"></textarea>
 						</div>
 						<div class="mt-2 text-right">
-							<button class="btn btn-success" th:onclick="handleComment([[${p.id}]])"
-								type="button"><i class="fa fa-commenting-o"></i> Bình luận</button>
+							<button class="btn btn-success" th:onclick="handleComment([[${p.id}]])" type="button"><i
+									class="fa fa-commenting-o"></i> Bình luận</button>
 						</div>
 					</div>
 
@@ -292,23 +294,27 @@
 	<div th:replace="fragments/modalForum.html"></div>
 
 	<!--        Pagination -->
-	<!-- <nav aria-label="Page navigation example" class="mt-2" th:if="${totalPages} != 0">
-			<ul class="pagination">
-				<li th:if="${page != 0}" class="page-item"><a th:href="@{'/main/' + ${page-1}}" class="page-link"
-						href="#">Previous</a></li>
-
-				<li th:classappend="${page == i-1 ? 'active': ''}" th:each="i : ${#numbers.sequence(1, totalPages)}"
-					class="page-item">
-					<a class="page-link" th:href="@{'/main/' + ${i-1}}"><span th:text="${i}"></span></a>
-				</li>
-
-				<li th:if="${page+1 != totalPages}" class="page-item"><a th:href="@{'/main/' + ${page+1}}"
-						class="page-link" href="#">Next</a></li>
-			</ul>
-		</nav> -->
-	<!---              --->
-
-	<!-- Modal -->
+	<nav aria-label="Page navigation example" class="mt-2" th:if="${maxpage} != 0">
+		<ul class="pagination">
+			<li th:class="page-item " th:classappend="${page==1}?disabled:''">
+				<span class="page-link" th:onclick="handleSearch([[${page-1}]])">Previous</span>
+			</li>
+			<li class="page-item " th:classappend="${page<=2}?d-none:''"><span class="page-link"
+					th:onclick="handleSearch([[${page-2}]])" th:text="${page-2}"></span></li>
+			<li class="page-item " th:classappend="${page==1}?d-none:''"><span class="page-link"
+					th:onclick="handleSearch([[${page-1}]])" th:text="${page-1}"></span></li>
+			<li class="page-item active">
+				<span class="page-link" th:text="${page}"></span>
+			</li>
+			<li class="page-item " th:classappend="${page==maxpage}?d-none:''"><span class="page-link"
+					th:onclick="handleSearch([[${page+1}]])" th:text="${page+1}"></span></li>
+			<li class="page-item " th:classappend="${page>=maxpage-1}?d-none:''"><span class="page-link"
+					th:onclick="handleSearch([[${page+2}]])" th:text="${page+2}"></span></li>
+			<li th:class="page-item " th:classappend="${maxpage==page}?disabled:''">
+				<span class="page-link" th:onclick="handleSearch([[${page+1}]])">Next</span>
+			</li>
+		</ul>
+	</nav>
 
 	<!-- Modal -->
 	<script>
@@ -338,7 +344,12 @@
 		});
 	</script>
 	<script th:inline="javascript">
-
+		const handleSearch = (pageVal) => {
+			const form = document.getElementById('formsearch')
+			const page = document.getElementById('page')
+			page.value = pageVal
+			form.submit()
+		}
 		const handleComment = (postid) => {
 			const message = document.getElementById("cmessage" + postid).value
 			fetch("/forum/comment?postid=" + postid + "&message=" + message).then(res => res.json()).then(res => {

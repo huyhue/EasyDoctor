@@ -22,67 +22,98 @@ import fpt.edu.vn.model.Specialty;
 import fpt.edu.vn.model.User;
 
 public interface UserService {
-//	Patient
+	// Patient
 	List<Patient> getAllPatients();
+
 	List<PatientDto> getAllPatient();
+
 	CommonMsg savePatient(PatientDto patientDto);
+
 	CommonMsg deletePatient(int patientId);
-	
+
 	User findByEmail(String email);
+
 	User findByUserName(String username);
+
 	User findByConfirmationToken(String token);
-	
+
 	User getUserById(int userId);
+
 	User findById(int userId);
+
 	Doctor getDoctorById(int userId);
+
 	Patient getPatientById(int userId);
-	
+
 	CommonMsg updateUserPassword(ChangePasswordForm passwordChangeForm);
+
 	void updatePatient(Patient patient);
+
 	void updateDoctor(Doctor doctor);
+
 	void updateUserActiveState(int id, boolean active);
-	
+
 	void savePasswordByUser(User user);
+
 	void savePatientRegister(Patient userRE);
 
-//	Doctor
+	// Doctor
 	List<DoctorDto> getAllDoctors();
+
 	CommonMsg saveDoctor(DoctorDto doctordto);
+
 	CommonMsg deleteDoctor(int doctorId);
+
 	List<Doctor> getAllDoctorsByPatient();
+
 	List<Doctor> getAllDoctorsBySpecialty(int specialtyId);
-	
+
 	Collection<Role> getRolesForDoctor();
+
 	Collection<Role> getRolesForPatient();
-	
-//	Review
+
+
+	// Review
 	double getRatingByDoctorId(int doctorId);
+
 	List<Review> getAllReviewByDoctorId(int doctorId);
+
 	List<ReviewDto> getAllReview();
+
 	CommonMsg deleteReview(int reviewId);
-	
-//	History
+
+	// History
 	List<History> getHistoryByPatientId(int patientId);
+
 	History getHistoryByAppointmentId(int id);
-	
-//	Declaration
+
+	// Declaration
 	Declaration getDeclarationByPatientId(int patientId);
+
 	void saveDeclarationByPatientId(Declaration declaration);
+
 	void updateDeclarationByPatientId(Declaration declaration);
-	
-//	FileModel
+
+	// FileModel
 	FileModel getFileByFileId(int id);
+
 	FileModel getCertificationByUserId(int userId);
+
 	String getImageByUserId(int userId);
+
 	void saveImageProfileByUser(MultipartFile file, int id);
+
 	void saveResultByDoctor(History history, MultipartFile[] files);
+
 	void saveCertificationByDoctor(MultipartFile file, int doctorId);
-	
-//	Specialty
+
+	// Specialty
 	List<Specialty> getAllSpecialty();
-	
-//	Clinic
+
+	// Clinic
 	List<Clinic> getAllClinic();
+
 	CommonMsg saveClinic(Clinic clinic);
+
 	CommonMsg deleteClinic(int clinicId);
 }
