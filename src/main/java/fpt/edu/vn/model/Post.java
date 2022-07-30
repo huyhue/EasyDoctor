@@ -2,19 +2,25 @@ package fpt.edu.vn.model;
 
 import javax.persistence.*;
 
-//import lombok.Data;
-
 @Entity
 @Table(name = "posts")
-//@Data
 public class Post {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private Long userId;
+	
 	private Long specialId;
+	
 	private String message;
+	
 	private String img;
+	@OneToOne
+    @JoinColumn(name = "id_fileModel")
+    private FileModel fileModel;
+	
 	private String likes;
 	private Long totalLike;
 	private String createAt;
@@ -35,7 +41,6 @@ public class Post {
 	}
 
 	public Post() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Long getId() {
@@ -108,6 +113,14 @@ public class Post {
 
 	public void setUpdateAt(String updateAt) {
 		this.updateAt = updateAt;
+	}
+
+	public FileModel getFileModel() {
+		return fileModel;
+	}
+
+	public void setFileModel(FileModel fileModel) {
+		this.fileModel = fileModel;
 	}
 
 	@Override

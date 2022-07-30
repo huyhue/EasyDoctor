@@ -118,12 +118,12 @@ public class PostService {
         } catch (Exception e) {
             return false;
         }
-
     }
 
     public boolean updatePost(long postid, String message, MultipartFile image, long specialId) throws IOException {
 
         Post p = postRepository.getById(postid);
+        
         if (!image.isEmpty()) {
             Path staticPath = Paths.get("src/main/resources/static");
             Path imagePath = Paths.get("img/forum");
@@ -137,6 +137,7 @@ public class PostService {
             }
             p.setImg(image.getOriginalFilename());
         }
+        
         p.setSpecialId(specialId);
         p.setMessage(message);
         p.setUpdateAt(Utils.formatDate(new Date(), Utils.DATETIME_FORMAT));
@@ -148,6 +149,7 @@ public class PostService {
     public boolean addPost(String message, long specialId, MultipartFile image) throws IOException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+        
         Path staticPath = Paths.get("src/main/resources/static");
         Path imagePath = Paths.get("img/forum");
         if (!Files.exists(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath))) {
@@ -158,7 +160,9 @@ public class PostService {
         try (OutputStream os = Files.newOutputStream(file)) {
             os.write(image.getBytes());
         }
+        
         Post p = new Post();
+        //
         p.setImg(image.getOriginalFilename());
         p.setSpecialId(specialId);
         p.setUserId(Long.parseLong(user.getId().toString()));

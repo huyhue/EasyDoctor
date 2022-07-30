@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	th:replace="~{fragments/layout :: layout (~{::body},'doctors','Doctor Detail')}">
+	th:replace="~{fragments/layout :: layout (~{::body},'doctors','Chi tiết bác sĩ')}">
 
 <body>
 	<h2 class="text-center" style="margin: 30px">[[${doctor.fullname}]]</h2>
@@ -91,7 +91,7 @@
 						<div class="col-sm-8 form-group">
 							<a th:href="@{'/appointments/new/' + ${doctor.id}}">
 								<button type="button" class="btn btn-warning"><i class="fas fa-heart"></i>
-									Follow</button>
+									Theo dõi</button>
 							</a>
 							<a th:href="@{'/forum/list?did=' + ${doctor.id}}">
 								<button type="button" class="btn btn-success"><i class="fas fa-newspaper"></i> Bài

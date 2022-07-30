@@ -10,34 +10,36 @@ import fpt.edu.vn.component.UserForm;
 @PrimaryKeyJoinColumn(name = "id_doctor")
 public class Doctor extends User {
 	private String description;
-	
+
 	private Integer startPracticeDate;
-	
+
 	@OneToOne
-    @JoinColumn(name = "id_specialty")
-    private Specialty specialty;
-	
+	@JoinColumn(name = "id_specialty")
+	private Specialty specialty;
+
 	@ManyToOne
-    @JoinColumn(name = "id_clinic")
-    private Clinic clinic;
-	
-	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
-    private List<Appointment> appointments;
-	
-	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
-    private List<Review> reviews;
+	@JoinColumn(name = "id_clinic")
+	private Clinic clinic;
 
-    @ManyToMany
-    @JoinTable(name = "packages_doctors", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_packages"))
-    private List<Packages> packages;
-    
-    //FOLLOW
+	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+	private List<Appointment> appointments;
 
-    @OneToOne(mappedBy = "doctor", cascade = {CascadeType.ALL})
-    private WorkingPlan workingPlan;
-	
-    public Doctor() {
-    }
+	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+	private List<Review> reviews;
+
+	@ManyToMany
+	@JoinTable(name = "patients_doctors", joinColumns = @JoinColumn(name = "id_doctor"), inverseJoinColumns = @JoinColumn(name = "id_patient"))
+	private List<Patient> follower;
+
+	@ManyToMany
+	@JoinTable(name = "packages_doctors", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_packages"))
+	private List<Packages> packages;
+
+	@OneToOne(mappedBy = "doctor", cascade = { CascadeType.ALL })
+	private WorkingPlan workingPlan;
+
+	public Doctor() {
+	}
 
 	@Override
 	public void update(UserForm updateData) {
@@ -99,12 +101,20 @@ public class Doctor extends User {
 	public void setWorkingPlan(WorkingPlan workingPlan) {
 		this.workingPlan = workingPlan;
 	}
-	
+
 	public List<Review> getReviews() {
 		return reviews;
 	}
 
 	public void setReviews(List<Review> reviews) {
 		this.reviews = reviews;
+	}
+
+	public List<Patient> getFollower() {
+		return follower;
+	}
+
+	public void setFollower(List<Patient> follower) {
+		this.follower = follower;
 	}
 }

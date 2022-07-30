@@ -7,6 +7,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -32,6 +34,10 @@ public class Patient extends User {
 	
 	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     private List<Review> reviews;
+
+	@ManyToMany
+    @JoinTable(name = "patients_doctors", joinColumns = @JoinColumn(name = "id_patient"), inverseJoinColumns = @JoinColumn(name = "id_doctor"))
+    private List<Doctor> doctors;
 	
 	public Patient() {
 		super();
@@ -79,6 +85,14 @@ public class Patient extends User {
 
 	public void setHistories(List<History> histories) {
 		this.histories = histories;
+	}
+
+	public List<Doctor> getDoctors() {
+		return doctors;
+	}
+
+	public void setDoctors(List<Doctor> doctors) {
+		this.doctors = doctors;
 	}
 
 }

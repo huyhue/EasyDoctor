@@ -1,10 +1,12 @@
 package fpt.edu.vn.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,6 +21,9 @@ public class FileModel extends BaseEntity {
     @Lob
     @Column(name = "data")
     private byte[] data;
+    
+    @OneToOne(mappedBy = "fileModel", cascade = {CascadeType.ALL})
+    private Post post;
     
     @ManyToOne
     @JoinColumn(name = "id_user")
@@ -79,6 +84,22 @@ public class FileModel extends BaseEntity {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Post getPost() {
+		return post;
+	}
+
+	public void setPost(Post post) {
+		this.post = post;
+	}
+
+	public History getHistory() {
+		return history;
+	}
+
+	public void setHistory(History history) {
+		this.history = history;
 	}
     
 }
