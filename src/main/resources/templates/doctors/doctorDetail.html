@@ -89,10 +89,16 @@
 									class="fas fa-book-medical"></i> Đặt ngay</button>
 						</div>
 						<div class="col-sm-8 form-group">
-							<a th:href="@{'/appointments/new/' + ${doctor.id}}">
+							<div th:if="${isFollow == true}">
 								<button type="button" class="btn btn-warning"><i class="fas fa-heart"></i>
+									Bỏ theo dõi</button>
+							</div>
+							<div th:unless="${isFollow}">
+								<button type="button" th:onclick="handleFollow([[${doctor.id}]])"
+									class="btn btn-warning"><i class="fas fa-heart"></i>
 									Theo dõi</button>
-							</a>
+							</div>
+
 							<a th:href="@{'/forum/list?did=' + ${doctor.id}}">
 								<button type="button" class="btn btn-success"><i class="fas fa-newspaper"></i> Bài
 									viết</button>
@@ -129,6 +135,34 @@
 	</div>
 
 	<div th:replace="fragments/modal.html"></div>
+	<script th:inline="javascript">
+		const handleFollow = (id) => {
+			$.confirm({
+				type: 'green',
+				title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:green;"></i> ' + 'Xác nhận!!',
+				content: 'Khi theo dõi bác sĩ bạn sẽ thấy thông báo mỗi khi bác sĩ có bài đăng trên diễn đàn?',
+				autoClose: 'No|8000',
+				buttons: {
+					Yes: function () {
+						$.ajax({
+							url: "/patients/follow?id=" + id,
+							type: 'GET',
+							dataType: 'json',
+							success: function (data) {
+								location.reload();
+							},
+							error: function (xhr, status, error) {
+								console.log("Lỗi đã xảy ra!");
+								location.reload();
+							}
+						});
+					},
+					No: function () {
+					}
+				}
+			});
+		}
+	</script>
 </body>
 
 </html>

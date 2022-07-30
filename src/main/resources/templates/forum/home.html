@@ -124,8 +124,6 @@
 			text-transform: uppercase;
 		}
 
-
-
 		@media (max-width: 575px) {
 			.category-lists-slider {
 				margin-top: 40px;
@@ -158,6 +156,9 @@
 			<h2 style="color: #37a7f1;">
 				<b>DIỄN ĐÀN CHO BỆNH NHÂN VÀ BÁC SĨ</b>
 			</h2>
+			<h3 th:if="${#strings.isEmpty(nameDoctor) == false}">
+				<b>Bài viết của bác sĩ: [[${nameDoctor}]]</b>
+			</h3>
 		</div>
 	</div>
 
@@ -170,17 +171,12 @@
 		</div>
 	</div>
 
-
-
-
-	<div class="container-fluid mt-5">
+	<div class="container-fluid mt-3">
 		<div class="row m-3">
 			<div class="col-md-12 d-flex justify-content-center">
 				<form id="formsearch" th:action="@{/forum/list}" method="get">
 					<input id="page" name="page" hidden th:value="${page}" />
-					<input name="did" hidden th:value="${did}" />
 					<div class="form-row">
-						<label for="specialty" class="col-form-label "><b>Tìm kiếm từ khóa</b></label>
 						<div class="col">
 							<input type="text" name="keyword" th:value="${keyword}" class="form-control" id="searchName"
 								placeholder="Nhập từ khóa liên quan">
@@ -213,15 +209,15 @@
 									<a th:href="@{'/detail/' + ${p.id}}">
 										<span th:text="${p.username}" class="d-block font-weight-bold fullname"></span>
 									</a>
-									<span th:text="${p.time}" class="date text-black-50"></span>
+									<span th:text="${p.special}" class="date text-black-50"></span>
 								</div>
 							</div>
 						</div>
 
 						<div th:if="${currentId==p.userid}">
-							<a th:href="@{'/forum/post/delete?pid='+${p.id}}" class="btn btn-danger float-right">
+							<button th:onclick="handleDeletePost([[${p.id}]])" class="btn btn-danger float-right">
 								<i class="fas fa-trash-alt"></i>
-							</a>
+							</button>
 							<button th:onclick="handleUpdate([[${p.id}]],[[${p.message}]],[[${p.specialId}]])"
 								type="button" class="btn btn-primary float-right mr-2" data-toggle="modal"
 								data-target="#updateModal">
@@ -234,8 +230,8 @@
 						</div>
 					</div>
 
-					<div class="bg-white ">
-						<img th:src="@{/img/forum/{name}(name=${p.img})}" width="auto" />
+					<div th:if="${#strings.isEmpty(p.img) == false}" class="bg-white">
+						<img th:src="@{/img/forum/{name}(name=${p.img})}" width="auto" id="" />
 					</div>
 
 					<div class="bg-white">
@@ -246,8 +242,7 @@
 								<strong th:id="'like'+${p.id}" th:text="${p.totalLike}" class="ml-1"></strong>
 							</div>
 							<div class="like p-2 cursor"><i class="fa fa-commenting-o fa-2x"></i><strong
-									class="ml-1">Bình
-									luận</strong></div>
+									class="ml-1">Bình luận</strong></div>
 						</div>
 					</div>
 
@@ -297,7 +292,7 @@
 	<nav aria-label="Page navigation example" class="mt-2" th:if="${maxpage} != 0">
 		<ul class="pagination">
 			<li th:class="page-item " th:classappend="${page==1}?disabled:''">
-				<span class="page-link" th:onclick="handleSearch([[${page-1}]])">Previous</span>
+				<span class="page-link" th:onclick="handleSearch([[${page-1}]])">Trước</span>
 			</li>
 			<li class="page-item " th:classappend="${page<=2}?d-none:''"><span class="page-link"
 					th:onclick="handleSearch([[${page-2}]])" th:text="${page-2}"></span></li>
@@ -311,7 +306,7 @@
 			<li class="page-item " th:classappend="${page>=maxpage-1}?d-none:''"><span class="page-link"
 					th:onclick="handleSearch([[${page+2}]])" th:text="${page+2}"></span></li>
 			<li th:class="page-item " th:classappend="${maxpage==page}?disabled:''">
-				<span class="page-link" th:onclick="handleSearch([[${page+1}]])">Next</span>
+				<span class="page-link" th:onclick="handleSearch([[${page+1}]])">Sau</span>
 			</li>
 		</ul>
 	</nav>
@@ -342,6 +337,8 @@
 			}
 
 		});
+
+
 	</script>
 	<script th:inline="javascript">
 		const handleSearch = (pageVal) => {
@@ -378,6 +375,33 @@
 			fetch('/forum/comment/delete?cid=' + id).then(res => res.json()).then(res => {
 				$('#cm' + id).remove()
 			})
+		}
+
+		const handleDeletePost = (id) => {
+			$.confirm({
+				type: 'red',
+				title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red;"></i> ' + 'Xác nhận!!',
+				content: 'Bạn có chắc chắn muốn xóa bài đăng không?',
+				autoClose: 'No|8000',
+				buttons: {
+					Yes: function () {
+						$.ajax({
+							url: "/forum/post/delete?pid=" + id,
+							type: 'GET',
+							dataType: 'json',
+							success: function (data) {
+								location.reload();
+							},
+							error: function (xhr, status, error) {
+								console.log("Lỗi đã xảy ra!");
+								location.reload();
+							}
+						});
+					},
+					No: function () {
+					}
+				}
+			});
 		}
 
 		const handleUpdate = (pid, mes, spe) => {

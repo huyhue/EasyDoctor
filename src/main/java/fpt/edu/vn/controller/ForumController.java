@@ -46,42 +46,18 @@ public class ForumController {
 		}
 		if (page == null)
 			page = 1;
+		if (did != null) {
+			model.addAttribute("nameDoctor", userService.findById(did).getFullname());
+		}
 		model.addAttribute("currentId", currentUser.getId());
-		model.addAttribute("currentImg", currentUser.getProfileImage());
 		model.addAttribute("page", page);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("specialId", specialId);
-		model.addAttribute("did", did);
+
 		model.addAttribute("maxpage", postService.getTotalPage(did, keyword, specialId));
 		model.addAttribute("ls", postService.getListPost(did, keyword, specialId, page));
 		model.addAttribute("specialties", userService.getAllSpecialty());
 		return "forum/home";
-	}
-
-	@GetMapping("/comment")
-	@ResponseBody
-	public CommentDTO comment(@RequestParam Long postid,
-			@RequestParam String message) {
-		return commentService.addComment(postid, message);
-	}
-
-	@PostMapping("/comment/update")
-	@ResponseBody
-	public CommentDTO updatComment(@RequestParam Long commentid,
-			@RequestParam String message) {
-		return commentService.updateComment(commentid, message);
-	}
-
-	@GetMapping("/comment/delete")
-	@ResponseBody
-	public boolean deleteComment(@RequestParam Long cid) {
-		return commentService.deleteComment(cid);
-	}
-
-	@GetMapping("/post/like")
-	@ResponseBody
-	public PostDTO likePost(@RequestParam Long pid) {
-		return postService.handleLike(pid);
 	}
 
 	@PostMapping("/post/add")
@@ -106,4 +82,29 @@ public class ForumController {
 		return "redirect:/forum/list";
 	}
 
+	@GetMapping("/post/like")
+	@ResponseBody
+	public PostDTO likePost(@RequestParam Long pid) {
+		return postService.handleLike(pid);
+	}
+
+	@GetMapping("/comment")
+	@ResponseBody
+	public CommentDTO comment(@RequestParam Long postid,
+			@RequestParam String message) {
+		return commentService.addComment(postid, message);
+	}
+
+	@PostMapping("/comment/update")
+	@ResponseBody
+	public CommentDTO updatComment(@RequestParam Long commentid,
+			@RequestParam String message) {
+		return commentService.updateComment(commentid, message);
+	}
+
+	@GetMapping("/comment/delete")
+	@ResponseBody
+	public boolean deleteComment(@RequestParam Long cid) {
+		return commentService.deleteComment(cid);
+	}
 }

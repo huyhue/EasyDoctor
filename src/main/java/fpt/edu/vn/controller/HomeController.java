@@ -162,7 +162,7 @@ public class HomeController {
 		modelMap.put("reviewList", reviewList);
 		modelMap.put("totalPost", postService.getTotalPost(doctorId));
 		
-		//isFollow  = tim currentUser.getId()
+		modelMap.put("isFollow", userService.isFollowDoctor(doctorId, currentUser.getId()));
 		return "doctors/doctorDetail";
 	}
 

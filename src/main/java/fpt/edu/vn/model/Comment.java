@@ -5,10 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.*;
 
-//import lombok.Data;
-
 @Entity
-//@Data
 @Table(name = "comments")
 public class Comment {
 	@Id
@@ -22,7 +19,6 @@ public class Comment {
 	private Long userId;
 
 	public Comment() {
-
 	}
 
 	public Comment(Long id, Long postId, String message, String createAt, String updateAt, Long parentId, Long userId) {

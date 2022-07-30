@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import fpt.edu.vn.component.ChangePasswordForm;
@@ -66,23 +68,35 @@ public class PatientController {
 		userService.updatePatient(user);
 		return "redirect:/patients/" + user.getId();
 	}
-	
+
 	@PostMapping("/update/password")
 	@ResponseBody
 	public CommonMsg processPatientPasswordUpdate(@RequestBody ChangePasswordForm passwordChange) {
 		return userService.updateUserPassword(passwordChange);
 	}
 
+	@GetMapping("/follow")
+	public String followDoctor(@RequestParam Integer id, @AuthenticationPrincipal CustomUserDetails currentUser) {
+		userService.followDoctor(id, currentUser.getId());
+		return "redirect:/detail/" + id;
+	}
+
+	@RequestMapping(value = "/unfollow", method = RequestMethod.GET)
+	public String unfollowDoctor(@RequestParam(required = false) Integer id, @AuthenticationPrincipal CustomUserDetails currentUser) {
+		userService.unfollowDoctor(id, currentUser.getId());
+		return "redirect:/detail/" + id;
+	}
+
 	@PostMapping("/declaration/{doctorId}")
 	public String addNewDeclaration(@PathVariable Integer doctorId,
 			@ModelAttribute("declaration") Declaration declaration,
 			@AuthenticationPrincipal CustomUserDetails currentUser) {
-		
+
 		declaration.setPatient(userService.getPatientById(currentUser.getId()));
 		userService.saveDeclarationByPatientId(declaration);
 		return "redirect:/appointments/new/" + doctorId;
 	}
-	
+
 	@PostMapping("/declaration/{declarationId}/{doctorId}")
 	public String changeDeclaration(@PathVariable Integer declarationId, @PathVariable Integer doctorId,
 			@ModelAttribute("declaration") Declaration declaration) {

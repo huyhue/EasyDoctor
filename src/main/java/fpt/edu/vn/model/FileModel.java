@@ -22,9 +22,6 @@ public class FileModel extends BaseEntity {
     @Column(name = "data")
     private byte[] data;
     
-    @OneToOne(mappedBy = "fileModel", cascade = {CascadeType.ALL})
-    private Post post;
-    
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
@@ -84,14 +81,6 @@ public class FileModel extends BaseEntity {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public Post getPost() {
-		return post;
-	}
-
-	public void setPost(Post post) {
-		this.post = post;
 	}
 
 	public History getHistory() {

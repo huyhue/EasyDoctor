@@ -527,5 +527,38 @@ public class UserServiceImpl implements UserService {
 		commonMsg.setMsgCode("200");
 		return commonMsg;
 	}
+	
+	@Override
+	public Boolean isFollowDoctor(int doctorId, int patientId) {
+		Patient patient = getPatientById(patientId);
+		List<Doctor> list = patient.getDoctors();
+		for (Doctor doctor : list) {
+			if (doctor.getId() == doctorId) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public void followDoctor(int doctorId, int patientId) {
+		List<Patient> list = new ArrayList<>();
+		Doctor doctor = getDoctorById(doctorId);
+		
+		list.add(getPatientById(patientId));
+		doctor.setFollower(list);
+		doctorRepository.save(doctor);
+	}
+	
+	@Override
+	public void unfollowDoctor(int doctorId, int patientId) {
+		List<Patient> list = new ArrayList<>();
+		Doctor doctor = getDoctorById(doctorId);
+		list.add(getPatientById(patientId));
+		doctor.setFollower(list);
+		//remove
+		
+		doctorRepository.save(doctor);
+	}
 
 }

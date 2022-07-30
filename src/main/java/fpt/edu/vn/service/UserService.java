@@ -116,4 +116,9 @@ public interface UserService {
 	CommonMsg saveClinic(Clinic clinic);
 
 	CommonMsg deleteClinic(int clinicId);
+	
+	//Follow
+	void followDoctor(int doctorId, int patientId);
+	void unfollowDoctor(int doctorId, int patientId);
+	Boolean isFollowDoctor(int doctorId, int patientId);
 }

@@ -17,12 +17,10 @@ public class Post {
 	private String message;
 	
 	private String img;
-	@OneToOne
-    @JoinColumn(name = "id_fileModel")
-    private FileModel fileModel;
 	
 	private String likes;
 	private Long totalLike;
+	
 	private String createAt;
 	private String updateAt;
 
@@ -113,14 +111,6 @@ public class Post {
 
 	public void setUpdateAt(String updateAt) {
 		this.updateAt = updateAt;
-	}
-
-	public FileModel getFileModel() {
-		return fileModel;
-	}
-
-	public void setFileModel(FileModel fileModel) {
-		this.fileModel = fileModel;
 	}
 
 	@Override
