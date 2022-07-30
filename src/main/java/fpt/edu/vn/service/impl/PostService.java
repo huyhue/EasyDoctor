@@ -37,14 +37,24 @@ public class PostService {
     @PersistenceContext
     EntityManager entityManager;
     private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
+    private final int pageSize = 5;
 
-    public List<PostDTO> getListPost(String keyword, Integer special_id) {
+    public int getTotalPost(long doctorId) {
+        return postRepository.findByUserId(doctorId).size();
+    }
+
+    public List<PostDTO> getListPost(Integer doctorId, String keyword, Integer special_id, Integer page) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
         List<PostDTO> ls = new ArrayList<>();
         String condition = "";
         if (special_id != null) {
             condition += "special_id=" + special_id;
+        }
+        if (doctorId != null) {
+            if (condition.length() > 0)
+                condition += " and ";
+            condition += "user_id=" + doctorId;
         }
         if (keyword != null) {
             if (condition.length() > 0)
@@ -55,7 +65,9 @@ public class PostService {
             condition = " where " + condition;
         String sql = "SELECT p.id,u.fullname,u.profile_img,s.name,p.message,p.img,likes,total_like,update_at,p.user_id,p.special_id FROM posts p join specialties s on s.id=p.special_id join users u on p.user_id=u.id "
                 + condition + " order by update_at desc";
-        List<Object[]> reList = entityManager.createNativeQuery(sql).getResultList();
+
+        List<Object[]> reList = entityManager.createNativeQuery(sql).setFirstResult((page - 1) * pageSize)
+                .setMaxResults(pageSize).getResultList();
         ls = reList.stream().map(obj -> {
             PostDTO p = new PostDTO();
             p.setId(Utils.objToLong(obj[0]));
@@ -73,6 +85,29 @@ public class PostService {
             return p;
         }).collect(Collectors.toList());
         return ls;
+    }
+
+    public long getTotalPage(Integer doctorId, String keyword, Integer special_id) {
+        String condition = "";
+        if (special_id != null) {
+            condition += "special_id=" + special_id;
+        }
+        if (doctorId != null) {
+            if (condition.length() > 0)
+                condition += " and ";
+            condition += "user_id=" + doctorId;
+        }
+        if (keyword != null) {
+            if (condition.length() > 0)
+                condition += " and ";
+            condition += "message like '%" + keyword + "%'";
+        }
+        if (condition.length() > 0)
+            condition = " where " + condition;
+        String sql = "SELECT count(*) FROM posts p join specialties s on s.id=p.special_id join users u on p.user_id=u.id "
+                + condition;
+        long res = Utils.objToLong(entityManager.createNativeQuery(sql).getSingleResult());
+        return (long) Math.ceil((double) res / pageSize);
     }
 
     public boolean deletePost(long postid) {
