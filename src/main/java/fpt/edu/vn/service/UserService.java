@@ -15,7 +15,9 @@ import fpt.edu.vn.model.Declaration;
 import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.FileModel;
 import fpt.edu.vn.model.History;
+import fpt.edu.vn.model.Invoice;
 import fpt.edu.vn.model.Patient;
+import fpt.edu.vn.model.Question;
 import fpt.edu.vn.model.Review;
 import fpt.edu.vn.model.Role;
 import fpt.edu.vn.model.Specialty;
@@ -72,7 +74,6 @@ public interface UserService {
 
 	Collection<Role> getRolesForPatient();
 
-
 	// Review
 	double getRatingByDoctorId(int doctorId);
 
@@ -116,9 +117,17 @@ public interface UserService {
 	CommonMsg saveClinic(Clinic clinic);
 
 	CommonMsg deleteClinic(int clinicId);
-	
-	//Follow
+
+	// Follow
 	void followDoctor(int doctorId, int patientId);
+
 	void unfollowDoctor(int doctorId, int patientId);
+
 	Boolean isFollowDoctor(int doctorId, int patientId);
+
+	void savePatientQuestion(Question userPQ);
+
+	// Question
+	List<Question> getAllQuestion();
+	CommonMsg deleteQuestion(int questionId);
 }

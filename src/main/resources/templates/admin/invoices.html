@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	th:replace="~{fragments/base :: base (~{::body},'Hoá đơn')}">
+
+<body>
+	<div class="content-header" id="scroll">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h4 class="m-0">Hoá đơn</h4>
+				</div>
+				<!-- /.col -->
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Trang chủ</a></li>
+						<li class="breadcrumb-item active">Hoá đơn</li>
+					</ol>
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-body" style="display: block;">
+						<table class="table table-bordered" id="tbl-invoice">
+							<thead>
+								<tr style="text-align:center;">
+									<th>#</th>
+									<th style="width: 150px">Số</th>
+									<th style="width: 200px">Ngày xuất hoá đơn</th>
+									<th style="width: 150px">Trạng thái</th>
+									<th style="width: 100px">Tổng cộng</th>
+									<th style="width: 50px">Tải về</th>
+									<th style="width: 50px">Thanh toán</th>
+								</tr>
+							</thead>
+							<tbody style="text-align:center;">
+								<tr th:if="${invoiceList.size()==0}">
+									<td colspan="5"> Không có hóa đơn nào</td>
+								</tr>
+								<tr th:each="invoice : ${invoiceList}">
+									<td th:data-id="${invoice.id}"><span th:text="${invoice.id}"></span></td>
+									<td><span th:text="${invoice.number}"></span></td>
+									<td><span th:text="${invoice.issued}"></span></td>
+									<td><span th:text="${invoice.status}"></span></td>
+									<td><span th:text="${invoice.totalAmount}"></span></td>
+									<td>
+										<a class="btn btn-outline-warning btn-sm"
+											th:href="@{'/invoices/download/' + ${invoice.id}}"><i class="fa fa-download"></i>
+										</a>
+									</td>
+									<td>
+										<a id="btn-invoice" class="btn btn-outline-success btn-sm"
+											th:if="${invoice.status == 'issued'}">Thanh toán
+										</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<div layout:fragment="script">
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$("#nav-doctAppoint").addClass("active menu-is-opening menu-open");
+				$("#nav-viewInvoice").addClass("active");
+				var table = $('#tbl-invoice').DataTable({
+					"order": [
+						[2, "desc"]
+					],
+				});
+				
+				$('#tbl-invoice tbody').on('click', '#btn-invoice', function () {
+					var curRow = $(this).closest('tr');
+					var uniId = curRow.find('td:eq(0)').attr("data-id");
+					if (uniId != '') {
+						$.confirm({
+							type: 'green',
+							title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:green;"></i> ' + 'Xác nhận!!',
+							content: 'Bệnh nhân đã thanh toán tiền rồi ak?',
+							autoClose: 'No|8000',
+							buttons: {
+								Yes: function () {
+									$.ajax({
+										url: "/invoices/paid?id=" + uniId,
+										type: 'GET',
+										dataType: 'json',
+										success: function (data) {
+											if (data.msgCode == '200') {
+												i = 0;
+												$.confirm({
+													type: 'green',
+													title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
+													content: 'Thay đổi trạng thái thành công!!',
+													buttons: {
+														ok: function () {
+														}
+													}
+												});
+												curRow.find('td:eq(6)').css("display", "none");
+												curRow.find('td:eq(3) span').text("paid");
+											}
+										},
+										error: function (xhr, status, error) {
+											console.log("Something Wrong!");
+										}
+									});
+								},
+								No: function () {}
+							}
+						});
+					}
+				});
+				
+			});
+		</script>
+	</div>
+	<div layout:fragment="css"></div>

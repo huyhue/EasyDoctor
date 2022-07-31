@@ -33,7 +33,6 @@ public interface AppointmentService {
 	
 	List<Appointment> getAllAppointments();
 	List<AppoinmentDto> getAllAppointment();
-	CommonMsg deleteAppoinment(int appointmentId);
 	List<Appointment> getAppointmentByPatientId(int patientId);
 	List<Appointment> getAppointmentByDoctorId(int doctorId);
 	

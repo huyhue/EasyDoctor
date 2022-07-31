@@ -45,10 +45,10 @@ public class InvoiceController {
 		return invoiceService.createNewInvoiceByAdmin(id, status);
 	}
 
-    @PostMapping("/paid/{invoiceId}")
-    public String changeStatusToPaid(@PathVariable("invoiceId") int invoiceId) {
-        invoiceService.changeInvoiceStatusToPaid(invoiceId);
-        return "redirect:/invoices/all";
+    @GetMapping(value = "/paid")
+	@ResponseBody
+    public CommonMsg changeStatusToPaid(@RequestParam("id") int id) {
+        return invoiceService.changeInvoiceStatusToPaid(id);
     }
 
     @GetMapping("/issue")

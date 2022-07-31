@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	th:replace="~{fragments/base :: base (~{::body},'Clinic')}">
+	th:replace="~{fragments/base :: base (~{::body},'Phòng khám')}">
 
 <body>
 	<div class="content-header" id="scroll">
@@ -13,7 +13,7 @@
 				<!-- /.col -->
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
-						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Home</a></li>
+						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Trang chủ</a></li>
 						<li class="breadcrumb-item active">Phòng khám</li>
 					</ol>
 				</div>
@@ -197,7 +197,7 @@
 										$.confirm({
 											type: 'green',
 											title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
-											content: 'Save successfully.',
+											content: 'Lưu thành công.',
 											buttons: {
 												ok: function () { }
 											}
@@ -209,7 +209,7 @@
 										$.confirm({
 											type: 'green',
 											title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
-											content: 'Update successfully.',
+											content: 'Cập nhật thành công.',
 											buttons: {
 												ok: function () { }
 											}
@@ -218,7 +218,7 @@
 										table.ajax.reload();
 										resetText();
 									} else if (data.msgCode == "exitName") {
-										$("#errorMsgName").text("Name already exit!!");
+										$("#errorMsgName").text("Tên đã tồn tại!!");
 										$("#name").css('border', '1px solid red');
 										$("#name").focus();
 									} 
@@ -227,7 +227,7 @@
 									xhr,
 									status,
 									error) {
-									showCustomAlert('D', "Sorry,Something wrong.Please contact with IT Team!!");
+									showCustomAlert('D', "Xin lỗi,Có một số lỗi.Hãy liên hệ với đội IT!");
 								}
 							});
 						}
@@ -239,25 +239,25 @@
 
 						if ($("#name").val() == "") {
 							status = false;
-							$("#errorMsgName").text("Required Field!!");
+							$("#errorMsgName").text("Bắt buộc!!");
 							$("#name").css('border', '1px solid red');
 							$("#name").focus();
 							return status;
 						} else if ($("#phone").val() == "") {
 							status = false;
-							$("#errorMsgPhone").text("Required Field!!");
+							$("#errorMsgPhone").text("Bắt buộc!!");
 							$("#phone").css('border', '1px solid red');
 							$("#phone").focus();
 							return status;
 						} else if ($("#address").val() == "") {
 							status = false;
-							$("#errorMsgAddress").text("Required Field!!");
+							$("#errorMsgAddress").text("Bắt buộc!!");
 							$("#address").css('border', '1px solid red');
 							$("#address").focus();
 							return status;
 						} if ($("#description").val() == "") {
 							status = false;
-							$("#errorMsgDescription").text("Required Field!!");
+							$("#errorMsgDescription").text("Bắt buộc!!");
 							$("#description").css('border', '1px solid red');
 							$("#desription").focus();
 							return status;
@@ -300,7 +300,7 @@
 							$.confirm({
 								type: 'red',
 								title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red;"></i> ' + 'Confirm!!',
-								content: 'Do you want to delete?',
+								content: 'Bạn có muốn xoá không?',
 								buttons: {
 									Yes: function () {
 										$.ajax({
@@ -313,7 +313,7 @@
 													$.confirm({
 														type: 'green',
 														title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
-														content: 'Delete successfully.',
+														content: 'Xoá thành công.',
 														buttons: {
 															ok: function () { }
 														}

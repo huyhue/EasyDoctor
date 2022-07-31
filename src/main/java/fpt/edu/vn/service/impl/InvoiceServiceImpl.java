@@ -127,11 +127,15 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    public void changeInvoiceStatusToPaid(int invoiceId) {
+    public CommonMsg changeInvoiceStatusToPaid(int invoiceId) {
+    	CommonMsg commonMsg = new CommonMsg();
         Invoice invoice = invoiceRepository.findById(invoiceId).get();
         invoice.setStatus("paid");
         invoice.setIssued(LocalDateTime.now());
         invoiceRepository.save(invoice);
+        //chua co gui email
+        commonMsg.setMsgCode("200");
+		return commonMsg;
     }
 
     @Transactional

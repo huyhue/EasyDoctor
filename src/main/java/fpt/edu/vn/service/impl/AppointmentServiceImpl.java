@@ -81,14 +81,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	@Override
-	public CommonMsg deleteAppoinment(int appointmentId) {
-		CommonMsg commonMsg = new CommonMsg();
-		appointmentRepository.deleteById(appointmentId);
-		commonMsg.setMsgCode("200");
-		return commonMsg;
-	}
-
-	@Override
 	@PreAuthorize("#doctorId == principal.id")
 	public List<Appointment> getAppointmentByDoctorId(int doctorId) {
 		return appointmentRepository.findByDoctorId(doctorId);

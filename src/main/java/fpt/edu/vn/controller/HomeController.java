@@ -29,6 +29,7 @@ import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.FileModel;
 import fpt.edu.vn.model.History;
 import fpt.edu.vn.model.Patient;
+import fpt.edu.vn.model.Question;
 import fpt.edu.vn.model.Review;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.security.CustomUserDetails;
@@ -204,6 +205,19 @@ public class HomeController {
 		}
 		userService.saveImageProfileByUser(file, currentUser.getId());
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/question", method = RequestMethod.GET)
+	public String showQuestionForm(@ModelAttribute("user") Patient user) {
+		return "/home";
+	}
+
+	@RequestMapping(value = "/question", method = RequestMethod.POST)
+	public String addPatientQuestion(@ModelAttribute("user") Question user, Model model) {
+		userService.savePatientQuestion(user);
+		emailService.sendQuestionSuccess(user);
+		model.addAttribute("successMessage", "Chúng tôi sẽ phản hồi sớm nhất qua email bạn đã gửi.");
+		return "home";
 	}
 
 	@GetMapping("/access-denied")

@@ -24,7 +24,9 @@ import fpt.edu.vn.model.Declaration;
 import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.FileModel;
 import fpt.edu.vn.model.History;
+import fpt.edu.vn.model.Invoice;
 import fpt.edu.vn.model.Patient;
+import fpt.edu.vn.model.Question;
 import fpt.edu.vn.model.Review;
 import fpt.edu.vn.model.Role;
 import fpt.edu.vn.model.Specialty;
@@ -32,7 +34,9 @@ import fpt.edu.vn.model.User;
 import fpt.edu.vn.repository.DoctorRepository;
 import fpt.edu.vn.repository.FileModelRepository;
 import fpt.edu.vn.repository.HistoryRepository;
+import fpt.edu.vn.repository.InvoiceRepository;
 import fpt.edu.vn.repository.PatientRepository;
+import fpt.edu.vn.repository.QuestionRepository;
 import fpt.edu.vn.repository.ReviewRepository;
 import fpt.edu.vn.repository.ClinicRepository;
 import fpt.edu.vn.repository.DeclarationRepository;
@@ -55,12 +59,15 @@ public class UserServiceImpl implements UserService {
 	private final SpecialtyRepository specialtyRepository;
 	private final ClinicRepository clinicRepository;
 	private final PasswordEncoder passwordEncoder;
-	
+	private final QuestionRepository questionRepository;
+	private final InvoiceRepository invoiceRepository;
+
 	public UserServiceImpl(UserRepository userRepository, DoctorRepository doctorRepository,
 			PatientRepository patientRepository, RoleRepository roleRepository, ReviewRepository reviewRepository,
 			HistoryRepository historyRepository, FileModelRepository fileModelRepository,
 			DeclarationRepository declarationRepository, SpecialtyRepository specialtyRepository,
-			ClinicRepository clinicRepository, PasswordEncoder passwordEncoder) {
+			ClinicRepository clinicRepository, PasswordEncoder passwordEncoder, QuestionRepository questionRepository,
+			InvoiceRepository invoiceRepository) {
 		super();
 		this.userRepository = userRepository;
 		this.doctorRepository = doctorRepository;
@@ -73,6 +80,8 @@ public class UserServiceImpl implements UserService {
 		this.specialtyRepository = specialtyRepository;
 		this.clinicRepository = clinicRepository;
 		this.passwordEncoder = passwordEncoder;
+		this.questionRepository = questionRepository;
+		this.invoiceRepository = invoiceRepository;
 	}
 
 	@Override
@@ -85,7 +94,8 @@ public class UserServiceImpl implements UserService {
 		List<PatientDto> listDTO = new ArrayList<>();
 		List<Patient> list = patientRepository.findAll();
 		for (Patient p : list) {
-			listDTO.add(new PatientDto(p.getId().toString(), p.getUserName(), p.getEmail(), p.getFullname(), p.getMobile(), p.getAddress()));
+			listDTO.add(new PatientDto(p.getId().toString(), p.getUserName(), p.getEmail(), p.getFullname(),
+					p.getMobile(), p.getAddress()));
 		}
 		return listDTO;
 	}
@@ -196,7 +206,8 @@ public class UserServiceImpl implements UserService {
 		List<DoctorDto> listDTO = new ArrayList<>();
 		List<Doctor> list = doctorRepository.findAll();
 		for (Doctor d : list) {
-			listDTO.add(new DoctorDto(d.getId().toString(), d.getUserName(), d.getEmail(), d.getFullname(), d.getSpecialty().getName(), d.getClinic().getName()));
+			listDTO.add(new DoctorDto(d.getId().toString(), d.getUserName(), d.getEmail(), d.getFullname(),
+					d.getSpecialty().getName(), d.getClinic().getName()));
 		}
 		return listDTO;
 	}
@@ -353,17 +364,18 @@ public class UserServiceImpl implements UserService {
 	public List<Review> getAllReviewByDoctorId(int doctorId) {
 		return reviewRepository.getAllReviewByDoctorId(doctorId);
 	}
-	
+
 	@Override
 	public List<ReviewDto> getAllReview() {
 		List<ReviewDto> listDTO = new ArrayList<>();
 		List<Review> list = reviewRepository.findAll();
 		for (Review r : list) {
-			listDTO.add(new ReviewDto(r.getId().toString(), r.getFeedback(), r.getRating(), r.getPatient().getFullname(), r.getDoctor().getFullname()));
+			listDTO.add(new ReviewDto(r.getId().toString(), r.getFeedback(), r.getRating(),
+					r.getPatient().getFullname(), r.getDoctor().getFullname()));
 		}
 		return listDTO;
 	}
-	
+
 	@Override
 	public CommonMsg deleteReview(int reviewId) {
 		CommonMsg commonMsg = new CommonMsg();
@@ -497,7 +509,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public CommonMsg saveClinic(Clinic clinic) {
 		CommonMsg commonMsg = new CommonMsg();
-		if (clinic.getId()==null) {
+		if (clinic.getId() == null) {
 			Clinic checkName = clinicRepository.findByName(clinic.getName());
 			if (checkName != null) {
 				commonMsg.setMsgCode("exitName");
@@ -527,7 +539,7 @@ public class UserServiceImpl implements UserService {
 		commonMsg.setMsgCode("200");
 		return commonMsg;
 	}
-	
+
 	@Override
 	public Boolean isFollowDoctor(int doctorId, int patientId) {
 		Patient patient = getPatientById(patientId);
@@ -539,31 +551,55 @@ public class UserServiceImpl implements UserService {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public void followDoctor(int doctorId, int patientId) {
 		List<Patient> list = new ArrayList<>();
 		Doctor doctor = getDoctorById(doctorId);
-		
+
 		list.add(getPatientById(patientId));
 		doctor.setFollower(list);
 		doctorRepository.save(doctor);
 	}
-	
+
 	@Override
 	public void unfollowDoctor(int doctorId, int patientId) {
-		//Chua lam duoc
+		// Chua lam duoc
 		Patient patient = getPatientById(patientId);
-		
+
 		List<Doctor> list = patient.getDoctors();
 		for (Doctor doctor : list) {
 			if (doctor.getId() == doctorId) {
 				list.remove(patientId);
 			}
 		}
-		
+
 		patient.setDoctors(list);
 		patientRepository.save(patient);
+	}
+
+	// Question
+	@Override
+	public List<Question> getAllQuestion() {
+		return questionRepository.findAll();
+	}
+
+	@Override
+	public CommonMsg deleteQuestion(int questionId) {
+		CommonMsg commonMsg = new CommonMsg();
+		questionRepository.deleteById(questionId);
+		commonMsg.setMsgCode("200");
+		return commonMsg;
+	}
+
+	@Override
+	public void savePatientQuestion(Question userPQ) {
+		Question question = new Question(null, null, null, null);
+		question.setEmail(userPQ.getEmail());
+		question.setFullname(userPQ.getFullname());
+		question.setDescription(userPQ.getDescription());
+		question.setMobile(userPQ.getMobile());
+		questionRepository.save(question);
 	}
 
 }

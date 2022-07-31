@@ -16,7 +16,7 @@ public interface InvoiceService {
 
     List<Invoice> getAllInvoices();
 
-    void changeInvoiceStatusToPaid(int invoiceId);
+    CommonMsg changeInvoiceStatusToPaid(int invoiceId);
 
     void issueInvoicesForConfirmedAppointments();
 

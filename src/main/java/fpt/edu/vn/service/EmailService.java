@@ -6,6 +6,7 @@ import fpt.edu.vn.component.DoctorDto;
 import fpt.edu.vn.component.PatientDto;
 import fpt.edu.vn.model.Appointment;
 import fpt.edu.vn.model.Invoice;
+import fpt.edu.vn.model.Question;
 import fpt.edu.vn.model.User;
 
 import java.io.File;
@@ -28,4 +29,5 @@ public interface EmailService {
 	void sendInfoNewDoctor(DoctorDto doctordto);
 	void sendInfoNewPatient(PatientDto patientDto);
 	void sendNewPostByDoctor(String message, String email);
+	void sendQuestionSuccess(Question user);
 }

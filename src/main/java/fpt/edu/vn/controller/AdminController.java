@@ -18,7 +18,9 @@ import fpt.edu.vn.component.PatientDto;
 import fpt.edu.vn.component.ReviewDto;
 import fpt.edu.vn.model.Clinic;
 import fpt.edu.vn.model.Packages;
+import fpt.edu.vn.model.Question;
 import fpt.edu.vn.service.EmailService;
+import fpt.edu.vn.service.InvoiceService;
 import fpt.edu.vn.service.PackagesService;
 import fpt.edu.vn.service.AppointmentService;
 import fpt.edu.vn.service.UserService;
@@ -30,14 +32,16 @@ public class AdminController {
 	private final UserService userService;
 	private final PackagesService packagesService;
 	private final AppointmentService appointmentService;
+	private final InvoiceService invoiceService;
 	private final EmailService emailService;
 
 	public AdminController(UserService userService, PackagesService packagesService,
-			AppointmentService appointmentService, EmailService emailService) {
+			AppointmentService appointmentService, InvoiceService invoiceService, EmailService emailService) {
 		super();
 		this.userService = userService;
 		this.packagesService = packagesService;
 		this.appointmentService = appointmentService;
+		this.invoiceService = invoiceService;
 		this.emailService = emailService;
 	}
 
@@ -161,7 +165,7 @@ public class AdminController {
 	// Appointment
 	@GetMapping("/viewAppointment")
 	public String viewAppoinmentList(Model model) {
-		 model.addAttribute("appointmentList", appointmentService.getAllAppointment());
+		model.addAttribute("appointmentList", appointmentService.getAllAppointment());
 		return "admin/appointments";
 	}
 
@@ -170,12 +174,6 @@ public class AdminController {
 	public List<AppoinmentDto> viewAppointmentList() {
 		return appointmentService.getAllAppointment();
 	}
-
-//	@GetMapping(value = "/deleteAppoinment")
-//	@ResponseBody
-//	public CommonMsg deleteAppoinment(@RequestParam("id") int id) {
-//		return appointmentService.deleteAppoinment(id);
-//	}
 
 	// Review
 	@GetMapping("/viewReview")
@@ -193,6 +191,31 @@ public class AdminController {
 	@ResponseBody
 	public CommonMsg deleteReview(@RequestParam("id") int id) {
 		return userService.deleteReview(id);
+	}
+
+	// Question
+	@GetMapping("/viewQuestion")
+	public String viewQuestionList(Model model) {
+		return "admin/questions";
+	}
+
+	@GetMapping(value = "/getQuestionList")
+	@ResponseBody
+	public List<Question> viewQuestionList() {
+		return userService.getAllQuestion();
+	}
+
+	@GetMapping(value = "/deleteQuestion")
+	@ResponseBody
+	public CommonMsg deleteQuestion(@RequestParam("id") int id) {
+		return userService.deleteQuestion(id);
+	}
+
+	// Invoice
+	@GetMapping("/viewInvoice")
+	public String viewInvoiceList(Model model) {
+		model.addAttribute("invoiceList", invoiceService.getAllInvoices());
+		return "admin/invoices";
 	}
 
 }

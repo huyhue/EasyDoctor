@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	th:replace="~{fragments/base :: base (~{::body},'Question')}">
+
+<body>
+	<div class="content-header" id="scroll">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h4 class="m-0">Hỏi đáp</h4>
+				</div>
+				<!-- /.col -->
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Trang chủ</a></li>
+						<li class="breadcrumb-item active">Hỏi đáp</li>
+					</ol>
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-body" style="display: block;">
+						<table class="table table-bordered" id="tbl-question">
+							<thead>
+								<tr style="text-align:center;">
+									<th>#</th>
+									<th style="width: 150px">Họ và tên</th>
+									<th style="width: 100px">Số điện thoại</th>
+									<th style="width: 150px">Email</th>
+									<th style="width: 250px">Mô tả</th>
+									<th style="width: 50px">Hành động</th>
+								</tr>
+							</thead>
+							<tbody style="text-align:center;">
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<div layout:fragment="script">
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$("#nav-AccountId").addClass("active menu-is-opening menu-open");
+				$("#nav-viewAccountDetails").addClass("active");
+
+				var i = 0;
+				var table = $('#tbl-question').DataTable({
+					"sAjaxSource": "/admin/getQuestionList",
+					"sAjaxDataProp": "",
+					"aoColumns": [
+						{
+							"mData": "id",
+							"render": function (data, type, row) {
+								i += 1;
+								return i;
+							}
+						}, {
+							"mData": "fullname"
+						}, {
+							"mData": "mobile"
+						}, {
+							"mData": "email"
+						}, {
+							"mData": "description"
+						}, {
+							"className": "dt-btn",
+							"render": function (data, type, row) {
+								return '<div class="btn-group btn-group-sm"><a id="redirectUnID" class="btn btn-warning"><i class="fas fa-eye"></i></a><a href="#" class="btn btn-danger" id="deleteUnID"><i class="fa fa-trash"></i></a></div>';
+							}
+						}],
+					"fnCreatedRow": function (nRow, aData, iDataIndex) {
+						$('td:eq(1)', nRow).attr("data-id", aData.id);
+					}
+				});
+
+				$('#tbl-question tbody').on('click', '#redirectUnID', function () {
+					var curRow = $(this).closest('tr');
+					var id = curRow.find('td:eq(1)').attr("data-id");
+					var url = '/detail/' + id;
+					window.open(url, '_blank');
+				});
+
+				$('#tbl-question tbody').on('click', '#deleteUnID', function () {
+					var curRow = $(this).closest('tr');
+					var uniId = curRow.find('td:eq(1)').attr("data-id");
+					console.log("OK: " + uniId);
+					if (uniId != '') {
+						$.confirm({
+							type: 'red',
+							title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red;"></i> ' + 'Xác nhận!!',
+							content: 'Bạn có chắc chắn muốn xóa không?',
+							buttons: {
+								Yes: function () {
+									$.ajax({
+										url: "/admin/deleteQuestion?id=" + uniId,
+										type: 'GET',
+										dataType: 'json',
+										success: function (data) {
+											if (data.msgCode == '200') {
+												i = 0;
+												$.confirm({
+													type: 'green',
+													title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
+													content: 'Xóa thành công!!',
+													buttons: {
+														ok: function () {
+
+														}
+													}
+												});
+												table.ajax.reload();
+											}
+										},
+										error: function (xhr, status, error) {
+											showAlertByType('Something Wrong!', "F");
+										}
+									});
+								},
+								No: function () { }
+							}
+						});
+					}
+				});
+			});
+		</script>
+	</div>
+	<div layout:fragment="css"></div>

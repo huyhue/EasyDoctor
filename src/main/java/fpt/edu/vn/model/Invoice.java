@@ -2,6 +2,8 @@ package fpt.edu.vn.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -29,6 +31,7 @@ public class Invoice extends BaseEntity {
     @Column(name = "issued")
     private LocalDateTime issued;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "invoice")
     private List<Appointment> appointments;
 
