@@ -59,7 +59,6 @@ public class PatientController {
 		} else {
 			throw new org.springframework.security.access.AccessDeniedException("Unauthorized");
 		}
-
 	}
 
 	@PostMapping("/update/profile")

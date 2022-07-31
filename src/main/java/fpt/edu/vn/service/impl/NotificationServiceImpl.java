@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import fpt.edu.vn.model.Appointment;
+import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.Invoice;
 import fpt.edu.vn.model.Notification;
+import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.repository.NotificationRepository;
 import fpt.edu.vn.service.EmailService;
@@ -92,9 +94,10 @@ public class NotificationServiceImpl implements NotificationService {
 	@Override
 	public void newAppointmentRejectionRequestedNotification(Appointment appointment, boolean sendEmail) {
 		String title = "Lịch khám đã bị từ chối";
-		String message = "Bệnh nhân " + appointment.getPatient().getFullname() + " đã từ chối lịch khám. Sự chấp thuận của bạn là cần thiết";
+		String message = "Bệnh nhân " + appointment.getPatient().getFullname()
+				+ " đã từ chối lịch khám. Sự chấp thuận của bạn là cần thiết";
 		String url = "/appointments/" + appointment.getId();
-        newNotification(title, message, url, appointment.getDoctor());
+		newNotification(title, message, url, appointment.getDoctor());
 		if (sendEmail && mailingEnabled) {
 			emailService.sendAppointmentRejectionRequested(appointment);
 		}
@@ -134,26 +137,41 @@ public class NotificationServiceImpl implements NotificationService {
 			emailService.sendAppointmentCanceledByDoctor(appointment);
 		}
 	}
-	
-	@Override
-    public void newAppointmentFinishedNotification(Appointment appointment, boolean sendEmail) {
-        String title = "Lịch khám đã kết thúc";
-        String message = "Lịch khám đã kết thúc, bạn có thể từ chối cuộc hẹn nếu nó không diễn ra cho đến khi " + appointment.getEnd().plusHours(24).toString();
-        String url = "/appointments/" + appointment.getId();
-        newNotification(title, message, url, appointment.getPatient());
-        if (sendEmail && mailingEnabled) {
-            emailService.sendAppointmentFinished(appointment);
-        }
-    }
-	
-	public void newInvoice(Invoice invoice, boolean sendEmail) {
-        String title = "Xuất hóa đơn";
-        String message = "Xuất hóa đơn đã được gửi tới bạn";
-        String url = "/invoices/" + invoice.getId();
-        newNotification(title, message, url, invoice.getAppointments().get(0).getPatient());
-        if (sendEmail && mailingEnabled) {
-            emailService.sendInvoice(invoice);
-        }
-    }
 
+	@Override
+	public void newAppointmentFinishedNotification(Appointment appointment, boolean sendEmail) {
+		String title = "Lịch khám đã kết thúc";
+		String message = "Lịch khám đã kết thúc, bạn có thể từ chối cuộc hẹn nếu nó không diễn ra cho đến khi "
+				+ appointment.getEnd().plusHours(24).toString();
+		String url = "/appointments/" + appointment.getId();
+		newNotification(title, message, url, appointment.getPatient());
+		if (sendEmail && mailingEnabled) {
+			emailService.sendAppointmentFinished(appointment);
+		}
+	}
+
+	@Override
+	public void newPostNotificationByDoctor(int doctorId, String content) {
+		Doctor doctor = userService.getDoctorById(doctorId);
+		List<Patient> list = doctor.getFollower();
+
+		String title = "Bài viết mới trên diễn đàn";
+		String message = "Bác sĩ: " + doctor.getFullname() + " có nội dung: " + content;
+		String url = "/forum/list?did=" + doctorId;
+
+		for (Patient patient : list) {
+			newNotification(title, message, url, patient);
+			emailService.sendNewPostByDoctor(message, patient.getEmail());
+		}
+	}
+
+	public void newInvoice(Invoice invoice, boolean sendEmail) {
+		String title = "Xuất hóa đơn";
+		String message = "Xuất hóa đơn đã được gửi tới bạn";
+		String url = "/invoices/" + invoice.getId();
+		newNotification(title, message, url, invoice.getAppointments().get(0).getPatient());
+		if (sendEmail && mailingEnabled) {
+			emailService.sendInvoice(invoice);
+		}
+	}
 }

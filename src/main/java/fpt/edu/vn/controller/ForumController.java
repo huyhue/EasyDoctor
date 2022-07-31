@@ -15,7 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import fpt.edu.vn.component.CommentDTO;
 import fpt.edu.vn.component.PostDTO;
+import fpt.edu.vn.model.Notification;
 import fpt.edu.vn.security.CustomUserDetails;
+import fpt.edu.vn.service.NotificationService;
 import fpt.edu.vn.service.UserService;
 import fpt.edu.vn.service.impl.CommentService;
 import fpt.edu.vn.service.impl.PostService;
@@ -25,14 +27,16 @@ import fpt.edu.vn.service.impl.PostService;
 public class ForumController {
 
 	private final UserService userService;
+	private final NotificationService notificationService;
 	@Autowired
 	private PostService postService;
 	@Autowired
 	private CommentService commentService;
 
-	public ForumController(UserService userService) {
+	public ForumController(UserService userService, NotificationService notificationService) {
 		super();
 		this.userService = userService;
+		this.notificationService = notificationService;
 	}
 
 	@GetMapping("/list")
@@ -62,9 +66,10 @@ public class ForumController {
 
 	@PostMapping("/post/add")
 	public String addNewPost(@RequestParam String message, @RequestParam(required = false) long specialId,
-			@RequestParam(required = false) MultipartFile image)
+			@RequestParam(required = false) MultipartFile image, @AuthenticationPrincipal CustomUserDetails currentUser)
 			throws IOException {
 		postService.addPost(message, specialId, image);
+		notificationService.newPostNotificationByDoctor(currentUser.getId(), message);
 		return "redirect:/forum/list";
 	}
 

@@ -27,4 +27,5 @@ public interface EmailService {
     void sendAppointmentOTPConfirm(String email);
 	void sendInfoNewDoctor(DoctorDto doctordto);
 	void sendInfoNewPatient(PatientDto patientDto);
+	void sendNewPostByDoctor(String message, String email);
 }

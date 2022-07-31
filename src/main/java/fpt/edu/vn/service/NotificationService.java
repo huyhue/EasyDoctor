@@ -21,6 +21,7 @@ public interface NotificationService {
 	void newAppointmentRejectionRequestedNotification(Appointment appointment, boolean sendEmail);
 	void newAppointmentRejectionAcceptedNotification(Appointment appointment, boolean sendEmail);
 	void newAppointmentFinishedNotification(Appointment appointment, boolean sendEmail);
+	void newPostNotificationByDoctor(int doctorId, String content);
 	
 	void newInvoice(Invoice invoice, boolean sendEmail);
 }

@@ -143,6 +143,14 @@ public class EmailServiceImpl implements EmailService {
     
     @Async
     @Override
+    public void sendNewPostByDoctor(String message, String email) {
+    	Context context = new Context();
+    	context.setVariable("message", message);
+    	sendEmail(email, "Bài viết mới trên diễn đàn", "notificationFollow", context, null);
+    }
+    
+    @Async
+    @Override
     public void sendInvoice(Invoice invoice) {
         Context context = new Context();
         context.setVariable("patient", invoice.getAppointments().get(0).getPatient().getFullname());

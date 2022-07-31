@@ -88,20 +88,20 @@
 								th:onclick="javascript: showDeclarationModal([[${declaration.id}]], [[${doctor.id}]])"><i
 									class="fas fa-book-medical"></i> Đặt ngay</button>
 						</div>
-						<div class="col-sm-8 form-group">
-							<div th:if="${isFollow == true}">
-								<button type="button" class="btn btn-warning"><i class="fas fa-heart"></i>
+						<div class="col-sm-4">
+							<p th:if="${isFollow == true}">
+								<button type="button"  th:onclick="handleUnFollow([[${doctor.id}]])" class="btn btn-danger"><i class="fas fa-heart-crack"></i>
 									Bỏ theo dõi</button>
-							</div>
-							<div th:unless="${isFollow}">
+							</p>
+							<p th:unless="${isFollow}">
 								<button type="button" th:onclick="handleFollow([[${doctor.id}]])"
 									class="btn btn-warning"><i class="fas fa-heart"></i>
 									Theo dõi</button>
-							</div>
-
-							<a th:href="@{'/forum/list?did=' + ${doctor.id}}">
-								<button type="button" class="btn btn-success"><i class="fas fa-newspaper"></i> Bài
-									viết</button>
+							</p>
+						</div>
+						<div class="col">
+							<a th:href="@{'/forum/list?did=' + ${doctor.id}}" class="btn btn-success">
+								<i class="fas fa-newspaper"></i> Bài viết
 							</a>
 						</div>
 					</div>
@@ -110,7 +110,7 @@
 		</div>
 	</div>
 
-	<h2 class="text-center">Review of doctor</h2>
+	<h2 class="text-center">Các review của bác sĩ</h2>
 	<div class="card review-block">
 		<div th:if="${#lists.isEmpty(reviewList)}">
 			<span>
@@ -146,6 +146,32 @@
 					Yes: function () {
 						$.ajax({
 							url: "/patients/follow?id=" + id,
+							type: 'GET',
+							dataType: 'json',
+							success: function (data) {
+								location.reload();
+							},
+							error: function (xhr, status, error) {
+								console.log("Lỗi đã xảy ra!");
+								location.reload();
+							}
+						});
+					},
+					No: function () {
+					}
+				}
+			});
+		}
+		const handleUnFollow = (id) => {
+			$.confirm({
+				type: 'red',
+				title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red;"></i> ' + 'Xác nhận!!',
+				content: 'Khi bỏ theo dõi bác sĩ này, bạn sẽ không thấy thông báo mỗi khi bác sĩ có bài đăng trên diễn đàn?',
+				autoClose: 'No|8000',
+				buttons: {
+					Yes: function () {
+						$.ajax({
+							url: "/patients/unfollow?id=" + id,
 							type: 'GET',
 							dataType: 'json',
 							success: function (data) {

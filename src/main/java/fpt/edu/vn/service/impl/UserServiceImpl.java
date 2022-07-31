@@ -552,13 +552,18 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public void unfollowDoctor(int doctorId, int patientId) {
-		List<Patient> list = new ArrayList<>();
-		Doctor doctor = getDoctorById(doctorId);
-		list.add(getPatientById(patientId));
-		doctor.setFollower(list);
-		//remove
+		//Chua lam duoc
+		Patient patient = getPatientById(patientId);
 		
-		doctorRepository.save(doctor);
+		List<Doctor> list = patient.getDoctors();
+		for (Doctor doctor : list) {
+			if (doctor.getId() == doctorId) {
+				list.remove(patientId);
+			}
+		}
+		
+		patient.setDoctors(list);
+		patientRepository.save(patient);
 	}
 
 }

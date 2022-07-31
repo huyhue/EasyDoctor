@@ -97,6 +97,8 @@ public class DoctorController {
 
 			model.addAttribute("numberScheduled", appointmentService.getNumberScheduledAppointmentByUserId(doctorId));
 			model.addAttribute("numberCanceled", appointmentService.getNumberCanceledAppointmentByUserId(doctorId));
+			
+			model.addAttribute("listFollow", doctor.getFollower());
 			return "users/updateUserForm";
 		} else {
 			throw new org.springframework.security.access.AccessDeniedException("Unauthorized");
