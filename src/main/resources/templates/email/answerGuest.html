@@ -4,12 +4,13 @@
 <head></head>
 
 <body>
-<p>Xin chào bạn, <span th:text="${patient.fullname}"></span></p>
+<p>Xin chào bạn, <span th:text="${question.fullname}"></span></p><br>
 <p>Cảm ơn bạn đã quan tâm tới nền tảng EasyDoctor của chúng tôi:</p>
-<p>Với câu hỏi của bạn: </p><br>
-<p></p><br>
-
-<p>Cảm ơn bạn.</p>
+<p>Với vấn đề của bạn: <span th:text="${question.problem}"></span></p>
+<p>Được mô tả: <span th:text="${question.description}"></span></p>
+<p>Chúng tôi trả lời như sau: </p>
+<span th:text="${question.responses}"></span>
+<p>Với bất kì thắc mắc nào, hãy liên hệ với chúng tôi. Cảm ơn bạn.</p>
 
 </body>
 

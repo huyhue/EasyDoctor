@@ -8,7 +8,7 @@
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h4 class="m-0">Hỏi đáp</h4>
+					<h4 class="m-0">Hỏi đáp khách hàng</h4>
 				</div>
 				<!-- /.col -->
 				<div class="col-sm-6">
@@ -23,119 +23,264 @@
 		</div>
 	</div>
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card">
-					<div class="card-body" style="display: block;">
-						<table class="table table-bordered" id="tbl-question">
-							<thead>
-								<tr style="text-align:center;">
-									<th>#</th>
-									<th style="width: 150px">Họ và tên</th>
-									<th style="width: 100px">Số điện thoại</th>
-									<th style="width: 150px">Email</th>
-									<th style="width: 250px">Mô tả</th>
-									<th style="width: 250px">Vấn đề</th>
-									<th style="width: 50px">Trả lời</th>
-									<th style="width: 50px">Phản hồi</th>
-								</tr>
-							</thead>
-							<tbody style="text-align:center;">
+		<div class="card  card-outline card-primary">
+			<div class="card-header">
+				<h3 class="card-title"></h3>
+				<div class="card-tools">
+					<button type="button" class="btn btn-tool" data-card-widget="collapse">
+						<i class="fas fa-minus"></i>
+					</button>
+					<button type="button" class="btn btn-tool" data-card-widget="remove">
+						<i class="fas fa-times"></i>
+					</button>
+				</div>
+			</div>
+			<!-- /.card-header -->
+			<div class="card-body" style="display: block;">
+				<table class="table table-bordered" id="tbl-question">
+					<thead>
+						<tr style="text-align:center;">
+							<th>#</th>
+							<th>Họ và tên</th>
+							<th>Số điện thoại</th>
+							<th>Email</th>
+							<th>Vấn đề</th>
+							<th>Mô tả</th>
+							<th>Trả lời</th>
+							<th>Phản hồi</th>
+						</tr>
+					</thead>
+					<tbody style="text-align:center;">
 
-							</tbody>
-						</table>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="card card-default">
+			<div class="card-header">
+				<h3 class="card-title"></h3>
+				<div class="card-tools">
+					<button type="button" class="btn btn-tool" data-card-widget="collapse">
+						<i class="fas fa-minus"></i>
+					</button>
+					<button type="button" class="btn btn-tool" data-card-widget="remove">
+						<i class="fas fa-times"></i>
+					</button>
+				</div>
+			</div>
+			<!-- /.card-header -->
+			<div class="card-body" style="display: block;">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<input type="hidden" id="updateId" />
+							<label>Email<span class="errorMsg">*</span></label>
+							<input class="form-control filter" type="text" id="email">
+							<span class="errorMsg" id="errorMsgName"></span>
+						</div>
+
+						<div class="form-group">
+							<label>Phản hồi<span class="errorMsg">*</span></label>
+							<textarea class="form-control filter" type="text" id="responses"
+								placeholder="Nhập phản hồi khách tại đây"></textarea>
+							<span class="errorMsg" id="errorMsgResponses"></span>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Họ và tên<span class="errorMsg"></span></label>
+							<input class="form-control filter" type="text" id="fullname">
+							<span class="errorMsg" id="errorMsgFullname"></span>
+						</div>
+						<div class="form-group">
+							<label>Vấn đề<span class="errorMsg"></span></label>
+							<input class="form-control filter" type="text" id="problem">
+							<span class="errorMsg" id="errorMsgProblem"></span>
+						</div>
+
+						<div class="form-group">
+							<label>Mô tả<span class="errorMsg">*</span></label>
+							<input class="form-control filter" type="text" id="description">
+							<span class="errorMsg" id="errorMsgDescription"></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="margin">
+					<div class="btn-group">
+						<button style="color: #ffffff;" type="button" class="btn btn-block bg-gradient-info btn-sm"
+							id="btn-send">
+							<i class="fa fa-paper-plane"></i> Phản hồi
+						</button>
 					</div>
 				</div>
 			</div>
 		</div>
+
 	</div>
-	</div>
 
-	<div layout:fragment="script">
-		<script type="text/javascript">
-			$(document).ready(function () {
-				$("#nav-AccountId").addClass("active menu-is-opening menu-open");
-				$("#nav-viewAccountDetails").addClass("active");
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$("#nav-AccountId").addClass("active menu-is-opening menu-open");
+			$("#nav-viewAccountDetails").addClass("active");
 
-				var i = 0;
-				var table = $('#tbl-question').DataTable({
-					"sAjaxSource": "/admin/getQuestionList",
-					"sAjaxDataProp": "",
-					"aoColumns": [
-						{
-							"mData": "id",
-							"render": function (data, type, row) {
-								i += 1;
-								return i;
-							}
-						}, {
-							"mData": "fullname"
-						}, {
-							"mData": "mobile"
-						}, {
-							"mData": "email"
-						}, {
-							"mData": "description"
-						}, {
-							"className": "dt-btn",
-							"render": function (data, type, row) {
-								return '<div class="btn-group btn-group-sm"><a id="redirectUnID" class="btn btn-warning"><i class="fas fa-eye"></i></a><a href="#" class="btn btn-danger" id="deleteUnID"><i class="fa fa-trash"></i></a></div>';
-							}
-						}],
-					"fnCreatedRow": function (nRow, aData, iDataIndex) {
-						$('td:eq(1)', nRow).attr("data-id", aData.id);
-					}
-				});
+			var i = 0;
+			var table = $('#tbl-question').DataTable({
+				"sAjaxSource": "/admin/getQuestionList",
+				"sAjaxDataProp": "",
+				"aoColumns": [
+					{
+						"mData": "id",
+						"render": function (data, type, row) {
+							i += 1;
+							return i;
+						}
+					}, {
+						"mData": "fullname"
+					}, {
+						"mData": "mobile"
+					}, {
+						"mData": "email"
+					}, {
+						"mData": "problem"
+					}, {
+						"mData": "description"
+					}, {
+						"mData": "responses"
+					}, {
+						"className": "dt-btn",
+						"render": function (data, type, row) {
+							return '<div class="btn-group btn-group-sm"><a href="#" class="btn btn-info" id="editUnID"><i class="fa fa-reply"></i></a></div>';
+						}
+					}],
+				"fnCreatedRow": function (nRow, aData, iDataIndex) {
+					$('td:eq(1)', nRow).attr("data-id", aData.id);
+				}
+			});
 
-				$('#tbl-question tbody').on('click', '#redirectUnID', function () {
-					var curRow = $(this).closest('tr');
-					var id = curRow.find('td:eq(1)').attr("data-id");
-					var url = '/detail/' + id;
-					window.open(url, '_blank');
-				});
+			$('#tbl-question tbody').on('click', '#editUnID', function () {
+				var curRow = $(this).closest('tr');
+				var id = curRow.find('td:eq(1)').attr("data-id");
+				var email = curRow.find('td:eq(3)').text();
+				var fullname = curRow.find('td:eq(1)').text();
+				var problem = curRow.find('td:eq(4)').text();
+				var description = curRow.find('td:eq(5)').text();
+				var responses = curRow.find('td:eq(6)').text();
 
-				$('#tbl-question tbody').on('click', '#deleteUnID', function () {
-					var curRow = $(this).closest('tr');
-					var uniId = curRow.find('td:eq(1)').attr("data-id");
-					console.log("OK: " + uniId);
-					if (uniId != '') {
-						$.confirm({
-							type: 'red',
-							title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red;"></i> ' + 'Xác nhận!!',
-							content: 'Bạn có chắc chắn muốn xóa không?',
-							buttons: {
-								Yes: function () {
-									$.ajax({
-										url: "/admin/deleteQuestion?id=" + uniId,
-										type: 'GET',
-										dataType: 'json',
-										success: function (data) {
-											if (data.msgCode == '200') {
-												i = 0;
-												$.confirm({
-													type: 'green',
-													title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
-													content: 'Xóa thành công!!',
-													buttons: {
-														ok: function () {
+				$("#updateId").val(id);
+				$("#email").val(email);
+				$('#email').prop('readonly', true);
+				$("#fullname").val(fullname);
+				$('#fullname').prop('readonly', true);
+				$("#problem").val(problem);
+				$("#description").val(description);
+				$("#responses").val(responses);
 
-														}
-													}
-												});
-												table.ajax.reload();
-											}
-										},
-										error: function (xhr, status, error) {
-											showAlertByType('Something Wrong!', "F");
+
+				$('html, body').animate({
+					scrollTop: $('#scroll').offset().top
+				}, 500);
+			});
+
+			$("#btn-send").click(function () {
+				if (dataValidation()) {
+					var uniList = {};
+					uniList.responses = $("#responses").val();
+					uniList.id = $("#updateId").val();
+					if ($("#updateId").val() != '') {
+						$.ajax({
+							type: "POST",
+							contentType: "application/json",
+							url: "/admin/sendAnswerQuestion",
+							data: JSON.stringify(uniList),
+							timeout: 100000,
+							async: true,
+							dataType: 'json',
+							success: function (data) {
+								if (data.msgCode == '200') {
+									$.confirm({
+										type: 'green',
+										title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
+										content: 'Đã gửi mail tới khách hàng thành công.',
+										buttons: {
+											ok: function () { }
 										}
 									});
-								},
-								No: function () { }
+									i = 0;
+									table.ajax.reload();
+									resetText();
+								}
+							},
+							error: function (
+								xhr,
+								status,
+								error) {
+								showCustomAlert('D', "Sorry,Something wrong.Please contact with IT Team!!");
 							}
 						});
+					} else {
+						showCustomAlert('D', "Bạn phải chọn câu hỏi để phản hồi khách hàng!!");
 					}
-				});
+
+				}
 			});
-		</script>
+
+			function dataValidation() {
+				var status = true;
+				if ($("#responses").val() == "") {
+					status = false;
+					$("#errorMsgResponses").text("Không được để trống!!");
+					$("#responses").css('border', '1px solid red');
+					$("#responses").focus();
+					return status;
+				}
+				return status;
+			}
+
+			function resetText() {
+				$("#fullname").val('');
+				$('#fullname').prop('readonly', false);
+
+				$("#email").val('');
+				$('#email').prop('readonly', false);
+
+				$("#responses").val('');
+				$("#errorMsgResponses").text("");
+				$("#responses").css('border', '1px solid #CED4DA');
+
+				$("#problem").val('');
+				$("#errorMsgProblem").text("");
+				$("#problem").css('border', '1px solid #CED4DA');
+
+				$("#description").val('');
+				$("#errorMsgDescription").text("");
+				$("#description").css('border', '1px solid #CED4DA');
+
+				$("#updateId").val('');
+			}
+
+		});
+	</script>
+
+	<div layout:fragment="css">
+		<style>
+			.errorMsg {
+				color: red;
+				font-size: 13px;
+			}
+
+			table.dataTable thead th,
+			table.dataTable thead td {
+				border-bottom: 1px solid #DEE2E6;
+			}
+
+			table.dataTable.no-footer {
+				border-bottom: 1px solid #DEE2E6;
+			}
+		</style>
 	</div>
-	<div layout:fragment="css"></div>
+</body>
+
+</html>

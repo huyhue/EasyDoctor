@@ -2,9 +2,6 @@ package fpt.edu.vn.component;
 
 import java.util.List;
 
-//import lombok.Data;
-
-//@Data
 public class PostDTO {
     private long id;
     private String username;
@@ -16,6 +13,7 @@ public class PostDTO {
     private String time;
     private boolean isLiked;
     private List<CommentDTO> comments;
+    private int sizeComments;
     private long userid;
     private long specialId;
     
@@ -90,6 +88,12 @@ public class PostDTO {
 	}
 	public void setLiked(boolean isLiked) {
 		this.isLiked = isLiked;
+	}
+	public int getSizeComments() {
+		return sizeComments;
+	}
+	public void setSizeComments(int sizeComments) {
+		this.sizeComments = sizeComments;
 	}
 	public List<CommentDTO> getComments() {
 		return comments;

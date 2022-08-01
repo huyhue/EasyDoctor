@@ -14,17 +14,30 @@ public class Question extends BaseEntity {
 	@Column(name = "mobile")
 	private String mobile;
 	
+	@Column(name = "problem")
+	private String problem;
+	
 	@Column(name = "email")
 	private String email;
 	
 	@Column(name = "description")
 	private String description;
+	
+	@Column(name = "responses")
+	private String responses;
+	
+	public Question() {
+	}
 
-	public Question(String fullname, String mobile, String email, String description) {
+	public Question(String fullname, String mobile, String problem, String email, String description,
+			String responses) {
+		super();
 		this.fullname = fullname;
 		this.mobile = mobile;
+		this.problem = problem;
 		this.email = email;
 		this.description = description;
+		this.responses = responses;
 	}
 
 	public String getFullname() {
@@ -58,6 +71,21 @@ public class Question extends BaseEntity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
+	public String getProblem() {
+		return problem;
+	}
+
+	public void setProblem(String problem) {
+		this.problem = problem;
+	}
+
+	public String getResponses() {
+		return responses;
+	}
+
+	public void setResponses(String responses) {
+		this.responses = responses;
+	}
 	
 }

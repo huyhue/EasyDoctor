@@ -586,21 +586,19 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public CommonMsg deleteQuestion(int questionId) {
-		CommonMsg commonMsg = new CommonMsg();
-		questionRepository.deleteById(questionId);
-		commonMsg.setMsgCode("200");
-		return commonMsg;
+	public Question sendAnswerQuestion(Question q) {
+		Question question = questionRepository.findById(q.getId()).get();
+		question.setResponses(q.getResponses());
+		questionRepository.save(question);
+		return question;
 	}
 
 	@Override
-	public void savePatientQuestion(Question userPQ) {
-		Question question = new Question(null, null, null, null);
-		question.setEmail(userPQ.getEmail());
-		question.setFullname(userPQ.getFullname());
-		question.setDescription(userPQ.getDescription());
-		question.setMobile(userPQ.getMobile());
+	public CommonMsg saveQuestion(Question question) {
+		CommonMsg commonMsg = new CommonMsg();
 		questionRepository.save(question);
+		commonMsg.setMsgCode("200");
+		return commonMsg;
 	}
 
 	@Override

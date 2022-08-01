@@ -16,7 +16,6 @@ import fpt.edu.vn.model.Declaration;
 import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.FileModel;
 import fpt.edu.vn.model.History;
-import fpt.edu.vn.model.Invoice;
 import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.Question;
 import fpt.edu.vn.model.Review;
@@ -128,10 +127,9 @@ public interface UserService {
 
 	Boolean isFollowDoctor(int doctorId, int patientId);
 
-	void savePatientQuestion(Question userPQ);
+	CommonMsg saveQuestion(Question question);
 
 	// Question
 	List<Question> getAllQuestion();
-
-	CommonMsg deleteQuestion(int questionId);
+	Question sendAnswerQuestion(Question question);
 }

@@ -233,10 +233,14 @@ public class AdminController {
 		return userService.getAllQuestion();
 	}
 
-	@GetMapping(value = "/deleteQuestion")
+	@PostMapping("/sendAnswerQuestion")
 	@ResponseBody
-	public CommonMsg deleteQuestion(@RequestParam("id") int id) {
-		return userService.deleteQuestion(id);
+	public CommonMsg sendAnswerQuestion(@RequestBody Question q) {
+		CommonMsg commonMsg = new CommonMsg();
+		Question question = userService.sendAnswerQuestion(q);
+		emailService.sendQuestionSuccess(question);
+		commonMsg.setMsgCode("200");
+		return commonMsg;
 	}
 
 	// Invoice

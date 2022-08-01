@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
+import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.component.DoctorDto;
 import fpt.edu.vn.component.PatientDto;
 import fpt.edu.vn.model.Appointment;
@@ -198,10 +199,10 @@ public class EmailServiceImpl implements EmailService {
 
 	@Async
 	@Override
-	public void sendQuestionSuccess(Question user) {
+	public void sendQuestionSuccess(Question question) {
+		CommonMsg commonMsg = new CommonMsg();
 		Context context = new Context();
-		context.setVariable("user", user);
-		sendEmail(user.getEmail(), "Chúng tôi đã nhận được hỏi đáp của bạn. ", "registerSucess", context, null);
-
+		context.setVariable("question", question);
+		sendEmail(question.getEmail(), "Chúng tôi đã nhận được hỏi đáp của bạn", "answerGuest", context, null);
 	}
 }

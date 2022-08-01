@@ -1,3 +1,31 @@
+$.ajax({
+						type: "POST",
+						contentType: "application/json",
+						url: "/sendQuestion",
+						data: JSON.stringify(uniList),
+						timeout: 100000,
+						async: true,
+						dataType: 'json',
+						success: function (data) {
+							if (data.msgCode == '200') {
+								$.confirm({
+									type: 'green',
+									title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
+									content: 'Gửi thành công. Chúng tôi sẽ nhanh chóng phản hồi bạn qua mail. Cảm ơn!!!',
+									buttons: {
+										ok: function () { }
+									}
+								});
+								resetText();
+							}
+						},
+						error: function (xhr, status, error) {
+							console.log("Error, Sorry,Something wrong.Please contact with IT Team!!");
+						}
+					});
+
+
+
 $.get("/user/searchDoctor?id=" + fkId,
 					function (data, status) {
 						if (data == '') {
