@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="fragments/base">
+
+<div layout:fragment="adminContent">
+	<div class="content-header" >
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h4 class="m-0">Thông tin cá nhân</h4>
+				</div>
+				<!-- /.col -->
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Trang chủ</a></li>
+						<li class="breadcrumb-item active">Thông tin</li>
+					</ol>
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+	</div>
+
+	<div class="container-fluid">
+	     <div class="row">
+			<div class="col-md-12">
+				<div class="card card-primary card-outline">
+					<div class="card-body">
+						<div class="tab-content">
+							<div class="tab-pane active" id="settings">
+								<form class="form-horizontal">
+								
+								<div class="form-group row">
+										<label for="inputName" class="col-sm-2 col-form-label">Tên đăng nhập<span class="errorMsg">*</span></label>
+										<div class="col-sm-10">
+											<input readonly th:value="${userProfile.userName}" type="text" class="form-control"
+												placeholder="Name" id="userName">
+												<span class="errorMsg" id="errorMsginputName"></span>
+				                        </div>
+									</div>
+								
+									<div class="form-group row">
+										<label for="inputName" class="col-sm-2 col-form-label">Họ và tên<span class="errorMsg">*</span></label>
+										<div class="col-sm-10">
+											<input th:value="${userProfile.fullname}" type="text" class="form-control"
+												placeholder="Name" id="fullname">
+												<span class="errorMsg" id="errorMsginputName"></span>
+				                        </div>
+									</div>
+									
+									<div class="form-group row">
+										<label for="inputEmail" class="col-sm-2 col-form-label">Email<span class="errorMsg">*</span></label>
+										<div class="col-sm-10">
+											<input type="email" class="form-control" 
+												placeholder="Email" th:value="${userProfile.email}" id="email">
+												<span class="errorMsg" id="errorMsginputemail"></span>
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<label for="inputName2" class="col-sm-2 col-form-label">Mật khẩu mới</label>
+										<div class="col-sm-10">
+											<input type="password" class="form-control" 
+												placeholder="New Password" id="newPassword">
+												<span class="errorMsg" id="errorMsgPassword"></span>
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<div class="offset-sm-2 col-sm-10">
+											
+										
+										<div class="btn-group">
+						<button style="color: #ffffff;" type="button"
+							class="btn btn-block bg-gradient-info btn-sm" id="btnProfileUpdate">
+							<i class="far fa-save"></i> Lưu
+						</button>
+					</div>
+										
+										</div>
+									</div>
+								</form>
+							</div>
+							<!-- /.tab-pane -->
+						</div>
+						<!-- /.tab-content -->
+					</div>
+					<!-- /.card-body -->
+				</div>
+				<!-- /.card -->
+			</div>
+			<!-- /.col -->
+		</div>
+		<!-- /.row -->
+	</div>
+	<!-- /.container-fluid -->
+</div>
+
+<div layout:fragment="script">
+<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							
+							
+							$("#btnProfileUpdate")
+							.click(
+									function() {
+										
+										if (dataValidation()) {
+											
+											var uniList = {};
+											uniList.fullname = $("#fullname").val();
+											uniList.userName = $("#userName").val();
+											uniList.email = $("#email").val();
+											uniList.newPassword = $("#newPassword").val();
+										
+											$
+													.ajax({
+														type : "POST",
+														contentType : "application/json",
+														url : "/admin/ajax/saveProfile",
+														data : JSON
+																.stringify(uniList),
+														timeout : 100000,
+														async : true,
+														dataType : 'json',
+														success : function(data) {
+															if(data.msgCode=='200'){
+																
+															   $.confirm({
+								                     		         	type: 'green',
+								                     		         	title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> '+'Success!!',
+								                     		             content: 'Cập nhật thông tin thành công.',
+								                     		   
+								                     		             buttons: {
+								                     		                 ok: function () {
+								                     		                   
+								                     		                 }
+								                     		                 
+								                     		             }
+								                     		         });
+															
+															}
+														
+														},
+														error : function(
+																xhr,
+																status,
+																error) {
+															showCustomAlert(
+																	'D',
+																	"Sorry,Something wrong.Please contact with IT Team!!");
+														}
+													});
+											
+											
+											
+											
+										}
+										
+										
+									});
+									
+							
+							
+							
+							function dataValidation() {
+								var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
+								var status = true;
+
+								if ($("#fullname").val() == "") {
+									status = false;
+									$("#errorMsginputName").text(
+											"Bắt buộc!!");
+									$("#fullname").css('border',
+											'1px solid red');
+									$("#fullname").focus();
+									return status;
+
+								}   else {
+									$("#errorMsginputName").text("");
+									$("#fullname").css('border',
+											'1px solid #CED4DA');
+								}
+								
+								
+								if($("#email").val()==''){
+									  status=false;
+									  $("#errorMsginputemail").text('Bắt buộc!!');
+										$("#email").css('border',
+										'1px solid red');
+								$("#email").focus();
+									  return status;
+								  }
+								
+								
+								if($("#newPassword").val()!=''){
+									
+									if($("#newPassword").val().length<8){
+										 status=false;
+										 $("#errorMsgPassword").text('Độ dài của mật khẩu 8 ký tự!!');
+										 $("#newPassword").css('border','1px solid red');
+										 $("#newPassword").focus();
+									}else  
+										$("#errorMsgPassword").text('');
+									$("#newPassword").css('border','1px solid #CED4DA');
+								} 
+								return status;
+							}
+							
+							
+						});
+		
+		</script>
+</div>
+
+<div layout:fragment="css">
+<style>
+.errorMsg{color:red;}
+</style>
+
+</div>

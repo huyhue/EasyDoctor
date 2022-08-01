@@ -2,6 +2,8 @@ package fpt.edu.vn.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,15 +17,20 @@ import fpt.edu.vn.component.AppoinmentDto;
 import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.component.DoctorDto;
 import fpt.edu.vn.component.PatientDto;
+import fpt.edu.vn.component.ProfileDto;
 import fpt.edu.vn.component.ReviewDto;
 import fpt.edu.vn.model.Clinic;
 import fpt.edu.vn.model.Packages;
+import fpt.edu.vn.model.Post;
 import fpt.edu.vn.model.Question;
+import fpt.edu.vn.model.User;
+import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.EmailService;
 import fpt.edu.vn.service.InvoiceService;
 import fpt.edu.vn.service.PackagesService;
 import fpt.edu.vn.service.AppointmentService;
 import fpt.edu.vn.service.UserService;
+import fpt.edu.vn.service.impl.PostService;
 
 @Controller
 @RequestMapping("/admin")
@@ -34,6 +41,8 @@ public class AdminController {
 	private final AppointmentService appointmentService;
 	private final InvoiceService invoiceService;
 	private final EmailService emailService;
+	@Autowired
+	private PostService postService;
 
 	public AdminController(UserService userService, PackagesService packagesService,
 			AppointmentService appointmentService, InvoiceService invoiceService, EmailService emailService) {
@@ -52,6 +61,25 @@ public class AdminController {
 		model.addAttribute("totalPost", 5);
 		model.addAttribute("totalAppointment", appointmentService.getAllAppointments().size());
 		return "admin/home";
+	}
+
+	// Profile
+	@GetMapping("/profile")
+	public String adminProfile(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
+		if (currentUser != null) {
+			User getUser = userService.findByUserName(currentUser.getUsername());
+			model.addAttribute("userProfile", getUser);
+		} else {
+			model.addAttribute("userProfile", new User());
+			return "login";
+		}
+		return "admin/profile";
+	}
+
+	@PostMapping("/saveProfile")
+	@ResponseBody
+	public CommonMsg saveProfile(@RequestBody ProfileDto profileDto) {
+		return userService.saveProfileInfo(profileDto);
 	}
 
 	// Packages
@@ -216,6 +244,31 @@ public class AdminController {
 	public String viewInvoiceList(Model model) {
 		model.addAttribute("invoiceList", invoiceService.getAllInvoices());
 		return "admin/invoices";
+	}
+
+	// Forum
+	@GetMapping("/forum")
+	public String viewForum(Model model) {
+		model.addAttribute("specialties", userService.getAllSpecialty());
+		return "admin/forums";
+	}
+
+	@GetMapping(value = "/getListForum")
+	@ResponseBody
+	public List<Post> viewForumList() {
+		return postService.getAllForum();
+	}
+
+	@PostMapping("/saveForum")
+	@ResponseBody
+	public CommonMsg saveForum(@RequestBody Post post) {
+		return postService.saveForum(post);
+	}
+
+	@GetMapping(value = "/deleteForum")
+	@ResponseBody
+	public CommonMsg deleteForum(@RequestParam("id") long id) {
+		return postService.deleteForum(id);
 	}
 
 }

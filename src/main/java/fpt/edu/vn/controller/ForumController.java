@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import fpt.edu.vn.component.CommentDTO;
 import fpt.edu.vn.component.PostDTO;
-import fpt.edu.vn.model.Notification;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.service.NotificationService;
 import fpt.edu.vn.service.UserService;

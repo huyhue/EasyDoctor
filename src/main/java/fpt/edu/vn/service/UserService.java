@@ -9,6 +9,7 @@ import fpt.edu.vn.component.ChangePasswordForm;
 import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.component.DoctorDto;
 import fpt.edu.vn.component.PatientDto;
+import fpt.edu.vn.component.ProfileDto;
 import fpt.edu.vn.component.ReviewDto;
 import fpt.edu.vn.model.Clinic;
 import fpt.edu.vn.model.Declaration;
@@ -58,6 +59,8 @@ public interface UserService {
 	void savePasswordByUser(User user);
 
 	void savePatientRegister(Patient userRE);
+
+	CommonMsg saveProfileInfo(ProfileDto profileDto);
 
 	// Doctor
 	List<DoctorDto> getAllDoctors();
@@ -129,5 +132,6 @@ public interface UserService {
 
 	// Question
 	List<Question> getAllQuestion();
+
 	CommonMsg deleteQuestion(int questionId);
 }

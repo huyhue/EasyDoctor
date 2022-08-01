@@ -18,6 +18,7 @@ import fpt.edu.vn.component.ChangePasswordForm;
 import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.component.DoctorDto;
 import fpt.edu.vn.component.PatientDto;
+import fpt.edu.vn.component.ProfileDto;
 import fpt.edu.vn.component.ReviewDto;
 import fpt.edu.vn.model.Clinic;
 import fpt.edu.vn.model.Declaration;
@@ -602,4 +603,17 @@ public class UserServiceImpl implements UserService {
 		questionRepository.save(question);
 	}
 
+	@Override
+	public CommonMsg saveProfileInfo(ProfileDto profileDto) {
+		User user = userRepository.findByUserName(profileDto.getUserName()).get();
+		CommonMsg commonMsg = new CommonMsg();
+		user.setFullname(profileDto.getFullname());
+		user.setEmail(profileDto.getEmail());
+		if (!profileDto.getNewPassword().isEmpty()) {
+			user.setPassword(passwordEncoder.encode(profileDto.getNewPassword()));
+		}
+		userRepository.save(user);
+		commonMsg.setMsgCode("200");
+		return commonMsg;
+	}
 }

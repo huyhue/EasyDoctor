@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import fpt.edu.vn.component.CommentDTO;
+import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.component.PostDTO;
 import fpt.edu.vn.model.Post;
 import fpt.edu.vn.repository.CommentRepository;
@@ -161,7 +162,7 @@ public class PostService {
 			}
 			p.setImg(image.getOriginalFilename());
 		}
-		
+
 		p.setSpecialId(specialId);
 		p.setUserId(Long.parseLong(user.getId().toString()));
 		p.setMessage(message);
@@ -231,5 +232,19 @@ public class PostService {
 			return false;
 		List<String> ls = Arrays.asList(likes.split(","));
 		return ls.contains(String.valueOf(id));
+	}
+
+	public List<Post> getAllForum() {
+		return postRepository.findAll();
+	}
+
+	public CommonMsg saveForum(Post post) {
+		postRepository.save(post);
+		return null;
+	}
+
+	public CommonMsg deleteForum(long postId) {
+		postRepository.deleteById(postId);
+		return null;
 	}
 }
