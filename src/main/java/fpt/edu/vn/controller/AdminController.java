@@ -1,5 +1,6 @@
 package fpt.edu.vn.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import fpt.edu.vn.component.AppoinmentDto;
 import fpt.edu.vn.component.CommonMsg;
 import fpt.edu.vn.component.DoctorDto;
 import fpt.edu.vn.component.PatientDto;
+import fpt.edu.vn.component.PostDTO;
 import fpt.edu.vn.component.ProfileDto;
 import fpt.edu.vn.component.ReviewDto;
 import fpt.edu.vn.model.Clinic;
@@ -259,13 +261,13 @@ public class AdminController {
 
 	@GetMapping(value = "/getListForum")
 	@ResponseBody
-	public List<Post> viewForumList() {
+	public List<PostDTO> viewForumList() {
 		return postService.getAllForum();
 	}
 
 	@PostMapping("/saveForum")
 	@ResponseBody
-	public CommonMsg saveForum(@RequestBody Post post) {
+	public CommonMsg saveForum(@RequestBody PostDTO post) throws IOException {
 		return postService.saveForum(post);
 	}
 

@@ -19,7 +19,7 @@
 						</div>
 						<div class="mb-3">
 							<select id="specialty" name="specialId" class="form-control filter">
-								<option th:each="specialty : ${specialties}" th:value="${specialty.id}"
+								<option th:each="specialty : ${specialties}" th:value="${specialty.name}"
 									th:text="${specialty.name}" th:selected="${specialId==specialty.id}"></option>
 							</select>
 						</div>
@@ -59,7 +59,7 @@
 						</div>
 						<div class="mb-3">
 							<select id="specialUpdate" name="specialId" class="form-control filter">
-								<option th:each="specialty : ${specialties}" th:value="${specialty.id}"
+								<option th:each="specialty : ${specialties}" th:value="${specialty.name}"
 									th:text="${specialty.name}"></option>
 							</select>
 						</div>

@@ -184,7 +184,7 @@
 						<div class="col">
 							<select id="specialty" name="specialId" class="form-control filter">
 								<option value="" selected>Tất cả chuyên khoa</option>
-								<option th:each="specialty : ${specialties}" th:value="${specialty.id}"
+								<option th:each="specialty : ${specialties}" th:value="${specialty.name}"
 									th:text="${specialty.name}" th:selected="${specialId==specialty.id}"></option>
 							</select>
 						</div>

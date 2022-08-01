@@ -25,6 +25,7 @@ import fpt.edu.vn.component.PostDTO;
 import fpt.edu.vn.model.Post;
 import fpt.edu.vn.repository.CommentRepository;
 import fpt.edu.vn.repository.PostRepository;
+import fpt.edu.vn.repository.SpecialtyRepository;
 import fpt.edu.vn.security.CustomUserDetails;
 import fpt.edu.vn.util.Utils;
 
@@ -34,13 +35,43 @@ public class PostService {
 	PostRepository postRepository;
 	@Autowired
 	CommentRepository commentRepository;
+	private final SpecialtyRepository specialtyRepository;
+	
 	@PersistenceContext
 	EntityManager entityManager;
+	public PostService(PostRepository postRepository, CommentRepository commentRepository,
+			SpecialtyRepository specialtyRepository, EntityManager entityManager) {
+		super();
+		this.postRepository = postRepository;
+		this.commentRepository = commentRepository;
+		this.specialtyRepository = specialtyRepository;
+		this.entityManager = entityManager;
+	}
+
 	private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
 	private final int pageSize = 5;
 
 	public int getTotalPost(long doctorId) {
 		return postRepository.findByUserId(doctorId).size();
+	}
+
+	public List<PostDTO> getAllForum() {
+		List<PostDTO> ls = new ArrayList<>();
+		String sql = "SELECT p.id,u.fullname,s.name,p.message,p.img,total_like,update_at FROM posts p join specialties s on s.id=p.special_id join users u on p.user_id=u.id";
+		List<Object[]> reList = entityManager.createNativeQuery(sql).getResultList();
+
+		ls = reList.stream().map(obj -> {
+			PostDTO p = new PostDTO();
+			p.setId(Utils.objToLong(obj[0]));
+			p.setUsername(Utils.objToString(obj[1]));
+			p.setSpecial(Utils.objToString(obj[2]));
+			p.setMessage(Utils.objToString(obj[3]));
+			p.setImg(Utils.objToString(obj[4]));
+			p.setTotalLike(Utils.objToInt(obj[5]));
+			p.setTime(Utils.objToString(obj[6]));
+			return p;
+		}).collect(Collectors.toList());
+		return ls;
 	}
 
 	public List<PostDTO> getListPost(Integer doctorId, String keyword, Integer special_id, Integer page) {
@@ -144,31 +175,43 @@ public class PostService {
 
 	}
 
-	public boolean addPost(String message, long specialId, MultipartFile image) throws IOException {
+	public CommonMsg saveForum(PostDTO post) throws IOException {
+		CommonMsg commonMsg = new CommonMsg();
+//		if (post.getId() == null) {
+//			addPost(post.getMessage(), post.getSpecial(), null);
+//		}else {
+//			updatePost(post.getId(), post.getMessage(), null, post.getSpecial());
+//		}
+		addPost(post.getMessage(), post.getSpecial(), null);
+		commonMsg.setMsgCode("200");
+		return commonMsg;
+	}
+
+	public boolean addPost(String message, String special, MultipartFile image) throws IOException {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
 		Post p = new Post();
+		try {
+			if (!image.isEmpty()) {
+				Path staticPath = Paths.get("src/main/resources/static");
+				Path imagePath = Paths.get("img/forum");
+				if (!Files.exists(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath))) {
+					Files.createDirectories(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath));
+				}
 
-		if (!image.isEmpty()) {
-			Path staticPath = Paths.get("src/main/resources/static");
-			Path imagePath = Paths.get("img/forum");
-			if (!Files.exists(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath))) {
-				Files.createDirectories(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath));
+				Path file = CURRENT_FOLDER.resolve(staticPath).resolve(imagePath).resolve(image.getOriginalFilename());
+				try (OutputStream os = Files.newOutputStream(file)) {
+					os.write(image.getBytes());
+				}
+				p.setImg(image.getOriginalFilename());
 			}
-
-			Path file = CURRENT_FOLDER.resolve(staticPath).resolve(imagePath).resolve(image.getOriginalFilename());
-			try (OutputStream os = Files.newOutputStream(file)) {
-				os.write(image.getBytes());
-			}
-			p.setImg(image.getOriginalFilename());
+		} finally {
+			p.setSpecialId((long) specialtyRepository.findByName(special).getId());
+			p.setUserId(Long.parseLong(user.getId().toString()));
+			p.setMessage(message);
+//			p.setUpdateAt(Utils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
+			postRepository.save(p);
 		}
-
-		p.setSpecialId(specialId);
-		p.setUserId(Long.parseLong(user.getId().toString()));
-		p.setMessage(message);
-
-//		p.setUpdateAt(Utils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
-		postRepository.save(p);
 		return true;
 	}
 
@@ -234,17 +277,10 @@ public class PostService {
 		return ls.contains(String.valueOf(id));
 	}
 
-	public List<Post> getAllForum() {
-		return postRepository.findAll();
-	}
-
-	public CommonMsg saveForum(Post post) {
-		postRepository.save(post);
-		return null;
-	}
-
 	public CommonMsg deleteForum(long postId) {
-		postRepository.deleteById(postId);
-		return null;
+		CommonMsg commonMsg = new CommonMsg();
+		deletePost(postId);
+		commonMsg.setMsgCode("200");
+		return commonMsg;
 	}
 }

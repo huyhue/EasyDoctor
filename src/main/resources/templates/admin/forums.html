@@ -42,32 +42,31 @@
 						<div class="form-group">
 							<input type="hidden" id="updateId" />
 							<label>Người đăng<span class="errorMsg">*</span></label>
-							<input class="form-control filter" type="text" id="userName"
-								placeholder="Nhập tên đăng nhập">
+							<input class="form-control filter" type="text" id="username"
+								placeholder="Nhập tên đăng nhập" value="ADMIN" readonly>
 							<span class="errorMsg" id="errorMsgUsername"></span>
 						</div>
 						<div class="form-group">
 							<label>Chuyên khoa<span class="errorMsg">*</span></label>
-							<select id="specialty" class="form-control filter">
+							<select id="special" class="form-control filter">
 								<option value="-1">--Chọn--</option>
 								<option th:each="resultMap : ${specialties}" th:value="${resultMap.name}"
 									th:text="${resultMap.name}"></option>
 							</select>
-							<span class="errorMsg" id="errorMsgSpecialty"></span>
+							<span class="errorMsg" id="errorMsgSpecial"></span>
 						</div>
 					</div>
 
 					<div class="col-md-6">
 						<div class="form-group">
 							<label>Nội dung<span class="errorMsg">*</span></label>
-							<input class="form-control filter" type="text" id="forum" placeholder="Bài viết">
+							<input class="form-control filter" type="text" id="message" placeholder="Bài viết">
 							<span class="errorMsg" id="errorMsgForum"></span>
 						</div>
 						<div class="form-group">
-							<input type="hidden" id="updateId" />
 							<label>Hình ảnh<span class="errorMsg">*</span></label>
-							<input class="form-control filter" type="file" id="image">
-							<span class="errorMsg" id="errorMsgUsername"></span>
+							<input class="form-control filter" type="file" id="img">
+							<span class="errorMsg" id="errorMsgImg"></span>
 						</div>
 					</div>
 
@@ -89,44 +88,44 @@
 				</div>
 			</div>
 		</div>
-		
-		<div class="card card-default">
-				<div class="card-header">
-					<h3 class="card-title"></h3>
-					<div class="card-tools">
-						<button type="button" class="btn btn-tool" data-card-widget="collapse">
-							<i class="fas fa-minus"></i>
-						</button>
-						<button type="button" class="btn btn-tool" data-card-widget="remove">
-							<i class="fas fa-times"></i>
-						</button>
-					</div>
-				</div>
-				<!-- /.card-header -->
-				<div class="card-body" style="display: block;">
-					<table class="table table-bordered" id="tbl-forum">
-						<thead>
-							<tr style="text-align:center;">
-								<th style="width: 10px">#</th>
-								<th>Người đăng</th>
-								<th>Nội dung</th>
-								<th>Chuyên khoa</th>
-								<th>Ảnh</th>
-								<th>Thời gian</th>
-								<th>Lượt thích</th>
-								<th>Số bình luận</th>
-								<th style="width: 100px">Hành động</th>
-							</tr>
-						</thead>
-						<tbody style="text-align:center;">
 
-						</tbody>
-					</table>
+		<div class="card card-default">
+			<div class="card-header">
+				<h3 class="card-title"></h3>
+				<div class="card-tools">
+					<button type="button" class="btn btn-tool" data-card-widget="collapse">
+						<i class="fas fa-minus"></i>
+					</button>
+					<button type="button" class="btn btn-tool" data-card-widget="remove">
+						<i class="fas fa-times"></i>
+					</button>
 				</div>
 			</div>
-			
+			<!-- /.card-header -->
+			<div class="card-body" style="display: block;">
+				<table class="table table-bordered" id="tbl-forum">
+					<thead>
+						<tr style="text-align:center;">
+							<th style="width: 10px">#</th>
+							<th>Người đăng</th>
+							<th>Nội dung</th>
+							<th>Chuyên khoa</th>
+							<th>Ảnh</th>
+							<th>Thời gian</th>
+							<th>Lượt thích</th>
+							<th>Số bình luận</th>
+							<th style="width: 100px">Hành động</th>
+						</tr>
+					</thead>
+					<tbody style="text-align:center;">
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+
 	</div>
-	
+
 	<div layout:fragment="script">
 		<script type="text/javascript">
 			$(document).ready(function () {
@@ -145,21 +144,21 @@
 								return i;
 							}
 						}, {
-							"mData": "createAt"
+							"mData": "username"
 						}, {
-							"mData": "userName"
+							"mData": "message"
 						}, {
-							"mData": "specialId"
-						}, {
-							"mData": "post"
+							"mData": "special"
 						}, {
 							"mData": "img"
-						},{
-							"mData": "likes"
-						},{
-							"mData": "message"
+						}, {
+							"mData": "time"
+						}, {
+							"mData": "totalLike"
+						}, {
+							"mData": "totalLike"
 						},
-						 {
+						{
 							"className": "dt-btn",
 							"render": function () {
 								return '<div class="btn-group btn-group-sm"><a href="#" class="btn btn-info" id="editUnID"><i class="fas fa-user-edit"></i></a><a href="#" class="btn btn-danger" id="deleteUnID"><i class="fas fa-trash"></i></a></div>';
@@ -173,64 +172,95 @@
 				$("#btn-save").click(function () {
 					if (dataValidation()) {
 						var uniList = {};
-						uniList.userName = $("#userName").val();
-						uniList.forum = $("#forum").val();
-						uniList.img = $("#img").val();
-						uniList.specialId = $("#specialId option:selected").val();
+						uniList.username = $("#username").val();
+						uniList.message = $("#message").val();
+						
+						uniList.special = $("#special option:selected").val();
 						uniList.id = $("#updateId").val();
+
+						$.ajax({
+							type: "POST",
+							contentType: "application/json",
+							url: "/admin/saveForum",
+							data: JSON.stringify(uniList),
+							timeout: 100000,
+							async: true,
+							dataType: 'json',
+							success: function (data) {
+								if (data.msgCode == '200') {
+									$.confirm({
+										type: 'green',
+										title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
+										content: 'Lưu thành công.',
+										buttons: {
+											ok: function () { }
+										}
+									});
+									i = 0;
+									table.ajax.reload();
+									resetText();
+								} else if (data.msgCode == '205') {
+									$.confirm({
+										type: 'green',
+										title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
+										content: 'Cập nhật thành công.',
+										buttons: {
+											ok: function () { }
+										}
+									});
+									i = 0;
+									table.ajax.reload();
+									resetText();
+								}
+							},
+							error: function (
+								xhr,
+								status,
+								error) {
+								showCustomAlert('D', "Xin lỗi,Có một số lỗi.Hãy liên hệ với đội IT!!");
+							}
+						});
+					}
+				});
 				
-				$.ajax({
-						type: "POST",
-						contentType: "application/json",
-						url: "/admin/saveForum",
-						data: JSON.stringify(uniList),
-						timeout: 100000,
-						async: true,
-						dataType: 'json',
-						success: function (data) {
-							if (data.msgCode == '200') {
-								$.confirm({
-									type: 'green',
-									title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
-									content: 'Lưu thành công.',
-									buttons: {
-										ok: function () { }
-									}
-								});
-								i = 0;
-								table.ajax.reload();
-								resetText();
-							} else if (data.msgCode == '205') {
-								$.confirm({
-									type: 'green',
-									title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
-									content: 'Cập nhật thành công.',
-									buttons: {
-										ok: function () { }
-									}
-								});
-								i = 0;
-								table.ajax.reload();
-								resetText();
-							} 
-						},
-						error: function (
-							xhr,
-							status,
-							error) {
-							showCustomAlert('D', "Xin lỗi,Có một số lỗi.Hãy liên hệ với đội IT!!");
-						}
-					});
+				function dataValidation() {
+					var status = true;
+					
+					if ($("#message").val() == "") {
+						status = false;
+						$("#errorMsgMessage").text("Không được để trống!!");
+						$("#message").css('border', '1px solid red');
+						$("#message").focus();
+						return status;
+					}
+					return status;
 				}
-			});
+					
 				$("#btn-reset").click(function () {
 					resetText();
 				});
 
+				function resetText() {
+					$("#username").val('ADMIN');
+					$("#errorMsgUsername").text("");
+					$("#username").css('border', '1px solid #CED4DA');
+
+					$("#message").val('');
+					$("#errorMsgMessage").text("");
+					$("#message").css('border', '1px solid #CED4DA');
+
+					$("#special option:selected").text("--Chọn--");
+					$("#special option:selected").val(-1);
+					$("#errorMsgSpecial").text("");
+					$("#special").css('border', '1px solid #CED4DA');
+
+					$("#updateId").val('');
+				}
+
 				$('#tbl-forum tbody').on('click', '#deleteUnID', function () {
 					var curRow = $(this).closest('tr');
 					var uniId = curRow.find('td:eq(1)').attr("data-id");
-					console.log("OK id: " +uniId);
+					console.log("OK id: " + uniId);
 					if (uniId != '') {
 						$.confirm({
 							type: 'red',
@@ -269,22 +299,19 @@
 				$('#tbl-forum tbody').on('click', '#editUnID', function () {
 					var curRow = $(this).closest('tr');
 					var id = curRow.find('td:eq(1)').attr("data-id");
-					var userName = curRow.find('td:eq(1)').text();
-					var forum = curRow.find('td:eq(2)').text();
-					var specialId = curRow.find('td:eq(3)').text();
+					var username = curRow.find('td:eq(1)').text();
+					var message = curRow.find('td:eq(2)').text();
+					var special = curRow.find('td:eq(3)').text();
 					var img = curRow.find('td:eq(4)').text();
-			
+
 
 					$("#updateId").val(id);
-					$("#userName").val(userName);
-					$('#userName').prop('readonly', true);
-					$("#forum").val(forum);
-					$('#forum').prop('readonly', true);
-					
-					$("#userName").val(userName);
-					
-					$("#specialty option:selected").text(specialty);
-					$("#specialty option:selected").val(specialty);
+					$("#username").val(username);
+					$('#username').prop('readonly', true);
+					$("#message").val(message);
+
+					$("#special option:selected").text(special);
+					$("#special option:selected").val(special);
 
 					$('html, body').animate({
 						scrollTop: $('#scroll').offset().top
@@ -292,8 +319,8 @@
 				});
 			});
 		</script>
-		
-		</div>
+
+	</div>
 
 	<div layout:fragment="css">
 		<style>
@@ -316,11 +343,3 @@
 </body>
 
 </html>
-			
-			
-			
-			
-			
-			
-			
-			
