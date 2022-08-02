@@ -9,12 +9,20 @@
 			<div class="row mb-2">
 				<div class="col-sm-6">
 					<h4 class="m-0">Hoá đơn</h4>
+					
+					
 				</div>
 				<!-- /.col -->
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
-						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Trang chủ</a></li>
-						<li class="breadcrumb-item active">Hoá đơn</li>
+						<div class="form-inline">
+						<label>Lọc trạng thái: </label>
+						<select id="status" class="form-control filter m-2">
+							<option value="all"> Tất cả</option>
+							<option value="paid">paid</option>
+							<option value="issued">issued</option>
+						</select>
+					</div>
 					</ol>
 				</div>
 				<!-- /.col -->
@@ -51,7 +59,8 @@
 									<td><span th:text="${invoice.totalAmount}"></span></td>
 									<td>
 										<a class="btn btn-outline-warning btn-sm"
-											th:href="@{'/invoices/download/' + ${invoice.id}}"><i class="fa fa-download"></i>
+											th:href="@{'/invoices/download/' + ${invoice.id}}"><i
+												class="fa fa-download"></i>
 										</a>
 									</td>
 									<td>
@@ -80,6 +89,33 @@
 					],
 				});
 				
+				$("#status").on('change', function () {
+					$('#tbl-invoice').DataTable({
+						destroy: true,
+						"dom": '<"toolbar">lrtip',
+						"bFilter": true,
+						"bLengthChange": true,
+						"order": [
+							[3, "desc"]
+						],
+						"initComplete": function () {
+							this.api().columns([3]).every(function () {
+								var column = this;
+								var searchString = $("#status").val();
+								if (searchString == 'all') {
+									column.draw();
+								} else {
+									console.log("test: " + searchString)
+									searchString = searchString.replace('<span>', '');
+									searchString = searchString.replace('</span>', '');
+									var val = $.fn.dataTable.util.escapeRegex(searchString);
+									column.search(val ? '^' + val + '$' : '', true, false).draw();
+								}
+							});
+						}
+					});
+				});
+
 				$('#tbl-invoice tbody').on('click', '#btn-invoice', function () {
 					var curRow = $(this).closest('tr');
 					var uniId = curRow.find('td:eq(0)').attr("data-id");
@@ -116,12 +152,12 @@
 										}
 									});
 								},
-								No: function () {}
+								No: function () { }
 							}
 						});
 					}
 				});
-				
+
 			});
 		</script>
 	</div>

@@ -33,8 +33,13 @@
 					<label>Lọc trạng thái: </label>
 					<select id="status" class="form-control filter m-2">
 						<option value="all"> Tất cả</option>
-						<option value="true"> Đã đọc</option>
-						<option value="false"> Chưa đọc</option>
+						<option value="SCHEDULED">SCHEDULED</option>
+						<option value="FINISHED">FINISHED</option>
+						<option value="CANCELED">CANCELED</option>
+						<option value="CONFIRMED">CONFIRMED</option>
+						<option value="INVOICED">INVOICED</option>
+						<option value="REJECTION_REQUESTED">REJECTION_REQUESTED</option>
+						<option value="REJECTED">REJECTED</option>
 					</select>
 				</div>
 			</div>
@@ -102,6 +107,33 @@
 					"order": [
 						[3, "desc"]
 					],
+				});
+				
+				$("#status").on('change', function () {
+					$('#tbl-appointment').DataTable({
+						destroy: true,
+						"dom": '<"toolbar">lrtip',
+						"bFilter": true,
+						"bLengthChange": true,
+						"order": [
+							[3, "desc"]
+						],
+						"initComplete": function () {
+							this.api().columns([6]).every(function () {
+								var column = this;
+								var searchString = $("#status").val();
+								if (searchString == 'all') {
+									column.draw();
+								} else {
+									console.log("test: " + searchString)
+									searchString = searchString.replace('<span>', '');
+									searchString = searchString.replace('</span>', '');
+									var val = $.fn.dataTable.util.escapeRegex(searchString);
+									column.search(val ? '^' + val + '$' : '', true, false).draw();
+								}
+							});
+						}
+					});
 				});
 
 				$('#tbl-appointment tbody').on('click', '#btn-cancel', function () {

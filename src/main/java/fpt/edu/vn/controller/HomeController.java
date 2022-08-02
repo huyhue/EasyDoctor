@@ -164,6 +164,7 @@ public class HomeController {
 		List<Review> reviewList = userService.getAllReviewByDoctorId(doctorId);
 		modelMap.put("reviewList", reviewList);
 		modelMap.put("totalPost", postService.getTotalPost(doctorId));
+		modelMap.put("totalAppointment", doctor.getAppointments().size());
 		
 		modelMap.put("isFollow", userService.isFollowDoctor(doctorId, currentUser.getId()));
 		return "doctors/doctorDetail";
