@@ -184,7 +184,7 @@
 						<div class="col">
 							<select id="specialty" name="specialId" class="form-control filter">
 								<option value="" selected>Tất cả chuyên khoa</option>
-								<option th:each="specialty : ${specialties}" th:value="${specialty.name}"
+								<option th:each="specialty : ${specialties}" th:value="${specialty.id}"
 									th:text="${specialty.name}" th:selected="${specialId==specialty.id}"></option>
 							</select>
 						</div>
@@ -206,7 +206,7 @@
 							<div class="d-flex justify-content-start">
 								<i class="avatar"></i>
 								<div class="d-flex flex-column justify-content-start ml-2">
-									<a th:href="@{'/detail/' + ${p.id}}">
+									<a th:href="@{'/detail/' + ${p.userid}}">
 										<span th:text="${p.username}" class="d-block font-weight-bold fullname"></span>
 									</a>
 									<span th:text="${p.special}" class="date text-black-50"></span>

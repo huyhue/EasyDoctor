@@ -64,10 +64,10 @@ public class ForumController {
 	}
 
 	@PostMapping("/post/add")
-	public String addNewPost(@RequestParam String message, @RequestParam(required = false) String special,
+	public String addNewPost(@RequestParam String message, @RequestParam(required = false) long specialId,
 			@RequestParam(required = false) MultipartFile image, @AuthenticationPrincipal CustomUserDetails currentUser)
 			throws IOException {
-		postService.addPost(message, special, image);
+		postService.addPost(message, specialId, image);
 		notificationService.newPostNotificationByDoctor(currentUser.getId(), message);
 		return "redirect:/forum/list";
 	}

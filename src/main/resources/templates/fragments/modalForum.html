@@ -19,7 +19,7 @@
 						</div>
 						<div class="mb-3">
 							<select id="specialty" name="specialId" class="form-control filter">
-								<option th:each="specialty : ${specialties}" th:value="${specialty.name}"
+								<option th:each="specialty : ${specialties}" th:value="${specialty.id}"
 									th:text="${specialty.name}" th:selected="${specialId==specialty.id}"></option>
 							</select>
 						</div>
@@ -54,12 +54,12 @@
 					<input hidden name="pid" id="pid" />
 					<div class="modal-body">
 						<div class="mb-3">
-							<label for="exampleFormControlTextarea1" class="form-label">Nội dung</label>
+							<label for="textmessage" class="form-label">Nội dung</label>
 							<textarea name="message" class="form-control" id="textmessage" rows="5"></textarea>
 						</div>
 						<div class="mb-3">
 							<select id="specialUpdate" name="specialId" class="form-control filter">
-								<option th:each="specialty : ${specialties}" th:value="${specialty.name}"
+								<option th:each="specialty : ${specialties}" th:value="${specialty.id}"
 									th:text="${specialty.name}"></option>
 							</select>
 						</div>

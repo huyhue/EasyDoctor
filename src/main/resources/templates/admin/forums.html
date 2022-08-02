@@ -60,13 +60,8 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label>Nội dung<span class="errorMsg">*</span></label>
-							<input class="form-control filter" type="text" id="message" placeholder="Bài viết">
+							<textarea class="form-control filter" type="text" id="message" placeholder="Bài viết"></textarea>
 							<span class="errorMsg" id="errorMsgForum"></span>
-						</div>
-						<div class="form-group">
-							<label>Hình ảnh<span class="errorMsg">*</span></label>
-							<input class="form-control filter" type="file" id="img">
-							<span class="errorMsg" id="errorMsgImg"></span>
 						</div>
 					</div>
 
@@ -138,7 +133,7 @@
 					"sAjaxDataProp": "",
 					"aoColumns": [
 						{
-							"mData": "id",
+							"mData": "idPostDTO",
 							"render": function (data, type, row) {
 								i += 1;
 								return i;
@@ -165,7 +160,7 @@
 							}
 						}],
 					"fnCreatedRow": function (nRow, aData, iDataIndex) {
-						$('td:eq(1)', nRow).attr("data-id", aData.id);
+						$('td:eq(1)', nRow).attr("data-id", aData.idPostDTO);
 					}
 				});
 
@@ -176,7 +171,7 @@
 						uniList.message = $("#message").val();
 						
 						uniList.special = $("#special option:selected").val();
-						uniList.id = $("#updateId").val();
+						uniList.idPostDTO = $("#updateId").val();
 
 						$.ajax({
 							type: "POST",

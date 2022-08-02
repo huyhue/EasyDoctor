@@ -4,6 +4,7 @@ import java.util.List;
 
 public class PostDTO {
     private long id;
+    private String idPostDTO;
     private String username;
     private String userImg;
     private String special;
@@ -34,6 +35,12 @@ public class PostDTO {
 		this.comments = comments;
 		this.userid = userid;
 		this.specialId = specialId;
+	}
+	public String getIdPostDTO() {
+		return idPostDTO;
+	}
+	public void setIdPostDTO(String idPostDTO) {
+		this.idPostDTO = idPostDTO;
 	}
 	public long getId() {
 		return id;

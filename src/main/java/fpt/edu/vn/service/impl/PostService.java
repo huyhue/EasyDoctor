@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,7 +63,7 @@ public class PostService {
 
 		ls = reList.stream().map(obj -> {
 			PostDTO p = new PostDTO();
-			p.setId(Utils.objToLong(obj[0]));
+			p.setIdPostDTO(Utils.objToLong(obj[0]).toString());
 			p.setUsername(Utils.objToString(obj[1]));
 			p.setSpecial(Utils.objToString(obj[2]));
 			p.setMessage(Utils.objToString(obj[3]));
@@ -177,17 +178,28 @@ public class PostService {
 
 	public CommonMsg saveForum(PostDTO post) throws IOException {
 		CommonMsg commonMsg = new CommonMsg();
-//		if (post.getId() == null) {
-//			addPost(post.getMessage(), post.getSpecial(), null);
-//		}else {
-//			updatePost(post.getId(), post.getMessage(), null, post.getSpecial());
-//		}
-		addPost(post.getMessage(), post.getSpecial(), null);
-		commonMsg.setMsgCode("200");
+		
+		if (post.getIdPostDTO().isEmpty()) {
+			Post p = new Post();
+			p.setSpecialId((long) specialtyRepository.findByName(post.getSpecial()).getId());
+			p.setMessage(post.getMessage());
+			p.setUserId((long) 1);
+			p.setUpdateAt(new Date().toString());
+			postRepository.save(p);
+			commonMsg.setMsgCode("200");
+		}else {
+			Post p = postRepository.findById(Long.parseLong(post.getIdPostDTO())).get();
+			p.setSpecialId((long) specialtyRepository.findByName(post.getSpecial()).getId());
+			p.setMessage(post.getMessage());
+			postRepository.save(p);
+			p.setUpdateAt(new Date().toString());
+			commonMsg.setMsgCode("205");
+		}
+
 		return commonMsg;
 	}
 
-	public boolean addPost(String message, String special, MultipartFile image) throws IOException {
+	public boolean addPost(String message, long specialId, MultipartFile image) throws IOException {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
 		Post p = new Post();
@@ -206,7 +218,7 @@ public class PostService {
 				p.setImg(image.getOriginalFilename());
 			}
 		} finally {
-			p.setSpecialId((long) specialtyRepository.findByName(special).getId());
+			p.setSpecialId(specialId);
 			p.setUserId(Long.parseLong(user.getId().toString()));
 			p.setMessage(message);
 //			p.setUpdateAt(Utils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));

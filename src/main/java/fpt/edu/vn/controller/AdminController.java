@@ -23,7 +23,6 @@ import fpt.edu.vn.component.ProfileDto;
 import fpt.edu.vn.component.ReviewDto;
 import fpt.edu.vn.model.Clinic;
 import fpt.edu.vn.model.Packages;
-import fpt.edu.vn.model.Post;
 import fpt.edu.vn.model.Question;
 import fpt.edu.vn.model.User;
 import fpt.edu.vn.security.CustomUserDetails;
