@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -37,9 +38,10 @@ public class PostService {
 	@Autowired
 	CommentRepository commentRepository;
 	private final SpecialtyRepository specialtyRepository;
-	
+
 	@PersistenceContext
 	EntityManager entityManager;
+
 	public PostService(PostRepository postRepository, CommentRepository commentRepository,
 			SpecialtyRepository specialtyRepository, EntityManager entityManager) {
 		super();
@@ -170,7 +172,7 @@ public class PostService {
 
 		p.setSpecialId(specialId);
 		p.setMessage(message);
-//		p.setUpdateAt(Utils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
+		p.setUpdateAt(LocalDateTime.now());
 		postRepository.save(p);
 		return true;
 
@@ -178,21 +180,21 @@ public class PostService {
 
 	public CommonMsg saveForum(PostDTO post) throws IOException {
 		CommonMsg commonMsg = new CommonMsg();
-		
+
 		if (post.getIdPostDTO().isEmpty()) {
 			Post p = new Post();
 			p.setSpecialId((long) specialtyRepository.findByName(post.getSpecial()).getId());
 			p.setMessage(post.getMessage());
 			p.setUserId((long) 1);
-			p.setUpdateAt(new Date().toString());
+			p.setUpdateAt(LocalDateTime.now());
 			postRepository.save(p);
 			commonMsg.setMsgCode("200");
-		}else {
+		} else {
 			Post p = postRepository.findById(Long.parseLong(post.getIdPostDTO())).get();
 			p.setSpecialId((long) specialtyRepository.findByName(post.getSpecial()).getId());
 			p.setMessage(post.getMessage());
 			postRepository.save(p);
-			p.setUpdateAt(new Date().toString());
+			p.setUpdateAt(LocalDateTime.now());
 			commonMsg.setMsgCode("205");
 		}
 
@@ -221,7 +223,7 @@ public class PostService {
 			p.setSpecialId(specialId);
 			p.setUserId(Long.parseLong(user.getId().toString()));
 			p.setMessage(message);
-//			p.setUpdateAt(Utils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
+			p.setUpdateAt(LocalDateTime.now());
 			postRepository.save(p);
 		}
 		return true;
@@ -294,5 +296,9 @@ public class PostService {
 		deletePost(postId);
 		commonMsg.setMsgCode("200");
 		return commonMsg;
+	}
+
+	public int countAllPostByMonth(int month) {
+		return postRepository.countAllPostByMonth(month);
 	}
 }

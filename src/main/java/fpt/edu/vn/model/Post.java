@@ -1,6 +1,10 @@
 package fpt.edu.vn.model;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.*;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "posts")
@@ -21,11 +25,12 @@ public class Post {
 	private String likes;
 	private Long totalLike;
 	
-	private String createAt;
-	private String updateAt;
+	@Column(name = "updateAt")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime updateAt;
 
 	public Post(Long id, Long userId, Long specialId, String message, String img, String likes, Long totalLike,
-			String createAt, String updateAt) {
+			LocalDateTime updateAt) {
 		super();
 		this.id = id;
 		this.userId = userId;
@@ -34,7 +39,6 @@ public class Post {
 		this.img = img;
 		this.likes = likes;
 		this.totalLike = totalLike;
-		this.createAt = createAt;
 		this.updateAt = updateAt;
 	}
 
@@ -97,27 +101,18 @@ public class Post {
 		this.totalLike = totalLike;
 	}
 
-	public String getCreateAt() {
-		return createAt;
-	}
-
-	public void setCreateAt(String createAt) {
-		this.createAt = createAt;
-	}
-
-	public String getUpdateAt() {
+	public LocalDateTime getUpdateAt() {
 		return updateAt;
 	}
 
-	public void setUpdateAt(String updateAt) {
+	public void setUpdateAt(LocalDateTime updateAt) {
 		this.updateAt = updateAt;
 	}
 
 	@Override
 	public String toString() {
 		return "Post [id=" + id + ", userId=" + userId + ", specialId=" + specialId + ", message=" + message + ", img="
-				+ img + ", likes=" + likes + ", totalLike=" + totalLike + ", createAt=" + createAt + ", updateAt="
-				+ updateAt + "]";
+				+ img + ", likes=" + likes + ", totalLike=" + totalLike + ", updateAt=" + updateAt + "]";
 	}
 
 }

@@ -480,6 +480,11 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public int getNumberCanceledAppointmentByUserId(int userId) {
 		return appointmentRepository.findCanceledByUserId(userId).size();
 	}
+	
+	@Override
+	public int countAllAppointmentByMonth(int month) {
+		return appointmentRepository.countAllAppointmentByMonth(month);
+	}
 
 	@Override
 	public long[] getCountAppointmentByStatus(int doctorId, String dateTime) {
