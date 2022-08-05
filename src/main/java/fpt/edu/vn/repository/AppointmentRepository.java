@@ -66,6 +66,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
     @Query("select COUNT(a) from Appointment a where a.doctor.id = :doctorId and DATE(a.start) =:date and a.status = 'REJECTION_REQUESTED'")
     int countAppointmentByStatus5(@Param("doctorId") int doctorId, @Param("date") Date date);
     
+    @Query("select COUNT(a) from Appointment a where MONTH(a.start) =:month ")
+    int countAllAppointmentByMonth(@Param("month") int month);
+    
     @Query("select a from Appointment a where a.id = :id and TIME(a.start) >=:timeStart and TIME(a.end) <=:timeEnd")
     List<Appointment> findAppointmentToCancel(@Param("id") int id, @Param("timeStart") String timeStart, @Param("timeEnd") String timeEnd);
 }

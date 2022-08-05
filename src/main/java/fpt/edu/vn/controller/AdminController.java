@@ -1,7 +1,9 @@
 package fpt.edu.vn.controller;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -59,8 +61,18 @@ public class AdminController {
 	public String showHome(Model model) {
 		model.addAttribute("totalPatient", userService.getAllPatients().size());
 		model.addAttribute("totalDoctor", userService.getAllDoctors().size());
-		model.addAttribute("totalPost", 5);
 		model.addAttribute("totalAppointment", appointmentService.getAllAppointments().size());
+		model.addAttribute("totalPost", postService.getAllForum().size());
+		
+		Map<Integer, Integer> dataAppointment = new LinkedHashMap<>();
+		Map<Integer, Integer> dataPost = new LinkedHashMap<>();
+		for (int i = 1; i < 13; i++) {
+			dataAppointment.put(i, appointmentService.countAllAppointmentByMonth(i));
+			dataPost.put(i, postService.countAllPostByMonth(i));
+		}
+   
+        model.addAttribute("dataAppointment", dataAppointment.values());
+        model.addAttribute("dataPost", dataPost.values());
 		return "admin/home";
 	}
 

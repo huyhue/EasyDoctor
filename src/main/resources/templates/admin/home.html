@@ -1,6 +1,50 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	th:replace="~{fragments/base :: base (~{::body},'Admin Home')}">
+<style>
+	.highcharts-figure,
+	.highcharts-data-table table {
+		min-width: 310px;
+		max-width: 800px;
+		margin: 1em auto;
+	}
+
+	.highcharts-data-table table {
+		font-family: Verdana, sans-serif;
+		border-collapse: collapse;
+		border: 1px solid #ebebeb;
+		margin: 10px auto;
+		text-align: center;
+		width: 100%;
+		max-width: 500px;
+	}
+
+	.highcharts-data-table caption {
+		padding: 1em 0;
+		font-size: 1.2em;
+		color: #555;
+	}
+
+	.highcharts-data-table th {
+		font-weight: 600;
+		padding: 0.5em;
+	}
+
+	.highcharts-data-table td,
+	.highcharts-data-table th,
+	.highcharts-data-table caption {
+		padding: 0.5em;
+	}
+
+	.highcharts-data-table thead tr,
+	.highcharts-data-table tr:nth-child(even) {
+		background: #f8f8f8;
+	}
+
+	.highcharts-data-table tr:hover {
+		background: #f1f7ff;
+	}
+</style>
 
 <body>
 	<div>
@@ -80,7 +124,7 @@
 				<div class="col-md-12">
 					<div class="card">
 						<div class="card-header">
-							<h5 class="card-title">Báo cáo hàng tuần</h5>
+							<h5 class="card-title">Báo cáo hàng tháng trong năm</h5>
 
 							<div class="card-tools">
 								<button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -107,9 +151,9 @@
 						<div class="card-body">
 							<div class="row">
 								<div class="col-md-12">
-									<div class="chart">
-										<!-- Sales Chart Canvas <canvas id="salesChart" height="180" style="height: 180px;"></canvas>-->
-										<canvas class="my-5" id="myChart"></canvas>
+									<div class="chart" id="myChart">
+										<!--<canvas class="my-5" id="myChart"></canvas> Sales Chart Canvas <canvas id="salesChart" height="180" style="height: 180px;"></canvas>-->
+
 									</div>
 									<!-- /.chart-responsive -->
 								</div>
@@ -127,75 +171,71 @@
 		</div>
 	</div>
 
-	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/series-label.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.highcharts.com/modules/export-data.js"></script>
+	<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 	<div layout:fragment="script">
 		<script type="text/javascript">
 			$(document).ready(function () {
 				$("#nav-linkDashboard").addClass("active");
 
-				function newDate(num) {
-					let today = new Date();
-					today.setDate(today.getDate() - num);
-					let result = today.toLocaleDateString();
-					return result;
-				}
-
-				var ctx = document.getElementById('myChart').getContext('2d');
-				var chart = new Chart(ctx, {
-					type: 'line',
-					data: {
-						labels: [newDate(6), newDate(5), newDate(4), newDate(3), newDate(2), newDate(1), newDate(0)],
-						datasets: [
-							{
-								label: 'Total Patient',
-								backgroundColor: '#17a2b8',
-								borderColor: '#17a2b8',
-								fill: false,
-								lineTension: 0.1,
-								data: [0, 0, 0, 0, 0, 0, 0]
-							}, {
-								label: 'Total Doctor',
-								backgroundColor: '#dc3545',
-								borderColor: '#dc3545',
-								fill: false,
-								lineTension: 0.1,
-								data: [0, 0, 0, 0, 0, 0, 0]
-							}, {
-								label: 'Total Post',
-								backgroundColor: '#28a745',
-								borderColor: '#28a745',
-								fill: false,
-								lineTension: 0.1,
-								data: [0, 0, 0, 0, 0, 0, 0]
-							}, {
-								label: 'Total Appointment',
-								backgroundColor: '#ffc107',
-								borderColor: '#ffc107',
-								fill: false,
-								lineTension: 0.1,
-								data: [0, 0, 0, 0, 0, 0, 0]
-							}
-						]
+				Highcharts.chart('myChart', {
+					chart: {
+						type: 'spline'
 					},
+					title: {
+						text: 'Thống kê qua các tháng'
+					},
+					subtitle: {
+						text: 'EasyDoctor'
+					},
+					xAxis: {
+						categories: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
+							'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+						accessibility: {
+							description: 'Các tháng trong năm'
+						}
+					},
+					yAxis: {
+						title: {
+							text: 'Số lượng'
+						},
+						labels: {
+							formatter: function () {
+								return this.value + '°';
+							}
+						}
+					},
+					tooltip: {
+						crosshairs: true,
+						shared: true
+					},
+					plotOptions: {
+						spline: {
+							marker: {
+								radius: 4,
+								lineColor: '#666666',
+								lineWidth: 1
+							}
+						}
+					},
+					series: [{
+						name: 'Cuộc hẹn',
+						marker: {
+							symbol: 'square'
+						},
+						data: [[${dataAppointment}]]
 
-					options: {}
+					}, {
+						name: 'Bài đăng',
+						marker: {
+							symbol: 'diamond'
+						},
+						data: [[${dataPost}]]
+					}]
 				});
-
-				chart.data.datasets[0].data.push(1)
-				chart.data.datasets[0].data.shift()
-				chart.update()
-
-				chart.data.datasets[1].data.push(2)
-				chart.data.datasets[1].data.shift()
-				chart.update()
-				
-				chart.data.datasets[3].data.push(3)
-				chart.data.datasets[3].data.shift()
-				chart.update()
-				
-				chart.data.datasets[4].data.push(4)
-				chart.data.datasets[4].data.shift()
-				chart.update()
 			});
 		</script>
 	</div>

@@ -72,4 +72,5 @@ public interface AppointmentService {
 	
 	//Statitics
 	long[] getCountAppointmentByStatus(int doctorId, String dateTime);
+	int countAllAppointmentByMonth(int month);
 }
