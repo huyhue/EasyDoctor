@@ -188,7 +188,7 @@
 								if (data.msgCode == '200') {
 									$.confirm({
 										type: 'green',
-										title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
+										title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
 										content: 'Lưu thành công.',
 										buttons: {
 											ok: function () { }
@@ -200,7 +200,7 @@
 								} else if (data.msgCode == '205') {
 									$.confirm({
 										type: 'green',
-										title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
+										title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
 										content: 'Cập nhật thành công.',
 										buttons: {
 											ok: function () { }
@@ -262,7 +262,7 @@
 					if (uniId != '') {
 						$.confirm({
 							type: 'red',
-							title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red;"></i> ' + 'Confirm!!',
+							title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red;"></i> ' + 'Xác nhận!!',
 							content: 'Bạn có muốn xoá không?',
 							buttons: {
 								Yes: function () {
@@ -275,7 +275,7 @@
 												i = 0;
 												$.confirm({
 													type: 'green',
-													title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
+													title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
 													content: 'Xoá thành công.',
 													buttons: {
 														ok: function () { }
@@ -285,7 +285,7 @@
 											}
 										},
 										error: function (xhr, status, error) {
-											showAlertByType('Something Wrong!', "F");
+											showAlertByType('Có một vài lỗi!', "F");
 										}
 									});
 								},

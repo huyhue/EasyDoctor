@@ -39,7 +39,7 @@
 							<thead>
 								<tr style="text-align:center;">
 									<th>#</th>
-									<th style="width: 150px">Số</th>
+									<th style="width: 30px">Số</th>
 									<th style="width: 200px">Ngày xuất hoá đơn</th>
 									<th style="width: 150px">Trạng thái</th>
 									<th style="width: 100px">Tổng cộng</th>
@@ -123,7 +123,7 @@
 						$.confirm({
 							type: 'green',
 							title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:green;"></i> ' + 'Xác nhận!!',
-							content: 'Bệnh nhân đã thanh toán tiền rồi ak?',
+							content: 'Bệnh nhân đã thanh toán tiền ?',
 							autoClose: 'No|8000',
 							buttons: {
 								Yes: function () {
@@ -136,7 +136,7 @@
 												i = 0;
 												$.confirm({
 													type: 'green',
-													title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
+													title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
 													content: 'Thay đổi trạng thái thành công!!',
 													buttons: {
 														ok: function () {
@@ -148,7 +148,7 @@
 											}
 										},
 										error: function (xhr, status, error) {
-											console.log("Something Wrong!");
+											console.log("Có một vài lỗi!");
 										}
 									});
 								},

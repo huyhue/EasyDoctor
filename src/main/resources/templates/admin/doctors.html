@@ -13,7 +13,7 @@
 				<!-- /.col -->
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
-						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Home</a></li>
+						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Trang chủ</a></li>
 						<li class="breadcrumb-item active">Bác sĩ</li>
 					</ol>
 				</div>
@@ -198,7 +198,7 @@
 								if (data.msgCode == '200') {
 									$.confirm({
 										type: 'green',
-										title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
+										title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
 										content: 'Thêm bác sĩ thành công. Đã gửi thông tin tài khoản đến mail đến bác sĩ.',
 										buttons: {
 											ok: function () { }
@@ -210,7 +210,7 @@
 								} else if (data.msgCode == '205') {
 									$.confirm({
 										type: 'green',
-										title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
+										title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
 										content: 'Chỉnh sửa thông tin bác sĩ thành công.',
 										buttons: {
 											ok: function () { }
@@ -220,11 +220,11 @@
 									table.ajax.reload();
 									resetText();
 								} else if (data.msgCode == "exitName") {
-									$("#errorMsgName").text("Name already exit!!");
+									$("#errorMsgName").text("Tên đã tồn tại!!");
 									$("#fullname").css('border', '1px solid red');
 									$("#fullname").focus();
 								} else if (data.msgCode == "exitEmail") {
-									$("#errorMsgEmail").text("Email already exit!!");
+									$("#errorMsgEmail").text("Email đã tồn tại!!");
 									$("#email").css('border', '1px solid red');
 									$("#email").focus();
 								} else if (data.msgCode == "notSpecialty") {
@@ -241,7 +241,7 @@
 								xhr,
 								status,
 								error) {
-								showCustomAlert('D', "Sorry,Something wrong.Please contact with IT Team!!");
+								showCustomAlert('D', "Xin lỗi, hãy liên hệ với đội ngũ IT của chúng tôi!!");
 							}
 						});
 					}
@@ -253,7 +253,7 @@
 
 					if ($("#clinic").val() == -1) {
 						status = false;
-						$("#errorMsgClinic").text("Required Field!!");
+						$("#errorMsgClinic").text("Bắt buộc!!");
 						$("#clinic").css('border', '1px solid red');
 						$("#clinic").focus();
 						return status;
@@ -261,7 +261,7 @@
 
 					if ($("#specialty").val() == -1) {
 						status = false;
-						$("#errorMsgSpecialty").text("Required Field!!");
+						$("#errorMsgSpecialty").text("Bắt buộc!!");
 						$("#specialty").css('border', '1px solid red');
 						$("#specialty").focus();
 						return status;
@@ -269,14 +269,14 @@
 
 					if ($("#fullname").val() == "") {
 						status = false;
-						$("#errorMsgFullname").text("Required Field!!");
+						$("#errorMsgFullname").text("Bắt buộc!!");
 						$("#fullname").css('border', '1px solid red');
 						$("#fullname").focus();
 						return status;
 					} else if ($("#fullname").val().length < 2) {
 						status = false;
 						$("#errorMsgName").text(
-							"Length must be greater than 2 characters!!");
+							"Độ dài phải nhiều hơn 2 ký tự!!");
 						$("#fullname").css('border',
 							'1px solid red');
 						$("#fullname").focus();
@@ -286,7 +286,7 @@
 					if ($("#userName").val() == "") {
 						status = false;
 						$("#errorMsgUsername").text(
-							"Required Field!!");
+							"Bắt buộc!!");
 						$("#userName").css('border',
 							'1px solid red');
 						$("#userName").focus();
@@ -294,7 +294,7 @@
 					} else if ($("#userName").val() < 2) {
 						status = false;
 						$("#errorMsgUsername").text(
-							"Length must be greater than 2 characters!!");
+							"Độ dài phải nhiều hơn 2 ký tự!!");
 						$("#userName").css('border',
 							'1px solid red');
 						$("#userName").focus();
@@ -304,7 +304,7 @@
 					if ($("#email").val() == "") {
 						status = false;
 						$("#errorMsgEmail").text(
-							"Required Field!!");
+							"Bắt buộc!");
 						$("#email").css('border',
 							'1px solid red');
 						$("#email").focus();
@@ -312,7 +312,7 @@
 					} else if (!pattern.test($("#email").val())) {
 						status = false;
 						$("#errorMsgEmail").text(
-							"Invalid Email Address!!");
+							"Email không khả dụng!!");
 						$("#email").css('border',
 							'1px solid red');
 						$("#email").focus();
@@ -361,8 +361,8 @@ console.log("OK id: " +uniId);
 					if (uniId != '') {
 						$.confirm({
 							type: 'red',
-							title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red;"></i> ' + 'Confirm!!',
-							content: 'Do you want to delete?',
+							title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red;"></i> ' + 'Xác nhận!!',
+							content: 'Bạn có muốn xoá không?',
 							buttons: {
 								Yes: function () {
 									$.ajax({
@@ -374,8 +374,8 @@ console.log("OK id: " +uniId);
 												i = 0;
 												$.confirm({
 													type: 'green',
-													title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
-													content: 'Delete successfully.',
+													title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
+													content: 'Xoá thành công.',
 													buttons: {
 														ok: function () { }
 													}
@@ -384,7 +384,7 @@ console.log("OK id: " +uniId);
 											}
 										},
 										error: function (xhr, status, error) {
-											showAlertByType('Something Wrong!', "F");
+											showAlertByType('Có một vài lỗi!', "F");
 										}
 									});
 								},

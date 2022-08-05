@@ -13,7 +13,7 @@
 				<!-- /.col -->
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
-						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Home</a></li>
+						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Trang chủ</a></li>
 						<li class="breadcrumb-item active">Bệnh nhân</li>
 					</ol>
 				</div>
@@ -40,9 +40,9 @@
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
-							<label>UserName<span class="errorMsg">*</span></label>
+							<label>Tên đăng nhập<span class="errorMsg">*</span></label>
 							<input type="hidden" id="updateId" />
-							<input class="form-control filter" type="text" id="userName" placeholder="Nhập userName">
+							<input class="form-control filter" type="text" id="userName" placeholder="Nhập tên đăng nhập">
 							<span class="errorMsg" id="errorMsgUserName"></span>
 						</div>
 						<div class="form-group">
@@ -191,8 +191,8 @@
 								if (data.msgCode == '200') {
 									$.confirm({
 										type: 'green',
-										title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
-										content: 'Save successfully.',
+										title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
+										content: 'Lưu thành công.',
 										buttons: {
 											ok: function () { }
 										}
@@ -203,8 +203,8 @@
 								} else if (data.msgCode == '205') {
 									$.confirm({
 										type: 'green',
-										title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
-										content: 'Update successfully.',
+										title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
+										content: 'Cập nhật thành công.',
 										buttons: {
 											ok: function () { }
 										}
@@ -213,11 +213,11 @@
 									table.ajax.reload();
 									resetText();
 								} else if (data.msgCode == "exitUserName") {
-									$("#errorMsgUserName").text("UserName already exit!!");
+									$("#errorMsgUserName").text("Tên đăng nhập đã tồn tại!!");
 									$("#userName").css('border', '1px solid red');
 									$("#userName").focus();
 								} else if (data.msgCode == "exitEmail") {
-									$("#errorMsgEmail").text("Email already exit!!");
+									$("#errorMsgEmail").text("Email đã tồn tại!!");
 									$("#email").css('border', '1px solid red');
 									$("#email").focus();
 								}
@@ -226,7 +226,7 @@
 								xhr,
 								status,
 								error) {
-								showCustomAlert('D', "Sorry,Something wrong.Please contact with IT Team!!");
+								showCustomAlert('D', "Xin lỗi, hãy liên hệ với đội ngũ IT của chúng tôi!!");
 							}
 						});
 					}
@@ -238,14 +238,14 @@
 
 					if ($("#fullname").val() == "") {
 						status = false;
-						$("#errorMsgFullname").text("Required Field!!");
+						$("#errorMsgFullname").text("Bắt buộc!!");
 						$("#fullname").css('border', '1px solid red');
 						$("#fullname").focus();
 						return status;
 					} else if ($("#fullname").val().length < 2) {
 						status = false;
 						$("#errorMsgName").text(
-							"Length must be greater than 2 characters!!");
+							"Độ dài phải nhiều hơn 2 ký tự!!");
 						$("#fullname").css('border',
 							'1px solid red');
 						$("#fullname").focus();
@@ -255,7 +255,7 @@
 					if ($("#userName").val() == "") {
 						status = false;
 						$("#errorMsgUsername").text(
-							"Required Field!!");
+							"Bắt buộc!!");
 						$("#userName").css('border',
 							'1px solid red');
 						$("#userName").focus();
@@ -263,7 +263,7 @@
 					} else if ($("#userName").val() < 2) {
 						status = false;
 						$("#errorMsgUsername").text(
-							"Length must be greater than 2 characters!!");
+							"Độ dài phải nhiều hơn 2 ký tự!!");
 						$("#userName").css('border',
 							'1px solid red');
 						$("#userName").focus();
@@ -273,7 +273,7 @@
 					if ($("#email").val() == "") {
 						status = false;
 						$("#errorMsgEmail").text(
-							"Required Field!!");
+							"Bắt buộc!!");
 						$("#email").css('border',
 							'1px solid red');
 						$("#email").focus();
@@ -281,7 +281,7 @@
 					} else if (!pattern.test($("#email").val())) {
 						status = false;
 						$("#errorMsgEmail").text(
-							"Invalid Email Address!!");
+							"Địa chỉ email không khả dụng!!");
 						$("#email").css('border',
 							'1px solid red');
 						$("#email").focus();
@@ -326,8 +326,8 @@
 					if (uniId != '') {
 						$.confirm({
 							type: 'orange',
-							title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:orange;"></i> ' + 'Confirm!!',
-							content: 'Do you want to delete?',
+							title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:orange;"></i> ' + 'Xác nhận!!',
+							content: 'Bạn có muốn xoá không?',
 							buttons: {
 								Yes: function () {
 									$.ajax({
@@ -339,8 +339,8 @@
 												i = 0;
 												$.confirm({
 													type: 'green',
-													title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
-													content: 'Delete successfully.',
+													title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
+													content: 'Xoá thành công.',
 													buttons: {
 														ok: function () { }
 													}
@@ -349,7 +349,7 @@
 											}
 										},
 										error: function (xhr, status, error) {
-											showAlertByType('Something Wrong!', "F");
+											showAlertByType(' Có một vài lỗi!', "F");
 										}
 									});
 								},
