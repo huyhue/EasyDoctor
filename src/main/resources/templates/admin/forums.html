@@ -126,11 +126,14 @@
 			$(document).ready(function () {
 				$("#nav-itemBlog").addClass("active");
 				$("#nav-linkAddPost").addClass("active menu-is-opening menu-open");
-
+				
 				var i = 0;
 				var table = $('#tbl-forum').DataTable({
 					"sAjaxSource": "/admin/getListForum",
 					"sAjaxDataProp": "",
+					"order": [
+						[5, "desc"]
+					],
 					"aoColumns": [
 						{
 							"mData": "idPostDTO",

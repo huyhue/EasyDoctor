@@ -335,6 +335,19 @@
 				avatar[i].innerHTML = name[0];
 				avatar[i].style.backgroundColor = getAvatarColor(name);
 			}
+			
+			$("#forum-form").validate({
+				rules: {
+					message: {
+						required: true
+					}
+				},
+				messages: {
+					message: {
+						required: "Không được để trống"
+					}
+				}
+			});
 
 		});
 

@@ -159,11 +159,12 @@ public class WorkingPlan {
 	}
 
 	public static WorkingPlan generateDefaultWorkingPlan() {
-        WorkingPlan wp = new WorkingPlan();
         LocalTime defaultStartHour = LocalTime.parse("06:00");
         LocalTime defaultEndHour = LocalTime.parse("18:00");
         TimePeroid defaultWorkingPeroid = new TimePeroid(defaultStartHour, defaultEndHour);
         DayPlan defaultDayPlan = new DayPlan(defaultWorkingPeroid);
+        
+        WorkingPlan wp = new WorkingPlan();
         wp.setMonday(defaultDayPlan);
         wp.setTuesday(defaultDayPlan);
         wp.setWednesday(defaultDayPlan);

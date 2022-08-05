@@ -10,11 +10,11 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form th:action="@{/forum/post/add}" method="post" enctype="multipart/form-data">
+				<form th:action="@{/forum/post/add}" method="post" enctype="multipart/form-data" id="forum-form">
 					<div class="modal-body">
 						<div class="mb-3">
-							<label for="exampleFormControlTextarea1" class="form-label">Nội dung</label>
-							<textarea name="message" class="form-control" id="exampleFormControlTextarea1"
+							<label for="message" class="form-label">Nội dung</label>
+							<textarea name="message" class="form-control" id="message"
 								rows="5"></textarea>
 						</div>
 						<div class="mb-3">

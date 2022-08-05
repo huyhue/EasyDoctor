@@ -32,6 +32,7 @@ import fpt.edu.vn.model.Review;
 import fpt.edu.vn.model.Role;
 import fpt.edu.vn.model.Specialty;
 import fpt.edu.vn.model.User;
+import fpt.edu.vn.model.WorkingPlan;
 import fpt.edu.vn.repository.DoctorRepository;
 import fpt.edu.vn.repository.FileModelRepository;
 import fpt.edu.vn.repository.HistoryRepository;
@@ -246,7 +247,14 @@ public class UserServiceImpl implements UserService {
 			doctor.setRoles(getRolesForDoctor());
 			doctor.setSpecialty(specialtyRepository.findByName(doctordto.getNameSpecialty()));
 			doctor.setClinic(clinicRepository.findByName(doctordto.getNameClinic()));
-			doctorRepository.save(doctor);
+			int doctorID = doctorRepository.save(doctor).getId();
+			
+			//Set WorkingPlan Default
+			Doctor doctorUpdate = getDoctorById(doctorID);
+			WorkingPlan workingPlan = WorkingPlan.generateDefaultWorkingPlan();
+			doctorUpdate.setWorkingPlan(workingPlan);
+			doctorRepository.save(doctorUpdate);
+			
 			commonMsg.setMsgCode("200");
 		} else {
 			// update
