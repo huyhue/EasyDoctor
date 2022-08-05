@@ -13,7 +13,7 @@
 				<!-- /.col -->
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
-						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Home</a></li>
+						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Trang chủ</a></li>
 						<li class="breadcrumb-item active">Danh sách đánh giá</li>
 					</ol>
 				</div>
@@ -112,7 +112,7 @@
 												i = 0;
 												$.confirm({
 													type: 'green',
-													title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
+													title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
 													content: 'Xóa thành công!!',
 													buttons: {
 														ok: function () {
@@ -124,7 +124,7 @@
 											}
 										},
 										error: function (xhr, status, error) {
-											showAlertByType('Something Wrong!', "F");
+											showAlertByType('Có một vài lỗi!', "F");
 										}
 									});
 								},

@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	th:replace="~{fragments/base :: base (~{::body},'Packages')}">
+	th:replace="~{fragments/base :: base (~{::body},'Gói khám')}">
 
 <body>
 	<div class="content-header" id="scroll">
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h4 class="m-0">Packages Information</h4>
+					<h4 class="m-0">Thông tin gói khám</h4>
 				</div>
 				<!-- /.col -->
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
-						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Home</a></li>
-						<li class="breadcrumb-item active">Packages</li>
+						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Trang chủ</a></li>
+						<li class="breadcrumb-item active">Gói khám</li>
 					</ol>
 				</div>
 				<!-- /.col -->
@@ -40,39 +40,39 @@
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
-							<label>Name<span class="errorMsg">*</span></label>
+							<label>Họ và tên<span class="errorMsg">*</span></label>
 							<input type="hidden" id="updateId" />
-							<input class="form-control filter" type="text" id="name" placeholder="Enter Name">
+							<input class="form-control filter" type="text" id="name" placeholder="Nhập họ và tên">
 							<span class="errorMsg" id="errorMsgName"></span>
 						</div>
 
 						<div class="form-group">
-							<label>Price<span class="errorMsg">*</span></label>
-							<input class="form-control filter" type="number" id="price" placeholder="Enter Price"> <span
+							<label>Giá<span class="errorMsg">*</span></label>
+							<input class="form-control filter" type="number" id="price" placeholder="Nhập giá"> <span
 								class="errorMsg" id="errorMsgPrice"></span>
 						</div>
 						<div class="form-group">
-							<label>Duration<span class="errorMsg">*</span></label>
-							<input class="form-control filter" type="number" id="duration" placeholder="Enter Duration">
+							<label>Thời hạn(ngày)<span class="errorMsg">*</span></label>
+							<input class="form-control filter" type="number" id="duration" placeholder="Nhập thời hạn">
 							<span class="errorMsg" id="errorMsgDuration"></span>
 						</div>
 					</div>
 
 					<div class="col-md-6">
 						<div class="form-group">
-							<label>Description<span class="errorMsg">*</span></label>
+							<label>Mô tả<span class="errorMsg">*</span></label>
 							<input class="form-control filter" type="text" id="description"
-								placeholder="Enter Description"> <span class="errorMsg" id="errorMsgDescription"></span>
+								placeholder="Nhập mô tả"> <span class="errorMsg" id="errorMsgDescription"></span>
 						</div>
 						<div class="form-group">
-							<label>Cancelable by patient ?<span class="errorMsg">*</span></label><br>
+							<label>Có thể huỷ bởi bệnh nhân ?<span class="errorMsg">*</span></label><br>
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio" id="option1" name="editable" value="True">
-								<label class="form-check-label" for="option1">Yes</label>
+								<label class="form-check-label" for="option1">Có</label>
 							</div>
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio" id="option2" name="editable" value="False">
-								<label class="form-check-label" for="option2">No</label>
+								<label class="form-check-label" for="option2">Không</label>
 							</div>
 							<span class="errorMsg" id="errorMsgEditable"></span>
 						</div>
@@ -83,7 +83,7 @@
 					<div class="btn-group">
 						<button style="color: #ffffff;" type="button" class="btn btn-block bg-gradient-info btn-sm"
 							id="btn-save">
-							<i class="far fa-save"></i> Save
+							<i class="far fa-save"></i> Lưu
 						</button>
 					</div>
 
@@ -116,12 +116,12 @@
 					<thead>
 						<tr style="text-align:center;">
 							<th style="width: 10px">#</th>
-							<th>Name</th>
-							<th>Price</th>
-							<th>Duration</th>
-							<th>Cancelable</th>
-							<th>Description</th>
-							<th style="width: 100px">Action</th>
+							<th>Họ và tên</th>
+							<th>Giá</th>
+							<th>Thời hạn(ngày)</th>
+							<th>Có thể huỷ</th>
+							<th>Mô tả</th>
+							<th style="width: 100px">Hành động</th>
 						</tr>
 					</thead>
 					<tbody style="text-align:center;">
@@ -190,8 +190,8 @@
 							if (data.msgCode == '200') {
 								$.confirm({
 									type: 'green',
-									title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
-									content: 'Save successfully.',
+									title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
+									content: 'Lưu thành công.',
 									buttons: {
 										ok: function () { }
 									}
@@ -202,8 +202,8 @@
 							} else if (data.msgCode == '205') {
 								$.confirm({
 									type: 'green',
-									title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
-									content: 'Update successfully.',
+									title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
+									content: 'Cập nhật thành công.',
 									buttons: {
 										ok: function () { }
 									}
@@ -212,7 +212,7 @@
 								table.ajax.reload();
 								resetText();
 							} else if (data.msgCode == "exitName") {
-								$("#errorMsgName").text("Name already exit!!");
+								$("#errorMsgName").text("Tên đã tồn tại!!");
 								$("#name").css('border', '1px solid red');
 								$("#name").focus();
 							}
@@ -221,7 +221,7 @@
 							xhr,
 							status,
 							error) {
-							showCustomAlert('D', "Sorry,Something wrong.Please contact with IT Team!!");
+							showCustomAlert('D', "Xin lỗi, hãy liên hệ với đội ngũ IT của chúng tôi!!");
 						}
 					});
 				}
@@ -233,7 +233,7 @@
 
 				if ($("#name").val() == "") {
 					status = false;
-					$("#errorMsgName").text("Required Field!!");
+					$("#errorMsgName").text("Bắt buộc!!");
 					$("#name").css('border', '1px solid red');
 					$("#name").focus();
 					return status;
@@ -276,8 +276,8 @@
 				if (uniId != '') {
 					$.confirm({
 						type: 'orange',
-						title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:orange;"></i> ' + 'Confirm!!',
-						content: 'Do you want to delete?',
+						title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:orange;"></i> ' + 'Xác nhận!!',
+						content: 'Bạn có muốn xoá không?',
 						buttons: {
 							Yes: function () {
 								$.ajax({
@@ -289,8 +289,8 @@
 											i = 0;
 											$.confirm({
 												type: 'green',
-												title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Success!!',
-												content: 'Delete successfully.',
+												title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
+												content: 'Xoá thành công.',
 												buttons: {
 													ok: function () { }
 												}
@@ -299,7 +299,7 @@
 										}
 									},
 									error: function (xhr, status, error) {
-										showAlertByType('Something Wrong!', "F");
+										showAlertByType('Có một vài lỗi!', "F");
 									}
 								});
 							},
