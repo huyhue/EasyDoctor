@@ -52,8 +52,14 @@
 								class="errorMsg" id="errorMsgPrice"></span>
 						</div>
 						<div class="form-group">
-							<label>Thời hạn(ngày)<span class="errorMsg">*</span></label>
-							<input class="form-control filter" type="number" id="duration" placeholder="Nhập thời hạn">
+							<label>Thời lượng<span class="errorMsg">*</span></label>
+							<select id="duration" class="form-control filter">
+									<option value="-1">Chọn thời lượng</option>
+									<option value="30">30 phút</option>
+									<option value="60">60 phút</option>
+									<option value="90">90 phút</option>
+									<option value="120">120 phút</option>
+								</select>
 							<span class="errorMsg" id="errorMsgDuration"></span>
 						</div>
 					</div>
@@ -118,7 +124,7 @@
 							<th style="width: 10px">#</th>
 							<th>Họ và tên</th>
 							<th>Giá</th>
-							<th>Thời hạn(ngày)</th>
+							<th>Thời lượng</th>
 							<th>Có thể huỷ</th>
 							<th>Mô tả</th>
 							<th style="width: 100px">Hành động</th>
@@ -238,6 +244,14 @@
 					$("#name").focus();
 					return status;
 				}
+				
+				if ($("#duration").val() == -1) {
+						status = false;
+						$("#errorMsgDuration").text("Bắt buộc!!");
+						$("#duration").css('border', '1px solid red');
+						$("#duration").focus();
+						return status;
+					}
 				return status;
 			}
 

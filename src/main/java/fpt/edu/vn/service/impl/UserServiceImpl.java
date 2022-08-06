@@ -247,10 +247,10 @@ public class UserServiceImpl implements UserService {
 			doctor.setRoles(getRolesForDoctor());
 			doctor.setSpecialty(specialtyRepository.findByName(doctordto.getNameSpecialty()));
 			doctor.setClinic(clinicRepository.findByName(doctordto.getNameClinic()));
-			int doctorID = doctorRepository.save(doctor).getId();
+			Doctor doctorID = doctorRepository.save(doctor);
 			
 			//Set WorkingPlan Default
-			Doctor doctorUpdate = getDoctorById(doctorID);
+			Doctor doctorUpdate = getDoctorById(doctorID.getId());
 			WorkingPlan workingPlan = WorkingPlan.generateDefaultWorkingPlan();
 			doctorUpdate.setWorkingPlan(workingPlan);
 			doctorRepository.save(doctorUpdate);

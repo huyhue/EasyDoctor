@@ -49,16 +49,16 @@
 						<div class="form-group">
 							<label>Địa chỉ<span class="errorMsg">*</span></label>
 							<select id="address" class="form-control filter">
-									<option value="-1">Nhập địa chỉ</option>
-									<option value="Quận Ngũ Hành Sơn">Quận Ngũ Hành Sơn</option>
-									<option value="Quận Hải Châu">Quận Hải Châu</option>
-									<option value="Quận Cẩm Lệ">Quận Cẩm Lệ</option>
-									<option value="Quận Thanh Khê">Quận Thanh Khê</option>
-									<option value="Quận Liên Chiểu">Quận Liên Chiểu</option>
-									<option value="Quận Sơn Trà">Quận Sơn Trà</option>
-									<option value="Huyện Hòa Vang">Huyện Hòa Vang</option>
-									<option value="Huyện Hoàng Sa">Huyện Hoàng Sa</option>
-								</select>
+								<option value="-1">Nhập địa chỉ</option>
+								<option value="Quận Ngũ Hành Sơn">Quận Ngũ Hành Sơn</option>
+								<option value="Quận Hải Châu">Quận Hải Châu</option>
+								<option value="Quận Cẩm Lệ">Quận Cẩm Lệ</option>
+								<option value="Quận Thanh Khê">Quận Thanh Khê</option>
+								<option value="Quận Liên Chiểu">Quận Liên Chiểu</option>
+								<option value="Quận Sơn Trà">Quận Sơn Trà</option>
+								<option value="Huyện Hòa Vang">Huyện Hòa Vang</option>
+								<option value="Huyện Hoàng Sa">Huyện Hoàng Sa</option>
+							</select>
 							<span class="errorMsg" id="errorMsgAddress"></span>
 						</div>
 
@@ -100,274 +100,281 @@
 						</button>
 					</div>
 				</div>
-				</div>
+			</div>
 		</div>
-				
 
-				<div class="card card-default">
-					<div class="card-header">
-						<h3 class="card-title"></h3>
-						<div class="card-tools">
-							<button type="button" class="btn btn-tool" data-card-widget="collapse">
-								<i class="fas fa-minus"></i>
-							</button>
-							<button type="button" class="btn btn-tool" data-card-widget="remove">
-								<i class="fas fa-times"></i>
-							</button>
-						</div>
-					</div>
-					<!-- /.card-header -->
-					<div class="card-body" style="display: block;">
-						<table class="table table-bordered" id="tbl-clinic">
-							<thead>
-								<tr style="text-align:center;">
-									<th style="width: 10px">#</th>
-									<th>Tên phòng khám</th>
-									<th>Địa chỉ</th>
-									<th>Số điện thoại</th>
-									<th>Trang Web</th>
-									<th>Mô tả</th>
-									<th style="width: 100px">Hành động</th>
-								</tr>
-							</thead>
-							<tbody style="text-align:center;">
 
-							</tbody>
-						</table>
-					</div>
+		<div class="card card-default">
+			<div class="card-header">
+				<h3 class="card-title"></h3>
+				<div class="card-tools">
+					<button type="button" class="btn btn-tool" data-card-widget="collapse">
+						<i class="fas fa-minus"></i>
+					</button>
+					<button type="button" class="btn btn-tool" data-card-widget="remove">
+						<i class="fas fa-times"></i>
+					</button>
 				</div>
 			</div>
+			<!-- /.card-header -->
+			<div class="card-body" style="display: block;">
+				<table class="table table-bordered" id="tbl-clinic">
+					<thead>
+						<tr style="text-align:center;">
+							<th style="width: 10px">#</th>
+							<th>Tên phòng khám</th>
+							<th>Địa chỉ</th>
+							<th>Số điện thoại</th>
+							<th>Trang Web</th>
+							<th>Mô tả</th>
+							<th style="width: 100px">Hành động</th>
+						</tr>
+					</thead>
+					<tbody style="text-align:center;">
 
-			<script type="text/javascript">
-				$(document).ready(function () {
-					$("#nav-clinic").addClass("active");
-					$("#nav-clinicId").addClass("active menu-is-opening menu-open");
-
-					var i = 0;
-					var table = $('#tbl-clinic').DataTable({
-						"sAjaxSource": "/admin/getListClinic",
-						"sAjaxDataProp": "",
-						"aoColumns": [
-							{
-								"mData": "id",
-								"render": function (data, type, row) {
-									i += 1;
-									return i;
-								}
-							}, {
-								"mData": "name"
-							}, {
-								"mData": "address"
-							}, {
-								"mData": "telephone"
-							}, {
-								"mData": "website"
-							}, {
-								"mData": "description"
-							}, {
-								"className": "dt-btn",
-								"render": function () {
-									return '<div class="btn-group btn-group-sm"> <a href="#" class="btn btn-info" id="editUnID"><i class="fas fa-user-edit"></i></a><a href="#" class="btn btn-danger" id="deleteUnID"><i class="fas fa-trash"></i></a></div>';
-								}
-							}],
-						"fnCreatedRow": function (nRow, aData, iDataIndex) {
-							$('td:eq(1)', nRow).attr("data-id", aData.id);
-						}
-					});
-
-					$("#btn-save").click(function () {
-						if (dataValidation()) {
-							var uniList = {};
-							uniList.name = $("#name").val();
-							uniList.address = $("#address").val();
-							uniList.telephone = $("#telephone").val();
-							uniList.website = $("#website").val();
-							uniList.description = $("#description").val();
-							uniList.id = $("#updateId").val();
-							$.ajax({
-								type: "POST",
-								contentType: "application/json",
-								url: "/admin/saveClinic",
-								data: JSON.stringify(uniList),
-								timeout: 100000,
-								async: true,
-								dataType: 'json',
-								success: function (data) {
-									if (data.msgCode == '200') {
-										$.confirm({
-											type: 'green',
-											title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
-											content: 'Lưu thành công.',
-											buttons: {
-												ok: function () { }
-											}
-										});
-										i = 0;
-										table.ajax.reload();
-										resetText();
-									} else if (data.msgCode == '205') {
-										$.confirm({
-											type: 'green',
-											title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
-											content: 'Cập nhật thành công.',
-											buttons: {
-												ok: function () { }
-											}
-										});
-										i = 0;
-										table.ajax.reload();
-										resetText();
-									} else if (data.msgCode == "exitName") {
-										$("#errorMsgName").text("Tên đã tồn tại!!");
-										$("#name").css('border', '1px solid red');
-										$("#name").focus();
-									} 
-								},
-								error: function (
-									xhr,
-									status,
-									error) {
-									showCustomAlert('D', "Xin lỗi,Có một số lỗi.Hãy liên hệ với đội IT!");
-								}
-							});
-						}
-					});
-
-					function dataValidation() {
-						var status = true;
-						var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
-
-						if ($("#name").val() == "") {
-							status = false;
-							$("#errorMsgName").text("Bắt buộc!!");
-							$("#name").css('border', '1px solid red');
-							$("#name").focus();
-							return status;
-						} else if ($("#phone").val() == "") {
-							status = false;
-							$("#errorMsgPhone").text("Bắt buộc!!");
-							$("#phone").css('border', '1px solid red');
-							$("#phone").focus();
-							return status;
-						} else if ($("#address").val() == "") {
-							status = false;
-							$("#errorMsgAddress").text("Bắt buộc!!");
-							$("#address").css('border', '1px solid red');
-							$("#address").focus();
-							return status;
-						} if ($("#description").val() == "") {
-							status = false;
-							$("#errorMsgDescription").text("Bắt buộc!!");
-							$("#description").css('border', '1px solid red');
-							$("#desription").focus();
-							return status;
-						}
-						return status;
-					}
-
-					function resetText() {
-						$("#name").val('');
-						$("#errorMsgName").text("");
-						$("#name").css('border', '1px solid #CED4DA');
-
-						$("#address").val('');
-						$("#errorMsgAddress").text("");
-						$("#address").css('border', '1px solid #CED4DA');
-
-						$("#telephone").val('');
-						$("#errorMsgTelephone").text("");
-						$("#telephone").css('border', '1px solid #CED4DA');
-
-						$("#website").val('');
-						$("#errorMsgWebsite").text("");
-						$("#website").css('border', '1px solid #CED4DA');
-
-						$("#description").val('');
-						$("#errorMsgDescription").text("");
-						$("#description").css('border', '1px solid #CED4DA');
-
-						$("#updateId").val('');
-					}
-
-					$("#btn-reset").click(function () {
-						resetText();
-					});
-
-					$('#tbl-clinic tbody').on('click', '#deleteUnID', function () {
-						var curRow = $(this).closest('tr');
-						var uniId = curRow.find('td:eq(1)').attr("data-id");
-						if (uniId != '') {
-							$.confirm({
-								type: 'red',
-								title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red;"></i> ' + 'Xác nhận!!',
-								content: 'Bạn có muốn xoá không?',
-								buttons: {
-									Yes: function () {
-										$.ajax({
-											url: "/admin/deleteClinic?id=" + uniId,
-											type: 'GET',
-											dataType: 'json',
-											success: function (data) {
-												if (data.msgCode == '200') {
-													i = 0;
-													$.confirm({
-														type: 'green',
-														title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
-														content: 'Xoá thành công.',
-														buttons: {
-															ok: function () { }
-														}
-													});
-													table.ajax.reload();
-												}
-											},
-											error: function (xhr, status, error) {
-												showAlertByType('Có một vài lỗi!', "F");
-											}
-										});
-									},
-									No: function () { }
-								}
-							});
-						}
-					});
-
-					$('#tbl-clinic tbody').on('click', '#editUnID', function () {
-						var curRow = $(this).closest('tr');
-						var id = curRow.find('td:eq(1)').attr("data-id");
-						var name = curRow.find('td:eq(1)').text();
-						var address = curRow.find('td:eq(2)').text();
-						var phone = curRow.find('td:eq(3)').text();
-						var website = curRow.find('td:eq(4)').text();
-						var description = curRow.find('td:eq(5)').text();
-
-						$("#updateId").val(id);
-						$("#name").val(name);
-						$("#address").val(address);
-						$("#phone").val(phone);
-						$("#website").val(website);
-						$("#description").val(description);
-					});
-				});
-			</script>
-
-			<div layout:fragment="css">
-				<style>
-					.errorMsg {
-						color: red;
-						font-size: 13px;
-					}
-
-					table.dataTable thead th,
-					table.dataTable thead td {
-						border-bottom: 1px solid #DEE2E6;
-					}
-
-					table.dataTable.no-footer {
-						border-bottom: 1px solid #DEE2E6;
-					}
-				</style>
+					</tbody>
+				</table>
 			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$("#nav-clinic").addClass("active");
+			$("#nav-clinicId").addClass("active menu-is-opening menu-open");
+
+			var i = 0;
+			var table = $('#tbl-clinic').DataTable({
+				"sAjaxSource": "/admin/getListClinic",
+				"sAjaxDataProp": "",
+				"aoColumns": [
+					{
+						"mData": "id",
+						"render": function (data, type, row) {
+							i += 1;
+							return i;
+						}
+					}, {
+						"mData": "name"
+					}, {
+						"mData": "address"
+					}, {
+						"mData": "telephone"
+					}, {
+						"mData": "website"
+					}, {
+						"mData": "description"
+					}, {
+						"className": "dt-btn",
+						"render": function () {
+							return '<div class="btn-group btn-group-sm"> <a href="#" class="btn btn-info" id="editUnID"><i class="fas fa-user-edit"></i></a><a href="#" class="btn btn-danger" id="deleteUnID"><i class="fas fa-trash"></i></a></div>';
+						}
+					}],
+				"fnCreatedRow": function (nRow, aData, iDataIndex) {
+					$('td:eq(1)', nRow).attr("data-id", aData.id);
+				}
+			});
+
+			$("#btn-save").click(function () {
+				if (dataValidation()) {
+					var uniList = {};
+					uniList.name = $("#name").val();
+					uniList.address = $("#address").val();
+					uniList.telephone = $("#telephone").val();
+					uniList.website = $("#website").val();
+					uniList.description = $("#description").val();
+					uniList.id = $("#updateId").val();
+					$.ajax({
+						type: "POST",
+						contentType: "application/json",
+						url: "/admin/saveClinic",
+						data: JSON.stringify(uniList),
+						timeout: 100000,
+						async: true,
+						dataType: 'json',
+						success: function (data) {
+							if (data.msgCode == '200') {
+								$.confirm({
+									type: 'green',
+									title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
+									content: 'Lưu thành công.',
+									buttons: {
+										ok: function () { }
+									}
+								});
+								i = 0;
+								table.ajax.reload();
+								resetText();
+							} else if (data.msgCode == '205') {
+								$.confirm({
+									type: 'green',
+									title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
+									content: 'Cập nhật thành công.',
+									buttons: {
+										ok: function () { }
+									}
+								});
+								i = 0;
+								table.ajax.reload();
+								resetText();
+							} else if (data.msgCode == "exitName") {
+								$("#errorMsgName").text("Tên đã tồn tại!!");
+								$("#name").css('border', '1px solid red');
+								$("#name").focus();
+							}
+						},
+						error: function (
+							xhr,
+							status,
+							error) {
+							showCustomAlert('D', "Xin lỗi,Có một số lỗi.Hãy liên hệ với đội IT!");
+						}
+					});
+				}
+			});
+
+			function dataValidation() {
+				var status = true;
+				var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+
+				if ($("#name").val() == "") {
+					status = false;
+					$("#errorMsgName").text("Bắt buộc!!");
+					$("#name").css('border', '1px solid red');
+					$("#name").focus();
+					return status;
+				} else if ($("#phone").val() == "") {
+					status = false;
+					$("#errorMsgPhone").text("Bắt buộc!!");
+					$("#phone").css('border', '1px solid red');
+					$("#phone").focus();
+					return status;
+				} else if ($("#address").val() == "") {
+					status = false;
+					$("#errorMsgAddress").text("Bắt buộc!!");
+					$("#address").css('border', '1px solid red');
+					$("#address").focus();
+					return status;
+				} if ($("#description").val() == "") {
+					status = false;
+					$("#errorMsgDescription").text("Bắt buộc!!");
+					$("#description").css('border', '1px solid red');
+					$("#desription").focus();
+					return status;
+				}
+				if ($("#address").val() == -1) {
+					status = false;
+					$("#errorMsgAddress").text("Bắt buộc!!");
+					$("#address").css('border', '1px solid red');
+					$("#address").focus();
+					return status;
+				}
+				return status;
+			}
+
+			function resetText() {
+				$("#name").val('');
+				$("#errorMsgName").text("");
+				$("#name").css('border', '1px solid #CED4DA');
+
+				$("#address").val('');
+				$("#errorMsgAddress").text("");
+				$("#address").css('border', '1px solid #CED4DA');
+
+				$("#telephone").val('');
+				$("#errorMsgTelephone").text("");
+				$("#telephone").css('border', '1px solid #CED4DA');
+
+				$("#website").val('');
+				$("#errorMsgWebsite").text("");
+				$("#website").css('border', '1px solid #CED4DA');
+
+				$("#description").val('');
+				$("#errorMsgDescription").text("");
+				$("#description").css('border', '1px solid #CED4DA');
+
+				$("#updateId").val('');
+			}
+
+			$("#btn-reset").click(function () {
+				resetText();
+			});
+
+			$('#tbl-clinic tbody').on('click', '#deleteUnID', function () {
+				var curRow = $(this).closest('tr');
+				var uniId = curRow.find('td:eq(1)').attr("data-id");
+				if (uniId != '') {
+					$.confirm({
+						type: 'red',
+						title: '<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red;"></i> ' + 'Xác nhận!!',
+						content: 'Bạn có muốn xoá không?',
+						buttons: {
+							Yes: function () {
+								$.ajax({
+									url: "/admin/deleteClinic?id=" + uniId,
+									type: 'GET',
+									dataType: 'json',
+									success: function (data) {
+										if (data.msgCode == '200') {
+											i = 0;
+											$.confirm({
+												type: 'green',
+												title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
+												content: 'Xoá thành công.',
+												buttons: {
+													ok: function () { }
+												}
+											});
+											table.ajax.reload();
+										}
+									},
+									error: function (xhr, status, error) {
+										showAlertByType('Có một vài lỗi!', "F");
+									}
+								});
+							},
+							No: function () { }
+						}
+					});
+				}
+			});
+
+			$('#tbl-clinic tbody').on('click', '#editUnID', function () {
+				var curRow = $(this).closest('tr');
+				var id = curRow.find('td:eq(1)').attr("data-id");
+				var name = curRow.find('td:eq(1)').text();
+				var address = curRow.find('td:eq(2)').text();
+				var phone = curRow.find('td:eq(3)').text();
+				var website = curRow.find('td:eq(4)').text();
+				var description = curRow.find('td:eq(5)').text();
+
+				$("#updateId").val(id);
+				$("#name").val(name);
+				$("#address").val(address);
+				$("#phone").val(phone);
+				$("#website").val(website);
+				$("#description").val(description);
+			});
+		});
+	</script>
+
+	<div layout:fragment="css">
+		<style>
+			.errorMsg {
+				color: red;
+				font-size: 13px;
+			}
+
+			table.dataTable thead th,
+			table.dataTable thead td {
+				border-bottom: 1px solid #DEE2E6;
+			}
+
+			table.dataTable.no-footer {
+				border-bottom: 1px solid #DEE2E6;
+			}
+		</style>
+	</div>
 </body>
 
 </html>
