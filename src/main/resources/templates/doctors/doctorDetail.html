@@ -84,12 +84,12 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-sm-4 form-group">
+						<div class="col-sm-4 form-group" th:if="${declaration != null}">
 							<button type="button" class="btn btn-info"
 								th:onclick="javascript: showDeclarationModal([[${declaration.id}]], [[${doctor.id}]])"><i
 									class="fas fa-book-medical"></i> Đặt ngay</button>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-4" th:if="${isFollow != null}">
 							<p th:if="${isFollow == true}">
 								<button type="button"  th:onclick="handleUnFollow([[${doctor.id}]])" class="btn btn-danger"><i class="fas fa-heart-crack"></i>
 									Bỏ theo dõi</button>

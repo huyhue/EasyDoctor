@@ -40,9 +40,9 @@
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
-							<label>Họ và tên<span class="errorMsg">*</span></label>
+							<label>Tên gói khám<span class="errorMsg">*</span></label>
 							<input type="hidden" id="updateId" />
-							<input class="form-control filter" type="text" id="name" placeholder="Nhập họ và tên">
+							<input class="form-control filter" type="text" id="name" placeholder="Nhập tên gói khám">
 							<span class="errorMsg" id="errorMsgName"></span>
 						</div>
 
@@ -54,12 +54,12 @@
 						<div class="form-group">
 							<label>Thời lượng<span class="errorMsg">*</span></label>
 							<select id="duration" class="form-control filter">
-									<option value="-1">Chọn thời lượng</option>
-									<option value="30">30 phút</option>
-									<option value="60">60 phút</option>
-									<option value="90">90 phút</option>
-									<option value="120">120 phút</option>
-								</select>
+								<option value="-1">Chọn thời lượng</option>
+								<option value="30">30 phút</option>
+								<option value="60">60 phút</option>
+								<option value="90">90 phút</option>
+								<option value="120">120 phút</option>
+							</select>
 							<span class="errorMsg" id="errorMsgDuration"></span>
 						</div>
 					</div>
@@ -67,8 +67,8 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label>Mô tả<span class="errorMsg">*</span></label>
-							<input class="form-control filter" type="text" id="description"
-								placeholder="Nhập mô tả"> <span class="errorMsg" id="errorMsgDescription"></span>
+							<input class="form-control filter" type="text" id="description" placeholder="Nhập mô tả">
+							<span class="errorMsg" id="errorMsgDescription"></span>
 						</div>
 						<div class="form-group">
 							<label>Có thể huỷ bởi bệnh nhân ?<span class="errorMsg">*</span></label><br>
@@ -122,7 +122,7 @@
 					<thead>
 						<tr style="text-align:center;">
 							<th style="width: 10px">#</th>
-							<th>Họ và tên</th>
+							<th>Tên gói khám</th>
 							<th>Giá</th>
 							<th>Thời lượng</th>
 							<th>Có thể huỷ</th>
@@ -235,7 +235,6 @@
 
 			function dataValidation() {
 				var status = true;
-				var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
 
 				if ($("#name").val() == "") {
 					status = false;
@@ -244,14 +243,14 @@
 					$("#name").focus();
 					return status;
 				}
-				
+
 				if ($("#duration").val() == -1) {
-						status = false;
-						$("#errorMsgDuration").text("Bắt buộc!!");
-						$("#duration").css('border', '1px solid red');
-						$("#duration").focus();
-						return status;
-					}
+					status = false;
+					$("#errorMsgDuration").text("Bắt buộc!!");
+					$("#duration").css('border', '1px solid red');
+					$("#duration").focus();
+					return status;
+				}
 				return status;
 			}
 
@@ -286,7 +285,7 @@
 			$('#tbl-packages tbody').on('click', '#deleteUnID', function () {
 				var curRow = $(this).closest('tr');
 				var uniId = curRow.find('td:eq(1)').attr("data-id");
-				
+
 				if (uniId != '') {
 					$.confirm({
 						type: 'orange',
@@ -317,12 +316,12 @@
 									}
 								});
 							},
-							No: function () {}
+							No: function () { }
 						}
 					});
 				}
 			});
-			
+
 			$('#tbl-packages tbody').on('click', '#editUnID', function () {
 				var curRow = $(this).closest('tr');
 				var id = curRow.find('td:eq(1)').attr("data-id");
@@ -331,21 +330,21 @@
 				var duration = curRow.find('td:eq(3)').text();
 				var editable = curRow.find('td:eq(4)').text();
 				var description = curRow.find('td:eq(5)').text();
-    
+
 				$("#updateId").val(id);
 				$("#name").val(name);
 				$("#price").val(price);
 				$("#duration").val(duration);
 				$("#description").val(description);
-				
-				if(editable == 'true'){
+
+				if (editable == 'true') {
 					console.log("Test editable: " + editable);
-					 $("#option1").prop('checked', true);
+					$("#option1").prop('checked', true);
 				}
-				else{
+				else {
 					$("#option2").prop('checked', true);
 				}
-				
+
 				$('html, body').animate({
 					scrollTop: $('#scroll').offset().top
 				}, 500);

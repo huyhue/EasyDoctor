@@ -156,7 +156,7 @@ public class HomeController {
 			@AuthenticationPrincipal CustomUserDetails currentUser) {
 		Doctor doctor = userService.getDoctorById(doctorId);
 		modelMap.put("doctor", doctor);
-		modelMap.put("declaration", userService.getDeclarationByPatientId(currentUser.getId()));
+		
 		double doctorRatingDouble = userService.getRatingByDoctorId(doctorId);
 		int doctorRating = (int) Math.floor(doctorRatingDouble);
 		modelMap.put("doctorRating", doctorRating);
@@ -165,8 +165,12 @@ public class HomeController {
 		modelMap.put("reviewList", reviewList);
 		modelMap.put("totalPost", postService.getTotalPost(doctorId));
 		modelMap.put("totalAppointment", doctor.getAppointments().size());
-		
-		modelMap.put("isFollow", userService.isFollowDoctor(doctorId, currentUser.getId()));
+		if (currentUser.hasRole("ROLE_PATIENT")) {
+			modelMap.put("isFollow", userService.isFollowDoctor(doctorId, currentUser.getId()));
+		}
+		if (currentUser.hasRole("ROLE_PATIENT") || currentUser.hasRole("ROLE_ADMIN")) {
+			modelMap.put("declaration", userService.getDeclarationByPatientId(currentUser.getId()));
+		}
 		return "doctors/doctorDetail";
 	}
 

@@ -168,7 +168,7 @@ public class NotificationServiceImpl implements NotificationService {
 	public void newInvoice(Invoice invoice, boolean sendEmail) {
 		String title = "Xuất hóa đơn";
 		String message = "Xuất hóa đơn đã được gửi tới bạn";
-		String url = "/invoices/" + invoice.getId();
+		String url = "/invoices/download/" + invoice.getId();
 		newNotification(title, message, url, invoice.getAppointments().get(0).getPatient());
 		if (sendEmail && mailingEnabled) {
 			emailService.sendInvoice(invoice);

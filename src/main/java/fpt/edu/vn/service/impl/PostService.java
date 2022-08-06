@@ -72,6 +72,9 @@ public class PostService {
 			p.setImg(Utils.objToString(obj[4]));
 			p.setTotalLike(Utils.objToInt(obj[5]));
 			p.setTime(Utils.objToString(obj[6]));
+			
+			p.setId(Utils.objToLong(obj[0]));
+			p.setSizeComments(getComment(p.getId()).size());
 			return p;
 		}).collect(Collectors.toList());
 		return ls;
