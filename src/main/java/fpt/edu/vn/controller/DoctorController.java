@@ -1,6 +1,7 @@
 package fpt.edu.vn.controller;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import fpt.edu.vn.component.ChangePasswordForm;
 import fpt.edu.vn.component.CommonMsg;
+import fpt.edu.vn.component.DayPlan;
 import fpt.edu.vn.component.TimePeroid;
 import fpt.edu.vn.model.Appointment;
 import fpt.edu.vn.model.Doctor;
@@ -119,7 +121,17 @@ public class DoctorController {
 
 	@GetMapping("/availability")
 	public String showAvailability(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
-		model.addAttribute("plan", workingPlanService.getWorkingPlanByDoctorId(currentUser.getId()));
+		WorkingPlan workingPlan = workingPlanService.getWorkingPlanByDoctorId(currentUser.getId());
+		if (workingPlan == null) {
+			Doctor doctor = userService.getDoctorById(currentUser.getId());
+			WorkingPlan plan = WorkingPlan.generateDefaultWorkingPlan(doctor);
+	        doctor.setWorkingPlan(plan);
+	        userService.updateDoctorWithWorkingPlan(doctor);
+			model.addAttribute("plan", plan);
+		}else {
+			model.addAttribute("plan", workingPlan);
+		}
+		
 //		model.addAttribute("breakModel", new TimePeroid());
 		return "doctors/doctorAvailability";
 	}

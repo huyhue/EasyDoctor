@@ -41,8 +41,7 @@
 					sec:authorize="hasRole('ROLE_DOCTOR')">
 					<td><b>Kết quả</b></td>
 					<td>
-						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Nhận
-							xét</button>
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Nhập kết quả khám bệnh</button>
 					</td>
 				</tr>
 				<tr th:if="${appointment.status.name()=='CANCELED'}">
@@ -104,14 +103,15 @@
 						<a id="download" download="easyQR-code.png">
 							<button class="btn btn-primary" id="button-download-qr-code" type="button"
 								style="margin-left: 3px;background: rgb(255, 128, 64);border-style: solid;border-color: rgb(255,73,41);"
-								onClick="download()" download=""><i class="fas fa-download"></i> Tải QR
+								onClick="download()" download=""><i class="fas fa-download"></i>
 							</button>
 						</a>
-						<p class="font-weight-light p-2">Tải mã QR về để phòng khám kiểm tra thông tin</p>
+						
 					</td>
 					<td>
 						<div id="qrcode">
 							<canvas id="qr-code"></canvas>
+							<p class="font-weight-light p-2">QR về để phòng khám kiểm tra thông tin cuộc hẹn</p>
 						</div>
 					</td>
 				</tr>

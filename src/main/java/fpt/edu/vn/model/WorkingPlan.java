@@ -58,7 +58,21 @@ public class WorkingPlan {
     public WorkingPlan() {
     }
 
-    public int getId() {
+    public WorkingPlan(int id, Doctor doctor, DayPlan monday, DayPlan tuesday, DayPlan wednesday, DayPlan thursday,
+			DayPlan friday, DayPlan saturday, DayPlan sunday) {
+		super();
+		this.id = id;
+		this.doctor = doctor;
+		this.monday = monday;
+		this.tuesday = tuesday;
+		this.wednesday = wednesday;
+		this.thursday = thursday;
+		this.friday = friday;
+		this.saturday = saturday;
+		this.sunday = sunday;
+	}
+
+	public int getId() {
         return id;
     }
 
@@ -158,13 +172,15 @@ public class WorkingPlan {
 		this.doctor = doctor;
 	}
 
-	public static WorkingPlan generateDefaultWorkingPlan() {
+	public static WorkingPlan generateDefaultWorkingPlan(Doctor doctor) {
         LocalTime defaultStartHour = LocalTime.parse("06:00");
         LocalTime defaultEndHour = LocalTime.parse("18:00");
         TimePeroid defaultWorkingPeroid = new TimePeroid(defaultStartHour, defaultEndHour);
         DayPlan defaultDayPlan = new DayPlan(defaultWorkingPeroid);
         
         WorkingPlan wp = new WorkingPlan();
+        wp.setId(doctor.getId());
+        wp.setDoctor(doctor);
         wp.setMonday(defaultDayPlan);
         wp.setTuesday(defaultDayPlan);
         wp.setWednesday(defaultDayPlan);

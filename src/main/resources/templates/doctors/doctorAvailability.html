@@ -7,7 +7,7 @@
 	<div class="row mt-5">
 		<div class="col-md-12 text-center">
 			<h2 style="color: #37a7f1;">
-				<b>THAY ĐỔI LỊCH TRÌNH TUẦN TIẾP THEO</b>
+				<b>QUẢN LÝ THAY ĐỔI LỊCH TRÌNH</b>
 			</h2>
 		</div>
 	</div>
@@ -20,7 +20,7 @@
 						<th>Thứ</th>
 						<th>Thời gian bắt đầu</th>
 						<th>Thời gian kết thúc</th>
-						<th>Mặc định</th>
+						<th>Set mặc định</th>
 					</tr>
 				</thead>
 				<form th:action="@{/doctors/availability}" method="POST" th:object="${plan}" id="availability_form">
@@ -28,59 +28,59 @@
 					<input type="hidden" th:field="*{doctor.id}" th:value="${plan.doctor.id}">
 					<tr>
 						<td>Thứ Hai</td>
-						<td><input type="time" th:field="*{monday.workingHours.start}" class="form-control"
+						<td><input type="time" th:field="*{monday.workingHours.start}" class="form-control" id="startMonday"
 								th:value="${plan.monday.workingHours.start}"></td>
-						<td><input type="time" th:field="*{monday.workingHours.end}" class="form-control"
+						<td><input type="time" th:field="*{monday.workingHours.end}" class="form-control" id="endMonday"
 								th:value="${plan.monday.workingHours.start}"></td>
-						<td><span th:text="${plan.monday.breaks.size()}">3</span></td>
+						<td><a id="resetMonday" class="btn btn-warning"><i class="fas fa-business-time"></i></a></td>
 					</tr>
 					<tr>
 						<td>Thứ Ba</td>
-						<td><input type="time" th:field="*{tuesday.workingHours.start}" class="form-control"
+						<td><input type="time" th:field="*{tuesday.workingHours.start}" class="form-control" id="startTuesday"
 								th:value="${plan.tuesday.workingHours.start}"></td>
-						<td><input type="time" th:field="*{tuesday.workingHours.end}" class="form-control"
+						<td><input type="time" th:field="*{tuesday.workingHours.end}" class="form-control" id="endTuesday"
 								th:value="${plan.tuesday.workingHours.start}"></td>
-						<td><span th:text="${plan.tuesday.breaks.size()}">3</span></td>
+						<td><a id="resetTuesday" class="btn btn-warning"><i class="fas fa-business-time"></i></a></td>
 					</tr>
 					<tr>
 						<td>Thứ Tư</td>
-						<td><input type="time" th:field="*{wednesday.workingHours.start}" class="form-control"
+						<td><input type="time" th:field="*{wednesday.workingHours.start}" class="form-control" id="startWednesday"
 								th:value="${plan.wednesday.workingHours.start}"></td>
-						<td><input type="time" th:field="*{wednesday.workingHours.end}" class="form-control"
+						<td><input type="time" th:field="*{wednesday.workingHours.end}" class="form-control" id="endWednesday"
 								th:value="${plan.wednesday.workingHours.start}"></td>
-						<td><span th:text="${plan.wednesday.breaks.size()}">3</span></td>
+						<td><a id="resetWednesday" class="btn btn-warning"><i class="fas fa-business-time"></i></a></td>
 					</tr>
 					<tr>
 						<td>Thứ Năm</td>
-						<td><input type="time" th:field="*{thursday.workingHours.start}" class="form-control"
+						<td><input type="time" th:field="*{thursday.workingHours.start}" class="form-control" id="startThursday"
 								th:value="${plan.thursday.workingHours.start}"></td>
-						<td><input type="time" th:field="*{thursday.workingHours.end}" class="form-control"
+						<td><input type="time" th:field="*{thursday.workingHours.end}" class="form-control" id="endThursday"
 								th:value="${plan.thursday.workingHours.start}"></td>
-						<td><span th:text="${plan.thursday.breaks.size()}">3</span></td>
+						<td><a id="resetThursday" class="btn btn-warning"><i class="fas fa-business-time"></i></a></td>
 					</tr>
 					<tr>
 						<td>Thứ Sáu</td>
-						<td><input type="time" th:field="*{friday.workingHours.start}" class="form-control"
+						<td><input type="time" th:field="*{friday.workingHours.start}" class="form-control" id="startFriday"
 								th:value="${plan.friday.workingHours.start}"></td>
-						<td><input type="time" th:field="*{friday.workingHours.end}" class="form-control"
+						<td><input type="time" th:field="*{friday.workingHours.end}" class="form-control" id="endFriday"
 								th:value="${plan.friday.workingHours.start}"></td>
-						<td><span th:text="${plan.friday.breaks.size()}">3</span></td>
+						<td><a id="resetFriday" class="btn btn-warning"><i class="fas fa-business-time"></i></a></td>
 					</tr>
 					<tr>
 						<td>Thứ Bảy</td>
-						<td><input type="time" th:field="*{saturday.workingHours.start}" class="form-control"
+						<td><input type="time" th:field="*{saturday.workingHours.start}" class="form-control" id="startSaturday"
 								th:value="${plan.saturday.workingHours.start}"></td>
-						<td><input type="time" th:field="*{saturday.workingHours.end}" class="form-control"
+						<td><input type="time" th:field="*{saturday.workingHours.end}" class="form-control" id="endSaturday"
 								th:value="${plan.saturday.workingHours.start}"></td>
-						<td><span th:text="${plan.saturday.breaks.size()}">3</span></td>
+						<td><a id="resetSaturday" class="btn btn-warning"><i class="fas fa-business-time"></i></a></td>
 					</tr>
 					<tr>
 						<td>Chủ Nhật</td>
-						<td><input type="time" th:field="*{sunday.workingHours.start}" class="form-control"
+						<td><input type="time" th:field="*{sunday.workingHours.start}" class="form-control" id="startSunday"
 								th:value="${plan.sunday.workingHours.start}"></td>
-						<td><input type="time" th:field="*{sunday.workingHours.end}" class="form-control"
+						<td><input type="time" th:field="*{sunday.workingHours.end}" class="form-control" id="endSunday"
 								th:value="${plan.sunday.workingHours.start}"></td>
-						<td><span th:text="${plan.sunday.breaks.size()}">3</span></td>
+						<td><a id="resetSunday" class="btn btn-warning"><i class="fas fa-business-time"></i></a></td>
 					</tr>
 					<tr>
 						<td colspan="4">
@@ -108,6 +108,35 @@
 					}
 				}
 			});
+		});
+		
+		$("#resetMonday").on("click", function(){
+			$("#startMonday").val("06:00");
+			$("#endMonday").val("18:00");
+		});
+		$("#resetTuesday").on("click", function(){
+			$("#startTuesday").val("06:00");
+			$("#endTuesday").val("18:00");
+		});
+		$("#resetWednesday").on("click", function(){
+			$("#startWednesday").val("06:00");
+			$("#endWednesday").val("18:00");
+		});
+		$("#resetThursday").on("click", function(){
+			$("#startThursday").val("06:00");
+			$("#endThursday").val("18:00");
+		});
+		$("#resetFriday").on("click", function(){
+			$("#startFriday").val("06:00");
+			$("#endFriday").val("18:00");
+		});
+		$("#resetSaturday").on("click", function(){
+			$("#startSaturday").val("06:00");
+			$("#endSaturday").val("18:00");
+		});
+		$("#resetSunday").on("click", function(){
+			$("#startSunday").val("06:00");
+			$("#endSunday").val("18:00");
 		});
 	</script>
 </body>

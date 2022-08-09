@@ -56,9 +56,9 @@
 								<h4> [[${doctor.fullname}]]</h4>
 							</a>
 							<span>[[${doctor.getClinic().getName()}]]</span>
+							<p class="font-weight-light">[[${doctor.getClinic().getAddress()}]]</p>
 							<p>[[${doctor.getSpecialty().getName()}]]</p>
 							<span>[[${doctor.description}]]</span>
-							<span style="display: none;">[[${doctor.getClinic().getAddress()}]]</span>
 							<div class="social">
 								<button type="button" class="btn btn-info"
 									th:onclick="javascript: showDeclarationModal([[${declaration.id}]], [[${doctor.id}]])"><i
@@ -84,8 +84,6 @@
 								<span>[[${doctor.getClinic().getName()}]]</span>
 								<p>[[${doctor.getSpecialty().getName()}]]</p>
 								<span>[[${doctor.description}]]</span>
-								<!--<small class="text-muted"
-                               th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(doctor.startPracticeDate) + 1} years|"></small>-->
 								<div class="social">
 									<button type="button" class="btn btn-warning"
 										th:onclick="javascript: showDeclarationModal([[${declaration.id}]], [[${doctor.id}]])"><i

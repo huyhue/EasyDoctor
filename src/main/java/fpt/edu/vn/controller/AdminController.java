@@ -1,6 +1,7 @@
 package fpt.edu.vn.controller;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -237,6 +238,14 @@ public class AdminController {
 	// Question
 	@GetMapping("/viewQuestion")
 	public String viewQuestionList(Model model) {
+		List<Question> list = userService.getAllQuestion();
+		int countResponses = 0;
+		for (Question question : list) {
+			if (question.getResponses() == null) {
+				countResponses++;
+			}
+		}
+		model.addAttribute("countResponses", countResponses);
 		return "admin/questions";
 	}
 

@@ -66,6 +66,8 @@ public interface UserService {
 
 	CommonMsg saveDoctor(DoctorDto doctordto);
 
+	void updateDoctorWithWorkingPlan(Doctor doctor);
+
 	CommonMsg deleteDoctor(int doctorId);
 
 	List<Doctor> getAllDoctorsByPatient();
@@ -131,5 +133,6 @@ public interface UserService {
 
 	// Question
 	List<Question> getAllQuestion();
+
 	Question sendAnswerQuestion(Question question);
 }

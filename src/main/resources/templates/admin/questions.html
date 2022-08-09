@@ -14,7 +14,8 @@
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Trang chủ</a></li>
-						<li class="breadcrumb-item active">Hỏi đáp</li>
+						<li class="breadcrumb-item active">Hỏi đáp <span
+								id="countResponses"></span> ([[${countResponses}]] cần phản hồi)</li>
 					</ol>
 				</div>
 				<!-- /.col -->
@@ -157,8 +158,10 @@
 					}],
 				"fnCreatedRow": function (nRow, aData, iDataIndex) {
 					$('td:eq(1)', nRow).attr("data-id", aData.id);
+					$('td:eq(6)', nRow).attr("class", "responses");
 				}
 			});
+			showCountResponses();
 
 			$('#tbl-question tbody').on('click', '#editUnID', function () {
 				var curRow = $(this).closest('tr');
@@ -259,6 +262,18 @@
 				$("#description").css('border', '1px solid #CED4DA');
 
 				$("#updateId").val('');
+			}
+
+			function showCountResponses() {
+				var responsesList = document.querySelectorAll('.responses');
+				console.log("test: " + responsesList.length)
+				var countResponses = 0;
+				for (var i = 0; i < responsesList.length; i++) {
+					if (responsesList[i].innerText == "") {
+						countResponses++;
+					}
+				}
+				$("#countResponses").text(countResponses);
 			}
 
 		});

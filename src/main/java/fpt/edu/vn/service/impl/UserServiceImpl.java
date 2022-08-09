@@ -184,6 +184,14 @@ public class UserServiceImpl implements UserService {
 		d.setPackages(doctor.getPackages());
 		doctorRepository.save(d);
 	}
+	
+	@Override
+	@PreAuthorize("#doctor.id == principal.id or hasRole('ADMIN')")
+	public void updateDoctorWithWorkingPlan(Doctor doctor) {
+		Doctor d = doctorRepository.findById(doctor.getId()).get();
+		d.setWorkingPlan(doctor.getWorkingPlan());
+		doctorRepository.save(d);
+	}
 
 	@Override
 	public void updateUserActiveState(int id, boolean active) {
@@ -247,13 +255,7 @@ public class UserServiceImpl implements UserService {
 			doctor.setRoles(getRolesForDoctor());
 			doctor.setSpecialty(specialtyRepository.findByName(doctordto.getNameSpecialty()));
 			doctor.setClinic(clinicRepository.findByName(doctordto.getNameClinic()));
-			Doctor doctorID = doctorRepository.save(doctor);
-			
-			//Set WorkingPlan Default
-			Doctor doctorUpdate = getDoctorById(doctorID.getId());
-			WorkingPlan workingPlan = WorkingPlan.generateDefaultWorkingPlan();
-			doctorUpdate.setWorkingPlan(workingPlan);
-			doctorRepository.save(doctorUpdate);
+			doctorRepository.save(doctor);
 			
 			commonMsg.setMsgCode("200");
 		} else {

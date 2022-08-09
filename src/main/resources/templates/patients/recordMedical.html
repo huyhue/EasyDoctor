@@ -22,15 +22,15 @@
 				</li>
 				<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
 					<strong><i class="fas fa-solid fa-user"></i> Tuổi: </strong>
-					<span class="badge badge-primary badge-pill">[[${patient.age}]]</span>
+					<span class="badge badge-primary badge-pill" th:if="${patient.age != null}">[[${patient.age}]]</span>
 				</li>
 				<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
 					<strong><i class="fas fa-solid fa-venus-mars"></i> Giới tính: </strong>
-					<span class="badge badge-primary badge-pill">[[${patient.gender}]]</span>
+					<span class="badge badge-primary badge-pill" th:if="${patient.gender != null}">[[${patient.gender}]]</span>
 				</li>
 				<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
 					<strong><i class="fas fa-solid fa-mobile-screen"></i> Số điện thoại: </strong>
-					<span class="badge badge-primary badge-pill">[[${patient.mobile}]]</span>
+					<span class="badge badge-primary badge-pill" th:if="${patient.mobile != null}">[[${patient.mobile}]]</span>
 				</li>
 			</ul>
 		</div>
