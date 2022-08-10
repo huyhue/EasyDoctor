@@ -3,7 +3,7 @@
 	th:replace="~{fragments/layout :: layout (~{::body},'patients','Danh sách bác sĩ')}">
 
 <body>
-<div class="row mt-5">
+	<div class="row mt-5">
 		<div class="col-md-12 text-center">
 			<h2 style="color: #37a7f1;">
 				<b>ĐẶT LỊCH HẸN VỚI CÁC BÁC SĨ EASYDOCTOR</b>
@@ -99,66 +99,65 @@
 	</section>
 
 	<script>
+		const addPaginationLinks = (list) => {
+			console.log("log phan trang");
+			removeElementsByClass('pagination')
+			let numberOfButtons = Math.ceil(list.length / itemsPerPage);
+			let htmlDiv = document.getElementById('page-pagination');
+			let newDiv = document.createElement('DIV');
+			let newUl = document.createElement('UL');
+			newDiv.classList.add("pagination")
+			htmlDiv.appendChild(newDiv)
+			newDiv.appendChild(newUl)
+			for (i = 0; i < numberOfButtons; i++) {
+				let li = document.createElement('LI');
+				let link = document.createElement('A');
+				link.setAttribute("href", "#");
+				li.appendChild(link)
+				newUl.appendChild(li)
+				link.innerText = `${i + 1}`
+				if (i == 0) {
+					link.classList.add("active")
+				}
+			}
+			let links = document.querySelectorAll('a')
+			for (i = 0; i < links.length; i++) {
+				links[i].addEventListener("click", function () {
+					for (i = 0; i < links.length; i++) {
+						links[i].classList.remove('active') // Remove the active state for all the pagination links when any of them is clicked
+					}
+					event.target.classList.add('active') // But add it back to the selected pagination link
+					showPage(list, event.target.innerText) // Call the function taking the list items and setting the number of the page according to the text on the buttons
+				});
+			}
+		};
+		function removeElementsByClass(className) {
+			var elements = document.getElementsByClassName(className);
+			while (elements.length > 0) {
+				elements[0].parentNode.removeChild(elements[0]);
+			}
+		}
+		let itemsPerPage = 6;
+
+		const showPage = (list, page) => {
+			let startIndex = (page * itemsPerPage) - itemsPerPage;
+			let endIndex = page * itemsPerPage - 1;
+			for (i = 0; i < list.length; i++) {
+				list[i].style.display = 'none';
+				if (i >= startIndex && i <= endIndex) {
+					list[i].style.display = 'block';
+				}
+			}
+		};
+
 		window.addEventListener('load', (event) => {
 			const doctorList = document.querySelectorAll('#item-doctor');
 			const searchName = document.querySelector("#searchName");
 			const searchSpecialty = document.querySelector("#specialty");
 			const searchLocal = document.querySelector("#local");
-			
-			let itemsPerPage = 6;
-
-			const showPage = (list, page) => {
-				let startIndex = (page * itemsPerPage) - itemsPerPage;
-				let endIndex = page * itemsPerPage - 1;
-				for (i = 0; i < list.length; i++) {
-					list[i].style.display = 'none';
-					if (i >= startIndex && i <= endIndex) {
-						list[i].style.display = 'block';
-					}
-				}
-			};
-
-			const addPaginationLinks = (list) => {
-				removeElementsByClass('pagination')
-				let numberOfButtons = Math.ceil(list.length / itemsPerPage);
-				let htmlDiv = document.getElementById('page-pagination');
-				let newDiv = document.createElement('DIV');
-				let newUl = document.createElement('UL');
-				newDiv.classList.add("pagination")
-				htmlDiv.appendChild(newDiv)
-				newDiv.appendChild(newUl)
-				for (i = 0; i < numberOfButtons; i++) {
-					let li = document.createElement('LI');
-					let link = document.createElement('A');
-					link.setAttribute("href", "#");
-					li.appendChild(link)
-					newUl.appendChild(li)
-					link.innerText = `${i + 1}`
-					if (i == 0) {
-						link.classList.add("active")
-					}
-				}
-				let links = document.querySelectorAll('a')
-				for (i = 0; i < links.length; i++) {
-					links[i].addEventListener("click", function () {
-						for (i = 0; i < links.length; i++) {
-							links[i].classList.remove('active') // Remove the active state for all the pagination links when any of them is clicked
-						}
-						event.target.classList.add('active') // But add it back to the selected pagination link
-						showPage(list, event.target.innerText) // Call the function taking the list items and setting the number of the page according to the text on the buttons
-					});
-				}
-			};
 
 			showPage(doctorList, 1);
 			addPaginationLinks(doctorList);
-
-			function removeElementsByClass(className) {
-				var elements = document.getElementsByClassName(className);
-				while (elements.length > 0) {
-					elements[0].parentNode.removeChild(elements[0]);
-				}
-			}
 
 			function removeVietnameseTones(str) {
 				str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
@@ -237,8 +236,8 @@
 					newP.style.margin = "25px";
 				}
 			}
-			
-			const findLocal= () => {
+
+			const findLocal = () => {
 				let search = searchLocal.value;
 				let results = []
 				removeElementsByClass('no_results')
@@ -271,7 +270,7 @@
 			searchSpecialty.addEventListener("change", function () {
 				findMatchesSpecialty();
 			});
-			
+
 			searchLocal.addEventListener("change", function () {
 				findLocal();
 			});

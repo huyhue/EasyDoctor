@@ -14,8 +14,8 @@
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Trang chủ</a></li>
-						<li class="breadcrumb-item active">Hỏi đáp <span
-								id="countResponses"></span> ([[${countResponses}]] cần phản hồi)</li>
+						<li class="breadcrumb-item active">Hỏi đáp (Phản hồi: <p id="countResponses" class="font-weight-bold">
+								[[${countResponses}]]</p>)</li>
 					</ol>
 				</div>
 				<!-- /.col -->
@@ -158,10 +158,9 @@
 					}],
 				"fnCreatedRow": function (nRow, aData, iDataIndex) {
 					$('td:eq(1)', nRow).attr("data-id", aData.id);
-					$('td:eq(6)', nRow).attr("class", "responses");
+					$('td:eq(6)', nRow).attr("class", "response");
 				}
 			});
-			showCountResponses();
 
 			$('#tbl-question tbody').on('click', '#editUnID', function () {
 				var curRow = $(this).closest('tr');
@@ -208,7 +207,15 @@
 										title: '<i class="fas fa-check-circle" aria-hidden="true" style="color:#51D88A;"></i> ' + 'Thành công!!',
 										content: 'Đã gửi mail tới khách hàng thành công.',
 										buttons: {
-											ok: function () { }
+											ok: function () {
+												var countResponses = $('#countResponses').text();
+												if (countResponses == '0') {
+													$("#countResponses").text("Hoàn thành");
+												} else {
+													var iNum = parseInt(countResponses) - 1;
+													$("#countResponses").text(iNum);
+												}
+											}
 										}
 									});
 									i = 0;
@@ -265,8 +272,9 @@
 			}
 
 			function showCountResponses() {
-				var responsesList = document.querySelectorAll('.responses');
-				console.log("test: " + responsesList.length)
+				var responsesList = $('#tbl-question').DataTable().column(6).data().toArray();
+				//document.querySelectorAll('.response');
+				console.log("test: " + responsesList.length);
 				var countResponses = 0;
 				for (var i = 0; i < responsesList.length; i++) {
 					if (responsesList[i].innerText == "") {
