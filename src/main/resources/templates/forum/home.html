@@ -19,6 +19,7 @@
 
 		body {
 			font-family: 'Nunito', sans-serif;
+			background: #efefef;
 		}
 
 		/*--------------------*/
@@ -147,6 +148,23 @@
 				right: 0;
 			}
 		}
+		.post-comment{
+			    background: #fff;
+			    padding: 10px 0;
+			    border-radius: 30px;
+			    margin: 16px 0;
+		}
+		.post-comment-details{
+		    display: flex;
+		    justify-content: space-between;
+		    width: 100%;
+		}
+		.comment-details{
+			background: #efefef;
+		    margin-bottom: 12px;
+		    border-radius: 20px;
+		    padding: 12px 8px 4px 8px;
+		}
 	</style>
 	<script src="https://kit.fontawesome.com/e36f939b0f.js" crossorigin="anonymous"></script>
 
@@ -170,9 +188,7 @@
 			</button>
 		</div>
 	</div>
-
-	<div class="container-fluid mt-3">
-		<div class="row m-3">
+	<div class="row m-3">
 			<div class="col-md-12 d-flex justify-content-center">
 				<form id="formsearch" th:action="@{/forum/list}" method="get">
 					<input id="page" name="page" hidden th:value="${page}" />
@@ -198,10 +214,12 @@
 
 			</div>
 		</div>
-		<div class="d-flex justify-content-center row mt-3" th:each="p : ${ls}">
+	<div class="container-fluid mt-3">
+	
+		<div class="d-flex justify-content-center row mt-3 post-comment" th:each="p : ${ls}">
 			<div class="col-md-8">
 				<div class="d-flex flex-column comment-section">
-					<div class="bg-white p-2">
+					<div class="p-2">
 						<div class="d-flex flex-row user-info">
 							<div class="d-flex justify-content-start">
 								<i class="avatar"></i>
@@ -215,12 +233,12 @@
 						</div>
 
 						<div th:if="${currentId==p.userid}">
-							<button th:onclick="handleDeletePost([[${p.id}]])" class="btn btn-danger float-right">
+							<button th:onclick="handleDeletePost([[${p.id}]])" class="btn btn-danger float-right" style="margin-top:-45px;">
 								<i class="fas fa-trash-alt"></i>
 							</button>
 							<button th:onclick="handleUpdate([[${p.id}]],[[${p.message}]],[[${p.specialId}]])"
-								type="button" class="btn btn-primary float-right mr-2" data-toggle="modal"
-								data-target="#updateModal">
+								type="button" class="btn btn-primary float-right mr-5" data-toggle="modal"
+								data-target="#updateModal" style="margin-top:-45px;">
 								<i class="fas fa-pencil-alt"></i>
 							</button>
 						</div>
@@ -231,10 +249,13 @@
 					</div>
 
 					<div th:if="${#strings.isEmpty(p.img) == false}" class="bg-white">
-						<img th:src="@{/img/forum/{name}(name=${p.img})}" width="auto" id="" />
+						<img th:src="@{/img/forum/{name}(name=${p.img})}" style="object-fit: cover;
+                                                                                 width: 100%;
+                                                                                 height: 450px;
+                                                                                 border-radius: 15px;" />
 					</div>
 
-					<div class="bg-white">
+					<div class="">
 						<div class="d-flex flex-row fs-12">
 							<div class="like p-2 cursor">
 								<i th:id="'icon'+${p.id}" th:onclick="handleLike([[${p.id}]])" class="fa fa-2x"
@@ -247,37 +268,40 @@
 					</div>
 
 					<div class="bg-white">
-						<div class="d-flex flex-row align-items-start">
+						<div class="d-flex flex-row align-items-start" style="margin-bottom: 30px;">
 							<textarea th:id="'cmessage'+${p.id}" placeholder="Mời bạn bình luận tại đây"
 								class="form-control ml-1 shadow-none textarea"></textarea>
-						</div>
-						<div class="mt-2 text-right">
-							<button class="btn btn-success" th:onclick="handleComment([[${p.id}]])" type="button"><i
+								<button class="btn btn-success" th:onclick="handleComment([[${p.id}]])" type="button" style="margin-left:13px;"><i
 									class="fa fa-commenting-o"></i> Bình luận</button>
 						</div>
+						
 					</div>
 
 				</div>
 			</div>
 
-			<div th:id="'commentls'+${p.id}" class="col-md-8 mt-2 bg-light">
+			<div th:id="'commentls'+${p.id}" class="col-md-8 mt-2 ">
 				<th:block th:each="c : ${p.comments}">
 
-					<div th:id="'cm'+${c.id}">
+					<div th:id="'cm'+${c.id}" class="comment-details">
 						<div class="d-flex flex-row mr-5">
 							<img src="/img/avatar.png" class="avatarc" />
-							<div class="d-flex flex-row justify-content-start ml-2">
+							<div class="post-comment-details">
+								<p style="margin-bottom:0 !important">
 								<a href="#" th:text="${c.username}"
-									class="btn-link text-semibold media-heading box-inline mr-5"></a>
-								<span th:text="${c.time}" class="date text-black-50"></span>
+									class="btn-link text-semibold media-heading box-inline" style="margin-left: 12px;"></a>
+								</p>
+								<p th:text="${c.time}" style="margin-bottom:0 !important; margin-right:-45px;" class="date text-black-50"></p>
 							</div>
 						</div>
-						<div class="d-flex flex-row ml-5">
-							<p th:text="${c.message}" class="pr-5"></p>
-							<div th:if="${currentId==c.userid}">
-								<a th:onclick="event.preventDefault(); handleDelete([[${c.id}]])" href="#">Xóa</a>
-							</div>
-							<hr>
+						<div class="post-comment-details" style="padding:0 0 0 50px; margin-top:-15px;">
+							<p th:text="${c.message}" class=""></p>
+							<p th:if="${currentId==c.userid}">
+								<button th:onclick="event.preventDefault(); handleDelete([[${c.id}]])" class="btn btn-danger float-right" href="#">
+								<i class="fas fa-trash-alt"></i>
+								</button>
+							</p>
+	
 						</div>
 					</div>
 
@@ -290,7 +314,7 @@
 
 	<!--        Pagination -->
 	<nav aria-label="Page navigation example" class="mt-2" th:if="${maxpage} != 0">
-		<ul class="pagination">
+		<ul class="pagination" style="justify-content: center;">
 			<li th:class="page-item " th:classappend="${page==1}?disabled:''">
 				<span class="page-link" th:onclick="handleSearch([[${page-1}]])">Trước</span>
 			</li>

@@ -180,3 +180,24 @@ i.chat-avatar {
     left:0px;
     bottom:0;
 }
+.fa.fa-thumbs-o-up:before {
+    content: "\f164";
+    font-size: 22px;
+}
+.fa-thumbs-up:before {
+    content: "\f164";
+    font-size: 22px;
+}
+.fa.fa-commenting-o:before {
+    content: "\f4ad";
+    font-size: 22px;
+}
+.btn.btn-danger.float-right {
+	font-size: 11px;
+}
+.btn.btn-primary.float-right {
+	font-size: 11px;
+}.textarea.form-control {
+    height: 42px;
+    width: 80%;
+}
