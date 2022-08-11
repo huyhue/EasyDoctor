@@ -39,6 +39,9 @@ public class Patient extends User {
     @JoinTable(name = "patients_doctors", joinColumns = @JoinColumn(name = "id_patient"), inverseJoinColumns = @JoinColumn(name = "id_doctor"))
     private List<Doctor> doctors;
 	
+	@Column(name = "editable", columnDefinition = "boolean default false")
+    private boolean editable;
+	
 	public Patient() {
 		super();
 	}
@@ -94,5 +97,26 @@ public class Patient extends User {
 	public void setDoctors(List<Doctor> doctors) {
 		this.doctors = doctors;
 	}
+	
+	public boolean getEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+    
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Patient)) return false;
+        Patient work = (Patient) o;
+        return super.getId().equals(work.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getId().hashCode();
+    }
 
 }

@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
 		List<Patient> list = patientRepository.findAll();
 		for (Patient p : list) {
 			listDTO.add(new PatientDto(p.getId().toString(), p.getUserName(), p.getEmail(), p.getFullname(),
-					p.getMobile(), p.getAddress()));
+					p.getMobile(),p.getAddress(), p.getEditable()));
 		}
 		return listDTO;
 	}
@@ -126,7 +126,7 @@ public class UserServiceImpl implements UserService {
 			patient.setProfileImage("/img/avatar.png");
 			patient.setRoles(getRolesForPatient());
 			patient.setMobile(patientDto.getMobile());
-			patient.setAddress(patientDto.getAddress());
+			patient.setAddress(patientDto.getAddress());			patient.setEditable(patientDto.getEditable());
 			patientRepository.save(patient);
 			commonMsg.setMsgCode("200");
 		} else {
@@ -135,6 +135,7 @@ public class UserServiceImpl implements UserService {
 			patientView.setFullname(patientDto.getFullname());
 			patientView.setMobile(patientDto.getMobile());
 			patientView.setAddress(patientDto.getAddress());
+			patientView.setEditable(patientDto.getEditable());
 			patientRepository.save(patientView);
 			commonMsg.setMsgCode("205");
 		}
@@ -168,6 +169,7 @@ public class UserServiceImpl implements UserService {
 		p.setAge(patient.getAge());
 		p.setGender(patient.getGender());
 		p.setAddress(patient.getAddress());
+		p.setEditable(patient.getEditable());
 		patientRepository.save(p);
 	}
 
@@ -217,7 +219,7 @@ public class UserServiceImpl implements UserService {
 		List<Doctor> list = doctorRepository.findAll();
 		for (Doctor d : list) {
 			listDTO.add(new DoctorDto(d.getId().toString(), d.getUserName(), d.getEmail(), d.getFullname(),
-					d.getSpecialty().getName(), d.getClinic().getName()));
+					d.getSpecialty().getName(), d.getClinic().getName(), d.getEditable()));
 		}
 		return listDTO;
 	}
@@ -255,6 +257,7 @@ public class UserServiceImpl implements UserService {
 			doctor.setRoles(getRolesForDoctor());
 			doctor.setSpecialty(specialtyRepository.findByName(doctordto.getNameSpecialty()));
 			doctor.setClinic(clinicRepository.findByName(doctordto.getNameClinic()));
+			doctor.setEditable(doctordto.getEditable());
 			doctorRepository.save(doctor);
 			
 			commonMsg.setMsgCode("200");
@@ -264,6 +267,7 @@ public class UserServiceImpl implements UserService {
 			doctorUpdate.setFullname(doctordto.getFullname());
 			doctorUpdate.setSpecialty(specialtyRepository.findByName(doctordto.getNameSpecialty()));
 			doctorUpdate.setClinic(clinicRepository.findByName(doctordto.getNameClinic()));
+			doctorUpdate.setEditable(doctordto.getEditable());
 			doctorRepository.save(doctorUpdate);
 			commonMsg.setMsgCode("205");
 		}

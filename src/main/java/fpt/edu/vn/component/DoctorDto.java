@@ -7,9 +7,10 @@ public class DoctorDto {
 	private String fullname;
 	private String nameSpecialty;
 	private String nameClinic;
+	private boolean editable;
 
 	public DoctorDto(String id, String userName, String email, String fullname, String nameSpecialty,
-			String nameClinic) {
+			String nameClinic, boolean editable ) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -17,6 +18,7 @@ public class DoctorDto {
 		this.fullname = fullname;
 		this.nameSpecialty = nameSpecialty;
 		this.nameClinic = nameClinic;
+		this.editable = editable;
 	}
 
 	public String getId() {
@@ -66,4 +68,12 @@ public class DoctorDto {
 	public void setNameClinic(String nameClinic) {
 		this.nameClinic = nameClinic;
 	}
+	
+	public boolean getEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
 }

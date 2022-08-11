@@ -1,5 +1,7 @@
 package fpt.edu.vn.component;
 
+import fpt.edu.vn.model.Packages;
+
 public class PatientDto {
 	private String id;
 	private String userName;
@@ -7,8 +9,9 @@ public class PatientDto {
 	private String fullname;
 	private String mobile;
 	private String address;
+	private boolean editable;
 
-	public PatientDto(String id, String userName, String email, String fullname, String mobile, String address) {
+	public PatientDto(String id, String userName, String email, String fullname, String mobile, String address, boolean editable) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -16,6 +19,7 @@ public class PatientDto {
 		this.fullname = fullname;
 		this.mobile = mobile;
 		this.address = address;
+		this.editable = editable;
 	}
 
 	public String getId() {
@@ -65,4 +69,14 @@ public class PatientDto {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	
+	public boolean getEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+
+   
 }

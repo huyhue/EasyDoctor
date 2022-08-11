@@ -34,6 +34,9 @@ public class Doctor extends User {
 	@ManyToMany
 	@JoinTable(name = "packages_doctors", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_packages"))
 	private List<Packages> packages;
+	
+	@Column(name = "editable", columnDefinition = "boolean default false")
+    private boolean editable;
 
 	@OneToOne(mappedBy = "doctor", cascade = { CascadeType.ALL })
 	private WorkingPlan workingPlan;
@@ -117,4 +120,25 @@ public class Doctor extends User {
 	public void setFollower(List<Patient> follower) {
 		this.follower = follower;
 	}
+	
+	public boolean getEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+    
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Doctor)) return false;
+        Doctor work = (Doctor) o;
+        return super.getId().equals(work.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getId().hashCode();
+    }
 }

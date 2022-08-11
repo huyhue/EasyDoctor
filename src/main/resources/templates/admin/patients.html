@@ -47,7 +47,7 @@
 						</div>
 						<div class="form-group">
 							<label>Email<span class="errorMsg">*</span></label>
-							<input class="form-control filter" type="text" id="email" placeholder="Nhập email">
+							<input class="form-control filter" type="email" id="email" placeholder="Nhập email">
 							<span class="errorMsg" id="errorMsgEmail"></span>
 						</div>
 						<div class="form-group">
@@ -60,7 +60,7 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label>Số di động<span class="errorMsg">*</span></label>
-							<input class="form-control filter" type="text" id="mobile" placeholder="Nhập số di động">
+							<input class="form-control filter" type="number" id="mobile" placeholder="Nhập số di động">
 							<span class="errorMsg" id="errorMsgMobile"></span>
 						</div>
 
@@ -68,6 +68,18 @@
 							<label>Địa chỉ<span class="errorMsg">*</span></label>
 							<input class="form-control filter" type="text" id="address" placeholder="Nhập địa chỉ">
 							<span class="errorMsg" id="errorMsgAddress"></span>
+						</div>
+							<div class="form-group">
+							<label>Bệnh nhận còn hoạt động không ?<span class="errorMsg">*</span></label><br>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" id="option1" name="editable" value="True">
+								<label class="form-check-label" for="option1">Có</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" id="option2" name="editable" value="False">
+								<label class="form-check-label" for="option2">Không</label>
+							</div>
+							<span class="errorMsg" id="errorMsgEditable"></span>
 						</div>
 					</div>
 				</div>
@@ -113,6 +125,7 @@
 							<th>Họ và tên</th>
 							<th>Số di động</th>
 							<th>Địa chỉ</th>
+							<th>Hoạt động</th>
 							<th style="width: 100px">Hành động</th>
 						</tr>
 					</thead>
@@ -152,6 +165,8 @@
 						}, {
 							"mData": "address"
 						}, {
+							"mData": "editable"
+						}, {
 							"className": "dt-btn",
 							"render": function () {
 								return '<div class="btn-group btn-group-sm"> <a id="redirectUnID" class="btn btn-warning"><i class="fas fa-eye"></i></a><a href="#" class="btn btn-info" id="editUnID"><i class="fas fa-user-edit"></i></a></div>';
@@ -177,6 +192,7 @@
 						uniList.fullname = $("#fullname").val();
 						uniList.mobile = $("#mobile").val();
 						uniList.address = $("#address").val();
+						uniList.editable = $("input[name='editable']:checked").val();
 						uniList.id = $("#updateId").val();
 
 						$.ajax({
@@ -311,6 +327,10 @@
 					$("#address").val('');
 					$("#errorMsgAddress").text("");
 					$("#address").css('border', '1px solid #CED4DA');
+					
+					$("#option1").prop('checked', false);
+					$("#option2").prop('checked', false);
+					$("#errorMsgEditable").text("");
 
 					$("#updateId").val('');
 				}
@@ -367,6 +387,7 @@
 					var fullname = curRow.find('td:eq(3)').text();
 					var mobile = curRow.find('td:eq(4)').text();
 					var address = curRow.find('td:eq(5)').text();
+					var editable = curRow.find('td:eq(6)').text();
 
 					$("#updateId").val(id);
 					$("#userName").val(userName);
@@ -374,6 +395,14 @@
 					$("#fullname").val(fullname);
 					$("#mobile").val(mobile);
 					$("#address").val(address);
+					
+					if (editable == 'true') {
+					console.log("Test editable: " + editable);
+					$("#option1").prop('checked', true);
+					}
+					else {
+					$("#option2").prop('checked', true);
+					}
 					
 					$('html, body').animate({
 						scrollTop: $('#scroll').offset().top

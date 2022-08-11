@@ -77,7 +77,7 @@
 						<div class="form-group">
 							<input type="hidden" id="updateId" />
 							<label>Email<span class="errorMsg">*</span></label>
-							<input class="form-control filter" type="text" id="email">
+							<input class="form-control filter" type="email" id="email">
 							<span class="errorMsg" id="errorMsgName"></span>
 						</div>
 
@@ -244,6 +244,18 @@
 					$("#errorMsgResponses").text("Không được để trống!!");
 					$("#responses").css('border', '1px solid red');
 					$("#responses").focus();
+					return status;
+				} else if ($("#email").val() == "") {
+					status = false;
+					$("#errorMsgName").text("Không được để trống!!");
+					$("#email").css('border', '1px solid red');
+					$("#email").focus();
+					return status;
+				} else if ($("#description").val() == "") {
+					status = false;
+					$("#errorMsgDescription").text("Không được để trống!!");
+					$("#description").css('border', '1px solid red');
+					$("#description").focus();
 					return status;
 				}
 				return status;
