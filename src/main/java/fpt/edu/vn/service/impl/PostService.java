@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -72,7 +73,7 @@ public class PostService {
 			p.setImg(Utils.objToString(obj[4]));
 			p.setTotalLike(Utils.objToInt(obj[5]));
 			p.setTime(Utils.objToString(obj[6]));
-			
+
 			p.setId(Utils.objToLong(obj[0]));
 			p.setSizeComments(getComment(p.getId()).size());
 			return p;
@@ -161,16 +162,9 @@ public class PostService {
 		Post p = postRepository.getById(postid);
 
 		if (!image.isEmpty()) {
-			Path staticPath = Paths.get("src/main/resources/static");
-			Path imagePath = Paths.get("img/forum");
-			if (!Files.exists(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath))) {
-				Files.createDirectories(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath));
-			}
-			Path file = CURRENT_FOLDER.resolve(staticPath).resolve(imagePath).resolve(image.getOriginalFilename());
-			try (OutputStream os = Files.newOutputStream(file)) {
-				os.write(image.getBytes());
-			}
-			p.setImg(image.getOriginalFilename());
+			byte[] byteimage = Base64.encodeBase64(image.getBytes());
+				String result = new String(byteimage);
+				p.setImg(result);
 		}
 
 		p.setSpecialId(specialId);
@@ -210,17 +204,9 @@ public class PostService {
 		Post p = new Post();
 		try {
 			if (!image.isEmpty()) {
-				Path staticPath = Paths.get("src/main/resources/static");
-				Path imagePath = Paths.get("img/forum");
-				if (!Files.exists(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath))) {
-					Files.createDirectories(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath));
-				}
-
-				Path file = CURRENT_FOLDER.resolve(staticPath).resolve(imagePath).resolve(image.getOriginalFilename());
-				try (OutputStream os = Files.newOutputStream(file)) {
-					os.write(image.getBytes());
-				}
-				p.setImg(image.getOriginalFilename());
+				byte[] byteimage = Base64.encodeBase64(image.getBytes());
+				String result = new String(byteimage);
+				p.setImg(result);
 			}
 		} finally {
 			p.setSpecialId(specialId);

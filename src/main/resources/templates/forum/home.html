@@ -253,7 +253,7 @@
 					</div>
 
 					<div th:if="${#strings.isEmpty(p.img) == false}" class="bg-white">
-						<img th:src="@{/img/forum/{name}(name=${p.img})}" style="object-fit: cover;
+						<img th:src="|data:image;base64,${p.img}|" style="object-fit: cover;
                                                                                  width: 100%;
                                                                                  height: 450px;
                                                                                  border-radius: 15px;" />
