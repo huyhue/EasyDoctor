@@ -361,9 +361,9 @@
 							Bạn có thể đặt lịch khám với khung giờ mà bạn mong muốn mà không cần phải đến tận phòng khám
 							để ngồi chờ. </p>
 						<div class="py-3">
-						<!--<button class="btn btn-lg btn-outline-primary rounded-pill" type="submit">Learn more
+							<!--<button class="btn btn-lg btn-outline-primary rounded-pill" type="submit">Learn more
 							</button>-->
-							
+
 						</div>
 					</div>
 				</div>
@@ -531,7 +531,7 @@
 													<p class="text-600 mb-0">Hải Châu, Đà Nẵng</p>
 													<p class="text-600 mb-4">25 năm kinh nghiệm</p>
 													<div class="text-center">
-													<!-- <button
+														<!-- <button
 															class="btn btn-secondary hover-top rounded-pill border-0"
 															type="submit">View Profile</button>-->
 													</div>
@@ -697,6 +697,7 @@
 								<label class="visually-hidden" for="inputPhone">Số điện thoại</label>
 								<input class="form-control form-livedoc-control" id="inputPhone" type="text"
 									placeholder="Số điện thoại" />
+									<span class="errorMsg" id="errorMsgPhone"></span>
 							</div>
 							<div class="col-md-6">
 								<label class="form-label visually-hidden" for="inputCategory">Loại vấn đề</label>
@@ -712,15 +713,18 @@
 								<label class="form-label visually-hidden" for="inputEmail">Email</label>
 								<input class="form-control form-livedoc-control" id="inputEmail" type="email"
 									placeholder="Email" />
+									<span class="errorMsg" id="errorMsgEmail"></span>
 							</div>
 							<div class="col-md-12">
-								<label class="form-label visually-hidden" for="validationTextarea">Message</label>
-								<textarea class="form-control form-livedoc-control" id="validationTextarea"
+								<label class="form-label visually-hidden" for="message">Message</label>
+								<textarea class="form-control form-livedoc-control" id="message"
 									placeholder="Mô tả" style="height: 250px;" required="required"></textarea>
+									<span class="errorMsg" id="errorMsgMessage"></span>
 							</div>
 							<div class="col-12">
 								<div class="d-grid">
-									<button class="btn btn-primary rounded-pill" type="button" id="btn-send">Gửi</button>
+									<button class="btn btn-primary rounded-pill" type="button"
+										id="btn-send">Gửi</button>
 								</div>
 							</div>
 						</form>
@@ -896,12 +900,12 @@
 	<link
 		href="https://fonts.googleapis.com/css2?family=Fjalla+One&amp;family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100&amp;display=swap"
 		rel="stylesheet">
-	
-	
+
+
 	<script type="text/javascript">
 		$(document).ready(function () {
 			$("#btn-send").click(function () {
-				
+
 				if (dataValidation()) {
 					console.log("click: ");
 					var uniList = {};
@@ -909,8 +913,8 @@
 					uniList.mobile = $("#inputPhone").val();
 					uniList.problem = $("#inputCategory").val();
 					uniList.email = $("#inputEmail").val();
-					uniList.description = $("#validationTextarea").val();
-console.log("click: "+uniList.fullname);
+					uniList.description = $("#message").val();
+					console.log("click: " + uniList.fullname);
 					$.ajax({
 						type: "POST",
 						contentType: "application/json",
@@ -946,10 +950,16 @@ console.log("click: "+uniList.fullname);
 				$("#inputName").css('border', '1px solid #CED4DA');
 
 				$("#inputPhone").val('');
+				$("#errorMsgPhone").text("");
+				$("#inputPhone").css('border', '1px solid #CED4DA');
 
 				$("#inputEmail").val('');
+				$("#errorMsgEmail").text("");
+				$("#inputEmail").css('border', '1px solid #CED4DA');
 
-				$("#validationTextarea").val('');
+				$("#message").val('');
+				$("#errorMsgMessage").text("");
+				$("#message").css('border', '1px solid #CED4DA');
 
 			}
 			function dataValidation() {
@@ -963,7 +973,34 @@ console.log("click: "+uniList.fullname);
 					$("#inputName").focus();
 					return status;
 				}
-				
+				if ($("#inputPhone").val() == "") {
+					status = false;
+					$("#errorMsgPhone").text("Không được để trống!!");
+					$("#inputPhone").css('border', '1px solid red');
+					$("#inputPhone").focus();
+					return status;
+				}
+				if ($("#inputEmail").val() == "") {
+					status = false;
+					$("#errorMsgEmail").text("Không được để trống!!");
+					$("#inputEmail").css('border', '1px solid red');
+					$("#inputEmail").focus();
+					return status;
+				} else if (!pattern.test($("#inputEmail").val())) {
+					status = false;
+					$("#errorMsgEmail").text("Email không khả dụng!!");
+					$("#inputEmail").css('border', '1px solid red');
+					$("#inputEmail").focus();
+					return status;
+				}
+				if ($("#message").val() == "") {
+					status = false;
+					$("#errorMsgMessage").text("Không được để trống!!");
+					$("#message").css('border', '1px solid red');
+					$("#message").focus();
+					return status;
+				}
+
 				return status;
 			}
 		});
