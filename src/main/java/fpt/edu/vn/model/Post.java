@@ -20,6 +20,7 @@ public class Post {
 	
 	private String message;
 	
+	@Column(length = 65555)
 	private String img;
 	
 	private String likes;

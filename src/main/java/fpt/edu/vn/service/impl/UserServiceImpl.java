@@ -196,7 +196,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void updateUserActiveState(int id, boolean active) {
 		User user = userRepository.findById(id).get();
-		user.setEnabled(active);
+		user.setActive(active);
 		userRepository.save(user);
 	}
 

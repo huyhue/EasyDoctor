@@ -417,9 +417,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public Boolean getActiveUserByAppointment(int appointmentId, int userId) {
 		Appointment appointment = appointmentRepository.findById(appointmentId).get();
 		if (appointment.getPatient().getId() == userId) {
-			return userService.findById(appointment.getDoctor().getId()).isEnabled();
+			return userService.findById(appointment.getDoctor().getId()).isActive();
 		}
-		return userService.findById(appointment.getPatient().getId()).isEnabled();
+		return userService.findById(appointment.getPatient().getId()).isActive();
 	}
 
 	@Override

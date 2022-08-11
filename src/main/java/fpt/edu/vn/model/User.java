@@ -37,8 +37,11 @@ public class User extends BaseEntity {
 	@Enumerated(value = EnumType.STRING)
 	private Gender gender;
 
-	@Column(name = "enabled", columnDefinition = "boolean default false")
+	@Column(name = "enabled", columnDefinition = "boolean default true")
 	private boolean enabled;
+	
+	@Column(name = "active", columnDefinition = "boolean default false")
+	private boolean active;
 
 	@Column(name = "confirmation_token")
 	private String confirmationToken;
@@ -204,6 +207,14 @@ public class User extends BaseEntity {
 
 	public void setNotifications(List<Notification> notifications) {
 		this.notifications = notifications;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	public boolean hasRole(String roleName) {
