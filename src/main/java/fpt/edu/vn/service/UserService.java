@@ -31,8 +31,6 @@ public interface UserService {
 
 	CommonMsg savePatient(PatientDto patientDto);
 
-	CommonMsg deletePatient(int patientId);
-
 	User findByEmail(String email);
 
 	User findByUserName(String username);
@@ -67,8 +65,6 @@ public interface UserService {
 	CommonMsg saveDoctor(DoctorDto doctordto);
 
 	void updateDoctorWithWorkingPlan(Doctor doctor);
-
-	CommonMsg deleteDoctor(int doctorId);
 
 	List<Doctor> getAllDoctorsByPatient();
 

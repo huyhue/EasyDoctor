@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	th:replace="~{fragments/base :: base (~{::body},'Diễn đàn')}">
+	th:replace="~{fragments/base :: base (~{::body},'Blog tư vấn')}">
 
 <body>
 	<div class="content-header" id="scroll">
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h4 class="m-0">Diễn đàn</h4>
+					<h4 class="m-0">Blog tư vấn</h4>
 				</div>
 				<!-- /.col -->
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Trang chủ</a></li>
-						<li class="breadcrumb-item active">Diễn đàn</li>
+						<li class="breadcrumb-item active">Blog tư vấn</li>
 					</ol>
 				</div>
 				<!-- /.col -->
@@ -105,7 +105,6 @@
 							<th>Người đăng</th>
 							<th>Nội dung</th>
 							<th>Chuyên khoa</th>
-							<th>Ảnh</th>
 							<th>Thời gian</th>
 							<th>Lượt thích</th>
 							<th>Số bình luận</th>
@@ -147,8 +146,6 @@
 							"mData": "message"
 						}, {
 							"mData": "special"
-						}, {
-							"mData": "img"
 						}, {
 							"mData": "time"
 						}, {

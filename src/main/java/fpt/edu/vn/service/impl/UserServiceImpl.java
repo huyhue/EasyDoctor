@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
 		List<Patient> list = patientRepository.findAll();
 		for (Patient p : list) {
 			listDTO.add(new PatientDto(p.getId().toString(), p.getUserName(), p.getEmail(), p.getFullname(),
-					p.getMobile(), p.getAddress()));
+					p.getMobile(), p.getAddress(), p.isEnabled()));
 		}
 		return listDTO;
 	}
@@ -127,6 +127,7 @@ public class UserServiceImpl implements UserService {
 			patient.setRoles(getRolesForPatient());
 			patient.setMobile(patientDto.getMobile());
 			patient.setAddress(patientDto.getAddress());
+			patient.setEnabled(patientDto.isEnabled());
 			patientRepository.save(patient);
 			commonMsg.setMsgCode("200");
 		} else {
@@ -135,17 +136,10 @@ public class UserServiceImpl implements UserService {
 			patientView.setFullname(patientDto.getFullname());
 			patientView.setMobile(patientDto.getMobile());
 			patientView.setAddress(patientDto.getAddress());
+			patientView.setEnabled(patientDto.isEnabled());
 			patientRepository.save(patientView);
 			commonMsg.setMsgCode("205");
 		}
-		return commonMsg;
-	}
-
-	@Override
-	public CommonMsg deletePatient(int patientId) {
-		CommonMsg commonMsg = new CommonMsg();
-		patientRepository.deleteById(patientId);
-		commonMsg.setMsgCode("200");
 		return commonMsg;
 	}
 
@@ -217,7 +211,7 @@ public class UserServiceImpl implements UserService {
 		List<Doctor> list = doctorRepository.findAll();
 		for (Doctor d : list) {
 			listDTO.add(new DoctorDto(d.getId().toString(), d.getUserName(), d.getEmail(), d.getFullname(),
-					d.getSpecialty().getName(), d.getClinic().getName()));
+					d.getSpecialty().getName(), d.getClinic().getName(), d.isEnabled()));
 		}
 		return listDTO;
 	}
@@ -255,6 +249,7 @@ public class UserServiceImpl implements UserService {
 			doctor.setRoles(getRolesForDoctor());
 			doctor.setSpecialty(specialtyRepository.findByName(doctordto.getNameSpecialty()));
 			doctor.setClinic(clinicRepository.findByName(doctordto.getNameClinic()));
+			doctor.setEnabled(doctordto.isEnabled());
 			doctorRepository.save(doctor);
 			
 			commonMsg.setMsgCode("200");
@@ -264,17 +259,10 @@ public class UserServiceImpl implements UserService {
 			doctorUpdate.setFullname(doctordto.getFullname());
 			doctorUpdate.setSpecialty(specialtyRepository.findByName(doctordto.getNameSpecialty()));
 			doctorUpdate.setClinic(clinicRepository.findByName(doctordto.getNameClinic()));
+			doctorUpdate.setEnabled(doctordto.isEnabled());
 			doctorRepository.save(doctorUpdate);
 			commonMsg.setMsgCode("205");
 		}
-		return commonMsg;
-	}
-
-	@Override
-	public CommonMsg deleteDoctor(int doctorId) {
-		CommonMsg commonMsg = new CommonMsg();
-		doctorRepository.deleteById(doctorId);
-		commonMsg.setMsgCode("200");
 		return commonMsg;
 	}
 
@@ -338,7 +326,6 @@ public class UserServiceImpl implements UserService {
 				.orElseThrow(() -> new UsernameNotFoundException("User not found"));
 		userRE.setConfirmationToken(UUID.randomUUID().toString());
 		userRE.setPassword(passwordEncoder.encode(user.getPassword()));
-		userRE.setEnabled(true);
 		userRepository.save(userRE);
 	}
 
@@ -348,6 +335,7 @@ public class UserServiceImpl implements UserService {
 				userRE.getConfirmationToken(), getRolesForPatient());
 		patient.setEmail(userRE.getEmail());
 		patient.setProfileImage("/img/avatar.png");
+		patient.setEnabled(true);
 		userRepository.save(patient);
 	}
 

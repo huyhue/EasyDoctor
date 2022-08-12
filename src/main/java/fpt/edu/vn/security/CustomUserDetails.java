@@ -22,14 +22,16 @@ public class CustomUserDetails implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
     private String email;
     private String profileImage;
+    private boolean enabled;
     private Integer id;
 
-    public CustomUserDetails(Integer id, String userName, String email, String password,String profileImage, Collection<? extends GrantedAuthority> authorities) {
+    public CustomUserDetails(Integer id, String userName, String email, String password,String profileImage, boolean enabled, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.userName = userName;
         this.email = email;
         this.password = password;
         this.profileImage = profileImage;
+        this.enabled = enabled;
         this.authorities = authorities;
     }
 
@@ -43,6 +45,7 @@ public class CustomUserDetails implements UserDetails {
                 user.getEmail(),
                 user.getPassword(),
                 user.getProfileImage(),
+                user.isEnabled(),
                 authorities
         );
     }
@@ -84,7 +87,7 @@ public class CustomUserDetails implements UserDetails {
 //        } catch (Exception e){
 //            return false;
 //        }
-        return true;
+        return this.enabled;
     }
 
     public String getEmail() {

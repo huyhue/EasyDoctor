@@ -48,7 +48,7 @@
 						</div>
 						<div class="form-group">
 							<label>Email<span class="errorMsg">*</span></label>
-							<input class="form-control filter" type="text" id="email" placeholder="Nhập email">
+							<input class="form-control filter" type="email" id="email" placeholder="Nhập email">
 							<span class="errorMsg" id="errorMsgEmail"></span>
 						</div>
 						<div class="form-group">
@@ -76,6 +76,18 @@
 									th:text="${resultMap.name}"></option>
 							</select>
 							<span class="errorMsg" id="errorMsgSpecialty"></span>
+						</div>
+						<div class="form-group">
+							<label>Hoạt động<span class="errorMsg">*</span></label><br>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" id="option1" name="enabled" value="True" checked>
+								<label class="form-check-label" for="option1">Có</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" id="option2" name="enabled" value="False">
+								<label class="form-check-label" for="option2">Không</label>
+							</div>
+							<span class="errorMsg" id="errorMsgEnabled"></span>
 						</div>
 					</div>
 
@@ -120,6 +132,7 @@
 								<th>Họ và tên</th>
 								<th>Chuyên khoa</th>
 								<th>Phòng khám</th>
+								<th>Hoạt động</th>
 								<th style="width: 100px">Hành động</th>
 							</tr>
 						</thead>
@@ -159,6 +172,8 @@
 						}, {
 							"mData": "nameClinic"
 						}, {
+							"mData": "enabled"
+						}, {
 							"className": "dt-btn",
 							"render": function () {
 								return '<div class="btn-group btn-group-sm"> <a  href="#" id="redirectUnID" class="btn btn-warning"><i class="fas fa-eye"></i></a><a href="#" class="btn btn-info" id="editUnID"><i class="fas fa-user-edit"></i></a></div>';
@@ -184,6 +199,7 @@
 						uniList.fullname = $("#fullname").val();
 						uniList.nameSpecialty = $("#specialty option:selected").val();
 						uniList.nameClinic = $("#clinic option:selected").val();
+						uniList.enabled = $("input[name='enabled']:checked").val();
 						uniList.id = $("#updateId").val();
 
 						$.ajax({
@@ -345,6 +361,10 @@
 					$("#errorMsgSpecialty").text("");
 					$("#specialty").css('border', '1px solid #CED4DA');
 
+					$("#option1").prop('checked', false);
+					$("#option2").prop('checked', false);
+					$("#errorMsgEnabled").text("");
+
 					$("#updateId").val('');
 				}
 
@@ -355,7 +375,7 @@
 				$('#tbl-adddoctor tbody').on('click', '#deleteUnID', function () {
 					var curRow = $(this).closest('tr');
 					var uniId = curRow.find('td:eq(1)').attr("data-id");
-console.log("OK id: " +uniId);
+					console.log("OK id: " + uniId);
 					if (uniId != '') {
 						$.confirm({
 							type: 'red',
@@ -400,6 +420,7 @@ console.log("OK id: " +uniId);
 					var fullname = curRow.find('td:eq(3)').text();
 					var specialty = curRow.find('td:eq(4)').text();
 					var clinic = curRow.find('td:eq(5)').text();
+					var enabled = curRow.find('td:eq(6)').text();
 
 					$("#updateId").val(id);
 					$("#userName").val(userName);
@@ -410,6 +431,13 @@ console.log("OK id: " +uniId);
 					$("#userName").val(userName);
 					$("#clinic").val(clinic);
 					$("#specialty").val(specialty);
+
+					if (enabled == 'true') {
+						$("#option1").prop('checked', true);
+					}
+					else {
+						$("#option2").prop('checked', true);
+					}
 
 					$('html, body').animate({
 						scrollTop: $('#scroll').offset().top

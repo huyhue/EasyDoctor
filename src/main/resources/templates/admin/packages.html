@@ -252,7 +252,24 @@
 					return status;
 				}
 				return status;
-			}
+				
+				if ($("#price").val() == 0) {
+					status = false;
+					$("#errorMsgPrice").text("Bắt buộc!!");
+					$("#price").css('border', '1px solid red');
+					$("#price").focus();
+					return status;
+				}
+				return status;
+				
+				if ($("#description").val() == "") {
+					status = false;
+					$("#errorMsgDescription").text("Bắt buộc!!");
+					$("#description").css('border', '1px solid red');
+					$("#desription").focus();
+					return status;
+				}
+		}
 
 			function resetText() {
 				$("#name").val('');

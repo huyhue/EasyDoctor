@@ -7,8 +7,10 @@ public class PatientDto {
 	private String fullname;
 	private String mobile;
 	private String address;
+	private boolean enabled;
 
-	public PatientDto(String id, String userName, String email, String fullname, String mobile, String address) {
+	public PatientDto(String id, String userName, String email, String fullname, String mobile, String address,
+			boolean enabled) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -16,6 +18,7 @@ public class PatientDto {
 		this.fullname = fullname;
 		this.mobile = mobile;
 		this.address = address;
+		this.enabled = enabled;
 	}
 
 	public String getId() {
@@ -64,5 +67,13 @@ public class PatientDto {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 }

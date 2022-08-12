@@ -14,7 +14,8 @@
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Trang chủ</a></li>
-						<li class="breadcrumb-item active">Hỏi đáp (Phản hồi: <p id="countResponses" class="font-weight-bold">
+						<li class="breadcrumb-item active">Hỏi đáp (Phản hồi: <p id="countResponses"
+								class="font-weight-bold">
 								[[${countResponses}]]</p>)</li>
 					</ol>
 				</div>
@@ -77,8 +78,8 @@
 						<div class="form-group">
 							<input type="hidden" id="updateId" />
 							<label>Email<span class="errorMsg">*</span></label>
-							<input class="form-control filter" type="text" id="email">
-							<span class="errorMsg" id="errorMsgName"></span>
+							<input class="form-control filter" type="email" id="email">
+							<span class="errorMsg" id="errorMsgEmail"></span>
 						</div>
 
 						<div class="form-group">
@@ -244,6 +245,27 @@
 					$("#errorMsgResponses").text("Không được để trống!!");
 					$("#responses").css('border', '1px solid red');
 					$("#responses").focus();
+					return status;
+				}
+				if ($("#email").val() == "") {
+					status = false;
+					$("#errorMsgEmail").text("Vui lòng chọn câu hỏi để phản hồi!!");
+					$("#email").css('border', '1px solid red');
+					$("#email").focus();
+					return status;
+				}
+				if ($("#description").val() == "") {
+					status = false;
+					$("#errorMsgDescription").text("Vui lòng chọn câu hỏi để phản hồi!!");
+					$("#description").css('border', '1px solid red');
+					$("#description").focus();
+					return status;
+				}
+				if ($("#problem").val() == "") {
+					status = false;
+					$("#errorMsgProblem").text("Vui lòng chọn câu hỏi để phản hồi!!");
+					$("#problem").css('border', '1px solid red');
+					$("#problem").focus();
 					return status;
 				}
 				return status;

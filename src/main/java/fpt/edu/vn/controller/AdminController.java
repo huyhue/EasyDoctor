@@ -1,7 +1,6 @@
 package fpt.edu.vn.controller;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -145,12 +144,6 @@ public class AdminController {
 		return commonMsg;
 	}
 
-//	@GetMapping(value = "/deleteDoctor")
-//	@ResponseBody
-//	public CommonMsg deleteDoctor(@RequestParam("id") int id) {
-//		return userService.deleteDoctor(id);
-//	}
-
 	// Clinic
 	@GetMapping("/clinic")
 	public String viewClinic(Model model) {
@@ -197,12 +190,6 @@ public class AdminController {
 		}
 		return commonMsg;
 	}
-
-//	@GetMapping(value = "/deletePatient")
-//	@ResponseBody
-//	public CommonMsg deletePatient(@RequestParam("id") int id) {
-//		return userService.deletePatient(id);
-//	}
 
 	// Appointment
 	@GetMapping("/viewAppointment")
