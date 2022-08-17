@@ -82,12 +82,13 @@
 						}],
 					"fnCreatedRow": function (nRow, aData, iDataIndex) {
 						$('td:eq(1)', nRow).attr("data-id", aData.id);
+						$('td:eq(3)', nRow).attr("data-id", aData.doctorId);
 					}
 				});
 
 				$('#tbl-reivew tbody').on('click', '#redirectUnID', function () {
 					var curRow = $(this).closest('tr');
-					var id = curRow.find('td:eq(1)').attr("data-id");
+					var id = curRow.find('td:eq(3)').attr("data-id");
 					var url = '/detail/' + id;
 					window.open(url, '_blank');
 				});

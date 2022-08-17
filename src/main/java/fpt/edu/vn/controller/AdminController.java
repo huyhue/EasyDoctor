@@ -1,11 +1,18 @@
 package fpt.edu.vn.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +31,7 @@ import fpt.edu.vn.component.PostDTO;
 import fpt.edu.vn.component.ProfileDto;
 import fpt.edu.vn.component.ReviewDto;
 import fpt.edu.vn.model.Clinic;
+import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.Packages;
 import fpt.edu.vn.model.Question;
 import fpt.edu.vn.model.User;
@@ -34,6 +42,13 @@ import fpt.edu.vn.service.PackagesService;
 import fpt.edu.vn.service.AppointmentService;
 import fpt.edu.vn.service.UserService;
 import fpt.edu.vn.service.impl.PostService;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Controller
 @RequestMapping("/admin")
@@ -46,6 +61,8 @@ public class AdminController {
 	private final EmailService emailService;
 	@Autowired
 	private PostService postService;
+	@Autowired
+    private ApplicationContext applicationContext;
 
 	public AdminController(UserService userService, PackagesService packagesService,
 			AppointmentService appointmentService, InvoiceService invoiceService, EmailService emailService) {
@@ -283,5 +300,26 @@ public class AdminController {
 	public CommonMsg deleteForum(@RequestParam("id") long id) {
 		return postService.deleteForum(id);
 	}
+	
+	@GetMapping("/clinicReport")
+	public String accountReport(Model model) {
+		model.addAttribute("listOfClinic", "");
+		return "clinic-report";
+	}
 
+	@GetMapping(path = "doctorByClinicReport")
+    @ResponseBody
+    public void doctorByClinicReport(HttpServletResponse response,@RequestParam("id") int clinicId) throws Exception {
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("logo", "static/assets/img/logo.jpg");
+        
+        List<Doctor> getReportData = userService.getDoctorsByClinicId(clinicId);
+        Resource resource = applicationContext.getResource("classpath:templates/reports/doctor-report.jrxml");
+        InputStream inputStream = resource.getInputStream();
+        JasperReport report = JasperCompileManager.compileReport(inputStream);
+        JRDataSource dataSource = new JRBeanCollectionDataSource(getReportData);
+        JasperPrint jasperPrint = JasperFillManager.fillReport(report, params, dataSource);
+        response.setContentType(MediaType.APPLICATION_PDF_VALUE);
+        JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
+	}
 }

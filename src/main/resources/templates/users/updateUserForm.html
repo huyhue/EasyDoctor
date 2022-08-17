@@ -165,7 +165,7 @@
 							</div>
 						</th:block>
 
-						<button type="submit" class="btn btn-info">Lưu thay đổi</button>
+						<button sec:authorize="hasRole('ROLE_PATIENT') or hasRole('ROLE_DOCTOR')" type="submit" class="btn btn-info">Lưu thay đổi</button>
 					</form>
 				</div>
 

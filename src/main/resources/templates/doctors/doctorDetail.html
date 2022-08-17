@@ -84,7 +84,7 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-sm-4 form-group" th:if="${declaration != null}">
+						<div sec:authorize="hasRole('ROLE_PATIENT')" class="col-sm-4 form-group" th:if="${declaration != null}">
 							<button type="button" class="btn btn-info"
 								th:onclick="javascript: showDeclarationModal([[${declaration.id}]], [[${doctor.id}]])"><i
 									class="fas fa-book-medical"></i> Đặt ngay</button>

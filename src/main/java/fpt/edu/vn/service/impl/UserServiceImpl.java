@@ -25,14 +25,12 @@ import fpt.edu.vn.model.Declaration;
 import fpt.edu.vn.model.Doctor;
 import fpt.edu.vn.model.FileModel;
 import fpt.edu.vn.model.History;
-import fpt.edu.vn.model.Invoice;
 import fpt.edu.vn.model.Patient;
 import fpt.edu.vn.model.Question;
 import fpt.edu.vn.model.Review;
 import fpt.edu.vn.model.Role;
 import fpt.edu.vn.model.Specialty;
 import fpt.edu.vn.model.User;
-import fpt.edu.vn.model.WorkingPlan;
 import fpt.edu.vn.repository.DoctorRepository;
 import fpt.edu.vn.repository.FileModelRepository;
 import fpt.edu.vn.repository.HistoryRepository;
@@ -314,7 +312,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@PreAuthorize("#patientId == principal.id or hasRole('ADMIN')")
 	public Patient getPatientById(int patientId) {
 		return patientRepository.findById(patientId)
 				.orElseThrow(() -> new UsernameNotFoundException("User not found!"));
@@ -370,7 +367,7 @@ public class UserServiceImpl implements UserService {
 		List<Review> list = reviewRepository.findAll();
 		for (Review r : list) {
 			listDTO.add(new ReviewDto(r.getId().toString(), r.getFeedback(), r.getRating(),
-					r.getPatient().getFullname(), r.getDoctor().getFullname()));
+					r.getPatient().getFullname(), r.getDoctor().getId(), r.getDoctor().getFullname()));
 		}
 		return listDTO;
 	}
@@ -468,6 +465,12 @@ public class UserServiceImpl implements UserService {
 	public History getHistoryByAppointmentId(int id) {
 		History history = historyRepository.getHistoryByAppointmentId(id);
 		return (history == null) ? new History() : history;
+	}
+	
+	@Override
+	public List<Doctor> getDoctorsByClinicId(int id) {
+		List<Doctor> list = clinicRepository.findById(id).get().getDoctors();
+		return list;
 	}
 
 	@Override

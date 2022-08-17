@@ -131,4 +131,7 @@ public interface UserService {
 	List<Question> getAllQuestion();
 
 	Question sendAnswerQuestion(Question question);
+	
+	//Report
+	List<Doctor> getDoctorsByClinicId(int id);
 }
