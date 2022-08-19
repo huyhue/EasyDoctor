@@ -79,6 +79,18 @@ public class AppointmentServiceImpl implements AppointmentService {
 		}
 		return listDTO;
 	}
+	
+	@Override
+	public List<AppoinmentDto> getAppointmentByDate(LocalDateTime start, LocalDateTime end) {
+		List<AppoinmentDto> listDTO = new ArrayList<>();
+		List<Appointment> list = appointmentRepository.findByInPeroid(start, end);
+		for (Appointment a : list) {
+			if (a.getStatus().equals("SCHEDULE")) {
+				
+			}
+		}
+		return listDTO;
+	}
 
 	@Override
 	@PreAuthorize("#doctorId == principal.id")

@@ -105,7 +105,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="Arial Black" size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[" Doctor Information"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" Clinic Information"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="200" y="91" width="404" height="30" uuid="b3b5b3d8-0cc7-4ae4-b909-cd559385c901"/>
@@ -113,7 +113,7 @@
 					<font fontName="Arial Black" size="14" isBold="true" isUnderline="true"/>
 					<paragraph lineSpacingSize="7.0"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Doctor Information Report"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Doctor Of Clinic Information Report"]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="35" y="64" width="565" height="1" forecolor="#807575" uuid="4fff3cd4-64b2-4880-b93f-d3eecc0a1bff"/>
@@ -137,7 +137,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="Arial Black" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA["DOCTOR BARI"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["EASY DOCTOR"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="201" y="23" width="429" height="20" forecolor="#8A8484" uuid="3ffcfcd5-c053-4bfd-9308-b73d14ca782d">
@@ -146,7 +146,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="Arial Black"/>
 				</textElement>
-				<textFieldExpression><![CDATA["18/F, Bir Uttam Qazi Nuruzzaman Sarak West, Panthapath, Dhaka 1205"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="200" y="39" width="429" height="20" forecolor="#8A8484" uuid="05a22f14-33f6-4db6-a7ae-ffc905fc3865">
@@ -155,7 +155,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="Arial Black"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Phone: 01755654432, Email: doctorbari@gmail.com"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<image>
 				<reportElement x="290" y="-4" width="53" height="58" uuid="8c606f5f-2cf0-469e-a036-6c9ad5a1d946"/>

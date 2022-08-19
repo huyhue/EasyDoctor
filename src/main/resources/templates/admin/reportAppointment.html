@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	th:replace="~{fragments/base :: base (~{::body},'Báo cáo phòng khám')}">
+	th:replace="~{fragments/base :: base (~{::body},'Báo cáo cuộc hẹn')}">
 
 <body>
 	<div class="content-header">
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h4 class="m-0">Báo cáo phòng khám</h4>
+					<h4 class="m-0">Báo cáo cuộc hẹn</h4>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Trang chủ</a></li>
-						<li class="breadcrumb-item active">Phòng khám</li>
+						<li class="breadcrumb-item active">Cuộc hẹn</li>
 					</ol>
 				</div>
 			</div>
@@ -71,7 +71,7 @@
 	<div layout:fragment="script">
 		<script type="text/javascript">
 			$(document).ready(function () {
-				$("#nav-account").addClass("active");
+				$("#nav-appointmentReport").addClass("active");
 				$("#nav-GenReport").addClass("active menu-is-opening menu-open");
 				$("#btn-uni-save").click(function () {
 					if ($("#clinicId").val() == '-1') {
@@ -87,7 +87,7 @@
 				});
 
 				$("#btn-uni-reset").click(function () {
-					$("#userId").val('-1');
+					$("#clinicId").val('-1');
 				});
 			});
 		</script>

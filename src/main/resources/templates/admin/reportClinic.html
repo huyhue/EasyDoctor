@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	th:replace="~{fragments/base :: base (~{::body},'Báo cáo phòng khám')}">
+
+<body>
+	<div class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h4 class="m-0">Báo cáo phòng khám</h4>
+				</div>
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Trang chủ</a></li>
+						<li class="breadcrumb-item active">Phòng khám</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="card card-outline card-primary">
+			<div class="card-header">
+				<h3 class="card-title"></h3>
+				<div class="card-tools">
+					<button type="button" class="btn btn-tool" data-card-widget="collapse">
+						<i class="fas fa-minus"></i>
+					</button>
+					<button type="button" class="btn btn-tool" data-card-widget="remove">
+						<i class="fas fa-times"></i>
+					</button>
+				</div>
+			</div>
+
+			<div class="card-body" style="display: block;">
+				<div class="row">
+					<div class="col-md-12" data-select2-id="29">
+						<div class="form-group">
+							<label>Chọn phòng khám<span class="errorMsg">*</span></label>
+							<select class="form-control filter" id="clinicId">
+								<option value="-1">--Chọn--</option>
+								<option th:each="resultMap : ${listOfClinic}" th:value="${resultMap.id}"
+									th:text="${resultMap.name}"></option>
+							</select>
+							<span class="errorMsg" id="errorMsgClinic"></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="margin">
+					<div class="btn-group">
+						<button style="color: #ffffff;" type="button" class="btn btn-block bg-gradient-info btn-sm"
+							id="btn-uni-save">
+							<i class="far fa-save"></i> Báo cáo
+						</button>
+					</div>
+
+					<div class="btn-group">
+						<button style="color: #ffffff;" type="button" class="btn btn-block bg-gradient-warning btn-sm"
+							id="btn-uni-reset">
+							<i class="fas fa-sync"></i> Reset
+						</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div layout:fragment="script">
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$("#nav-clinicReport").addClass("active");
+				$("#nav-GenReport").addClass("active menu-is-opening menu-open");
+				$("#btn-uni-save").click(function () {
+					if ($("#clinicId").val() == '-1') {
+						$("#errorMsgClinic").text("Required Field!!");
+						$("#clinicId").css('border', '1px solid red');
+						$("#clinicId").focus();
+					} else {
+						$("#errorMsgClinic").text("");
+						$("#clinicId").css('border', '1px solid #CED4DA');
+						window.open('/admin/doctorByClinicReport?id=' + $("#clinicId").val(), '_blank');
+						$("#clinicId").val('-1');
+					}
+				});
+
+				$("#btn-uni-reset").click(function () {
+					$("#clinicId").val('-1');
+				});
+			});
+		</script>
+	</div>
+	<div layout:fragment="css">
+		<style>
+			.errorMsg {
+				color: red;
+				font-size: 13px;
+			}
+
+			table.dataTable thead th,
+			table.dataTable thead td {
+				border-bottom: 1px solid #DEE2E6;
+			}
+
+			table.dataTable.no-footer {
+				border-bottom: 1px solid #DEE2E6;
+			}
+		</style>
+	</div>

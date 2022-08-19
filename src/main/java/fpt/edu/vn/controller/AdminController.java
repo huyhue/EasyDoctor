@@ -303,23 +303,44 @@ public class AdminController {
 	
 	@GetMapping("/clinicReport")
 	public String accountReport(Model model) {
-		model.addAttribute("listOfClinic", "");
-		return "clinic-report";
+		model.addAttribute("listOfClinic", userService.getAllClinic());
+		return "admin/reportClinic";
 	}
 
 	@GetMapping(path = "doctorByClinicReport")
     @ResponseBody
     public void doctorByClinicReport(HttpServletResponse response,@RequestParam("id") int clinicId) throws Exception {
         HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put("logo", "static/assets/img/logo.jpg");
+        params.put("logo", "static/img/logo.jpg");
         
         List<Doctor> getReportData = userService.getDoctorsByClinicId(clinicId);
-        Resource resource = applicationContext.getResource("classpath:templates/reports/doctor-report.jrxml");
+        Resource resource = applicationContext.getResource("classpath:templates/reports/clinic-report.jrxml");
         InputStream inputStream = resource.getInputStream();
         JasperReport report = JasperCompileManager.compileReport(inputStream);
         JRDataSource dataSource = new JRBeanCollectionDataSource(getReportData);
         JasperPrint jasperPrint = JasperFillManager.fillReport(report, params, dataSource);
         response.setContentType(MediaType.APPLICATION_PDF_VALUE);
         JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
+	}
+	
+	@GetMapping("/appointmentReport")
+	public String appointmentReport(Model model) {
+		return "admin/reportAppointment";
+	}
+	
+	@GetMapping(path = "appointmentByDateReport")
+	@ResponseBody
+	public void appointmentByDateReport(HttpServletResponse response,@RequestParam("id") int clinicId) throws Exception {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("logo", "static/img/logo.jpg");
+		
+//		List<> getReportData = appointmentService.getAppointmentByDate(start, end);
+//		Resource resource = applicationContext.getResource("classpath:templates/reports/appointment-report.jrxml");
+//		InputStream inputStream = resource.getInputStream();
+//		JasperReport report = JasperCompileManager.compileReport(inputStream);
+//		JRDataSource dataSource = new JRBeanCollectionDataSource(getReportData);
+//		JasperPrint jasperPrint = JasperFillManager.fillReport(report, params, dataSource);
+//		response.setContentType(MediaType.APPLICATION_PDF_VALUE);
+//		JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
 	}
 }
