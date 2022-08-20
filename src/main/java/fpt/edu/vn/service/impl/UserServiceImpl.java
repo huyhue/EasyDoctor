@@ -507,6 +507,10 @@ public class UserServiceImpl implements UserService {
 	public List<Clinic> getAllClinic() {
 		return clinicRepository.findAll();
 	}
+	@Override
+	public String getClinic(int id) {
+		return clinicRepository.getById(id).getName();
+	}
 
 	@Override
 	public CommonMsg saveClinic(Clinic clinic) {

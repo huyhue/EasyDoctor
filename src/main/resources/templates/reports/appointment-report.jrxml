@@ -11,6 +11,7 @@
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="logo" class="java.lang.String"/>
+	<parameter name="title" class="java.lang.String"/>
 	<parameter name="totalStatusInvoiced" class="java.lang.Integer"/>
 	<parameter name="totalStatusCanceled" class="java.lang.Integer"/>
 	<parameter name="totalStatusRejected" class="java.lang.Integer"/>
@@ -111,15 +112,15 @@
 				<textElement textAlignment="Right">
 					<font fontName="Arial Black" size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[" Appointment Information"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Appointment Information"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="200" y="91" width="404" height="30" uuid="b3b5b3d8-0cc7-4ae4-b909-cd559385c901"/>
+				<reportElement x="200" y="91" width="500" height="30" uuid="b3b5b3d8-0cc7-4ae4-b909-cd559385c901"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial Black" size="14" isBold="true" isUnderline="true"/>
 					<paragraph lineSpacingSize="7.0"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Appointment Information Report"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{title}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="100" y="120" width="404" height="30" uuid="b3b5b3d8-0cc7-4ae4-b909-cd559385c901"/>
@@ -136,7 +137,7 @@
 				<reportElement x="6" y="44" width="30" height="20" forecolor="#807575" uuid="1b0121a8-478c-474c-bffd-3379277abc6f"/>
 			</line>
 			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="684" y="131" width="200" height="20" uuid="92a7a42c-a508-4d16-a0b0-6afab5cfbd67">
+				<reportElement x="681" y="125" width="210" height="20" uuid="92a7a42c-a508-4d16-a0b0-6afab5cfbd67">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>

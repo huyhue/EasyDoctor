@@ -113,6 +113,8 @@ public interface UserService {
 
 	// Clinic
 	List<Clinic> getAllClinic();
+	
+	String getClinic(int id);
 
 	CommonMsg saveClinic(Clinic clinic);
 

@@ -312,6 +312,7 @@ public class AdminController {
     public void doctorByClinicReport(HttpServletResponse response,@RequestParam("id") int clinicId) throws Exception {
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("logo", "static/img/logo.jpg");
+        params.put("title", "Report Clinic " +userService.getClinic(clinicId));
         
         List<Doctor> getReportData = userService.getDoctorsByClinicId(clinicId);
         Resource resource = applicationContext.getResource("classpath:templates/reports/clinic-report.jrxml");
@@ -333,9 +334,9 @@ public class AdminController {
 	public void appointmentByDateReport(HttpServletResponse response, @RequestParam("start") String start, @RequestParam("end") String end) throws Exception {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("logo", "static/img/logo.jpg");
+		params.put("title", "Report Appointment start: " + start +" end: " +end);
 		
 		List<AppoinmentDto> getReportData = appointmentService.getAppointmentByDate(start, end);
-		
 		Integer totalStatusInvoiced = 0;
 		Integer totalStatusCanceled = 0;
 		Integer totalStatusRejected = 0;
@@ -368,12 +369,13 @@ public class AdminController {
 	public void appointmentByMonthReport(HttpServletResponse response, @RequestParam("month") String month) throws Exception {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("logo", "static/img/logo.jpg");
+		params.put("title", "Report Appointment month " + month);
 		
 		List<AppoinmentDto> getReportData = appointmentService.getAppointmentByMonth(month);
-		
 		Integer totalStatusInvoiced = 0;
 		Integer totalStatusCanceled = 0;
 		Integer totalStatusRejected = 0;
+		
 		for (AppoinmentDto ap : getReportData) {
 			if (ap.getStatus().equals("INVOICED")) {
 				totalStatusInvoiced++;

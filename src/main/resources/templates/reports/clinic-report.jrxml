@@ -11,6 +11,7 @@
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="logo" class="java.lang.String"/>
+	<parameter name="title" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -113,7 +114,7 @@
 					<font fontName="Arial Black" size="14" isBold="true" isUnderline="true"/>
 					<paragraph lineSpacingSize="7.0"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Doctor Of Clinic Information Report"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{title}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="35" y="64" width="565" height="1" forecolor="#807575" uuid="4fff3cd4-64b2-4880-b93f-d3eecc0a1bff"/>
