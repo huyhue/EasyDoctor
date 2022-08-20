@@ -336,11 +336,55 @@ public class AdminController {
 		
 		List<AppoinmentDto> getReportData = appointmentService.getAppointmentByDate(start, end);
 		
-		Double totalAmount = (double) 0;
 		Integer totalStatusInvoiced = 0;
 		Integer totalStatusCanceled = 0;
 		Integer totalStatusRejected = 0;
-		params.put("totalAmount", totalAmount);
+		for (AppoinmentDto ap : getReportData) {
+			if (ap.getStatus().equals("INVOICED")) {
+				totalStatusInvoiced++;
+			}
+			if (ap.getStatus().equals("CANCELED")) {
+				totalStatusCanceled++;
+			}
+			if (ap.getStatus().equals("REJECTED")) {
+				totalStatusRejected++;
+			}
+		}
+		params.put("totalStatusInvoiced", totalStatusInvoiced);
+		params.put("totalStatusCanceled", totalStatusCanceled);
+		params.put("totalStatusRejected", totalStatusRejected);
+		
+		Resource resource = applicationContext.getResource("classpath:templates/reports/appointment-report.jrxml");
+		InputStream inputStream = resource.getInputStream();
+		JasperReport report = JasperCompileManager.compileReport(inputStream);
+		JRDataSource dataSource = new JRBeanCollectionDataSource(getReportData);
+		JasperPrint jasperPrint = JasperFillManager.fillReport(report, params, dataSource);
+		response.setContentType(MediaType.APPLICATION_PDF_VALUE);
+		JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
+	}
+	
+	@GetMapping(path = "appointmentByMonthReport")
+	@ResponseBody
+	public void appointmentByMonthReport(HttpServletResponse response, @RequestParam("month") String month) throws Exception {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("logo", "static/img/logo.jpg");
+		
+		List<AppoinmentDto> getReportData = appointmentService.getAppointmentByMonth(month);
+		
+		Integer totalStatusInvoiced = 0;
+		Integer totalStatusCanceled = 0;
+		Integer totalStatusRejected = 0;
+		for (AppoinmentDto ap : getReportData) {
+			if (ap.getStatus().equals("INVOICED")) {
+				totalStatusInvoiced++;
+			}
+			if (ap.getStatus().equals("CANCELED")) {
+				totalStatusCanceled++;
+			}
+			if (ap.getStatus().equals("REJECTED")) {
+				totalStatusRejected++;
+			}
+		}
 		params.put("totalStatusInvoiced", totalStatusInvoiced);
 		params.put("totalStatusCanceled", totalStatusCanceled);
 		params.put("totalStatusRejected", totalStatusRejected);

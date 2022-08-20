@@ -35,7 +35,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial Black" size="11" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["userName"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Username"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="208" y="0" width="142" height="35" uuid="4d24e896-194e-4ee6-a807-dea270a66a14">
@@ -51,7 +51,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial Black" size="11" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["fullname"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Fullname"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="350" y="0" width="240" height="35" uuid="10eb1dcb-504e-4305-a070-1f10378a3c13">
@@ -67,7 +67,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial Black" size="11" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["email"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Email"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="590" y="0" width="212" height="35" uuid="70b31826-d9ea-4103-be6c-fd60f3bb6868">
@@ -83,7 +83,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial Black" size="11" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["description"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Description"]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>

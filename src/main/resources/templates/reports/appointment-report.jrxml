@@ -11,13 +11,19 @@
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="logo" class="java.lang.String"/>
+	<parameter name="totalStatusInvoiced" class="java.lang.Integer"/>
+	<parameter name="totalStatusCanceled" class="java.lang.Integer"/>
+	<parameter name="totalStatusRejected" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
 	<field name="patient" class="java.lang.String"/>
 	<field name="doctor" class="java.lang.String"/>
 	<field name="packages" class="java.lang.String"/>
-	<field name="status" class="java.lang.String"/>
+	<field name="totalAmount" class="java.lang.Double"/>
+	<variable name="totalAmt" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalAmount}]]></variableExpression>
+	</variable>
 	<group name="GroupBy Office" isReprintHeaderOnEachPage="true">
 		<groupHeader>
 			<band height="36">
@@ -35,7 +41,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial Black" size="11" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["patient"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Patient"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="208" y="0" width="142" height="35" uuid="4d24e896-194e-4ee6-a807-dea270a66a14">
@@ -51,7 +57,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial Black" size="11" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["doctor"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Doctor"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="350" y="0" width="240" height="35" uuid="10eb1dcb-504e-4305-a070-1f10378a3c13">
@@ -67,7 +73,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial Black" size="11" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["packages"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Package"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="590" y="0" width="212" height="35" uuid="70b31826-d9ea-4103-be6c-fd60f3bb6868">
@@ -83,7 +89,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial Black" size="11" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["status"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Total Amount"]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -114,6 +120,14 @@
 					<paragraph lineSpacingSize="7.0"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Appointment Information Report"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="120" width="404" height="30" uuid="b3b5b3d8-0cc7-4ae4-b909-cd559385c901"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="14" isBold="true"/>
+					<paragraph lineSpacingSize="7.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Invoiced: "+$P{totalStatusInvoiced} + ". Canceled: "+$P{totalStatusCanceled} + ". Rejected: "+$P{totalStatusRejected}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="35" y="64" width="565" height="1" forecolor="#807575" uuid="4fff3cd4-64b2-4880-b93f-d3eecc0a1bff"/>
@@ -217,7 +231,7 @@
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#807575"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{totalAmount}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -258,4 +272,28 @@
 			</textField>
 		</band>
 	</pageFooter>
+	<summary>
+		<band height="18">
+			<textField>
+				<reportElement x="650" y="0" width="140" height="17" uuid="f30e0158-3669-4536-b727-2b32b12313ec">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial Black" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Amount =  "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="670" y="0" width="124" height="17" uuid="d944aea0-81ab-418c-a6c3-69ab0981aed6">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Black" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalAmt}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
 </jasperReport>

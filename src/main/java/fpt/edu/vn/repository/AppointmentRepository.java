@@ -21,6 +21,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
 	@Query("select a from Appointment a where DATE(a.start) >=:start and  DATE(a.end) <=:end")
     List<Appointment> findByInPeroid(@Param("start") Date start, @Param("end") Date end);
 	
+	@Query("select a from Appointment a where MONTH(a.start) =:month")
+	List<Appointment> findByMonth(@Param("month") int month);
+	
 	@Query("select a from Appointment a where a.doctor.id = :doctorId and  a.start >=:dayStart and  a.start <=:dayEnd")
     List<Appointment> findByDoctorIdWithStartInPeroid(@Param("doctorId") int doctorId, @Param("dayStart") LocalDateTime startPeroid, @Param("dayEnd") LocalDateTime endPeroid);
 
@@ -69,7 +72,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
     @Query("select COUNT(a) from Appointment a where a.doctor.id = :doctorId and DATE(a.start) =:date and a.status = 'REJECTION_REQUESTED'")
     int countAppointmentByStatus5(@Param("doctorId") int doctorId, @Param("date") Date date);
     
-    @Query("select COUNT(a) from Appointment a where MONTH(a.start) =:month ")
+    @Query("select COUNT(a) from Appointment a where MONTH(a.start) =:month")
     int countAllAppointmentByMonth(@Param("month") int month);
     
     @Query("select a from Appointment a where a.id = :id and TIME(a.start) >=:timeStart and TIME(a.end) <=:timeEnd")

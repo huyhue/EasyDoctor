@@ -17,6 +17,7 @@ public interface AppointmentService {
 	//Get Available Hour
 	List<TimePeroid> getAvailableHours(int doctorId, int patientId, int packagesId, LocalDate date);
 	List<AppoinmentDto> getAppointmentByDate(String start, String end);
+	List<AppoinmentDto> getAppointmentByMonth(String month);
 	List<Appointment> getAppointmentsByDoctorAtDay(int doctorId, LocalDate day);
 	List<Appointment> getAppointmentsByPatientAtDay(int patientId, LocalDate day);
 	List<TimePeroid> excludeAppointmentsFromTimePeroids(List<TimePeroid> peroids, List<Appointment> appointments);

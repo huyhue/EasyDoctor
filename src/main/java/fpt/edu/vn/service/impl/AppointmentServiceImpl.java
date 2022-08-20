@@ -1,5 +1,6 @@
 package fpt.edu.vn.service.impl;
 
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -69,18 +70,19 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public List<Appointment> getAllAppointments() {
 		return appointmentRepository.findAll();
 	}
-	
+
 	@Override
 	@PreAuthorize("hasRole('ADMIN')")
 	public List<AppoinmentDto> getAllAppointment() {
 		List<AppoinmentDto> listDTO = new ArrayList<>();
 		List<Appointment> list = appointmentRepository.findAll();
 		for (Appointment a : list) {
-			listDTO.add(new AppoinmentDto(a.getId(), a.getStart(), a.getEnd(), a.getStatus().toString(), a.getPatient().getFullname(), a.getDoctor().getFullname(), a.getPackages().getName()));
+			listDTO.add(new AppoinmentDto(a.getId(), a.getStart(), a.getEnd(), a.getStatus().toString(),
+					a.getPatient().getFullname(), a.getDoctor().getFullname(), a.getPackages().getName()));
 		}
 		return listDTO;
 	}
-	
+
 	@Override
 	public List<AppoinmentDto> getAppointmentByDate(String start, String end) {
 		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -92,16 +94,33 @@ public class AppointmentServiceImpl implements AppointmentService {
 			e.printStackTrace();
 		}
 		for (Appointment a : list) {
-			AppoinmentDto appoinmentDto = new AppoinmentDto(a.getId(), a.getStart(), a.getEnd(), a.getStatus().toString(), a.getPatient().getFullname(), a.getDoctor().getFullname(), a.getPackages().getName());
-//			if (a.getStatus().equals("INVOICED")) {
-//				appoinmentDto.setTotalStatusInvoiced(appoinmentDto.getTotalStatusInvoiced() + 1);
-//			}
-//			if (a.getStatus().equals("CANCELED")) {
-//				appoinmentDto.setTotalStatusCanceled(appoinmentDto.getTotalStatusCanceled() + 1);
-//			}
-//			if (a.getStatus().equals("REJECTED")) {
-//				appoinmentDto.setTotalStatusRejected(appoinmentDto.getTotalStatusRejected() + 1);
-//			}
+			AppoinmentDto appoinmentDto = new AppoinmentDto(a.getId(), a.getStart(), a.getEnd(),
+					a.getStatus().toString(), a.getPatient().getFullname(), a.getDoctor().getFullname(),
+					a.getPackages().getName());
+			if (a.getIncurred() != null) {
+				appoinmentDto.setTotalAmount(a.getPackages().getPrice() + a.getIncurred());
+			} else {
+				appoinmentDto.setTotalAmount(a.getPackages().getPrice());
+			}
+			listDTO.add(appoinmentDto);
+		}
+		return listDTO;
+	}
+
+	@Override
+	public List<AppoinmentDto> getAppointmentByMonth(String month) {
+		List<AppoinmentDto> listDTO = new ArrayList<>();
+		List<Appointment> list = new ArrayList<>();
+		list = appointmentRepository.findByMonth(Integer.parseInt(month));
+		for (Appointment a : list) {
+			AppoinmentDto appoinmentDto = new AppoinmentDto(a.getId(), a.getStart(), a.getEnd(),
+					a.getStatus().toString(), a.getPatient().getFullname(), a.getDoctor().getFullname(),
+					a.getPackages().getName());
+			if (a.getIncurred() != null) {
+				appoinmentDto.setTotalAmount(a.getPackages().getPrice() + a.getIncurred());
+			} else {
+				appoinmentDto.setTotalAmount(a.getPackages().getPrice());
+			}
 			listDTO.add(appoinmentDto);
 		}
 		return listDTO;
@@ -256,7 +275,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 			throw new org.springframework.security.access.AccessDeniedException("Unauthorized");
 		}
 	}
-	
+
 	@Override
 	public CommonMsg cancelAppointmentByAdmin(int appointmentId) {
 		CommonMsg commonMsg = new CommonMsg();
@@ -507,7 +526,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public int getNumberCanceledAppointmentByUserId(int userId) {
 		return appointmentRepository.findCanceledByUserId(userId).size();
 	}
-	
+
 	@Override
 	public int countAllAppointmentByMonth(int month) {
 		return appointmentRepository.countAllAppointmentByMonth(month);
