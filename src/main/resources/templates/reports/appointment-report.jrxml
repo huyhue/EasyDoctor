@@ -14,10 +14,10 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="userName" class="java.lang.String"/>
-	<field name="fullname" class="java.lang.String"/>
-	<field name="email" class="java.lang.String"/>
-	<field name="description" class="java.lang.String"/>
+	<field name="patient" class="java.lang.String"/>
+	<field name="doctor" class="java.lang.String"/>
+	<field name="packages" class="java.lang.String"/>
+	<field name="status" class="java.lang.String"/>
 	<group name="GroupBy Office" isReprintHeaderOnEachPage="true">
 		<groupHeader>
 			<band height="36">
@@ -35,7 +35,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial Black" size="11" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["userName"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["patient"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="208" y="0" width="142" height="35" uuid="4d24e896-194e-4ee6-a807-dea270a66a14">
@@ -51,7 +51,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial Black" size="11" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["fullname"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["doctor"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="350" y="0" width="240" height="35" uuid="10eb1dcb-504e-4305-a070-1f10378a3c13">
@@ -67,7 +67,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial Black" size="11" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["email"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["packages"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="590" y="0" width="212" height="35" uuid="70b31826-d9ea-4103-be6c-fd60f3bb6868">
@@ -83,7 +83,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial Black" size="11" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["description"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["status"]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -105,7 +105,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="Arial Black" size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[" Clinic Information"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" Appointment Information"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="200" y="91" width="404" height="30" uuid="b3b5b3d8-0cc7-4ae4-b909-cd559385c901"/>
@@ -113,7 +113,7 @@
 					<font fontName="Arial Black" size="14" isBold="true" isUnderline="true"/>
 					<paragraph lineSpacingSize="7.0"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Doctor Of Clinic Information Report"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Appointment Information Report"]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="35" y="64" width="565" height="1" forecolor="#807575" uuid="4fff3cd4-64b2-4880-b93f-d3eecc0a1bff"/>
@@ -122,13 +122,13 @@
 				<reportElement x="6" y="44" width="30" height="20" forecolor="#807575" uuid="1b0121a8-478c-474c-bffd-3379277abc6f"/>
 			</line>
 			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="684" y="131" width="129" height="20" uuid="92a7a42c-a508-4d16-a0b0-6afab5cfbd67">
+				<reportElement x="684" y="131" width="200" height="20" uuid="92a7a42c-a508-4d16-a0b0-6afab5cfbd67">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
 					<font fontName="Arial Black" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Date : "+new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Date Report: "+new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="260" y="0" width="286" height="23" forecolor="#8A8484" uuid="8c3e25df-074e-46c6-a6d4-7cf73848ae3c">
@@ -177,7 +177,7 @@
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#807575"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{userName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{patient}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="208" y="-1" width="142" height="20" uuid="26a65849-8084-4f02-b3ea-f5cdbe5d1684">
@@ -191,7 +191,7 @@
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#807575"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{fullname}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{doctor}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="350" y="-1" width="240" height="20" uuid="4eff9ffe-1fe3-45ee-91ce-bc85a0dd5c0b"/>
@@ -203,7 +203,7 @@
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#807575"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{packages}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="590" y="-1" width="212" height="20" uuid="c277c73d-cb10-44de-94e2-7bc40dd113b9">
@@ -217,7 +217,7 @@
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#807575"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

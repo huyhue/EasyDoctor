@@ -10,7 +10,11 @@ public class AppoinmentDto {
 	private String patient;
 	private String doctor;
 	private String packages;
-
+	private Double totalAmount;
+	
+	public AppoinmentDto() {
+	}
+	
 	public AppoinmentDto(Integer id, LocalDateTime start, LocalDateTime end, String status,
 			String patient, String doctor, String packages) {
 		super();
@@ -21,6 +25,19 @@ public class AppoinmentDto {
 		this.patient = patient;
 		this.doctor = doctor;
 		this.packages = packages;
+	}
+
+	public AppoinmentDto(Integer id, LocalDateTime start, LocalDateTime end, String status, String patient,
+			String doctor, String packages, Double totalAmount) {
+		super();
+		this.id = id;
+		this.start = start;
+		this.end = end;
+		this.status = status;
+		this.patient = patient;
+		this.doctor = doctor;
+		this.packages = packages;
+		this.totalAmount = totalAmount;
 	}
 
 	public Integer getId() {
@@ -78,6 +95,13 @@ public class AppoinmentDto {
 	public void setPackages(String packages) {
 		this.packages = packages;
 	}
-	
 
+	public Double getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(Double totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+	
 }

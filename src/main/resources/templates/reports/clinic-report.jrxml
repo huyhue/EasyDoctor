@@ -128,7 +128,7 @@
 				<textElement>
 					<font fontName="Arial Black" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Date : "+new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Date Report: "+new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="260" y="0" width="286" height="23" forecolor="#8A8484" uuid="8c3e25df-074e-46c6-a6d4-7cf73848ae3c">

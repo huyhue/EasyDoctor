@@ -330,17 +330,27 @@ public class AdminController {
 	
 	@GetMapping(path = "appointmentByDateReport")
 	@ResponseBody
-	public void appointmentByDateReport(HttpServletResponse response,@RequestParam("id") int clinicId) throws Exception {
+	public void appointmentByDateReport(HttpServletResponse response, @RequestParam("start") String start, @RequestParam("end") String end) throws Exception {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("logo", "static/img/logo.jpg");
 		
-//		List<> getReportData = appointmentService.getAppointmentByDate(start, end);
-//		Resource resource = applicationContext.getResource("classpath:templates/reports/appointment-report.jrxml");
-//		InputStream inputStream = resource.getInputStream();
-//		JasperReport report = JasperCompileManager.compileReport(inputStream);
-//		JRDataSource dataSource = new JRBeanCollectionDataSource(getReportData);
-//		JasperPrint jasperPrint = JasperFillManager.fillReport(report, params, dataSource);
-//		response.setContentType(MediaType.APPLICATION_PDF_VALUE);
-//		JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
+		List<AppoinmentDto> getReportData = appointmentService.getAppointmentByDate(start, end);
+		
+		Double totalAmount = (double) 0;
+		Integer totalStatusInvoiced = 0;
+		Integer totalStatusCanceled = 0;
+		Integer totalStatusRejected = 0;
+		params.put("totalAmount", totalAmount);
+		params.put("totalStatusInvoiced", totalStatusInvoiced);
+		params.put("totalStatusCanceled", totalStatusCanceled);
+		params.put("totalStatusRejected", totalStatusRejected);
+		
+		Resource resource = applicationContext.getResource("classpath:templates/reports/appointment-report.jrxml");
+		InputStream inputStream = resource.getInputStream();
+		JasperReport report = JasperCompileManager.compileReport(inputStream);
+		JRDataSource dataSource = new JRBeanCollectionDataSource(getReportData);
+		JasperPrint jasperPrint = JasperFillManager.fillReport(report, params, dataSource);
+		response.setContentType(MediaType.APPLICATION_PDF_VALUE);
+		JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
 	}
 }

@@ -13,7 +13,7 @@
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a th:href="@{/admin/home}">Trang chủ</a></li>
-						<li class="breadcrumb-item active">Cuộc hẹn</li>
+						<li class="breadcrumb-item active">Báo cáo cuộc hẹn</li>
 					</ol>
 				</div>
 			</div>
@@ -35,15 +35,18 @@
 
 			<div class="card-body" style="display: block;">
 				<div class="row">
-					<div class="col-md-12" data-select2-id="29">
+					<div class="col-md-6">
 						<div class="form-group">
-							<label>Chọn phòng khám<span class="errorMsg">*</span></label>
-							<select class="form-control filter" id="clinicId">
-								<option value="-1">--Chọn--</option>
-								<option th:each="resultMap : ${listOfClinic}" th:value="${resultMap.id}"
-									th:text="${resultMap.name}"></option>
-							</select>
-							<span class="errorMsg" id="errorMsgClinic"></span>
+							<label>Chọn ngày bắt đầu<span class="errorMsg">*</span></label>
+							<input type="date" class="form-control" id="start" name="start" />
+							<span class="errorMsg" id="errorMsgStart"></span>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Chọn ngày kết thúc<span class="errorMsg">*</span></label>
+							<input type="date" class="form-control" id="end" name="end" />
+							<span class="errorMsg" id="errorMsgEnd"></span>
 						</div>
 					</div>
 				</div>
@@ -74,20 +77,29 @@
 				$("#nav-appointmentReport").addClass("active");
 				$("#nav-GenReport").addClass("active menu-is-opening menu-open");
 				$("#btn-uni-save").click(function () {
-					if ($("#clinicId").val() == '-1') {
-						$("#errorMsgClinic").text("Required Field!!");
-						$("#clinicId").css('border', '1px solid red');
-						$("#clinicId").focus();
+					if ($("#start").val() == "") {
+						$("#errorMsgStart").text("Không để trống!!");
+						$("#start").css('border', '1px solid red');
+						$("#start").focus();
+					} 
+					if ($("#end").val() == "") {
+						$("#errorMsgEnd").text("Không để trống!!");
+						$("#end").css('border', '1px solid red');
+						$("#end").focus();
 					} else {
-						$("#errorMsgClinic").text("");
-						$("#clinicId").css('border', '1px solid #CED4DA');
-						window.open('/admin/doctorByClinicReport?id=' + $("#clinicId").val(), '_blank');
-						$("#clinicId").val('-1');
+						$("#errorMsgStart").text("");
+						$("#errorMsgEnd").text("");
+						$("#start").css('border', '1px solid #CED4DA');
+						$("#end").css('border', '1px solid #CED4DA');
+						window.open('/admin/appointmentByDateReport?start=' + $("#start").val() + '&end=' + $("#end").val(), '_blank');
+						$("#start").val('');
+						$("#end").val('');
 					}
 				});
 
 				$("#btn-uni-reset").click(function () {
-					$("#clinicId").val('-1');
+					$("#start").val('');
+					$("#end").val('');
 				});
 			});
 		</script>

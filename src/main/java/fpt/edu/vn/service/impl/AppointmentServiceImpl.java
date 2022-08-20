@@ -27,6 +27,7 @@ import fpt.edu.vn.service.PackagesService;
 import fpt.edu.vn.service.UserService;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -81,13 +82,27 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 	
 	@Override
-	public List<AppoinmentDto> getAppointmentByDate(LocalDateTime start, LocalDateTime end) {
+	public List<AppoinmentDto> getAppointmentByDate(String start, String end) {
+		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		List<AppoinmentDto> listDTO = new ArrayList<>();
-		List<Appointment> list = appointmentRepository.findByInPeroid(start, end);
+		List<Appointment> list = new ArrayList<>();
+		try {
+			list = appointmentRepository.findByInPeroid(formatter.parse(start), formatter.parse(end));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		for (Appointment a : list) {
-			if (a.getStatus().equals("SCHEDULE")) {
-				
-			}
+			AppoinmentDto appoinmentDto = new AppoinmentDto(a.getId(), a.getStart(), a.getEnd(), a.getStatus().toString(), a.getPatient().getFullname(), a.getDoctor().getFullname(), a.getPackages().getName());
+//			if (a.getStatus().equals("INVOICED")) {
+//				appoinmentDto.setTotalStatusInvoiced(appoinmentDto.getTotalStatusInvoiced() + 1);
+//			}
+//			if (a.getStatus().equals("CANCELED")) {
+//				appoinmentDto.setTotalStatusCanceled(appoinmentDto.getTotalStatusCanceled() + 1);
+//			}
+//			if (a.getStatus().equals("REJECTED")) {
+//				appoinmentDto.setTotalStatusRejected(appoinmentDto.getTotalStatusRejected() + 1);
+//			}
+			listDTO.add(appoinmentDto);
 		}
 		return listDTO;
 	}

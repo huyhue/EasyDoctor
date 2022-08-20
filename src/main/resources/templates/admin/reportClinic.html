@@ -75,7 +75,7 @@
 				$("#nav-GenReport").addClass("active menu-is-opening menu-open");
 				$("#btn-uni-save").click(function () {
 					if ($("#clinicId").val() == '-1') {
-						$("#errorMsgClinic").text("Required Field!!");
+						$("#errorMsgClinic").text("Không để trống!!");
 						$("#clinicId").css('border', '1px solid red');
 						$("#clinicId").focus();
 					} else {
