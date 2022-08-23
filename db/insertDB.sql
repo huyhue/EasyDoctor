@@ -2,9 +2,9 @@ INSERT INTO `roles` VALUES (1,'ROLE_ADMIN'),(2,'ROLE_DOCTOR'),(3,'ROLE_PATIENT')
 
 INSERT INTO `users` (id,fullname, email, confirmation_token, enabled, profile_img, username, password) VALUES 
 (1,'ADMIN','admin@gmail.com','f9027735-6fd9-4426-ba57-0a5d6dls7772',1,'/img/avatar.png','admin','$2a$10$Th3jovQba84Dul0dnXFxiOBTBKSx4s26sXi4k9s.NUge62i8rur92'),
-(2,'BS CKII Hà Ngọc Hùng','tpgiahuy5@gmail.com','f9027735-6fd9-4426-ba57-0a5d64jdsa772',1,'/img/avatar.png','doctor','$2a$10$Th3jovQba84Dul0dnXFxiOBTBKSx4s26sXi4k9s.NUge62i8rur92'),
+(2,'BS CKII Hà Ngọc Hùng','huytvde140135@fpt.edu.vn','f9027735-6fd9-4426-ba57-0a5d64jdsa772',1,'/img/avatar.png','doctor','$2a$10$Th3jovQba84Dul0dnXFxiOBTBKSx4s26sXi4k9s.NUge62i8rur92'),
 (3,'Tống Phước Gia Huy','tpgiahuy5@gmail.com','f9027735-6fd9-4426-ba57-0a5d646f7smd2',1,'/img/avatar.png','huyhue','$2a$10$Th3jovQba84Dul0dnXFxiOBTBKSx4s26sXi4k9s.NUge62i8rur92'),
-(4,'PGS.TS.Phạm Thị Bích Đào','doctor1@gmail.com','f9027735-6fd9-4426-ba57-0a5skd46f7772',1,'/img/avatar.png','doctor1','$2a$10$Th3jovQba84Dul0dnXFxiOBTBKSx4s26sXi4k9s.NUge62i8rur92'),
+(4,'PGS.TS.Phạm Thị Bích','doctor1@gmail.com','f9027735-6fd9-4426-ba57-0a5skd46f7772',1,'/img/avatar.png','doctor1','$2a$10$Th3jovQba84Dul0dnXFxiOBTBKSx4s26sXi4k9s.NUge62i8rur92'),
 (5,'PGS.TS.Đinh Ngọc Sơn','doctor2@gmail.com','f9027735-6fd9-4426-ba57-0a5d646fns',1,'/img/avatar.png','doctor2','$2a$10$Th3jovQba84Dul0dnXFxiOBTBKSx4s26sXi4k9s.NUge62i8rur92'),
 (6,'TS.Nguyễn Hoàng Long','doctor3@gmail.com','f9027735-6fd9-4426-ba57-0a5d5s2f7772',1,'/img/avatar.png','doctor3','$2a$10$Th3jovQba84Dul0dnXFxiOBTBKSx4s26sXi4k9s.NUge62i8rur92'),
 (7,'Ths.BS.Trần Đắc Đại','doctor4@gmail.com','f9027735-6fd9-4426-ba57-0a5d646kdo72',1,'/img/avatar.png','doctor4','$2a$10$Th3jovQba84Dul0dnXFxiOBTBKSx4s26sXi4k9s.NUge62i8rur92'),
@@ -22,11 +22,12 @@ INSERT INTO `clinics` VALUES
 ('5', 'Quận Sơn Trà', NULL, 'Phòng khám An Nghi', NULL, NULL);
 
 INSERT INTO `specialties` (`id`, `name`) VALUES 
-('1', 'Khoa Chấn Thương Chỉnh Hình'),
-(2,'Khoa Tâm Lý Trị Liệu'),
-(3,'Khoa Nhi'),
-(4,'Khoa Răng Hàm Mặt'),
-(5,'Khoa Sản');
+('1', 'Khoa ngoại thần kinh'),
+(2,'Khoa mắt'),
+(3,'Khoa nội'),
+(4,'Khoa tim'),
+(5,'Khoa xương khớp'),
+(6,'Khoa tai mũi họng');
 
 INSERT INTO `doctors` (description, start_practice_date, id_doctor, id_clinic, id_specialty) VALUES
 ('Tận tình giúp đỡ bệnh nhân', NULL, '2', '1', '1'),
@@ -42,9 +43,9 @@ INSERT INTO `patients`  VALUES
 ('61 Lê Minh, Huế', '3', NULL);
 
 INSERT INTO `packages` (id,duration,editable, description, name, price) VALUES
-('1','60','1','Chăm sóc tùy nhu cầu bệnh nhân','Gói cơ bản', '500'),
-('2','60','1', 'Chăm sóc toàn diện sức khỏe bệnh nhân','Gói toàn diện', '1000'),
-('3', '60', '1', 'Chăm sóc trọn gói trong vòng 6 tháng', 'Gói 6 tháng', '3200');
+('1','60','1','Chăm sóc tùy nhu cầu bệnh nhân','Gói cơ bản', '100000'),
+('2','60','1', 'Chăm sóc toàn diện sức khỏe bệnh nhân','Gói nâng cao', '500000'),
+('3', '60', '1', 'Chăm sóc trọn gói trong vòng 6 tháng', 'Gói toàn diện', '1000000');
 
 INSERT INTO `packages_doctors` VALUES
  (1,2),(2,2);
