@@ -1,0 +1,1685 @@
+{
+  "id": "a4f7687f-9d4c-4943-963e-aeea7d0f9553",
+  "version": "2.0",
+  "name": "Test Admin",
+  "url": "https://easydoctors.herokuapp.com/admin/forum",
+  "tests": [{
+    "id": "517eb366-8372-44da-a27f-7d0816e54560",
+    "name": "Login",
+    "commands": [{
+      "id": "89d3cfa1-46d4-498b-add3-6b6560496027",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "16bf2d12-4ff7-4020-a84a-e97485bbab07",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "838x594",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "caf16cd6-4229-470d-a40a-a7919419be12",
+      "comment": "",
+      "command": "click",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6b1454c1-027c-4559-a94b-b75e1d3d3057",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "quanglong123"
+    }, {
+      "id": "b57423d3-0eee-4b14-b51b-005da6838829",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "acce9e54-74c6-4876-a3a1-6c9437810e25",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "123456123"
+    }, {
+      "id": "999b36a3-0944-47db-9529-33796fecb5da",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Đăng nhập']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1733caa4-90f0-4232-9cc2-272f66d16ea0",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.alert",
+      "targets": [
+        ["css=.alert", "css:finder"],
+        ["xpath=//form[@id='basic-form']/div", "xpath:idRelative"],
+        ["xpath=//form/div", "xpath:position"]
+      ],
+      "value": "Tên đăng nhập hoặc mật khẩu không đúng"
+    }]
+  }, {
+    "id": "4f282701-a56f-42e1-b0b7-115481935a8d",
+    "name": "Login2",
+    "commands": [{
+      "id": "9dc679ef-5a58-4166-8c0a-8ae980e20a13",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4fc310f8-4b6c-4496-bd4f-51d68ee2a05d",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "837x591",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2e9e788a-8fcd-4e4c-bf38-c89a27639952",
+      "comment": "",
+      "command": "click",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0c79b225-8710-4f26-aa7b-df0dcd0aa276",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "admin"
+    }, {
+      "id": "47039abf-1811-45f7-b45b-cae8f11aac2c",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "123456"
+    }, {
+      "id": "4877f399-1ede-40e5-b925-2363aa1a62eb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Đăng nhập']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "6bfa9114-655e-4a62-bf27-9a49d9b43156",
+    "name": "Logout",
+    "commands": [{
+      "id": "b7d24e11-e0db-46d7-b8db-37e9df4c92fb",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/admin/home",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "11208b6e-b536-4cb0-9571-120b4f8f38f4",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "838x593",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "71a1ded0-5038-4abc-91cb-b5bc52f378fa",
+      "comment": "",
+      "command": "click",
+      "target": "css=.fa-user",
+      "targets": [
+        ["css=.fa-user", "css:finder"],
+        ["xpath=//li[3]/a/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e1b63e61-90ed-400b-979d-dbf5f873e389",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Đăng xuất",
+      "targets": [
+        ["linkText=Đăng xuất", "linkText"],
+        ["css=span:nth-child(4) > .dropdown-item", "css:finder"],
+        ["xpath=//a[contains(@href, '/perform_logout')]", "xpath:href"],
+        ["xpath=//span[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "71c635bd-c439-45d6-a148-f4cf80673942",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.alert > p",
+      "targets": [
+        ["css=.alert > p", "css:finder"],
+        ["xpath=//form[@id='basic-form']/div/p", "xpath:idRelative"],
+        ["xpath=//p", "xpath:position"],
+        ["xpath=//p[contains(.,'Đăng xuất thành công')]", "xpath:innerText"]
+      ],
+      "value": "Đăng xuất thành công"
+    }]
+  }, {
+    "id": "30d48851-8731-407f-90bc-fb05534c99df",
+    "name": "CreatePackage",
+    "commands": [{
+      "id": "6c905e36-40f8-49bb-9b07-fd40318f28ef",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/admin/packages",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1135adeb-dd6a-4b41-a411-33b28ff476a7",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "836x591",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e4440d87-c8c3-4eb3-b777-317b2618908c",
+      "comment": "",
+      "command": "click",
+      "target": "id=name",
+      "targets": [
+        ["id=name", "id"],
+        ["css=#name", "css:finder"],
+        ["xpath=//input[@id='name']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fcae91e3-8467-4cc2-a214-23668b16f8e4",
+      "comment": "",
+      "command": "type",
+      "target": "id=name",
+      "targets": [
+        ["id=name", "id"],
+        ["css=#name", "css:finder"],
+        ["xpath=//input[@id='name']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "Goi cao cap"
+    }, {
+      "id": "10294d68-ea23-4819-bb93-28420854ba50",
+      "comment": "",
+      "command": "click",
+      "target": "id=price",
+      "targets": [
+        ["id=price", "id"],
+        ["css=#price", "css:finder"],
+        ["xpath=//input[@id='price']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1f7c13bc-4f51-4745-b4d3-3e8cf9b3ebf7",
+      "comment": "",
+      "command": "type",
+      "target": "id=price",
+      "targets": [
+        ["id=price", "id"],
+        ["css=#price", "css:finder"],
+        ["xpath=//input[@id='price']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "500000"
+    }, {
+      "id": "92e81cbc-8fff-4150-a4d7-5585cd979da9",
+      "comment": "",
+      "command": "click",
+      "target": "id=duration",
+      "targets": [
+        ["id=duration", "id"],
+        ["css=#duration", "css:finder"],
+        ["xpath=//select[@id='duration']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "25a3b7c9-3a59-4a51-97ef-8c560e2a0d0c",
+      "comment": "",
+      "command": "select",
+      "target": "id=duration",
+      "targets": [],
+      "value": "label=120 phút"
+    }, {
+      "id": "d8b5cdba-4716-4418-81d9-74c75c93b8ed",
+      "comment": "",
+      "command": "click",
+      "target": "id=description",
+      "targets": [
+        ["id=description", "id"],
+        ["css=#description", "css:finder"],
+        ["xpath=//input[@id='description']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5331dde6-05c8-48cb-89aa-c13375252e80",
+      "comment": "",
+      "command": "type",
+      "target": "id=description",
+      "targets": [
+        ["id=description", "id"],
+        ["css=#description", "css:finder"],
+        ["xpath=//input[@id='description']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "Kham tong quat "
+    }, {
+      "id": "cc801c06-e0db-43c9-858d-360b31b3373e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-check:nth-child(3) > .form-check-label",
+      "targets": [
+        ["css=.form-check:nth-child(3) > .form-check-label", "css:finder"],
+        ["xpath=//div[2]/div[2]/div/label", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a143e982-286e-4aec-82db-10e96e81d71e",
+      "comment": "",
+      "command": "click",
+      "target": "id=btn-save",
+      "targets": [
+        ["id=btn-save", "id"],
+        ["css=#btn-save", "css:finder"],
+        ["xpath=//button[@id='btn-save']", "xpath:attributes"],
+        ["xpath=//div[2]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,' Lưu')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2c727da7-f48c-4a96-a41f-fe6037b9e5c5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-default",
+      "targets": [
+        ["css=.btn-default", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "6382ef7a-a7a0-4837-908b-09c4d3bd4021",
+    "name": "EditPackage",
+    "commands": [{
+      "id": "93077fbd-f9a9-4dee-bc4e-f92c621aad37",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/admin/packages",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "715a9ead-11f2-4ad8-bb3e-63386236937f",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "839x594",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9450b120-2191-4e96-b1f2-60adebd98b60",
+      "comment": "",
+      "command": "click",
+      "target": "css=.even:nth-child(6) #editUnID",
+      "targets": [
+        ["css=.even:nth-child(6) #editUnID", "css:finder"],
+        ["xpath=(//a[@id='editUnID'])[6]", "xpath:attributes"],
+        ["xpath=//table[@id='tbl-packages']/tbody/tr[6]/td[7]/div/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[14]", "xpath:href"],
+        ["xpath=//tr[6]/td[7]/div/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8a55cbd5-b9d6-4de3-aca4-5666129b7b76",
+      "comment": "",
+      "command": "click",
+      "target": "id=name",
+      "targets": [
+        ["id=name", "id"],
+        ["css=#name", "css:finder"],
+        ["xpath=//input[@id='name']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "554f1888-2d82-4fc3-9d86-85e3deb71c19",
+      "comment": "",
+      "command": "type",
+      "target": "id=name",
+      "targets": [
+        ["id=name", "id"],
+        ["css=#name", "css:finder"],
+        ["xpath=//input[@id='name']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "Goi thap cap"
+    }, {
+      "id": "2746830e-c399-453e-bd11-115a60b5b8ed",
+      "comment": "",
+      "command": "click",
+      "target": "id=description",
+      "targets": [
+        ["id=description", "id"],
+        ["css=#description", "css:finder"],
+        ["xpath=//input[@id='description']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "26cbffc8-3590-462d-bb01-11adf12afefc",
+      "comment": "",
+      "command": "type",
+      "target": "id=description",
+      "targets": [
+        ["id=description", "id"],
+        ["css=#description", "css:finder"],
+        ["xpath=//input[@id='description']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "Kham mot bo phan nhat dinh"
+    }, {
+      "id": "5c5bc567-2523-4749-968b-22bfc4d8e6c4",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-md-6:nth-child(1)",
+      "targets": [
+        ["css=.col-md-6:nth-child(1)", "css:finder"],
+        ["xpath=//div[2]/div/div[2]/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "98425431-c8b9-4a8f-8141-aec8b1392768",
+      "comment": "",
+      "command": "type",
+      "target": "id=price",
+      "targets": [
+        ["id=price", "id"],
+        ["css=#price", "css:finder"],
+        ["xpath=//input[@id='price']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "200000"
+    }, {
+      "id": "0a0d7ec8-deb6-4573-90ce-1b722e477be1",
+      "comment": "",
+      "command": "click",
+      "target": "id=duration",
+      "targets": [
+        ["id=duration", "id"],
+        ["css=#duration", "css:finder"],
+        ["xpath=//select[@id='duration']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b8eefeb2-6e86-4908-8f66-8d34cfb74b83",
+      "comment": "",
+      "command": "select",
+      "target": "id=duration",
+      "targets": [],
+      "value": "label=60 phút"
+    }, {
+      "id": "56f41c1f-867f-4239-89f7-584dae1a2a44",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-check:nth-child(4)",
+      "targets": [
+        ["css=.form-check:nth-child(4)", "css:finder"],
+        ["xpath=//div[2]/div[2]/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9272da23-f66c-451d-af0d-5e6cc712c5d1",
+      "comment": "",
+      "command": "click",
+      "target": "id=option2",
+      "targets": [
+        ["id=option2", "id"],
+        ["css=#option2", "css:finder"],
+        ["xpath=//input[@id='option2']", "xpath:attributes"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "de254a76-608f-4bc6-b3b3-ea7e33e00095",
+      "comment": "",
+      "command": "click",
+      "target": "id=btn-save",
+      "targets": [
+        ["id=btn-save", "id"],
+        ["css=#btn-save", "css:finder"],
+        ["xpath=//button[@id='btn-save']", "xpath:attributes"],
+        ["xpath=//div[2]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,' Lưu')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "90a3da84-eb10-4954-a4b2-df3aad947db5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-default",
+      "targets": [
+        ["css=.btn-default", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "0472b8e0-1cc6-4c19-9fe0-dfcbbfaad7e7",
+    "name": "CreateClinic",
+    "commands": [{
+      "id": "a8732d6c-b551-405a-b432-66cd8128f05d",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/admin/clinic",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0fbc76b4-9cc5-4969-af4c-8ba442d4ac8c",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "837x591",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b0d88134-41ab-4aee-a31e-88130a92f3da",
+      "comment": "",
+      "command": "click",
+      "target": "id=name",
+      "targets": [
+        ["id=name", "id"],
+        ["css=#name", "css:finder"],
+        ["xpath=//input[@id='name']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "68136380-40fb-48df-8733-bb0e3da1b4b5",
+      "comment": "",
+      "command": "type",
+      "target": "id=name",
+      "targets": [
+        ["id=name", "id"],
+        ["css=#name", "css:finder"],
+        ["xpath=//input[@id='name']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "Phong kham Quang Long"
+    }, {
+      "id": "7b4b0684-ad4b-40e5-9d8e-b1762aa71459",
+      "comment": "",
+      "command": "click",
+      "target": "id=address",
+      "targets": [
+        ["id=address", "id"],
+        ["css=#address", "css:finder"],
+        ["xpath=//select[@id='address']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "20da38e4-0106-4825-8ba8-c591b1f50cc6",
+      "comment": "",
+      "command": "select",
+      "target": "id=address",
+      "targets": [],
+      "value": "label=Quận Hải Châu"
+    }, {
+      "id": "7593abfb-cd6f-4bae-924c-f573fcaa34c5",
+      "comment": "",
+      "command": "click",
+      "target": "id=telephone",
+      "targets": [
+        ["id=telephone", "id"],
+        ["css=#telephone", "css:finder"],
+        ["xpath=//input[@id='telephone']", "xpath:attributes"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a0e3eee1-a82a-4a09-ba6b-a9c2f226419a",
+      "comment": "",
+      "command": "type",
+      "target": "id=telephone",
+      "targets": [
+        ["id=telephone", "id"],
+        ["css=#telephone", "css:finder"],
+        ["xpath=//input[@id='telephone']", "xpath:attributes"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "012345678"
+    }, {
+      "id": "03dc374e-badb-4ee3-82dc-052f2aa0e6af",
+      "comment": "",
+      "command": "click",
+      "target": "id=description",
+      "targets": [
+        ["id=description", "id"],
+        ["css=#description", "css:finder"],
+        ["xpath=//input[@id='description']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "70f67c54-0409-4dce-b255-a660b80fbc68",
+      "comment": "",
+      "command": "type",
+      "target": "id=description",
+      "targets": [
+        ["id=description", "id"],
+        ["css=#description", "css:finder"],
+        ["xpath=//input[@id='description']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Phong kham nha khoa"
+    }, {
+      "id": "2f8a9f5c-ad16-431e-8b7c-3dbab22da338",
+      "comment": "",
+      "command": "click",
+      "target": "id=website",
+      "targets": [
+        ["id=website", "id"],
+        ["css=#website", "css:finder"],
+        ["xpath=//input[@id='website']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cf002d30-3899-4712-af64-27f7dac28c06",
+      "comment": "",
+      "command": "type",
+      "target": "id=website",
+      "targets": [
+        ["id=website", "id"],
+        ["css=#website", "css:finder"],
+        ["xpath=//input[@id='website']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "quanglongclinic.com"
+    }, {
+      "id": "32bec836-75cc-4483-91eb-21a1279c494c",
+      "comment": "",
+      "command": "click",
+      "target": "id=btn-save",
+      "targets": [
+        ["id=btn-save", "id"],
+        ["css=#btn-save", "css:finder"],
+        ["xpath=//button[@id='btn-save']", "xpath:attributes"],
+        ["xpath=//div[2]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,' Lưu')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "afde776d-5667-4f8d-890a-73da6cc36be5",
+    "name": "EditClinic",
+    "commands": [{
+      "id": "16dd85d0-59fa-4a43-96c2-5ec0780decde",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/admin/clinic",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ab07b182-a471-4909-a993-ba17d2866fe6",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "839x594",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "66538a82-223d-48be-8e5e-a20dc25fc237",
+      "comment": "",
+      "command": "click",
+      "target": "css=.even:nth-child(6) #editUnID > .fas",
+      "targets": [
+        ["css=.even:nth-child(6) #editUnID > .fas", "css:finder"],
+        ["xpath=(//a[@id='editUnID']/i)[6]", "xpath:idRelative"],
+        ["xpath=//tr[6]/td[7]/div/a/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bd05a222-39ab-4f70-8afc-9122bcda5e5f",
+      "comment": "",
+      "command": "click",
+      "target": "id=name",
+      "targets": [
+        ["id=name", "id"],
+        ["css=#name", "css:finder"],
+        ["xpath=//input[@id='name']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "89ffb16a-d176-484e-bcb8-b7db9ce73aec",
+      "comment": "",
+      "command": "type",
+      "target": "id=name",
+      "targets": [
+        ["id=name", "id"],
+        ["css=#name", "css:finder"],
+        ["xpath=//input[@id='name']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "Phong kham Quang Long123"
+    }, {
+      "id": "54115dfc-aab6-4a39-ad6b-403c8c9b4ea5",
+      "comment": "",
+      "command": "click",
+      "target": "id=website",
+      "targets": [
+        ["id=website", "id"],
+        ["css=#website", "css:finder"],
+        ["xpath=//input[@id='website']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1b101d1a-c531-4844-a926-0389d25d763e",
+      "comment": "",
+      "command": "type",
+      "target": "id=website",
+      "targets": [
+        ["id=website", "id"],
+        ["css=#website", "css:finder"],
+        ["xpath=//input[@id='website']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "quanglongclinic1.com"
+    }, {
+      "id": "ef220eb3-fede-467f-9fb2-6c57d31a145c",
+      "comment": "",
+      "command": "click",
+      "target": "id=description",
+      "targets": [
+        ["id=description", "id"],
+        ["css=#description", "css:finder"],
+        ["xpath=//input[@id='description']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c14bc168-56e7-4cd6-88fb-992a2bf26923",
+      "comment": "",
+      "command": "type",
+      "target": "id=description",
+      "targets": [
+        ["id=description", "id"],
+        ["css=#description", "css:finder"],
+        ["xpath=//input[@id='description']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Phong kham nhi"
+    }, {
+      "id": "678243c1-7908-4d65-88f0-1f8702c6e002",
+      "comment": "",
+      "command": "click",
+      "target": "id=telephone",
+      "targets": [
+        ["id=telephone", "id"],
+        ["css=#telephone", "css:finder"],
+        ["xpath=//input[@id='telephone']", "xpath:attributes"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6d4084e7-06cc-4199-9300-20eff769ee4b",
+      "comment": "",
+      "command": "type",
+      "target": "id=telephone",
+      "targets": [
+        ["id=telephone", "id"],
+        ["css=#telephone", "css:finder"],
+        ["xpath=//input[@id='telephone']", "xpath:attributes"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "01234569011"
+    }, {
+      "id": "ec4dde72-6052-4b69-8a49-251b4421e6c0",
+      "comment": "",
+      "command": "click",
+      "target": "id=address",
+      "targets": [
+        ["id=address", "id"],
+        ["css=#address", "css:finder"],
+        ["xpath=//select[@id='address']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4e5f3424-534a-4f36-a5f2-1bae0b930ac4",
+      "comment": "",
+      "command": "select",
+      "target": "id=address",
+      "targets": [],
+      "value": "label=Quận Cẩm Lệ"
+    }, {
+      "id": "c0728d19-dbfc-462b-8b89-518170da2692",
+      "comment": "",
+      "command": "click",
+      "target": "id=btn-save",
+      "targets": [
+        ["id=btn-save", "id"],
+        ["css=#btn-save", "css:finder"],
+        ["xpath=//button[@id='btn-save']", "xpath:attributes"],
+        ["xpath=//div[2]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,' Lưu')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "82a1a8f2-8018-437e-8d20-7b4701de5720",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "id=btn-reset",
+      "targets": [
+        ["id=btn-reset", "id"],
+        ["css=#btn-reset", "css:finder"],
+        ["xpath=//button[@id='btn-reset']", "xpath:attributes"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,' Reset')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7d58e9c8-2796-479b-af4e-8dfb6cb4c3dd",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-default",
+      "targets": [
+        ["css=.btn-default", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "30c8cda6-3b71-41cd-902b-901ff83fb999",
+    "name": "AddDoctor",
+    "commands": [{
+      "id": "a353a678-a3e0-4c2b-80a2-a47092a563ec",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/admin/doctor",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bfbf00f0-9e90-40ae-8d64-f262ef8882c3",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "837x591",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "62059fb5-deef-4c90-8614-8a7594862c9c",
+      "comment": "",
+      "command": "click",
+      "target": "id=userName",
+      "targets": [
+        ["id=userName", "id"],
+        ["css=#userName", "css:finder"],
+        ["xpath=//input[@id='userName']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "55cae47b-a294-42d7-974e-57ecc51a2daf",
+      "comment": "",
+      "command": "type",
+      "target": "id=userName",
+      "targets": [
+        ["id=userName", "id"],
+        ["css=#userName", "css:finder"],
+        ["xpath=//input[@id='userName']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "longdoctor"
+    }, {
+      "id": "5773b3c6-6673-4124-8465-771cb8ce9ad3",
+      "comment": "",
+      "command": "click",
+      "target": "id=fullname",
+      "targets": [
+        ["id=fullname", "id"],
+        ["css=#fullname", "css:finder"],
+        ["xpath=//input[@id='fullname']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c8039a8c-918e-4f02-82a4-397f71bdf962",
+      "comment": "",
+      "command": "type",
+      "target": "id=fullname",
+      "targets": [
+        ["id=fullname", "id"],
+        ["css=#fullname", "css:finder"],
+        ["xpath=//input[@id='fullname']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "Le Quang Long"
+    }, {
+      "id": "249c074a-2ed5-48b5-9884-d40320ea686e",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "73655539-ce18-4cda-b79a-103b12155bc2",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "lequanglong3108@gmail.com"
+    }, {
+      "id": "882508fa-1e01-44f5-9596-8d85c0dc4418",
+      "comment": "",
+      "command": "click",
+      "target": "id=specialty",
+      "targets": [
+        ["id=specialty", "id"],
+        ["css=#specialty", "css:finder"],
+        ["xpath=//select[@id='specialty']", "xpath:attributes"],
+        ["xpath=//div[2]/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9f89ab3f-9bb9-4457-85f6-b88a8cb03ae3",
+      "comment": "",
+      "command": "select",
+      "target": "id=specialty",
+      "targets": [],
+      "value": "label=Khoa Chấn Thương Chỉnh Hình"
+    }, {
+      "id": "cebdcaea-51b0-4c9d-9a49-24bb202797fd",
+      "comment": "",
+      "command": "click",
+      "target": "id=clinic",
+      "targets": [
+        ["id=clinic", "id"],
+        ["css=#clinic", "css:finder"],
+        ["xpath=//select[@id='clinic']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "76b14296-72f7-462c-9526-299310c04586",
+      "comment": "",
+      "command": "select",
+      "target": "id=clinic",
+      "targets": [],
+      "value": "label=Phong kham Quang Long123"
+    }, {
+      "id": "309fbe4b-d05e-4875-9d53-caaab0dd9bd0",
+      "comment": "",
+      "command": "click",
+      "target": "id=btn-save",
+      "targets": [
+        ["id=btn-save", "id"],
+        ["css=#btn-save", "css:finder"],
+        ["xpath=//button[@id='btn-save']", "xpath:attributes"],
+        ["xpath=//div[3]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,' Lưu')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "755e80eb-5e0d-4c0b-8353-86a35533bf01",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "42586256-092d-4040-b21a-746d4b0feae5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.even:nth-child(10) #editUnID > .fas",
+      "targets": [
+        ["css=.even:nth-child(10) #editUnID > .fas", "css:finder"],
+        ["xpath=(//a[@id='editUnID']/i)[10]", "xpath:idRelative"],
+        ["xpath=//tr[10]/td[8]/div/a[2]/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "accc9eb9-9371-4e9c-88d7-9d21c69ce04b",
+      "comment": "",
+      "command": "click",
+      "target": "id=userName",
+      "targets": [
+        ["id=userName", "id"],
+        ["css=#userName", "css:finder"],
+        ["xpath=//input[@id='userName']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9e8b9a8b-a415-495a-8301-20b616cffcee",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "lequanglong31098@gmail.com"
+    }, {
+      "id": "26d11c56-07bf-46c7-9594-caece2838d33",
+      "comment": "",
+      "command": "click",
+      "target": "id=btn-save",
+      "targets": [
+        ["id=btn-save", "id"],
+        ["css=#btn-save", "css:finder"],
+        ["xpath=//button[@id='btn-save']", "xpath:attributes"],
+        ["xpath=//div[3]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,' Lưu')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ab3787c7-007c-417d-8e1a-a1d320cf506b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-default",
+      "targets": [
+        ["css=.btn-default", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "996a2511-70d4-4518-b09f-bfd4f0e5db30",
+    "name": "EditDoctor",
+    "commands": [{
+      "id": "9b6ed7e5-edec-4574-b2a5-63d0a7c65379",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/admin/doctor",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "687756e9-eeda-4b9b-a45e-466019634a54",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "837x591",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4a53c905-25bb-4155-b18e-c8b7b9fb44f4",
+      "comment": "",
+      "command": "click",
+      "target": "css=.even:nth-child(10) #editUnID > .fas",
+      "targets": [
+        ["css=.even:nth-child(10) #editUnID > .fas", "css:finder"],
+        ["xpath=(//a[@id='editUnID']/i)[10]", "xpath:idRelative"],
+        ["xpath=//tr[10]/td[8]/div/a[2]/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "74f60c28-6342-48e6-83ef-b553d27c4425",
+      "comment": "",
+      "command": "click",
+      "target": "id=specialty",
+      "targets": [
+        ["id=specialty", "id"],
+        ["css=#specialty", "css:finder"],
+        ["xpath=//select[@id='specialty']", "xpath:attributes"],
+        ["xpath=//div[2]/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f9c6da09-3434-45b8-8d64-98e18d862dbc",
+      "comment": "",
+      "command": "select",
+      "target": "id=specialty",
+      "targets": [],
+      "value": "label=Khoa Sản"
+    }, {
+      "id": "948d3fc6-cd05-466c-a64f-b39ba0047f42",
+      "comment": "",
+      "command": "click",
+      "target": "id=clinic",
+      "targets": [
+        ["id=clinic", "id"],
+        ["css=#clinic", "css:finder"],
+        ["xpath=//select[@id='clinic']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b1453311-b203-4d80-9242-337bd15bd90a",
+      "comment": "",
+      "command": "select",
+      "target": "id=clinic",
+      "targets": [],
+      "value": "label=Phòng khám An Nghi"
+    }, {
+      "id": "a437fe94-4ec3-4aad-965e-f57e2766dd71",
+      "comment": "",
+      "command": "click",
+      "target": "id=btn-save",
+      "targets": [
+        ["id=btn-save", "id"],
+        ["css=#btn-save", "css:finder"],
+        ["xpath=//button[@id='btn-save']", "xpath:attributes"],
+        ["xpath=//div[3]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,' Lưu')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a1b41195-ff14-47fe-bf5d-303e13b26a9c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-default",
+      "targets": [
+        ["css=.btn-default", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "31f439a3-fd5f-401b-aa9c-b73cd80c78c1",
+    "name": "EditPatient",
+    "commands": [{
+      "id": "32ab2646-116c-429d-b912-61478f860ea2",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/admin/viewPatient",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "492e710b-8624-43e5-b0aa-868e39ec7376",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "841x594",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "679a230f-b884-42ea-bb7b-716a1ee95670",
+      "comment": "",
+      "command": "click",
+      "target": "css=.odd:nth-child(7) #editUnID > .fas",
+      "targets": [
+        ["css=.odd:nth-child(7) #editUnID > .fas", "css:finder"],
+        ["xpath=(//a[@id='editUnID']/i)[7]", "xpath:idRelative"],
+        ["xpath=//tr[7]/td[8]/div/a[2]/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "08100f40-5872-4cff-af6b-5a308482b52d",
+      "comment": "",
+      "command": "click",
+      "target": "id=mobile",
+      "targets": [
+        ["id=mobile", "id"],
+        ["css=#mobile", "css:finder"],
+        ["xpath=//input[@id='mobile']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ad0367c5-9b97-4f9d-892c-707cdd937450",
+      "comment": "",
+      "command": "type",
+      "target": "id=mobile",
+      "targets": [
+        ["id=mobile", "id"],
+        ["css=#mobile", "css:finder"],
+        ["xpath=//input[@id='mobile']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "012345677"
+    }, {
+      "id": "eb981c97-d2e7-4ad6-b5bd-81cc5853e2e3",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "05e0aa52-1e39-472b-b78e-fddc827b88e2",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "edcdf979-f837-42d7-839f-e4fc64d501cb",
+      "comment": "",
+      "command": "doubleClick",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5a55afcf-ab63-4b70-90b4-cdf33bb174b0",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "quanglong123@gmail.com"
+    }, {
+      "id": "b6d2d4f2-60d3-419f-9570-8ce74567c0d3",
+      "comment": "",
+      "command": "click",
+      "target": "css=html",
+      "targets": [
+        ["css=html", "css:finder"],
+        ["xpath=//html", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a9ff8ad0-d11c-43d4-9eab-431944adc1e3",
+      "comment": "",
+      "command": "click",
+      "target": "id=fullname",
+      "targets": [
+        ["id=fullname", "id"],
+        ["css=#fullname", "css:finder"],
+        ["xpath=//input[@id='fullname']", "xpath:attributes"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c6bf856b-c377-41ce-af20-3e34cd686ec6",
+      "comment": "",
+      "command": "type",
+      "target": "id=fullname",
+      "targets": [
+        ["id=fullname", "id"],
+        ["css=#fullname", "css:finder"],
+        ["xpath=//input[@id='fullname']", "xpath:attributes"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "Le Quang Long 123"
+    }, {
+      "id": "1e1962e3-a6eb-4a8e-8ac0-94959affd174",
+      "comment": "",
+      "command": "click",
+      "target": "css=.fa-save",
+      "targets": [
+        ["css=.fa-save", "css:finder"],
+        ["xpath=//button[@id='btn-save']/i", "xpath:idRelative"],
+        ["xpath=//div[2]/div/button/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a23dd36d-d6c2-4f39-a463-434b0b5f6a05",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-default",
+      "targets": [
+        ["css=.btn-default", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "2f35c1ba-9081-4230-b508-7701b6b83a2e",
+    "name": "Question",
+    "commands": [{
+      "id": "63c1264a-13b3-4fec-ad8b-ab827f4f87fb",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/admin/viewQuestion",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5cf04377-8250-417c-9037-f190154d92e9",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "29b75a9c-f073-4634-9630-69b7e431aac4",
+      "comment": "",
+      "command": "click",
+      "target": "css=.even:nth-child(6) .fa",
+      "targets": [
+        ["css=.even:nth-child(6) .fa", "css:finder"],
+        ["xpath=(//a[@id='editUnID']/i)[6]", "xpath:idRelative"],
+        ["xpath=//tr[6]/td[8]/div/a/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "69b3881a-f517-481a-9602-cfefa96712a9",
+      "comment": "",
+      "command": "click",
+      "target": "id=responses",
+      "targets": [
+        ["id=responses", "id"],
+        ["css=#responses", "css:finder"],
+        ["xpath=//textarea[@id='responses']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f8c29953-ba03-4622-9e7f-cee86f3c88c5",
+      "comment": "",
+      "command": "type",
+      "target": "id=responses",
+      "targets": [
+        ["id=responses", "id"],
+        ["css=#responses", "css:finder"],
+        ["xpath=//textarea[@id='responses']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "Bạn vui lòng nhắn tin, và bác sĩ sẽ trả lời vào thời gian làm việc của bác sĩ. Cảm ơn"
+    }, {
+      "id": "f7e77a2d-136c-49d3-b2d9-b40fa741c9e3",
+      "comment": "",
+      "command": "click",
+      "target": "id=btn-send",
+      "targets": [
+        ["id=btn-send", "id"],
+        ["css=#btn-send", "css:finder"],
+        ["xpath=//button[@id='btn-send']", "xpath:attributes"],
+        ["xpath=//div[2]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,' Phản hồi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "763d7239-5962-4124-b3d7-8676e693b25c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-default",
+      "targets": [
+        ["css=.btn-default", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "a43b6e7a-ecb2-4ebb-93bb-2058c44b1b7d",
+    "name": "ViewDoctor",
+    "commands": [{
+      "id": "1ae95764-0a17-4fe6-b922-56bf3cc2f1a2",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/admin/doctor",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0bfc9788-a667-43ac-aef8-02305303a5bb",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "837x591",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8f8be1bc-6dd6-41dc-b6af-e18549de3dcb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.odd:nth-child(1) #redirectUnID > .fas",
+      "targets": [
+        ["css=.odd:nth-child(1) #redirectUnID > .fas", "css:finder"],
+        ["xpath=//a[@id='redirectUnID']/i", "xpath:idRelative"],
+        ["xpath=//div/a/i", "xpath:position"]
+      ],
+      "value": "",
+      "opensWindow": true,
+      "windowHandleName": "win9483",
+      "windowTimeout": 2000
+    }, {
+      "id": "d6a11caf-4edc-4690-8a82-9b30e8c8801e",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${win9483}",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "798aa3df-20a1-471c-a0b3-a81b879efe4e",
+    "name": "ViewPatient",
+    "commands": [{
+      "id": "9fd023fc-5d01-4ef9-b143-07ac377e579d",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/admin/viewPatient",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b361c689-a100-406f-9f2b-28b47dc55cf5",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "841x594",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f37b8af8-411b-410c-bb01-30e26f677080",
+      "comment": "",
+      "command": "click",
+      "target": "id=redirectUnID",
+      "targets": [
+        ["id=redirectUnID", "id"],
+        ["css=.odd:nth-child(1) #redirectUnID", "css:finder"],
+        ["xpath=//a[@id='redirectUnID']", "xpath:attributes"],
+        ["xpath=//table[@id='tbl-patient']/tbody/tr/td[8]/div/a", "xpath:idRelative"],
+        ["xpath=//div/a", "xpath:position"]
+      ],
+      "value": "",
+      "opensWindow": true,
+      "windowHandleName": "win8907",
+      "windowTimeout": 2000
+    }, {
+      "id": "0c2c9343-1965-4dca-8b6e-aa8cc872ddf2",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${win8907}",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "3c77471a-8daf-474d-9b4c-43f4c192ece4",
+    "name": "CreatePost",
+    "commands": [{
+      "id": "1ef885a7-ee82-4317-9445-b95799351ae0",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/admin/forum",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f122310b-bf0f-4c8d-8278-8b4e0068b77f",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "837x591",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "49a3a992-43d5-47b7-bc84-2cf827dbb97e",
+      "comment": "",
+      "command": "click",
+      "target": "id=message",
+      "targets": [
+        ["id=message", "id"],
+        ["css=#message", "css:finder"],
+        ["xpath=//textarea[@id='message']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0d2e8ea7-dea6-4658-a0b0-1036e7af08dc",
+      "comment": "",
+      "command": "type",
+      "target": "id=message",
+      "targets": [
+        ["id=message", "id"],
+        ["css=#message", "css:finder"],
+        ["xpath=//textarea[@id='message']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "Đây là bài viết để test chức năng Blog"
+    }, {
+      "id": "4b2b662c-42b8-41be-9024-150d30a99e6e",
+      "comment": "",
+      "command": "click",
+      "target": "id=special",
+      "targets": [
+        ["id=special", "id"],
+        ["css=#special", "css:finder"],
+        ["xpath=//select[@id='special']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d86082ee-d536-4fbc-bbe4-9451149610a0",
+      "comment": "",
+      "command": "select",
+      "target": "id=special",
+      "targets": [],
+      "value": "label=Khoa Nhi"
+    }, {
+      "id": "dcdc8a83-2efc-4a53-8c4e-726f7da8e8a7",
+      "comment": "",
+      "command": "click",
+      "target": "id=btn-save",
+      "targets": [
+        ["id=btn-save", "id"],
+        ["css=#btn-save", "css:finder"],
+        ["xpath=//button[@id='btn-save']", "xpath:attributes"],
+        ["xpath=//div[3]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,' Lưu')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1d892f3a-1db5-45c2-a2a6-ea5b8be3b017",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "id=btn-reset",
+      "targets": [
+        ["id=btn-reset", "id"],
+        ["css=#btn-reset", "css:finder"],
+        ["xpath=//button[@id='btn-reset']", "xpath:attributes"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,' Reset')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "891bd5ac-664f-4323-a605-0b4957b09421",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-default",
+      "targets": [
+        ["css=.btn-default", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "7f9a41e3-2b6e-4a3d-a704-f31cbc647e9e",
+    "name": "EditPost",
+    "commands": [{
+      "id": "781839e8-9a70-42fb-b92c-c213aea1a8f8",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/admin/forum",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8a578bea-10c0-420a-9828-a87b3a5097b1",
+      "comment": "",
+      "command": "click",
+      "target": "css=.even:nth-child(4) #editUnID > .fas",
+      "targets": [
+        ["css=.even:nth-child(4) #editUnID > .fas", "css:finder"],
+        ["xpath=(//a[@id='editUnID']/i)[4]", "xpath:idRelative"],
+        ["xpath=//tr[4]/td[8]/div/a/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7597dfb8-8454-40ad-8486-ae65f89abc91",
+      "comment": "",
+      "command": "click",
+      "target": "id=special",
+      "targets": [
+        ["id=special", "id"],
+        ["css=#special", "css:finder"],
+        ["xpath=//select[@id='special']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f6136593-89c8-41af-855b-693a26a85427",
+      "comment": "",
+      "command": "select",
+      "target": "id=special",
+      "targets": [],
+      "value": "label=Khoa Tâm Lý Trị Liệu"
+    }, {
+      "id": "9d31e4f8-7ab5-4bc6-9ae3-5bd1f03d59d1",
+      "comment": "",
+      "command": "click",
+      "target": "id=message",
+      "targets": [
+        ["id=message", "id"],
+        ["css=#message", "css:finder"],
+        ["xpath=//textarea[@id='message']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4f092d63-d169-4b26-8985-e402d551bcb6",
+      "comment": "",
+      "command": "type",
+      "target": "id=message",
+      "targets": [
+        ["id=message", "id"],
+        ["css=#message", "css:finder"],
+        ["xpath=//textarea[@id='message']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "Đây là bài viết để test chức năng Blog 123456"
+    }, {
+      "id": "e415d14a-7999-49f9-bd68-e42b4a8013a5",
+      "comment": "",
+      "command": "click",
+      "target": "id=btn-save",
+      "targets": [
+        ["id=btn-save", "id"],
+        ["css=#btn-save", "css:finder"],
+        ["xpath=//button[@id='btn-save']", "xpath:attributes"],
+        ["xpath=//div[3]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,' Lưu')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "20cbb650-d6fa-457a-b964-f1f5dd19587a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-default",
+      "targets": [
+        ["css=.btn-default", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "893f6da4-a681-4185-83a2-71d5039182de",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "841x594",
+      "targets": [],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "b773358d-9d7c-467e-ad02-7760bb0d6eaa",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["https://easydoctors.herokuapp.com/login", "https://easydoctors.herokuapp.com/admin/home", "https://easydoctors.herokuapp.com/admin/packages", "https://easydoctors.herokuapp.com/admin/clinic", "https://easydoctors.herokuapp.com/admin/doctor", "https://easydoctors.herokuapp.com/admin/viewPatient", "https://easydoctors.herokuapp.com/admin/viewQuestion", "https://easydoctors.herokuapp.com/admin/viewAppointment", "https://easydoctors.herokuapp.com/admin/forum"],
+  "plugins": []
+}

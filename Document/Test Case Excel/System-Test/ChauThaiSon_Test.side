@@ -1,0 +1,312 @@
+{
+  "id": "eb9ad76e-3da6-4a24-9c37-7496f11feec2",
+  "version": "2.0",
+  "name": "ChauThaiSon_Test",
+  "url": "https://easydoctors.herokuapp.com/doctors/availability",
+  "tests": [{
+    "id": "93678101-db9b-439f-b547-361ff631094a",
+    "name": "TestPost",
+    "commands": [{
+      "id": "89d0590b-6841-49a2-b97a-9b6fa03c392a",
+      "comment": "",
+      "command": "open",
+      "target": "/forum/list",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0f590346-e380-450c-bef1-44f8c03f970a",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1229x816",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ba04e578-d0e6-4c32-8641-0ddd02bb27e8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-info",
+      "targets": [
+        ["css=.btn-info", "css:finder"],
+        ["xpath=(//button[@type='button'])[2]", "xpath:attributes"],
+        ["xpath=//div[2]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,' Bác sĩ ơi đăng bài nào !')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "53647c64-ca21-427d-b570-96469eef72eb",
+      "comment": "",
+      "command": "click",
+      "target": "id=message",
+      "targets": [
+        ["id=message", "id"],
+        ["name=message", "name"],
+        ["css=#message", "css:finder"],
+        ["xpath=//textarea[@id='message']", "xpath:attributes"],
+        ["xpath=//form[@id='forum-form']/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//form/div/div/textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1adfc213-f4ef-4baa-a6f6-91c875b71d33",
+      "comment": "",
+      "command": "click",
+      "target": "css=.modal-footer:nth-child(2) > .btn-primary",
+      "targets": [
+        ["css=.modal-footer:nth-child(2) > .btn-primary", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='forum-form']/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//form/div[2]/button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Đăng bài')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8f64f61d-8774-4737-8429-7684a05dfd7c",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.modal-footer:nth-child(2) > .btn-primary",
+      "targets": [
+        ["css=.modal-footer:nth-child(2) > .btn-primary", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='forum-form']/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//form/div[2]/button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Đăng bài')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c5e69602-4d75-41d3-9a6b-98abbf596bb8",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.modal-footer:nth-child(2) > .btn-primary",
+      "targets": [
+        ["css=.modal-footer:nth-child(2) > .btn-primary", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='forum-form']/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//form/div[2]/button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Đăng bài')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2c6775cd-8c0f-4bbc-8fe0-dfc4e0310bde",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=message-error",
+      "targets": [
+        ["id=message-error", "id"],
+        ["css=#message-error", "css:finder"],
+        ["xpath=//label[@id='message-error']", "xpath:attributes"],
+        ["xpath=//form[@id='forum-form']/div/div/label[2]", "xpath:idRelative"],
+        ["xpath=//label[2]", "xpath:position"],
+        ["xpath=//label[contains(.,'Không được để trống')]", "xpath:innerText"]
+      ],
+      "value": "Không được để trống"
+    }]
+  }, {
+    "id": "4b57f9fb-0666-4ed0-ad98-a9b09a071477",
+    "name": "Comment",
+    "commands": [{
+      "id": "08d138b6-88d6-4c27-9490-03465a0b2665",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/forum/list",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2f0d0131-cfdc-4943-9516-619575439f8d",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1233x816",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "394661fb-2ad5-44cf-ae9c-f0b4a685b387",
+      "comment": "",
+      "command": "click",
+      "target": "id=cmessage34",
+      "targets": [
+        ["id=cmessage34", "id"],
+        ["css=#cmessage34", "css:finder"],
+        ["xpath=//textarea[@id='cmessage34']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "efb4913a-afde-4e05-92da-7b6cb8e24fde",
+      "comment": "",
+      "command": "click",
+      "target": "css=.d-flex:nth-child(1) > .col-md-8 > .d-flex .btn",
+      "targets": [
+        ["css=.d-flex:nth-child(1) > .col-md-8 > .d-flex .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[3]", "xpath:attributes"],
+        ["xpath=//div[3]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,' Bình luận')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fab152e6-26e2-4c0b-a7b5-c723ac2ec23c",
+      "comment": "",
+      "command": "click",
+      "target": "css=#cm64 > .post-comment-details",
+      "targets": [
+        ["css=#cm64 > .post-comment-details", "css:finder"],
+        ["xpath=//div[@id='cm64']/div[2]", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div[2]/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "0c3f43bc-a51c-45dc-8263-890fc1975234",
+    "name": "LikePost",
+    "commands": [{
+      "id": "85860ef2-6cb2-4e02-8c05-082f71ce768f",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/forum/list",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "10b46629-7353-4f26-b65b-2c922e24c686",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1237x816",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9109feea-934c-44df-80be-f54a07677353",
+      "comment": "",
+      "command": "click",
+      "target": "id=icon34",
+      "targets": [
+        ["id=icon34", "id"],
+        ["css=#icon34", "css:finder"],
+        ["xpath=//i[@id='icon34']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "58120a28-338c-42da-b4f5-ec96e9b386f7",
+      "comment": "",
+      "command": "click",
+      "target": "id=like34",
+      "targets": [
+        ["id=like34", "id"],
+        ["css=#like34", "css:finder"],
+        ["xpath=//strong[@id='like34']", "xpath:attributes"],
+        ["xpath=//strong", "xpath:position"],
+        ["xpath=//strong[contains(.,'1')]", "xpath:innerText"]
+      ],
+      "value": "1"
+    }]
+  }, {
+    "id": "6bf44097-e6a5-4cab-b039-8c418c9f28fe",
+    "name": "DeleteBook",
+    "commands": [{
+      "id": "e5f202fb-5204-4555-9fa6-97acdf3bc497",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/doctors/availability",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c02e41fe-7dd4-4f05-87ff-2f10e9c4578e",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1229x816",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8f09d29e-6ffe-45ca-b0b2-bb53a246ffe5",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Cuộc hẹn",
+      "targets": [
+        ["linkText=Cuộc hẹn", "linkText"],
+        ["css=.nav-item:nth-child(2) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Cuộc hẹn')]", "xpath:link"],
+        ["xpath=//div[@id='navbarResponsive']/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/appointments/all')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Cuộc hẹn')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "992e3fb5-d548-4150-a183-3bacfe3eac76",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Chi tiết",
+      "targets": [
+        ["linkText=Chi tiết", "linkText"],
+        ["css=.table-success:nth-child(1) .btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Chi tiết')]", "xpath:link"],
+        ["xpath=//table[@id='appointments']/tbody/tr/td[6]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/appointments/254')]", "xpath:href"],
+        ["xpath=//td[6]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Chi tiết')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "84b618de-a530-401b-9ee7-dce26ba77895",
+      "comment": "",
+      "command": "runScript",
+      "target": "window.scrollTo(0,20.799999237060547)",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1337a709-87c4-4239-af29-8d616671f3a5",
+      "comment": "",
+      "command": "click",
+      "target": "id=cancel",
+      "targets": [
+        ["id=cancel", "id"],
+        ["css=#cancel", "css:finder"],
+        ["xpath=//input[@id='cancel']", "xpath:attributes"],
+        ["xpath=//table[@id='appointments']/tbody/tr[10]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c3f2bc3d-f6aa-439f-be65-2ae5c6f865aa",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-default:nth-child(1)",
+      "targets": [
+        ["css=.btn-default:nth-child(1)", "css:finder"],
+        ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9061379c-bcaf-4358-943d-75b263bc5170",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=td > p",
+      "targets": [
+        ["css=td > p", "css:finder"],
+        ["xpath=//table[@id='appointments']/tbody/tr[10]/td[2]/p", "xpath:idRelative"],
+        ["xpath=//td[2]/p", "xpath:position"],
+        ["xpath=//p[contains(.,'Chỉ cuộc hẹn có trạng thái đã lên lịch có thể bị hủy.')]", "xpath:innerText"]
+      ],
+      "value": "Chỉ cuộc hẹn có trạng thái đã lên lịch có thể bị hủy."
+    }, {
+      "id": "d2a98abe-8d9b-46df-9161-9a64504e7f55",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "8192eb62-5543-4c29-9b59-6fa8299069d7",
+    "name": "ChangeTime",
+    "commands": []
+  }],
+  "suites": [{
+    "id": "d7e5d962-917a-48f7-aed8-7195b78d274e",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["https://easydoctors.herokuapp.com/", "https://easydoctors.herokuapp.com/forum/list", "https://easydoctors.herokuapp.com/doctors/availability"],
+  "plugins": []
+}

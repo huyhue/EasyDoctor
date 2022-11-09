@@ -1,0 +1,520 @@
+{
+  "id": "8dbc61c4-bc48-4954-a0f7-18f137b7be01",
+  "version": "2.0",
+  "name": "TruongVanHuy_Testing",
+  "url": "https://easydoctors.herokuapp.com/doctors/2?currentVersion=1.0.0",
+  "tests": [{
+    "id": "0cd86d40-32c8-49b3-a058-fac53df56c53",
+    "name": "SearchDoctor01",
+    "commands": [{
+      "id": "aade3bca-9ed1-4593-bca2-203c0fc1af3b",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/doctors/all",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "83016dde-b1fb-4ff4-9c02-0cfcf7b7bb72",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "977x895",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "982c1a6d-7b2b-4e9c-947d-12ca78609baa",
+      "comment": "",
+      "command": "click",
+      "target": "id=searchName",
+      "targets": [
+        ["id=searchName", "id"],
+        ["css=#searchName", "css:finder"],
+        ["xpath=//input[@id='searchName']", "xpath:attributes"],
+        ["xpath=//section[@id='doctors']/div/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8794907f-2d80-451c-8ee8-af20b8732733",
+      "comment": "",
+      "command": "type",
+      "target": "id=searchName",
+      "targets": [
+        ["id=searchName", "id"],
+        ["css=#searchName", "css:finder"],
+        ["xpath=//input[@id='searchName']", "xpath:attributes"],
+        ["xpath=//section[@id='doctors']/div/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "abcd"
+    }, {
+      "id": "eee59b9b-ecf0-46b5-b4b7-8fadacf0523e",
+      "comment": "",
+      "command": "click",
+      "target": "id=accordion",
+      "targets": [
+        ["id=accordion", "id"],
+        ["css=#accordion", "css:finder"],
+        ["xpath=//ul[@id='accordion']", "xpath:attributes"],
+        ["xpath=//section[@id='doctors']/div/ul", "xpath:idRelative"],
+        ["xpath=//section/div/ul", "xpath:position"],
+        ["xpath=//ul[contains(.,'Không có bác sĩ nào được tìm thấy.')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7f4f74cf-32e8-4f66-a213-2165c6b72b1a",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.no_results",
+      "targets": [
+        ["css=.no_results", "css:finder"],
+        ["xpath=//ul[@id='accordion']/h4", "xpath:idRelative"],
+        ["xpath=//ul/h4", "xpath:position"],
+        ["xpath=//h4[contains(.,'Không có bác sĩ nào được tìm thấy.')]", "xpath:innerText"]
+      ],
+      "value": "Không có bác sĩ nào được tìm thấy."
+    }]
+  }, {
+    "id": "6450e695-dacf-4adc-9deb-a92373a87640",
+    "name": "SearchDoctor02",
+    "commands": [{
+      "id": "7c681267-9909-4d1a-94ea-dde591a1dddf",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/doctors/all",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3f0aa7bd-fa43-4a2c-a734-93cb75cd3ab7",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "977x895",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6da6b0cf-3bcb-4120-b0c9-4203c294acf0",
+      "comment": "",
+      "command": "click",
+      "target": "id=searchName",
+      "targets": [
+        ["id=searchName", "id"],
+        ["css=#searchName", "css:finder"],
+        ["xpath=//input[@id='searchName']", "xpath:attributes"],
+        ["xpath=//section[@id='doctors']/div/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "85d622ac-ca4c-48a3-9559-dbb567753854",
+      "comment": "",
+      "command": "type",
+      "target": "id=searchName",
+      "targets": [
+        ["id=searchName", "id"],
+        ["css=#searchName", "css:finder"],
+        ["xpath=//input[@id='searchName']", "xpath:attributes"],
+        ["xpath=//section[@id='doctors']/div/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "Hùng"
+    }, {
+      "id": "10917846-a7b7-41b3-be69-70723079167d",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//li[@id='item-doctor']/div",
+      "targets": [
+        ["xpath=//li[@id='item-doctor']/div", "xpath:idRelative"],
+        ["xpath=//li/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "33751017-c74a-458b-ae41-dee5c57a5d8f",
+      "comment": "",
+      "command": "assertText",
+      "target": "xpath=//li[@id='item-doctor']/div/div[2]/a/h4",
+      "targets": [
+        ["xpath=//li[@id='item-doctor']/div/div[2]/a/h4", "xpath:idRelative"],
+        ["xpath=//h4", "xpath:position"],
+        ["xpath=//h4[contains(.,'BS CKII Hà Ngọc Hùng')]", "xpath:innerText"]
+      ],
+      "value": "BS CKII Hà Ngọc Hùng"
+    }]
+  }, {
+    "id": "b0020fb5-9aea-4f5d-9862-6f0a83774456",
+    "name": "ChooseDoctor01",
+    "commands": [{
+      "id": "9b9ef2e2-0a3a-48a1-a2eb-b1df5e9b9197",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/doctors/all",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ba038207-cbc4-445a-ab27-1ed73414116f",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "933x889",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3e61252a-fc40-4160-90be-d9ac6d42c51e",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=(//button[@type='button'])[2]",
+      "targets": [
+        ["xpath=(//button[@type='button'])[2]", "xpath:attributes"],
+        ["xpath=//li[@id='item-doctor']/div/div[2]/div/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,' Đặt ngay')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a7c09334-5205-4da5-ae0c-79fb02fdd824",
+      "comment": "",
+      "command": "click",
+      "target": "id=blood",
+      "targets": [
+        ["id=blood", "id"],
+        ["name=blood", "name"],
+        ["css=#blood", "css:finder"],
+        ["xpath=//select[@id='blood']", "xpath:attributes"],
+        ["xpath=//form[@id='declaration-form']/div/div/select", "xpath:idRelative"],
+        ["xpath=//form/div/div/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "775d6d68-9195-4c73-b3e6-1de4fa13aef8",
+      "comment": "",
+      "command": "select",
+      "target": "id=blood",
+      "targets": [],
+      "value": "label=A"
+    }, {
+      "id": "83c7558a-c2c6-4f81-afdc-8237e0ded4e8",
+      "comment": "",
+      "command": "click",
+      "target": "id=background",
+      "targets": [
+        ["id=background", "id"],
+        ["name=background", "name"],
+        ["css=#background", "css:finder"],
+        ["xpath=//select[@id='background']", "xpath:attributes"],
+        ["xpath=//form[@id='declaration-form']/div/div[2]/select", "xpath:idRelative"],
+        ["xpath=//form/div/div[2]/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "321dac02-d135-4abb-a597-b65702ce6a41",
+      "comment": "",
+      "command": "select",
+      "target": "id=background",
+      "targets": [],
+      "value": "label=Huyết áp"
+    }, {
+      "id": "92b22b55-7d5d-4eb2-af0b-95b6c5e4d290",
+      "comment": "",
+      "command": "click",
+      "target": "id=medicine",
+      "targets": [
+        ["id=medicine", "id"],
+        ["name=medicine", "name"],
+        ["css=#medicine", "css:finder"],
+        ["xpath=//input[@id='medicine']", "xpath:attributes"],
+        ["xpath=//form[@id='declaration-form']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "96731dbd-f01d-4c3b-bc38-180834867942",
+      "comment": "",
+      "command": "type",
+      "target": "id=medicine",
+      "targets": [
+        ["id=medicine", "id"],
+        ["name=medicine", "name"],
+        ["css=#medicine", "css:finder"],
+        ["xpath=//input[@id='medicine']", "xpath:attributes"],
+        ["xpath=//form[@id='declaration-form']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "có"
+    }, {
+      "id": "8b56bfa3-5c65-48da-b402-22b58cd6f5d0",
+      "comment": "",
+      "command": "click",
+      "target": "id=symptom",
+      "targets": [
+        ["id=symptom", "id"],
+        ["name=symptom", "name"],
+        ["css=#symptom", "css:finder"],
+        ["xpath=//input[@id='symptom']", "xpath:attributes"],
+        ["xpath=//form[@id='declaration-form']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0dacbfc6-b47b-46ef-a4b7-1b2a68077148",
+      "comment": "",
+      "command": "type",
+      "target": "id=symptom",
+      "targets": [
+        ["id=symptom", "id"],
+        ["name=symptom", "name"],
+        ["css=#symptom", "css:finder"],
+        ["xpath=//input[@id='symptom']", "xpath:attributes"],
+        ["xpath=//form[@id='declaration-form']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "có"
+    }, {
+      "id": "c91ca497-b022-40a9-ad3b-fb6868310345",
+      "comment": "",
+      "command": "click",
+      "target": "id=notes",
+      "targets": [
+        ["id=notes", "id"],
+        ["name=notes", "name"],
+        ["css=#notes", "css:finder"],
+        ["xpath=//textarea[@id='notes']", "xpath:attributes"],
+        ["xpath=//form[@id='declaration-form']/div[4]/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "969abe06-9ec9-44df-b189-8f4b2a5e7bd6",
+      "comment": "",
+      "command": "type",
+      "target": "id=notes",
+      "targets": [
+        ["id=notes", "id"],
+        ["name=notes", "name"],
+        ["css=#notes", "css:finder"],
+        ["xpath=//textarea[@id='notes']", "xpath:attributes"],
+        ["xpath=//form[@id='declaration-form']/div[4]/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "không"
+    }, {
+      "id": "2f584976-50ab-43a6-94d4-a6a97501ff67",
+      "comment": "",
+      "command": "click",
+      "target": "css=.modal-footer > .btn",
+      "targets": [
+        ["css=.modal-footer > .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[12]", "xpath:attributes"],
+        ["xpath=//div[@id='declarationModal']/div/div/div[3]/button", "xpath:idRelative"],
+        ["xpath=//div[3]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1aa97656-dad8-428b-b3de-2f16c8886bef",
+      "comment": "",
+      "command": "click",
+      "target": "css=h2",
+      "targets": [
+        ["css=h2", "css:finder"],
+        ["xpath=//h2", "xpath:position"],
+        ["xpath=//h2[contains(.,'1. CHỌN GÓI KHÁM BỆNH')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f7da7f25-60d6-4c7d-8213-bf758b38ae04",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=b",
+      "targets": [
+        ["css=b", "css:finder"],
+        ["xpath=//b", "xpath:position"],
+        ["xpath=//b[contains(.,'1. CHỌN GÓI KHÁM BỆNH')]", "xpath:innerText"]
+      ],
+      "value": "1. CHỌN GÓI KHÁM BỆNH"
+    }]
+  }, {
+    "id": "04cc5a3c-eb66-4363-b806-81a305137a3f",
+    "name": "ChoosePackages",
+    "commands": [{
+      "id": "0c87278c-f9e3-43df-bbc0-c13874b3bdfc",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/appointments/new/2?currentVersion=1.0.0",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0b3a6801-5abe-4a87-a316-cc5cbc3b4bb1",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "933x889",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "351d247e-962a-4702-91b1-cd9aabec4843",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Chọn",
+      "targets": [
+        ["linkText=Chọn", "linkText"],
+        ["css=.col-md-3:nth-child(1) .btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Chọn')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/appointments/new/2/1')]", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Chọn')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4a39558b-6956-4573-86d0-048841eea4fb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-md-12 > h2",
+      "targets": [
+        ["css=.col-md-12 > h2", "css:finder"],
+        ["xpath=//h2", "xpath:position"],
+        ["xpath=//h2[contains(.,'2. CHỌN THỜI GIAN KHÁM BỆNH')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "400a94ad-48b6-429b-8575-51287745444e",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=b",
+      "targets": [
+        ["css=b", "css:finder"],
+        ["xpath=//b", "xpath:position"],
+        ["xpath=//b[contains(.,'2. CHỌN THỜI GIAN KHÁM BỆNH')]", "xpath:innerText"]
+      ],
+      "value": "2. CHỌN THỜI GIAN KHÁM BỆNH"
+    }]
+  }, {
+    "id": "9e9d847c-6eb4-4ef3-8d24-d7fd1504974d",
+    "name": "ChooseTime",
+    "commands": [{
+      "id": "53b4445e-7ca1-410e-a3f6-39704c802ef4",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/appointments/new/2/1",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fa2aa58c-a0a6-4a0b-803a-4679421a70f3",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "933x889",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4a779251-a4d8-4f66-b1f9-359a83989cbd",
+      "comment": "",
+      "command": "click",
+      "target": "css=.fc-list-item:nth-child(2) > .fc-list-item-title",
+      "targets": [
+        ["css=.fc-list-item:nth-child(2) > .fc-list-item-title", "css:finder"],
+        ["xpath=//div[@id='calendar']/div[2]/div/div/table/tbody/tr[2]/td[3]", "xpath:idRelative"],
+        ["xpath=//td[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6437aef2-b6f6-4564-9614-b28b52996a1e",
+      "comment": "",
+      "command": "runScript",
+      "target": "window.scrollTo(0,319)",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1f08743f-0aa0-4a80-9382-0b800d15ee73",
+      "comment": "",
+      "command": "runScript",
+      "target": "window.scrollTo(0,0)",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7081c644-653e-4ad7-b0c5-3f91980001f7",
+      "comment": "",
+      "command": "click",
+      "target": "css=h2",
+      "targets": [
+        ["css=h2", "css:finder"],
+        ["xpath=//h2", "xpath:position"],
+        ["xpath=//h2[contains(.,'3. TÓM TẮT ĐẶT LỊCH KHÁM BỆNH')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c0181570-64e2-4c96-a3b4-b8ade9fa6241",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=h2 > b",
+      "targets": [
+        ["css=h2 > b", "css:finder"],
+        ["xpath=//b", "xpath:position"],
+        ["xpath=//b[contains(.,'3. TÓM TẮT ĐẶT LỊCH KHÁM BỆNH')]", "xpath:innerText"]
+      ],
+      "value": "3. TÓM TẮT ĐẶT LỊCH KHÁM BỆNH"
+    }]
+  }, {
+    "id": "d45b757f-0133-4b93-982a-54c89218dbb6",
+    "name": "ViewHistoryAppointment",
+    "commands": [{
+      "id": "42b37332-5d59-43b3-a4af-4c0b3db926ef",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/doctors/all",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1319cdaa-3925-485a-85b4-d1b1e131f5ea",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1159x883",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d7608e58-aec2-4bb1-8e3b-73df0bd83f89",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Cuộc hẹn",
+      "targets": [
+        ["linkText=Cuộc hẹn", "linkText"],
+        ["css=.nav-item:nth-child(2) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Cuộc hẹn')]", "xpath:link"],
+        ["xpath=//div[@id='navbarResponsive']/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/appointments/all')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Cuộc hẹn')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "56cb1584-d265-442d-a9c7-8ce485d91dce",
+      "comment": "",
+      "command": "click",
+      "target": "css=h2",
+      "targets": [
+        ["css=h2", "css:finder"],
+        ["xpath=//h2", "xpath:position"],
+        ["xpath=//h2[contains(.,'DANH SÁCH CUỘC HẸN KHÁM BỆNH')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d894b5d2-c0f8-4c96-bfef-b1ac6fc65e64",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=b",
+      "targets": [
+        ["css=b", "css:finder"],
+        ["xpath=//b", "xpath:position"],
+        ["xpath=//b[contains(.,'DANH SÁCH CUỘC HẸN KHÁM BỆNH')]", "xpath:innerText"]
+      ],
+      "value": "DANH SÁCH CUỘC HẸN KHÁM BỆNH"
+    }]
+  }, {
+    "id": "725bd3b1-7d38-4df7-a347-0d6c12654ce8",
+    "name": "AppointmentStatistics",
+    "commands": []
+  }],
+  "suites": [{
+    "id": "c97fb03f-88d5-405a-ba74-3d29e8db2a85",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["0cd86d40-32c8-49b3-a058-fac53df56c53"]
+  }],
+  "urls": ["https://easydoctors.herokuapp.com/doctors/all", "https://easydoctors.herokuapp.com/appointments/new/2?currentVersion=1.0.0", "https://easydoctors.herokuapp.com/appointments/new/2/1", "https://easydoctors.herokuapp.com/appointments/new/2/1/2022-08-13T14:00:00", "https://easydoctors.herokuapp.com/doctors/2?currentVersion=1.0.0"],
+  "plugins": []
+}

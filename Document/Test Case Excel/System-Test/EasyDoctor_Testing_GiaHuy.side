@@ -1,0 +1,2075 @@
+{
+  "id": "f7257edf-ed2a-4e61-af5b-00dc4e4c6fe8",
+  "version": "2.0",
+  "name": "EasyDoctor_Testing_GiaHuy",
+  "url": "http://localhost:8080/",
+  "tests": [{
+    "id": "f211c973-b169-4e85-b451-064e511548db",
+    "name": "TC-login-01",
+    "commands": [{
+      "id": "6b171431-0133-4eed-810f-ed536b28d0fa",
+      "comment": "",
+      "command": "open",
+      "target": "/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "19c2484f-bede-4b7a-b09b-352c224ea478",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1295x728",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "60bbfcb6-3d51-4b54-ac1e-64e12b2b8b8b",
+      "comment": "",
+      "command": "click",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7b442dd4-2acf-4026-97ef-93547c205bef",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "huyhue"
+    }, {
+      "id": "7332c510-5dc0-4ff0-a356-f96578b06b2d",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "1234567"
+    }, {
+      "id": "45a6213b-c0b1-4597-8342-919a4ccafdae",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Đăng nhập']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0ec65b3b-c0f0-4fd3-8cd4-691ff426560e",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.alert",
+      "targets": [
+        ["css=.alert", "css:finder"],
+        ["xpath=//form[@id='basic-form']/div", "xpath:idRelative"],
+        ["xpath=//form/div", "xpath:position"]
+      ],
+      "value": "Tên đăng nhập hoặc mật khẩu không sát"
+    }]
+  }, {
+    "id": "f14a9a7f-eee0-4dbb-bcc4-f64f33c87a3b",
+    "name": "TC-login-02",
+    "commands": [{
+      "id": "d1ac2fb0-f8b4-480a-b6d0-d9b2eea67c1b",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e3238ee9-7292-42a3-a4d3-2f4714eaaac8",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1295x728",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d0dd38ac-5890-4d83-b0f5-7331138ca65e",
+      "comment": "",
+      "command": "click",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "224ee4ed-bd49-4259-9ab8-7bb3fc767297",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "huyhue"
+    }, {
+      "id": "97759c19-9157-451d-9ec4-82deebca87fd",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a275e98e-f91d-4a21-b5b1-4ecc2435e97d",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "123456"
+    }, {
+      "id": "e512a72a-f857-4487-b061-69900695e6d8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Đăng nhập']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "332bdcfb-53f1-4101-9eb9-d21d85ca952f",
+      "comment": "",
+      "command": "click",
+      "target": "css=b",
+      "targets": [
+        ["css=b", "css:finder"],
+        ["xpath=//b", "xpath:position"],
+        ["xpath=//b[contains(.,'ĐẶT LỊCH HẸN VỚI CÁC BÁC SĨ EASYDOCTOR')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "32d14eb3-dfdd-4645-b47d-c3fe392734b7",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=b",
+      "targets": [
+        ["css=b", "css:finder"],
+        ["xpath=//b", "xpath:position"],
+        ["xpath=//b[contains(.,'ĐẶT LỊCH HẸN VỚI CÁC BÁC SĨ EASYDOCTOR')]", "xpath:innerText"]
+      ],
+      "value": "ĐẶT LỊCH HẸN VỚI CÁC BÁC SĨ EASYDOCTOR"
+    }]
+  }, {
+    "id": "d87b8a02-a2e3-44cb-ba79-c41d3fa3a788",
+    "name": "Search doctor-01",
+    "commands": [{
+      "id": "e9726615-e13f-4988-8c0c-85b9cbc4e469",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/doctors/all",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "64007172-66dd-4a92-a20c-3eab0dc228c8",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1295x728",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "acf0138c-f9ab-4b5f-834f-3e9e13435399",
+      "comment": "",
+      "command": "click",
+      "target": "id=searchName",
+      "targets": [
+        ["id=searchName", "id"],
+        ["css=#searchName", "css:finder"],
+        ["xpath=//input[@id='searchName']", "xpath:attributes"],
+        ["xpath=//section[@id='doctors']/div/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ce15f53d-57ea-4952-9b64-980d7cf5f3d9",
+      "comment": "",
+      "command": "type",
+      "target": "id=searchName",
+      "targets": [
+        ["id=searchName", "id"],
+        ["css=#searchName", "css:finder"],
+        ["xpath=//input[@id='searchName']", "xpath:attributes"],
+        ["xpath=//section[@id='doctors']/div/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "abc"
+    }, {
+      "id": "1d3534ec-1170-4fd3-aa44-0651cb7c66ef",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.no_results",
+      "targets": [],
+      "value": "Không có bác sĩ nào được tìm thấy."
+    }]
+  }, {
+    "id": "c0925bb9-4051-49d8-a96d-ffecf78645d0",
+    "name": "Search doctor-02",
+    "commands": [{
+      "id": "093c10bf-53ec-4674-a5e9-cb56761a66e2",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/doctors/all",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e75376c4-feab-49f2-82e7-e1c93a0ebe3f",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1295x728",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "be81136a-9831-4341-a4ed-7ec17ea53003",
+      "comment": "",
+      "command": "click",
+      "target": "id=searchName",
+      "targets": [
+        ["id=searchName", "id"],
+        ["css=#searchName", "css:finder"],
+        ["xpath=//input[@id='searchName']", "xpath:attributes"],
+        ["xpath=//section[@id='doctors']/div/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "39ce4eb1-89e0-4525-b7ea-625d2bb4180d",
+      "comment": "",
+      "command": "type",
+      "target": "id=searchName",
+      "targets": [
+        ["id=searchName", "id"],
+        ["css=#searchName", "css:finder"],
+        ["xpath=//input[@id='searchName']", "xpath:attributes"],
+        ["xpath=//section[@id='doctors']/div/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "hà ngọc"
+    }, {
+      "id": "183e02fd-751a-47ac-9c96-622db8173024",
+      "comment": "",
+      "command": "assertText",
+      "target": "xpath=//li[@id='item-doctor']/div/div[2]/a/h4",
+      "targets": [
+        ["xpath=//li[@id='item-doctor']/div/div[2]/a/h4", "xpath:idRelative"],
+        ["xpath=//h4", "xpath:position"],
+        ["xpath=//h4[contains(.,'BS CKII Hà Ngọc Hùng')]", "xpath:innerText"]
+      ],
+      "value": "BS CKII Hà Ngọc Hùng"
+    }]
+  }, {
+    "id": "6d328cda-57d1-4f94-8a32-a95ec51ab973",
+    "name": "TC-login-03",
+    "commands": [{
+      "id": "a64539c6-1511-4436-9e81-1d0314a5554d",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "135cbd0b-295f-4a62-af95-5f3676518e60",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1295x728",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "03a67a6e-9c86-47f7-abb8-446360803fb2",
+      "comment": "",
+      "command": "click",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7edcd075-01a9-4822-9916-6067121d4f69",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0a2635eb-3e60-46c5-95b1-dbfcac267df0",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "123456"
+    }, {
+      "id": "64cb2754-1e25-4436-a124-9eae0b3ec672",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Đăng nhập']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "db02371d-a531-4fb3-aa01-27d06f94c966",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "huyhue1"
+    }, {
+      "id": "5ce285f4-b683-4cc7-aa2a-8ee3eb7ae60b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Đăng nhập']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "86e9a321-d27a-4ed2-b96d-341ec150f689",
+      "comment": "",
+      "command": "click",
+      "target": "css=.alert",
+      "targets": [
+        ["css=.alert", "css:finder"],
+        ["xpath=//form[@id='basic-form']/div", "xpath:idRelative"],
+        ["xpath=//form/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "156741fe-6e8c-4cbc-aa00-37b0b607bb9b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.alert",
+      "targets": [
+        ["css=.alert", "css:finder"],
+        ["xpath=//form[@id='basic-form']/div", "xpath:idRelative"],
+        ["xpath=//form/div", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "b493aaf1-7fc1-4a1d-9a28-93622254d4e4",
+    "name": "Search doctor-03",
+    "commands": [{
+      "id": "63113428-4bf0-4729-a9fa-ec775fd17262",
+      "comment": "",
+      "command": "open",
+      "target": "https://easydoctors.herokuapp.com/doctors/all?currentVersion=1.0.0",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5d7f7704-908b-4732-848d-e23ab7c3932f",
+      "comment": "",
+      "command": "click",
+      "target": "id=searchName",
+      "targets": [
+        ["id=searchName", "id"],
+        ["css=#searchName", "css:finder"],
+        ["xpath=//input[@id='searchName']", "xpath:attributes"],
+        ["xpath=//section[@id='doctors']/div/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0bd25a68-25ad-4d84-b5f3-43c4ac4e8c54",
+      "comment": "",
+      "command": "type",
+      "target": "id=searchName",
+      "targets": [
+        ["id=searchName", "id"],
+        ["css=#searchName", "css:finder"],
+        ["xpath=//input[@id='searchName']", "xpath:attributes"],
+        ["xpath=//section[@id='doctors']/div/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "abcxt"
+    }, {
+      "id": "96876799-e646-4a0d-914a-de0ce34a3943",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.no_results",
+      "targets": [],
+      "value": "Không có bác sĩ nào được tìm thấy."
+    }]
+  }, {
+    "id": "0f716c4d-5e87-48e9-b41c-b0de95b0b0ff",
+    "name": "Cancel appointment-01",
+    "commands": [{
+      "id": "5592b878-0c0f-4c0e-b1bb-4aae82c2f8e3",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/appointments/all",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "07358e42-1361-4daf-aebd-49227f37413d",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1382x744",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3a78e20e-a87b-4d37-85d9-c7332824ef7a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.table-success:nth-child(2) .btn",
+      "targets": [
+        ["css=.table-success:nth-child(2) .btn", "css:finder"],
+        ["xpath=(//a[contains(text(),'Chi tiết')])[2]", "xpath:link"],
+        ["xpath=//table[@id='appointments']/tbody/tr[2]/td[6]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/appointments/2')]", "xpath:href"],
+        ["xpath=//tr[2]/td[6]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8a244e3a-455b-4d4b-93f4-c28aaa42f4e9",
+      "comment": "",
+      "command": "click",
+      "target": "id=cancel",
+      "targets": [
+        ["id=cancel", "id"],
+        ["css=#cancel", "css:finder"],
+        ["xpath=//input[@id='cancel']", "xpath:attributes"],
+        ["xpath=//table[@id='appointments']/tbody/tr[9]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4347724b-4ecc-4e41-9af1-1786cc8b4158",
+      "comment": "",
+      "command": "click",
+      "target": "css=.countdown",
+      "targets": [
+        ["css=.countdown", "css:finder"],
+        ["xpath=//button[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,' (4)')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "7b23b782-cad9-4086-a75b-580555b2da11",
+    "name": "Cancel appointment-02",
+    "commands": [{
+      "id": "c9ebbfd2-8313-4fce-a34f-46ce9d6b247e",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/appointments/all",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8f69f6ba-af34-4404-b16f-92f729710274",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "818x728",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6eff1522-f6c4-42f5-8ee2-1e5fa2433496",
+      "comment": "",
+      "command": "click",
+      "target": "css=.table-success:nth-child(2) .btn",
+      "targets": [
+        ["css=.table-success:nth-child(2) .btn", "css:finder"],
+        ["xpath=(//a[contains(text(),'Chi tiết')])[2]", "xpath:link"],
+        ["xpath=//table[@id='appointments']/tbody/tr[2]/td[6]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/appointments/2')]", "xpath:href"],
+        ["xpath=//tr[2]/td[6]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b92bfd48-b4f0-414d-8a28-62cf454af1f8",
+      "comment": "",
+      "command": "click",
+      "target": "id=cancel",
+      "targets": [
+        ["id=cancel", "id"],
+        ["css=#cancel", "css:finder"],
+        ["xpath=//input[@id='cancel']", "xpath:attributes"],
+        ["xpath=//table[@id='appointments']/tbody/tr[9]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1ea3803d-a55b-460b-8d3f-63bf096fefbd",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-default:nth-child(1)",
+      "targets": [
+        ["css=.btn-default:nth-child(1)", "css:finder"],
+        ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b4e76b31-ac86-4b15-9f22-d410f37cf6d6",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=td > p",
+      "targets": [
+        ["css=td > p", "css:finder"],
+        ["xpath=//table[@id='appointments']/tbody/tr[10]/td[2]/p", "xpath:idRelative"],
+        ["xpath=//td[2]/p", "xpath:position"],
+        ["xpath=//p[contains(.,'Chỉ cuộc hẹn có trạng thái đã lên lịch có thể bị hủy.')]", "xpath:innerText"]
+      ],
+      "value": "Chỉ cuộc hẹn có trạng thái đã lên lịch có thể bị hủy."
+    }]
+  }, {
+    "id": "f2408e6b-731d-4b9c-9873-cdf4ab8a89ca",
+    "name": "Cancel appointment-03",
+    "commands": [{
+      "id": "20037569-2095-403e-8b4c-4ea428f77cec",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "367829ca-d8e7-4012-915d-5cd4dd8d153b",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1382x744",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cb9cfa94-675d-49f3-a870-c33bd095042c",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Đăng nhập",
+      "targets": [
+        ["linkText=Đăng nhập", "linkText"],
+        ["css=.btn-sm", "css:finder"],
+        ["xpath=//a[contains(text(),'Đăng nhập')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/login')]", "xpath:href"],
+        ["xpath=//div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Đăng nhập')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "298fa49d-a2ca-426c-a469-6f82af04022d",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "huyhue"
+    }, {
+      "id": "aa3b6c77-d099-4359-b7a7-8c70382ceb0f",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "123456"
+    }, {
+      "id": "f34bbc5d-44c7-4005-aa93-34ad446ea8a6",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "css=.row",
+      "targets": [
+        ["css=.row", "css:finder"],
+        ["xpath=//div/div", "xpath:position"]
+      ],
+      "value": "264.5,321"
+    }, {
+      "id": "a5fc2c72-474c-4b93-8c46-92caea431730",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "css=.row",
+      "targets": [
+        ["css=.row", "css:finder"],
+        ["xpath=//div/div", "xpath:position"]
+      ],
+      "value": "264.5,321"
+    }, {
+      "id": "0759e72c-0113-481f-8353-4486bc3bc256",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "css=.row",
+      "targets": [
+        ["css=.row", "css:finder"],
+        ["xpath=//div/div", "xpath:position"]
+      ],
+      "value": "264.5,321"
+    }, {
+      "id": "623557ea-c1e5-410e-b6bd-f5d76447deab",
+      "comment": "",
+      "command": "click",
+      "target": "css=.row",
+      "targets": [
+        ["css=.row", "css:finder"],
+        ["xpath=//div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f15f50f0-ba65-42fd-b177-33a440c7eb97",
+      "comment": "",
+      "command": "click",
+      "target": "css=.row",
+      "targets": [
+        ["css=.row", "css:finder"],
+        ["xpath=//div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "31885c05-f193-49e6-b5d2-a848ae11888d",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "doctor"
+    }, {
+      "id": "659956d3-6c4e-473a-8546-c77d9e4e5093",
+      "comment": "",
+      "command": "click",
+      "target": "css=.row",
+      "targets": [
+        ["css=.row", "css:finder"],
+        ["xpath=//div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8ac9b229-f5db-4b00-a910-c5c6cc099e74",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Đăng nhập']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3c8b9ea4-8c10-4346-98fc-79b20dc7dd71",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Cuộc hẹn",
+      "targets": [
+        ["linkText=Cuộc hẹn", "linkText"],
+        ["css=.nav-item:nth-child(2) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Cuộc hẹn')]", "xpath:link"],
+        ["xpath=//div[@id='navbarResponsive']/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/appointments/all')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Cuộc hẹn')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e127dc85-7149-42a2-b4a4-bbdc024928a7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.table-success:nth-child(3) .btn",
+      "targets": [
+        ["css=.table-success:nth-child(3) .btn", "css:finder"],
+        ["xpath=(//a[contains(text(),'Chi tiết')])[3]", "xpath:link"],
+        ["xpath=//table[@id='appointments']/tbody/tr[3]/td[6]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/appointments/9')]", "xpath:href"],
+        ["xpath=//tr[3]/td[6]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b1fbfbe6-378c-45bc-822d-8cff76456f12",
+      "comment": "",
+      "command": "click",
+      "target": "id=cancel",
+      "targets": [
+        ["id=cancel", "id"],
+        ["css=#cancel", "css:finder"],
+        ["xpath=//input[@id='cancel']", "xpath:attributes"],
+        ["xpath=//table[@id='appointments']/tbody/tr[10]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9c302135-e794-461c-b7ca-b4915d687475",
+      "comment": "",
+      "command": "click",
+      "target": "css=.countdown",
+      "targets": [
+        ["css=.countdown", "css:finder"],
+        ["xpath=//button[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,' (2)')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "5459f5cb-7d98-4174-ab2b-aa7462a8aae7",
+    "name": "Cancel appointment-04",
+    "commands": [{
+      "id": "0c83bc28-a8f0-4def-887a-4e5ff87ff9b8",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "07cabcea-f9d6-4abc-b9f3-a108a46d3d7f",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "818x728",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "494a44fc-62fe-4f34-a3d6-4298ee4d0b51",
+      "comment": "",
+      "command": "click",
+      "target": "css=.navbar-toggler-icon",
+      "targets": [
+        ["css=.navbar-toggler-icon", "css:finder"],
+        ["xpath=//main[@id='top']/nav/div/button/span", "xpath:idRelative"],
+        ["xpath=//span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f945917e-cb60-475e-98b2-60e684089fad",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Đăng nhập",
+      "targets": [
+        ["linkText=Đăng nhập", "linkText"],
+        ["css=.btn-sm", "css:finder"],
+        ["xpath=//a[contains(text(),'Đăng nhập')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/login')]", "xpath:href"],
+        ["xpath=//div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Đăng nhập')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1854fae4-972f-4bf3-ab68-e73ac5e93c99",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "doctor"
+    }, {
+      "id": "41671812-a896-4f63-8b77-b3575691c031",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "123456"
+    }, {
+      "id": "306a46fc-eaf3-4820-a085-258726f4bdbe",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Đăng nhập']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8110e3ce-6647-4210-a926-8a9de54a4e80",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Cuộc hẹn",
+      "targets": [
+        ["linkText=Cuộc hẹn", "linkText"],
+        ["css=.nav-item:nth-child(2) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Cuộc hẹn')]", "xpath:link"],
+        ["xpath=//div[@id='navbarResponsive']/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/appointments/all')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Cuộc hẹn')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e61cb1d6-9d2c-444a-9a73-abcb60cd4718",
+      "comment": "",
+      "command": "click",
+      "target": "css=.table-success:nth-child(3) .btn",
+      "targets": [
+        ["css=.table-success:nth-child(3) .btn", "css:finder"],
+        ["xpath=(//a[contains(text(),'Chi tiết')])[3]", "xpath:link"],
+        ["xpath=//table[@id='appointments']/tbody/tr[3]/td[6]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/appointments/9')]", "xpath:href"],
+        ["xpath=//tr[3]/td[6]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b2db9f68-8da2-4f15-ad6d-74672f8aaf3e",
+      "comment": "",
+      "command": "click",
+      "target": "id=cancel",
+      "targets": [
+        ["id=cancel", "id"],
+        ["css=#cancel", "css:finder"],
+        ["xpath=//input[@id='cancel']", "xpath:attributes"],
+        ["xpath=//table[@id='appointments']/tbody/tr[10]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "77618876-0e66-4a4d-a174-58c5cf73dce7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-default:nth-child(1)",
+      "targets": [
+        ["css=.btn-default:nth-child(1)", "css:finder"],
+        ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b867e302-6d34-405e-9108-97fb4c4d95c0",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=td > p",
+      "targets": [],
+      "value": "Chỉ cuộc hẹn có trạng thái đã lên lịch có thể bị hủy."
+    }]
+  }, {
+    "id": "dbf5e351-02a3-446e-810a-03aaa53978c2",
+    "name": "Dowload QR",
+    "commands": [{
+      "id": "1019c7c4-431b-4c27-bb55-8eb51b2020e9",
+      "comment": "",
+      "command": "open",
+      "target": "/login?logout",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fcaf96b5-2150-49f1-9bf8-bc3c96b51f81",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1382x744",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a1eba3f6-5835-494f-af44-ff71987134ef",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Đăng nhập']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[5]/input", "xpath:idRelative"],
+        ["xpath=//div[5]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0a319331-4080-42d0-91eb-d29315b7621a",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Cuộc hẹn",
+      "targets": [
+        ["linkText=Cuộc hẹn", "linkText"],
+        ["css=.nav-item:nth-child(2) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Cuộc hẹn')]", "xpath:link"],
+        ["xpath=//div[@id='navbarResponsive']/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/appointments/all')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Cuộc hẹn')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "531b8798-a5d7-4b92-99ec-9aed21b220d1",
+      "comment": "",
+      "command": "click",
+      "target": "css=.table-success .btn",
+      "targets": [
+        ["css=.table-success .btn", "css:finder"],
+        ["xpath=(//a[contains(text(),'Chi tiết')])[4]", "xpath:link"],
+        ["xpath=//table[@id='appointments']/tbody/tr[4]/td[6]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/appointments/7')]", "xpath:href"],
+        ["xpath=//tr[4]/td[6]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a72adf1b-15cb-422b-b596-80db8b4c11af",
+      "comment": "",
+      "command": "click",
+      "target": "css=.fa-download",
+      "targets": [
+        ["css=.fa-download", "css:finder"],
+        ["xpath=//button[@id='button-download-qr-code']/i", "xpath:idRelative"],
+        ["xpath=//button/i", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "76017545-10a0-49c2-aff5-cd426870d3eb",
+    "name": "Dowload invoice",
+    "commands": [{
+      "id": "f886b6b8-535a-426f-8fc7-6bf56ce4d3df",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "caa2cd15-3f95-41ec-9130-9e05cf67de99",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1382x744",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0aaebe0a-bcd3-45af-aa24-6d6267a32e00",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Đăng nhập",
+      "targets": [
+        ["linkText=Đăng nhập", "linkText"],
+        ["css=.btn-sm", "css:finder"],
+        ["xpath=//a[contains(text(),'Đăng nhập')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/login')]", "xpath:href"],
+        ["xpath=//div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Đăng nhập')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "03a73598-de90-48df-b8d6-1a8211b47a58",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "huyhue"
+    }, {
+      "id": "953dcb47-957c-4bf8-a1b6-2e1088728d6e",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "123456"
+    }, {
+      "id": "60d59c77-432a-472f-8d8c-9c8583aa51db",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Đăng nhập']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cead5616-bc2e-4422-92c5-8b11cdc2c3ad",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Cuộc hẹn",
+      "targets": [
+        ["linkText=Cuộc hẹn", "linkText"],
+        ["css=.nav-item:nth-child(2) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Cuộc hẹn')]", "xpath:link"],
+        ["xpath=//div[@id='navbarResponsive']/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/appointments/all')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Cuộc hẹn')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "837ffc29-d399-49da-94d2-8bd84d36d63f",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Chi tiết",
+      "targets": [
+        ["linkText=Chi tiết", "linkText"],
+        ["css=.table-secondary:nth-child(1) .btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Chi tiết')]", "xpath:link"],
+        ["xpath=//table[@id='appointments']/tbody/tr/td[6]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/appointments/3')]", "xpath:href"],
+        ["xpath=//td[6]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Chi tiết')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5d62ed5f-781d-4bb0-a815-c8ed0e79728d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.bg-success span",
+      "targets": [
+        ["css=.bg-success span", "css:finder"],
+        ["xpath=//div[@id='reviewModal']/div/div/div/button/span", "xpath:idRelative"],
+        ["xpath=//div/div/button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'×')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "60743bbf-b223-4cae-84cf-b84db520e3ac",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Download",
+      "targets": [
+        ["linkText=Download", "linkText"],
+        ["css=td:nth-child(2) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Download')]", "xpath:link"],
+        ["xpath=//table[@id='appointments']/tbody/tr[9]/td[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/invoices/download/2')]", "xpath:href"],
+        ["xpath=//td[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Download')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "a9725682-409a-4ab2-8bc8-6cc361830ced",
+    "name": "Review doctor-01",
+    "commands": [{
+      "id": "b6de9c94-eedf-4425-a633-e7cd891f434e",
+      "comment": "",
+      "command": "open",
+      "target": "/doctors/all?currentVersion=1.0.0",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "66076e1c-f6c8-4219-bb4f-0d07b82f804e",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1382x744",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3cb20fdc-4269-492c-be63-e01e3c5052f4",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Cuộc hẹn",
+      "targets": [
+        ["linkText=Cuộc hẹn", "linkText"],
+        ["css=.nav-item:nth-child(2) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Cuộc hẹn')]", "xpath:link"],
+        ["xpath=//div[@id='navbarResponsive']/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/appointments/all')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Cuộc hẹn')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ce2e947a-6f39-4e0d-a244-4c4ef3c65307",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Chi tiết",
+      "targets": [
+        ["linkText=Chi tiết", "linkText"],
+        ["css=.table-secondary:nth-child(1) .btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Chi tiết')]", "xpath:link"],
+        ["xpath=//table[@id='appointments']/tbody/tr/td[6]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/appointments/3')]", "xpath:href"],
+        ["xpath=//td[6]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Chi tiết')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ed9e1a98-e16b-45ed-be29-d0ebfd486745",
+      "comment": "",
+      "command": "click",
+      "target": "id=feedback",
+      "targets": [
+        ["id=feedback", "id"],
+        ["name=feedback", "name"],
+        ["css=#feedback", "css:finder"],
+        ["xpath=//textarea[@id='feedback']", "xpath:attributes"],
+        ["xpath=//form[@id='review-form']/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0cf6904a-3762-4e7e-9855-08982d3d9603",
+      "comment": "",
+      "command": "click",
+      "target": "css=.modal-footer > .btn-primary:nth-child(1)",
+      "targets": [
+        ["css=.modal-footer > .btn-primary:nth-child(1)", "css:finder"],
+        ["xpath=(//button[@type='button'])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='reviewModal']/div/div/div[3]/button", "xpath:idRelative"],
+        ["xpath=//div[3]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Đánh Giá')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "aa03d2da-9243-478c-a883-c60a88617b3e",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=feedback-error",
+      "targets": [],
+      "value": "Không được để trống"
+    }]
+  }, {
+    "id": "357b4ee7-bf65-446f-b110-12115990c6a5",
+    "name": "Review doctor-02",
+    "commands": [{
+      "id": "37e6b48d-ff2b-49e5-bf67-e41b45c22602",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/appointments/all",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b7881d39-8931-430b-af51-275ef1b5d409",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1382x744",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c430d47b-d2c8-41e9-8a14-d68e9235fad4",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Chi tiết",
+      "targets": [
+        ["linkText=Chi tiết", "linkText"],
+        ["css=.table-secondary:nth-child(1) .btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Chi tiết')]", "xpath:link"],
+        ["xpath=//table[@id='appointments']/tbody/tr/td[6]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/appointments/3')]", "xpath:href"],
+        ["xpath=//td[6]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Chi tiết')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "72fe59ce-f116-4ccb-8962-91b683f43172",
+      "comment": "",
+      "command": "click",
+      "target": "id=feedback",
+      "targets": [
+        ["id=feedback", "id"],
+        ["name=feedback", "name"],
+        ["css=#feedback", "css:finder"],
+        ["xpath=//textarea[@id='feedback']", "xpath:attributes"],
+        ["xpath=//form[@id='review-form']/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bb4c6e40-bc14-4f6b-b078-ada0516ce9f3",
+      "comment": "",
+      "command": "type",
+      "target": "id=feedback",
+      "targets": [
+        ["id=feedback", "id"],
+        ["name=feedback", "name"],
+        ["css=#feedback", "css:finder"],
+        ["xpath=//textarea[@id='feedback']", "xpath:attributes"],
+        ["xpath=//form[@id='review-form']/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "cảm ơn bác sĩ"
+    }, {
+      "id": "c43fc14d-9eda-486b-b7aa-6a4413414374",
+      "comment": "",
+      "command": "click",
+      "target": "css=.modal-footer > .btn-primary:nth-child(1)",
+      "targets": [
+        ["css=.modal-footer > .btn-primary:nth-child(1)", "css:finder"],
+        ["xpath=(//button[@type='button'])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='reviewModal']/div/div/div[3]/button", "xpath:idRelative"],
+        ["xpath=//div[3]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Đánh Giá')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3fbd447e-195a-4ba4-98ea-eea1cd5e1a25",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.well",
+      "targets": [],
+      "value": "cảm ơn bác sĩ"
+    }]
+  }, {
+    "id": "7a115ff7-1cd6-48cb-a41c-5f4a93edaf62",
+    "name": "Chat appointment",
+    "commands": [{
+      "id": "864e1228-3024-4b3f-bd3e-c004ebeaaad7",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/appointments/10",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "78015f82-d4d9-433b-b1da-25970513db10",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1382x744",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b95e57c6-c338-4745-b182-8f3489cf2dd7",
+      "comment": "",
+      "command": "click",
+      "target": "id=message",
+      "targets": [
+        ["id=message", "id"],
+        ["css=#message", "css:finder"],
+        ["xpath=//input[@id='message']", "xpath:attributes"],
+        ["xpath=//form[@id='messageForm']/div/input[2]", "xpath:idRelative"],
+        ["xpath=//form/div/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cfc53c5f-bdec-4894-a995-9a1d0a2bffe3",
+      "comment": "",
+      "command": "type",
+      "target": "id=message",
+      "targets": [
+        ["id=message", "id"],
+        ["css=#message", "css:finder"],
+        ["xpath=//input[@id='message']", "xpath:attributes"],
+        ["xpath=//form[@id='messageForm']/div/input[2]", "xpath:idRelative"],
+        ["xpath=//form/div/input[2]", "xpath:position"]
+      ],
+      "value": "chat tại dây"
+    }, {
+      "id": "211222bc-fad4-4b69-8290-92b464218176",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "id=message",
+      "targets": [
+        ["id=message", "id"],
+        ["css=#message", "css:finder"],
+        ["xpath=//input[@id='message']", "xpath:attributes"],
+        ["xpath=//form[@id='messageForm']/div/input[2]", "xpath:idRelative"],
+        ["xpath=//form/div/input[2]", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "6ec079e1-a385-4f77-805b-bc8400f8e50f",
+      "comment": "",
+      "command": "type",
+      "target": "id=message",
+      "targets": [
+        ["id=message", "id"],
+        ["css=#message", "css:finder"],
+        ["xpath=//input[@id='message']", "xpath:attributes"],
+        ["xpath=//form[@id='messageForm']/div/input[2]", "xpath:idRelative"],
+        ["xpath=//form/div/input[2]", "xpath:position"]
+      ],
+      "value": "nhập thêm tại đây"
+    }, {
+      "id": "fedd4563-3f8e-4089-942f-f5b6dccf09fa",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "id=message",
+      "targets": [
+        ["id=message", "id"],
+        ["css=#message", "css:finder"],
+        ["xpath=//input[@id='message']", "xpath:attributes"],
+        ["xpath=//form[@id='messageForm']/div/input[2]", "xpath:idRelative"],
+        ["xpath=//form/div/input[2]", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }]
+  }, {
+    "id": "888544ff-656e-4900-a6b2-e5fbb546fe5b",
+    "name": "Add result-01",
+    "commands": [{
+      "id": "2fd62d08-1cd9-430b-a484-79952fb6dcee",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/appointments/10",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d5ebc343-f3e1-48fe-bffa-84a988fa4eca",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1382x744",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4e7b0fc5-6235-458e-bdd3-adaaa45335ce",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-info",
+      "targets": [
+        ["css=.btn-info", "css:finder"],
+        ["xpath=(//button[@type='button'])[3]", "xpath:attributes"],
+        ["xpath=//table[@id='appointments']/tbody/tr[2]/td[2]/button", "xpath:idRelative"],
+        ["xpath=//td[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Nhập kết quả khám bệnh')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2a9d46a1-05b9-4b8c-9506-98c7f4be39f5",
+      "comment": "",
+      "command": "click",
+      "target": "id=diagnose",
+      "targets": [
+        ["id=diagnose", "id"],
+        ["name=diagnose", "name"],
+        ["css=#diagnose", "css:finder"],
+        ["xpath=//input[@id='diagnose']", "xpath:attributes"],
+        ["xpath=//form[@id='history-form']/div/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "aa0c3648-96d2-4c8c-9b32-8902b8c38218",
+      "comment": "",
+      "command": "type",
+      "target": "id=diagnose",
+      "targets": [
+        ["id=diagnose", "id"],
+        ["name=diagnose", "name"],
+        ["css=#diagnose", "css:finder"],
+        ["xpath=//input[@id='diagnose']", "xpath:attributes"],
+        ["xpath=//form[@id='history-form']/div/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "bệnh đâu năng"
+    }, {
+      "id": "f2662793-be15-4d4d-afaa-bcf9348ebde0",
+      "comment": "",
+      "command": "type",
+      "target": "id=notes",
+      "targets": [
+        ["id=notes", "id"],
+        ["name=notes", "name"],
+        ["css=#notes", "css:finder"],
+        ["xpath=//textarea[@id='notes']", "xpath:attributes"],
+        ["xpath=//form[@id='history-form']/div/div[2]/div[2]/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "mô tả lần 2"
+    }, {
+      "id": "eb7c1c62-c28c-4ffa-a8b2-20e9d78ea50f",
+      "comment": "",
+      "command": "click",
+      "target": "id=advice",
+      "targets": [
+        ["id=advice", "id"],
+        ["name=advice", "name"],
+        ["css=#advice", "css:finder"],
+        ["xpath=//textarea[@id='advice']", "xpath:attributes"],
+        ["xpath=//form[@id='history-form']/div/div[2]/div[3]/textarea", "xpath:idRelative"],
+        ["xpath=//div[3]/textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1463d9ed-d5f8-4c75-a548-2d13fca4da21",
+      "comment": "",
+      "command": "type",
+      "target": "id=advice",
+      "targets": [
+        ["id=advice", "id"],
+        ["name=advice", "name"],
+        ["css=#advice", "css:finder"],
+        ["xpath=//textarea[@id='advice']", "xpath:attributes"],
+        ["xpath=//form[@id='history-form']/div/div[2]/div[3]/textarea", "xpath:idRelative"],
+        ["xpath=//div[3]/textarea", "xpath:position"]
+      ],
+      "value": "không nên ăn kiêng"
+    }, {
+      "id": "24a6ac53-2609-40b7-913b-72a5d3f434c8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-group:nth-child(6)",
+      "targets": [
+        ["css=.form-group:nth-child(6)", "css:finder"],
+        ["xpath=//form[@id='history-form']/div/div[2]/div[4]", "xpath:idRelative"],
+        ["xpath=//div[4]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e3629166-0b2e-44eb-988d-340fc442a042",
+      "comment": "",
+      "command": "click",
+      "target": "id=medicine",
+      "targets": [
+        ["id=medicine", "id"],
+        ["name=medicine", "name"],
+        ["css=#medicine", "css:finder"],
+        ["xpath=//textarea[@id='medicine']", "xpath:attributes"],
+        ["xpath=//form[@id='history-form']/div/div[2]/div[4]/textarea", "xpath:idRelative"],
+        ["xpath=//div[4]/textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e4ff5cee-c559-4597-a0c3-ce5a9bd56f0f",
+      "comment": "",
+      "command": "type",
+      "target": "id=medicine",
+      "targets": [
+        ["id=medicine", "id"],
+        ["name=medicine", "name"],
+        ["css=#medicine", "css:finder"],
+        ["xpath=//textarea[@id='medicine']", "xpath:attributes"],
+        ["xpath=//form[@id='history-form']/div/div[2]/div[4]/textarea", "xpath:idRelative"],
+        ["xpath=//div[4]/textarea", "xpath:position"]
+      ],
+      "value": "mediannaka"
+    }, {
+      "id": "1bbac18d-840d-49ef-bfa0-48e88dd97331",
+      "comment": "",
+      "command": "click",
+      "target": "id=type",
+      "targets": [
+        ["id=type", "id"],
+        ["name=type", "name"],
+        ["css=#type", "css:finder"],
+        ["xpath=//select[@id='type']", "xpath:attributes"],
+        ["xpath=//form[@id='history-form']/div/div[2]/div[6]/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8d50cbab-524e-492b-aa0d-befe8a2fc386",
+      "comment": "",
+      "command": "select",
+      "target": "id=type",
+      "targets": [],
+      "value": "label=Chuẩn đoán hình ảnh"
+    }, {
+      "id": "77fef25d-2b63-479c-9c75-eae0e062c44b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-success",
+      "targets": [
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='history-form']/div/div[3]/button", "xpath:idRelative"],
+        ["xpath=//div[3]/button", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "2a34e461-be6a-4163-ae81-7fe5aac01d47",
+    "name": "Request reject-01",
+    "commands": [{
+      "id": "e6016796-024f-4c42-9f8f-fe78a07ddc4b",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "465c5c4b-2f22-440d-8ad4-e75b2b91c980",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1382x744",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e27dadb5-ef11-41e1-a2e0-d35a92ad5837",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Đăng nhập",
+      "targets": [
+        ["linkText=Đăng nhập", "linkText"],
+        ["css=.btn-sm", "css:finder"],
+        ["xpath=//a[contains(text(),'Đăng nhập')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/login')]", "xpath:href"],
+        ["xpath=//div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Đăng nhập')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "18b56897-72f6-4fd9-adab-6ab2a078609c",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "huyhue"
+    }, {
+      "id": "38bfecd0-59e0-4278-88f3-a5b69d9b75df",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "123456"
+    }, {
+      "id": "8a905a08-bfa8-4a3f-b4f4-529607cd4faf",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Đăng nhập']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "62b25572-4f56-4427-a169-15ba7a78634a",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Cuộc hẹn",
+      "targets": [
+        ["linkText=Cuộc hẹn", "linkText"],
+        ["css=.nav-item:nth-child(2) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Cuộc hẹn')]", "xpath:link"],
+        ["xpath=//div[@id='navbarResponsive']/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/appointments/all')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Cuộc hẹn')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "699539e0-4112-4a7d-92a2-227cd90b15a5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.table-secondary:nth-child(3) .btn",
+      "targets": [
+        ["css=.table-secondary:nth-child(3) .btn", "css:finder"],
+        ["xpath=(//a[contains(text(),'Chi tiết')])[3]", "xpath:link"],
+        ["xpath=//table[@id='appointments']/tbody/tr[3]/td[6]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/appointments/12')]", "xpath:href"],
+        ["xpath=//tr[3]/td[6]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a84ba63d-c7d7-4403-89e6-178edc008e69",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-danger",
+      "targets": [
+        ["css=.btn-danger", "css:finder"],
+        ["xpath=(//button[@type='button'])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='requestRejectionModal']/div/div/div[3]/button", "xpath:idRelative"],
+        ["xpath=//div[3]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e5d4bcbf-9203-41c9-b6bd-2709ebb6567d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.p-5",
+      "targets": [
+        ["css=.p-5", "css:finder"],
+        ["xpath=//div[2]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "90734b8d-1065-4031-9679-995fa76b6a75",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.p-5 > h5",
+      "targets": [],
+      "value": "Bạn đã yêu cầu từ chối thành công cuộc hẹn này."
+    }]
+  }, {
+    "id": "fe52aad8-4e50-4889-86e0-0eb060a173e8",
+    "name": "Accept reject-01",
+    "commands": [{
+      "id": "4ef1e5d4-f4b0-41ad-a7af-4e5aebc259dd",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2024b374-dc0a-4816-b700-79ae38d51260",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1382x744",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c05ff747-c15b-4fd3-865c-27469a1b4ae0",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Đăng nhập",
+      "targets": [
+        ["linkText=Đăng nhập", "linkText"],
+        ["css=.btn-sm", "css:finder"],
+        ["xpath=//a[contains(text(),'Đăng nhập')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/login')]", "xpath:href"],
+        ["xpath=//div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Đăng nhập')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "bb4c3e52-0087-4c05-9c75-e6aeda224679",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "huyhue"
+    }, {
+      "id": "077442c0-6316-4ea2-ba68-6341463d3663",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "123456"
+    }, {
+      "id": "ff6e1c69-916a-456d-bb37-664e8a86a913",
+      "comment": "",
+      "command": "click",
+      "target": "css=.row",
+      "targets": [
+        ["css=.row", "css:finder"],
+        ["xpath=//div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "16c3b7b8-7110-4be7-9f98-8bab7e50d004",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "doctor"
+    }, {
+      "id": "86af0c1d-637b-4181-b8eb-0d84e399d5af",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Đăng nhập']", "xpath:attributes"],
+        ["xpath=//form[@id='basic-form']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d7571d2c-87b7-42c3-8e4f-4c628771afd0",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Cuộc hẹn",
+      "targets": [
+        ["linkText=Cuộc hẹn", "linkText"],
+        ["css=.nav-item:nth-child(2) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Cuộc hẹn')]", "xpath:link"],
+        ["xpath=//div[@id='navbarResponsive']/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/appointments/all')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Cuộc hẹn')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "48ec895d-1984-45a9-b200-09d86d65fc6c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.table-secondary:nth-child(3) .btn",
+      "targets": [
+        ["css=.table-secondary:nth-child(3) .btn", "css:finder"],
+        ["xpath=(//a[contains(text(),'Chi tiết')])[3]", "xpath:link"],
+        ["xpath=//table[@id='appointments']/tbody/tr[3]/td[6]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/appointments/12')]", "xpath:href"],
+        ["xpath=//tr[3]/td[6]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "55013708-ad58-4065-a91b-884918ab3bf3",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-danger",
+      "targets": [
+        ["css=.btn-danger", "css:finder"],
+        ["xpath=(//button[@type='button'])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='acceptRejectionModal']/div/div/div[3]/button", "xpath:idRelative"],
+        ["xpath=//div[3]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fa0a03ae-e45d-4aa3-bbc9-44da5019cef7",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.p-5 > h5",
+      "targets": [],
+      "value": "Trạng thái cuộc hẹn đã được đặt thành công thành bị từ chối."
+    }]
+  }, {
+    "id": "a3da66f0-9e07-4f2f-9077-21e5c48e8aee",
+    "name": "Add result-02",
+    "commands": [{
+      "id": "7edc1415-4e31-49ee-8d89-0a0bbd4c7b95",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/appointments/10",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "725353d9-340f-49b0-b971-156cdc475063",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1382x744",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6194219f-e0e3-4054-a175-0d8b2fe692f6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-info",
+      "targets": [
+        ["css=.btn-info", "css:finder"],
+        ["xpath=(//button[@type='button'])[3]", "xpath:attributes"],
+        ["xpath=//table[@id='appointments']/tbody/tr[2]/td[2]/button", "xpath:idRelative"],
+        ["xpath=//td[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Nhập kết quả khám bệnh')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "794127b3-f80b-4dda-add7-3639a79ef3a4",
+      "comment": "",
+      "command": "click",
+      "target": "id=diagnose",
+      "targets": [
+        ["id=diagnose", "id"],
+        ["name=diagnose", "name"],
+        ["css=#diagnose", "css:finder"],
+        ["xpath=//input[@id='diagnose']", "xpath:attributes"],
+        ["xpath=//form[@id='history-form']/div/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f7e7a4c1-8154-4c0b-a0c8-be318bf110d1",
+      "comment": "",
+      "command": "type",
+      "target": "id=diagnose",
+      "targets": [
+        ["id=diagnose", "id"],
+        ["name=diagnose", "name"],
+        ["css=#diagnose", "css:finder"],
+        ["xpath=//input[@id='diagnose']", "xpath:attributes"],
+        ["xpath=//form[@id='history-form']/div/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "kết quả bth "
+    }, {
+      "id": "282e9148-2b83-497c-97b7-e4f5fea208b4",
+      "comment": "",
+      "command": "click",
+      "target": "id=exampleModal",
+      "targets": [
+        ["id=exampleModal", "id"],
+        ["css=#exampleModal", "css:finder"],
+        ["xpath=//div[@id='exampleModal']", "xpath:attributes"],
+        ["xpath=//div[2]/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8e5c6f13-9f71-4437-bcaa-f4ac7895e0de",
+      "comment": "",
+      "command": "type",
+      "target": "id=notes",
+      "targets": [
+        ["id=notes", "id"],
+        ["name=notes", "name"],
+        ["css=#notes", "css:finder"],
+        ["xpath=//textarea[@id='notes']", "xpath:attributes"],
+        ["xpath=//form[@id='history-form']/div/div[2]/div[2]/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "mô tả không bth"
+    }, {
+      "id": "2bc844f6-b862-4a8a-a6ef-0e7d19703334",
+      "comment": "",
+      "command": "click",
+      "target": "id=advice",
+      "targets": [
+        ["id=advice", "id"],
+        ["name=advice", "name"],
+        ["css=#advice", "css:finder"],
+        ["xpath=//textarea[@id='advice']", "xpath:attributes"],
+        ["xpath=//form[@id='history-form']/div/div[2]/div[3]/textarea", "xpath:idRelative"],
+        ["xpath=//div[3]/textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ada2e1a0-7487-4931-9ed9-276fff5660eb",
+      "comment": "",
+      "command": "click",
+      "target": "id=advice",
+      "targets": [
+        ["id=advice", "id"],
+        ["name=advice", "name"],
+        ["css=#advice", "css:finder"],
+        ["xpath=//textarea[@id='advice']", "xpath:attributes"],
+        ["xpath=//form[@id='history-form']/div/div[2]/div[3]/textarea", "xpath:idRelative"],
+        ["xpath=//div[3]/textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "db896d70-05ce-4b29-ba4b-f4b0ebe7d3c5",
+      "comment": "",
+      "command": "click",
+      "target": "id=exampleModal",
+      "targets": [
+        ["id=exampleModal", "id"],
+        ["css=#exampleModal", "css:finder"],
+        ["xpath=//div[@id='exampleModal']", "xpath:attributes"],
+        ["xpath=//div[2]/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c333a3e4-d106-44be-a25f-19f7a1754355",
+      "comment": "",
+      "command": "type",
+      "target": "id=advice",
+      "targets": [
+        ["id=advice", "id"],
+        ["name=advice", "name"],
+        ["css=#advice", "css:finder"],
+        ["xpath=//textarea[@id='advice']", "xpath:attributes"],
+        ["xpath=//form[@id='history-form']/div/div[2]/div[3]/textarea", "xpath:idRelative"],
+        ["xpath=//div[3]/textarea", "xpath:position"]
+      ],
+      "value": "uống nhiều nước "
+    }, {
+      "id": "1d48dec9-443b-4a49-b230-a2b7ebc75afe",
+      "comment": "",
+      "command": "click",
+      "target": "id=exampleModal",
+      "targets": [
+        ["id=exampleModal", "id"],
+        ["css=#exampleModal", "css:finder"],
+        ["xpath=//div[@id='exampleModal']", "xpath:attributes"],
+        ["xpath=//div[2]/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "dd15168d-824f-461f-affc-178c4af05e18",
+      "comment": "",
+      "command": "type",
+      "target": "id=medicine",
+      "targets": [
+        ["id=medicine", "id"],
+        ["name=medicine", "name"],
+        ["css=#medicine", "css:finder"],
+        ["xpath=//textarea[@id='medicine']", "xpath:attributes"],
+        ["xpath=//form[@id='history-form']/div/div[2]/div[4]/textarea", "xpath:idRelative"],
+        ["xpath=//div[4]/textarea", "xpath:position"]
+      ],
+      "value": "ko cho uống thuốc"
+    }, {
+      "id": "26deef24-4245-44a7-afab-fa70232e9373",
+      "comment": "",
+      "command": "click",
+      "target": "id=type",
+      "targets": [
+        ["id=type", "id"],
+        ["name=type", "name"],
+        ["css=#type", "css:finder"],
+        ["xpath=//select[@id='type']", "xpath:attributes"],
+        ["xpath=//form[@id='history-form']/div/div[2]/div[6]/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "94a3f9ac-bcfc-4a3f-9e8e-caee0096ff8f",
+      "comment": "",
+      "command": "select",
+      "target": "id=type",
+      "targets": [],
+      "value": "label=Phiếu điều trị"
+    }, {
+      "id": "523b25d5-86de-4129-890d-5ca32f97dd23",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-primary",
+      "targets": [
+        ["css=.btn-primary", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='history-form']/div/div[3]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ee1eef6c-551c-4694-8da4-07f0a23b05cc",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Cuộc hẹn",
+      "targets": [
+        ["linkText=Cuộc hẹn", "linkText"],
+        ["css=.nav-item:nth-child(2) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Cuộc hẹn')]", "xpath:link"],
+        ["xpath=//div[@id='navbarResponsive']/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/appointments/all')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Cuộc hẹn')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "af95f554-061e-4ed7-803c-6153543a5116",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["f211c973-b169-4e85-b451-064e511548db"]
+  }, {
+    "id": "8703654d-921b-4f57-bf93-2110368c66aa",
+    "name": "Login",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["f211c973-b169-4e85-b451-064e511548db", "f14a9a7f-eee0-4dbb-bcc4-f64f33c87a3b", "6d328cda-57d1-4f94-8a32-a95ec51ab973"]
+  }, {
+    "id": "d5865925-1008-4852-a3e6-85a0d7d95f43",
+    "name": "Search doctor",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["c0925bb9-4051-49d8-a96d-ffecf78645d0", "d87b8a02-a2e3-44cb-ba79-c41d3fa3a788", "b493aaf1-7fc1-4a1d-9a28-93622254d4e4"]
+  }, {
+    "id": "3914dd48-1374-4386-9e4c-13b719759573",
+    "name": "Register",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }, {
+    "id": "48cca3b8-c72f-41ec-93b8-718582e3b77c",
+    "name": "Cancel",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["0f716c4d-5e87-48e9-b41c-b0de95b0b0ff", "7b23b782-cad9-4086-a75b-580555b2da11", "f2408e6b-731d-4b9c-9873-cdf4ab8a89ca", "5459f5cb-7d98-4174-ab2b-aa7462a8aae7"]
+  }],
+  "urls": ["https://easydoctors.herokuapp.com/", "https://easydoctors.herokuapp.com/login", "https://easydoctors.herokuapp.com/doctors/all", "http://localhost:8080/", "http://localhost:8080/appointments/all", "http://localhost:8080/appointments/10"],
+  "plugins": []
+}
